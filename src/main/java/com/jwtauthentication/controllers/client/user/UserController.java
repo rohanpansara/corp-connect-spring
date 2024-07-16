@@ -1,6 +1,5 @@
-package com.jwtauthentication.controllers.client;
+package com.jwtauthentication.controllers.client.user;
 
-import com.jwtauthentication.dtos.client.UserDTO;
 import com.jwtauthentication.security.dtos.AuthenticationRequest;
 import com.jwtauthentication.security.dtos.AuthenticationResponse;
 import com.jwtauthentication.security.dtos.RegisterDTO;
@@ -13,7 +12,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
-@RequestMapping("/public")
+@RequestMapping("/user")
 @RequiredArgsConstructor
 public class UserController {
     private final AuthenticationService authenticationService;

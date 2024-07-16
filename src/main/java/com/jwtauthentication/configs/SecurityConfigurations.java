@@ -27,8 +27,8 @@ import static org.springframework.security.config.http.SessionCreationPolicy.STA
 @RequiredArgsConstructor
 public class SecurityConfigurations {
     private static final String[] publicUrls = {
-            "/api/public/login",
-            "/api/public/register"
+            "/api/user/login",
+            "/api/user/register"
     };
 
     private final AuthenticationProvider authenticationProvider;

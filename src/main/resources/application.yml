@@ -4,6 +4,7 @@ server:
     session:
       cookie:
         http-only: true
+    context-path: /api
 
 spring:
   main:
@@ -13,7 +14,8 @@ spring:
     driver-class-name: com.mysql.cj.jdbc.Driver
     url: jdbc:mysql://localhost:3306/ess
     username: root
-    password: root
+    password: r@@T0000        # Office
+#    password: root           # Home
 
   jpa:
     hibernate:
