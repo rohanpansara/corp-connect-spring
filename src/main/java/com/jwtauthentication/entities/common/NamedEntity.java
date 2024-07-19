@@ -3,17 +3,15 @@ package com.jwtauthentication.entities.common;
 import jakarta.persistence.MappedSuperclass;
 import lombok.Getter;
 import lombok.Setter;
+import lombok.NoArgsConstructor;
 
 @Getter
 @Setter
 @MappedSuperclass
+@NoArgsConstructor
 public class NamedEntity extends BaseEntity {
 
     private String name;
-
-    public NamedEntity() {
-        super();
-    }
 
     public NamedEntity(String name) {
         this();

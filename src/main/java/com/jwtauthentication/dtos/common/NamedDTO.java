@@ -9,7 +9,7 @@ import lombok.Setter;
 @Getter
 @Setter
 @EqualsAndHashCode(callSuper = true)
-public class NamedDTO extends IdentityDTO {
+public class NamedDTO extends BaseDTO {
 
     @NotBlank(message = "Name must not be blank")
     @Length(max = 255, message = "Name must be less than or equal to 255 characters.")

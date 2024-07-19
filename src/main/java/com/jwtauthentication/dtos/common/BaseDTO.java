@@ -11,14 +11,14 @@ import org.springframework.data.annotation.LastModifiedDate;
 @Setter
 @EqualsAndHashCode
 @JsonInclude(JsonInclude.Include.NON_NULL)
-public class IdentityDTO {
+public class BaseDTO {
 
     private Integer id;
 
     @LastModifiedBy
     private String lastUpdatedBy;
     @LastModifiedDate
-    private String lastUpdateDate;
+    private String lastUpdatedDate;
 
     private String createdBy;
     private String createdDate;
