@@ -21,6 +21,11 @@ import java.io.IOException;
 @RequiredArgsConstructor
 public class JwtAuthenticationFilter extends OncePerRequestFilter {
 
+    private static final String[] PUBLIC_URLS = {
+            "/user/login",
+            "/user/register"
+    };
+
     private final JwtService jwtService;
     private final UserDetailsService userDetailsService;
 
@@ -29,9 +34,13 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
                                     @NonNull HttpServletResponse response,
                                     @NonNull FilterChain filterChain) throws ServletException, IOException {
 
-        if (request.getServletPath().contains("/api/public")) {
-            filterChain.doFilter(request, response);
-            return;
+        // Check if the request is for a public URL
+        String servletPath = request.getServletPath();
+        for (String url : PUBLIC_URLS) {
+            if (servletPath.equals(url)) {
+                filterChain.doFilter(request, response);
+                return;
+            }
         }
 
         final String authHeader = request.getHeader("Authorization");

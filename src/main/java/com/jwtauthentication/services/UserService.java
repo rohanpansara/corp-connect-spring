@@ -3,11 +3,12 @@ package com.jwtauthentication.services;
 import com.jwtauthentication.dtos.client.UserDTO;
 import com.jwtauthentication.entities.client.User;
 import com.jwtauthentication.mappers.client.UserMapper;
-import com.jwtauthentication.repositories.UserRepository;
+import com.jwtauthentication.repositories.client.UserRepository;
 import com.jwtauthentication.security.dtos.RegisterDTO;
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
 import lombok.Setter;
+import org.apache.coyote.BadRequestException;
 import org.springframework.stereotype.Service;
 
 import java.util.Optional;
@@ -20,7 +21,7 @@ public class UserService {
     private final UserMapper userMapper;
     private final UserRepository userRepository;
 
-    public User getEntityFromRegisterDTO(RegisterDTO registerDTO){
+    public User getUserFromRegisterDTO(RegisterDTO registerDTO) {
         return userMapper.toEntityFromRegisterDTO(registerDTO);
     }
 
@@ -32,7 +33,30 @@ public class UserService {
         return userMapper.toDTO(user);
     }
 
-    public Optional<User> getByEmail(String email){
+    public Optional<User> getUserByEmail(String email){
         return userRepository.findByEmail(email);
     }
+
+    public User getUserByUserId(Long userId){
+        return userRepository.findById(userId).orElseThrow();
+    }
+
+    public User enableUserAccount(Long userId){
+        User user = userRepository.findById(userId).orElseThrow();
+        user.setAccountEnabled(true);
+        return userRepository.save(user);
+    }
+
+    public User unlockUserAccount(Long userId){
+        User user = userRepository.findById(userId).orElseThrow();
+        user.setAccountNonLocked(true);
+        return userRepository.save(user);
+    }
+
+    public User disableUserAccount(Long userId){
+        User user = userRepository.findById(userId).orElseThrow();
+        user.setAccountEnabled(false);
+        return userRepository.save(user);
+    }
+
 }

@@ -1,14 +1,13 @@
 package com.jwtauthentication.security.dtos;
 
 import lombok.Getter;
-import lombok.NoArgsConstructor;
 import lombok.RequiredArgsConstructor;
 import lombok.Setter;
 
 @Getter
 @Setter
 @RequiredArgsConstructor
-public class AuthenticationRequest {
+public class AuthRequestDTO {
     private String email;
     private String password;
 }

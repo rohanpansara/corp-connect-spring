@@ -1,4 +1,4 @@
-package com.jwtauthentication.repositories;
+package com.jwtauthentication.repositories.client;
 
 import com.jwtauthentication.entities.client.User;
 import org.springframework.data.jpa.repository.JpaRepository;

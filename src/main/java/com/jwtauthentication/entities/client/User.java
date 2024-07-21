@@ -22,7 +22,7 @@ import java.util.Collection;
 @AllArgsConstructor
 @NoArgsConstructor
 @Entity
-@Table(name = "users", indexes = @Index(name = "IDX_NAME", columnList = "name"))
+@Table(name = "Users", indexes = @Index(name = "IDX_NAME", columnList = "name"))
 public class User extends NamedEntity implements UserDetails {
 
     @Column(name="email", nullable = false, unique = true)

@@ -2,8 +2,12 @@ package com.jwtauthentication.entities.hr;
 
 import com.jwtauthentication.entities.client.User;
 import com.jwtauthentication.entities.common.BaseEntity;
-import jakarta.persistence.Column;
+import com.jwtauthentication.enumerations.Gender;
 import jakarta.persistence.Entity;
+import jakarta.persistence.FetchType;
+import jakarta.persistence.JoinColumn;
+import jakarta.persistence.ManyToOne;
+import jakarta.persistence.Table;
 import jakarta.validation.constraints.NotBlank;
 import org.hibernate.validator.constraints.Length;
 import lombok.AllArgsConstructor;
@@ -16,9 +20,11 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @NoArgsConstructor
 @Entity
+@Table(name = "UserPersonalDetails")
 public class UserPersonalDetails extends BaseEntity {
 
-    @Column(name = "user", nullable = false, unique = true)
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "user_id", unique = true, nullable = false)
     private User user;
 
     @NotBlank(message = "Address must not be blank")
@@ -27,6 +33,6 @@ public class UserPersonalDetails extends BaseEntity {
     @Length(min = 10, max = 10, message = "Contact Number should be of length 10")
     private String contactNumber;
 
-    private String gender;
+    private Gender gender;
     private String bloodGroup;
 }

@@ -1,7 +1,7 @@
 package com.jwtauthentication.configs;
 
 import com.jwtauthentication.audits.ApplicationAuditAware;
-import com.jwtauthentication.repositories.UserRepository;
+import com.jwtauthentication.repositories.client.UserRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;

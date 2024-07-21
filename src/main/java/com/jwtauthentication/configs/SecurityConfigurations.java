@@ -13,8 +13,7 @@ import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 
 import static com.jwtauthentication.security.utils.UserPermission.*;
-import static com.jwtauthentication.security.utils.UserRole.ADMIN;
-import static com.jwtauthentication.security.utils.UserRole.MANAGER;
+import static com.jwtauthentication.security.utils.UserRole.*;
 import static org.springframework.http.HttpMethod.DELETE;
 import static org.springframework.http.HttpMethod.GET;
 import static org.springframework.http.HttpMethod.POST;
@@ -27,8 +26,8 @@ import static org.springframework.security.config.http.SessionCreationPolicy.STA
 @RequiredArgsConstructor
 public class SecurityConfigurations {
     private static final String[] publicUrls = {
-            "/api/user/login",
-            "/api/user/register"
+            "/user/login",
+            "/user/register"
     };
 
     private final AuthenticationProvider authenticationProvider;
