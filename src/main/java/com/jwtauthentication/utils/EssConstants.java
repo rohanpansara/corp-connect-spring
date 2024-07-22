@@ -7,6 +7,8 @@ public class EssConstants {
         public static final String USER_UPDATED = "User updated successfully";
         public static final String USER_DELETED = "User deleted successfully";
 
+        public static final String USER_LIST_FOUND = "User list found successfully";
+
         public static final String LOGIN_SUCCESS = "Login successful";
         public static final String LOGOUT_SUCCESS = "Logout successful";
 

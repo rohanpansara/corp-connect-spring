@@ -2,15 +2,17 @@ package com.jwtauthentication.services;
 
 import com.jwtauthentication.dtos.client.UserDTO;
 import com.jwtauthentication.entities.client.User;
+import com.jwtauthentication.exceptions.client.UserNotFoundException;
 import com.jwtauthentication.mappers.client.UserMapper;
 import com.jwtauthentication.repositories.client.UserRepository;
 import com.jwtauthentication.security.dtos.RegisterDTO;
+import com.jwtauthentication.utils.EssConstants;
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
 import lombok.Setter;
-import org.apache.coyote.BadRequestException;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
 import java.util.Optional;
 
 @Getter
@@ -33,12 +35,24 @@ public class UserService {
         return userMapper.toDTO(user);
     }
 
+    public List<User> getEntityList(List<UserDTO> userDTOList){
+        return userMapper.toEntityList(userDTOList);
+    }
+
+    public List<UserDTO> getDTOList(List<User> userList){
+        return userMapper.toDTOList(userList);
+    }
+
     public Optional<User> getUserByEmail(String email){
         return userRepository.findByEmail(email);
     }
 
     public User getUserByUserId(Long userId){
-        return userRepository.findById(userId).orElseThrow();
+        return userRepository.findUserById(userId);
+    }
+
+    public List<User> getAllUsers(){
+        return userRepository.findAll();
     }
 
     public User enableUserAccount(Long userId){

@@ -1,6 +1,5 @@
-package com.jwtauthentication.entities.hr;
+package com.jwtauthentication.entities.client;
 
-import com.jwtauthentication.entities.client.User;
 import com.jwtauthentication.entities.common.BaseEntity;
 import com.jwtauthentication.enumerations.Gender;
 import jakarta.persistence.Entity;

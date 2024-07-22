@@ -1,5 +1,6 @@
 package com.jwtauthentication.security.services;
 
+import com.jwtauthentication.entities.client.User;
 import com.jwtauthentication.exceptions.client.LoginFailed;
 import com.jwtauthentication.exceptions.client.RegistrationFailed;
 import com.jwtauthentication.exceptions.client.UserNotFoundException;
@@ -39,8 +40,8 @@ public class AuthenticationService {
             user.setLastUpdatedBy(String.valueOf(1));
 
             var savedUser = userRepository.save(user);
-            var jwtToken = jwtService.generateTokenForUser(user, savedUser.getName(), "HR");
-            var refreshToken = jwtService.generateRefreshTokenForUser(user, savedUser.getName(), "HR");
+            var jwtToken = jwtService.generateTokenForUser(user, savedUser.getEmail(), "HR");
+            var refreshToken = jwtService.generateRefreshTokenForUser(user, savedUser.getEmail(), "HR");
             return AuthResponseDTO.builder()
                     .accessToken(jwtToken)
                     .refreshToken(refreshToken)
@@ -59,11 +60,24 @@ public class AuthenticationService {
                 new UsernamePasswordAuthenticationToken(request.getEmail(), request.getPassword())
         );
 
-        var user = userRepository.findByEmail(request.getEmail())
+        User user = userRepository.findByEmail(request.getEmail())
                 .orElseThrow(() -> new LoginFailed(EssConstants.UserError.USER_NOT_FOUND));
 
-        var jwtToken = jwtService.generateTokenForUser(user, user.getName(), moduleType);
-        var refreshToken = jwtService.generateRefreshTokenForUser(user, user.getName(), moduleType);
+        if(user.getLoginAttempts()>3){
+            user.setLoginAttempts(0);
+            throw new LoginFailed(EssConstants.UserError.ACCOUNT_LOCKED);
+        }
+
+        if (!user.isAccountEnabled()) {
+            throw new LoginFailed(EssConstants.UserError.ACCOUNT_DISABLED);
+        } else if (!user.isAccountNonLocked()) {
+            throw new LoginFailed(EssConstants.UserError.ACCOUNT_LOCKED);
+        }
+
+        user.setLoginAttempts(user.getLoginAttempts()+1);
+
+        var jwtToken = jwtService.generateTokenForUser(user, user.getEmail(), moduleType);
+        var refreshToken = jwtService.generateRefreshTokenForUser(user, user.getEmail(), moduleType);
         return AuthResponseDTO.builder()
                 .accessToken(jwtToken)
                 .refreshToken(refreshToken)

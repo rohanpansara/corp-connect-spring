@@ -35,6 +35,9 @@ public class User extends NamedEntity implements UserDetails {
     @Column(name = "roles", nullable = false)
     private UserRole roles;
 
+    @Column(columnDefinition = "int default 0")
+    private Integer loginAttempts = 0;
+
     @Column(name="is_account_non_expired")
     private boolean isAccountNonExpired;
 

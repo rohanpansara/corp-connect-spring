@@ -40,7 +40,7 @@ public class SecurityConfigurations {
                 .authorizeHttpRequests(req ->
                         req.requestMatchers(publicUrls).permitAll()
                            .requestMatchers("/api/auth/**").hasAnyRole(ADMIN.name(), MANAGER.name())
-                           .requestMatchers(GET, "/api/auth/**").hasAnyAuthority(ADMIN_READ.name(), MANAGER_READ.name(), USER_READ.name())
+                           .requestMatchers(GET, "/api/auth/**").hasAnyAuthority(ADMIN_READ.name(), MANAGER_READ.name())
                            .requestMatchers(POST, "/api/auth/**").hasAnyAuthority(ADMIN_CREATE.name(), MANAGER_CREATE.name())
                            .requestMatchers(PUT, "/api/auth/**").hasAnyAuthority(ADMIN_UPDATE.name(), MANAGER_UPDATE.name())
                            .requestMatchers(DELETE, "/api/auth/**").hasAnyAuthority(ADMIN_DELETE.name(), MANAGER_DELETE.name())

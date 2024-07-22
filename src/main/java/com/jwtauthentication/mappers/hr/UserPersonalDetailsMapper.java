@@ -1,7 +1,7 @@
 package com.jwtauthentication.mappers.hr;
 
 import com.jwtauthentication.dtos.hr.UserPersonalDetailsDTO;
-import com.jwtauthentication.entities.hr.UserPersonalDetails;
+import com.jwtauthentication.entities.client.UserPersonalDetails;
 import com.jwtauthentication.mappers.client.UserMapper;
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
