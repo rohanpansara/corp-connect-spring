@@ -3,6 +3,7 @@ package com.jwtauthentication.controllers.client;
 import com.jwtauthentication.dtos.client.UserDTO;
 import com.jwtauthentication.dtos.common.ResponseDTO;
 import com.jwtauthentication.exceptions.common.BaseException;
+import com.jwtauthentication.security.EssUserContext;
 import com.jwtauthentication.services.UserService;
 import com.jwtauthentication.utils.EssConstants;
 import io.swagger.v3.oas.annotations.Operation;
@@ -24,16 +25,20 @@ public class EmployeeController {
 
     private final UserService userService;
 
-    @Operation(summary = "Find User By user-id", description = "We use the repository method to find the Entity and then we map it to DTO.")
+    @GetMapping
+    @PreAuthorize("hasAuthority('admin:read')")
+    public ResponseEntity<ResponseDTO<List<UserDTO>>> fetchAllUsers(){
+        return ResponseEntity.ok(ResponseDTO.success(EssConstants.UserSuccess.USER_LIST_FOUND, userService.getDTOList(userService.getAllUsers())));
+    }
+
     @GetMapping("/{userId}")
     @PreAuthorize("hasAuthority('admin:read')")
     public ResponseEntity<ResponseDTO<UserDTO>> fetchUserByUserId(@PathVariable("userId") Long userId) throws BaseException {
         return ResponseEntity.ok(ResponseDTO.success(EssConstants.UserSuccess.USER_FOUND, userService.getDTO(userService.getUserByUserId(userId))));
     }
 
-    @GetMapping
-    @PreAuthorize("hasAuthority('admin:read')")
-    public ResponseEntity<ResponseDTO<List<UserDTO>>> fetchAllUsers(){
-        return ResponseEntity.ok(ResponseDTO.success(EssConstants.UserSuccess.USER_LIST_FOUND, userService.getDTOList(userService.getAllUsers())));
+    @GetMapping("/current-user")
+    public ResponseEntity<ResponseDTO<UserDTO>> fetchCurrentUser(){
+        return ResponseEntity.ok(ResponseDTO.success(EssConstants.UserSuccess.USER_FOUND, userService.getDTO(EssUserContext.getCurrentUser())));
     }
 }

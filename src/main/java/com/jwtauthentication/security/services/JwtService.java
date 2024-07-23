@@ -95,13 +95,12 @@ public class JwtService {
         return extractClaim(token, Claims::getExpiration);
     }
 
-    @Deprecated
     private Claims extractAllClaims(String token) {
-        return Jwts.parser()
-                .setSigningKey(getSignInKey())
+        return Jwts
+                .parser()
                 .build()
-                .parseClaimsJws(token)
-                .getBody();
+                .parseSignedClaims(token)
+                .getPayload();
     }
 
     private Map<String, Object> getHeader(String moduleType) {

@@ -3,8 +3,8 @@ package com.jwtauthentication.security.services;
 import com.jwtauthentication.entities.client.User;
 import com.jwtauthentication.exceptions.client.LoginFailed;
 import com.jwtauthentication.exceptions.client.RegistrationFailed;
-import com.jwtauthentication.exceptions.client.UserNotFoundException;
 import com.jwtauthentication.repositories.client.UserRepository;
+import com.jwtauthentication.security.EssUserContext;
 import com.jwtauthentication.security.dtos.AuthRequestDTO;
 import com.jwtauthentication.security.dtos.AuthResponseDTO;
 import com.jwtauthentication.security.dtos.RegisterDTO;
@@ -56,17 +56,8 @@ public class AuthenticationService {
 
     public AuthResponseDTO authenticate(AuthRequestDTO request, String moduleType) {
 
-        authenticationManager.authenticate(
-                new UsernamePasswordAuthenticationToken(request.getEmail(), request.getPassword())
-        );
-
         User user = userRepository.findByEmail(request.getEmail())
                 .orElseThrow(() -> new LoginFailed(EssConstants.UserError.USER_NOT_FOUND));
-
-        if(user.getLoginAttempts()>3){
-            user.setLoginAttempts(0);
-            throw new LoginFailed(EssConstants.UserError.ACCOUNT_LOCKED);
-        }
 
         if (!user.isAccountEnabled()) {
             throw new LoginFailed(EssConstants.UserError.ACCOUNT_DISABLED);
@@ -74,15 +65,35 @@ public class AuthenticationService {
             throw new LoginFailed(EssConstants.UserError.ACCOUNT_LOCKED);
         }
 
-        user.setLoginAttempts(user.getLoginAttempts()+1);
+        if (user.getLoginAttempts() >= 3) {
+            user.setAccountNonLocked(false);
+            user.setLoginAttempts(0);
+            userRepository.save(user);
+            throw new LoginFailed(EssConstants.UserError.ACCOUNT_LOCKED);
+        }
+
+        try {
+            authenticationManager.authenticate(
+                    new UsernamePasswordAuthenticationToken(request.getEmail(), request.getPassword())
+            );
+        } catch (Exception e) {
+            user.setLoginAttempts(user.getLoginAttempts() + 1);
+            userRepository.save(user);
+            throw new LoginFailed(EssConstants.UserError.INVALID_CREDENTIALS);
+        }
+
+        user.setLoginAttempts(0);
+        userRepository.save(user);
 
         var jwtToken = jwtService.generateTokenForUser(user, user.getEmail(), moduleType);
         var refreshToken = jwtService.generateRefreshTokenForUser(user, user.getEmail(), moduleType);
+
+        EssUserContext.setCurrentUser(user);
+
         return AuthResponseDTO.builder()
                 .accessToken(jwtToken)
                 .refreshToken(refreshToken)
                 .user(userService.getDTO(user))
                 .build();
-
     }
 }

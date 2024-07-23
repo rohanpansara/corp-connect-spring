@@ -36,9 +36,9 @@ public class EssConstants {
 
         public static final String AUTHORIZATION_FAILED = "Authorization failed";
         public static final String INVALID_CREDENTIALS = "Invalid credentials";
-        public static final String ACCOUNT_LOCKED = "Account is locked. Contact HR.";
-        public static final String ACCOUNT_DISABLED = "Account is disabled. Contact HR.";
-        public static final String ACCOUNT_EXPIRED = "Account has expired. Contact HR.";
+        public static final String ACCOUNT_LOCKED = "Account is locked. Please contact HR.";
+        public static final String ACCOUNT_DISABLED = "Account is disabled. Please contact HR.";
+        public static final String ACCOUNT_EXPIRED = "Account has expired. Please contact HR.";
 
         public static final String LOGIN_FAILED = "Login failed";
         public static final String REGISTRATION_FAILED = "Registration failed";
