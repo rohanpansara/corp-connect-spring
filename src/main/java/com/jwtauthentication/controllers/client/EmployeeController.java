@@ -38,6 +38,7 @@ public class EmployeeController {
     }
 
     @GetMapping("/current-user")
+    @PreAuthorize("hasAuthority('admin:read')")
     public ResponseEntity<ResponseDTO<UserDTO>> fetchCurrentUser(){
         return ResponseEntity.ok(ResponseDTO.success(EssConstants.UserSuccess.USER_FOUND, userService.getDTO(EssUserContext.getCurrentUser())));
     }

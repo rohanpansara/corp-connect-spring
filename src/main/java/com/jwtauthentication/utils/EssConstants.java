@@ -34,6 +34,7 @@ public class EssConstants {
         public static final String CONFIRM_PASSWORD_DID_NOT_MATCH = "Password and Confirm Password doesn't match";
         public static final String EMAIL_EXISTS = "Email already exists";
 
+        public static final String NOT_LOGGED_IN = "You need to login first";
         public static final String AUTHORIZATION_FAILED = "Authorization failed";
         public static final String INVALID_CREDENTIALS = "Invalid credentials";
         public static final String ACCOUNT_LOCKED = "Account is locked. Please contact HR.";

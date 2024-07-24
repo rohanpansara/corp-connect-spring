@@ -1,6 +1,9 @@
 package com.jwtauthentication.security.filters;
 
+import com.jwtauthentication.entities.client.User;
+import com.jwtauthentication.security.EssUserContext;
 import com.jwtauthentication.security.services.JwtService;
+import com.jwtauthentication.utils.EssConstants;
 import jakarta.servlet.FilterChain;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;
@@ -34,37 +37,44 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
                                     @NonNull HttpServletResponse response,
                                     @NonNull FilterChain filterChain) throws ServletException, IOException {
 
-        // Check if the request is for a public URL
-        String servletPath = request.getServletPath();
-        for (String url : PUBLIC_URLS) {
-            if (servletPath.equals(url)) {
+        try {
+            // Check if the request is for a public URL
+            String servletPath = request.getServletPath();
+            for (String url : PUBLIC_URLS) {
+                if (servletPath.equals(url)) {
+                    filterChain.doFilter(request, response);
+                    return;
+                }
+            }
+
+            final String authHeader = request.getHeader("Authorization");
+            final String jwt;
+            final String userEmail;
+            if (authHeader == null || !authHeader.startsWith("Bearer ")) {
                 filterChain.doFilter(request, response);
                 return;
             }
-        }
+            jwt = authHeader.substring(7);
+            userEmail = jwtService.extractEmail(jwt);
+            if (userEmail != null && SecurityContextHolder.getContext().getAuthentication() == null) {
+                UserDetails userDetails = this.userDetailsService.loadUserByUsername(userEmail);
 
-        final String authHeader = request.getHeader("Authorization");
-        final String jwt;
-        final String userEmail;
-        if (authHeader == null || !authHeader.startsWith("Bearer ")) {
-            filterChain.doFilter(request, response);
-            return;
-        }
-        jwt = authHeader.substring(7);
-        userEmail = jwtService.extractEmail(jwt);
-        if (userEmail != null && SecurityContextHolder.getContext().getAuthentication() == null) {
-            UserDetails userDetails = this.userDetailsService.loadUserByUsername(userEmail);
-
-            if (jwtService.isTokenValid(jwt, userDetails)) {
-                UsernamePasswordAuthenticationToken authToken = new UsernamePasswordAuthenticationToken(
-                        userDetails,
-                        null,
-                        userDetails.getAuthorities()
-                );
-                authToken.setDetails(new WebAuthenticationDetailsSource().buildDetails(request));
-                SecurityContextHolder.getContext().setAuthentication(authToken);
+                if (jwtService.isTokenValid(jwt, userDetails)) {
+                    UsernamePasswordAuthenticationToken authToken = new UsernamePasswordAuthenticationToken(
+                            userDetails,
+                            null,
+                            userDetails.getAuthorities()
+                    );
+                    authToken.setDetails(new WebAuthenticationDetailsSource().buildDetails(request));
+                    SecurityContextHolder.getContext().setAuthentication(authToken);
+                    EssUserContext.setCurrentUser((User) userDetails);
+                }
             }
+            filterChain.doFilter(request, response);
+        } catch (Exception e){
+            throw new RuntimeException(EssConstants.UserError.AUTHORIZATION_FAILED);
+        } finally {
+            EssUserContext.clear();
         }
-        filterChain.doFilter(request, response);
     }
 }

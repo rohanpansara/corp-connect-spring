@@ -3,16 +3,22 @@ package com.jwtauthentication.services;
 import com.jwtauthentication.dtos.client.UserDTO;
 import com.jwtauthentication.entities.client.User;
 import com.jwtauthentication.exceptions.client.UserNotFoundException;
+import com.jwtauthentication.exceptions.common.BaseException;
 import com.jwtauthentication.mappers.client.UserMapper;
 import com.jwtauthentication.repositories.client.UserRepository;
+import com.jwtauthentication.security.EssUserContext;
 import com.jwtauthentication.security.dtos.RegisterDTO;
 import com.jwtauthentication.utils.EssConstants;
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
 import lombok.Setter;
+import org.apache.coyote.BadRequestException;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalDateTime;
 import java.util.List;
+import java.util.Objects;
 import java.util.Optional;
 
 @Getter
@@ -22,8 +28,9 @@ import java.util.Optional;
 public class UserService {
     private final UserMapper userMapper;
     private final UserRepository userRepository;
+    private final PasswordEncoder passwordEncoder;
 
-    public User getUserFromRegisterDTO(RegisterDTO registerDTO) {
+    public User getUserFromRegisterDTO(RegisterDTO registerDTO) throws BaseException {
         return userMapper.toEntityFromRegisterDTO(registerDTO);
     }
 
@@ -43,6 +50,21 @@ public class UserService {
         return userMapper.toDTOList(userList);
     }
 
+    public User finalSave(User user){
+        user.setPassword(passwordEncoder.encode(user.getPassword()));
+        user.setCreatedDate(LocalDateTime.now());
+        user.setLastUpdatedDate(LocalDateTime.now());
+        user.setAccountNonExpired(true);
+        user.setCredentialsNonExpired(true);
+        if (Objects.isNull(EssUserContext.getCurrentUser())) {
+            throw new RuntimeException(EssConstants.UserError.NOT_LOGGED_IN);
+        } else {
+            user.setCreatedBy(String.valueOf(EssUserContext.getCurrentUser().getId()));
+            user.setLastUpdatedBy(String.valueOf(EssUserContext.getCurrentUser().getId()));
+        }
+        return userRepository.save(user);
+    }
+
     public Optional<User> getUserByEmail(String email){
         return userRepository.findByEmail(email);
     }
@@ -57,18 +79,27 @@ public class UserService {
 
     public User enableUserAccount(Long userId){
         User user = userRepository.findById(userId).orElseThrow();
+        if(user.isAccountEnabled()){
+            return user;
+        }
         user.setAccountEnabled(true);
         return userRepository.save(user);
     }
 
     public User unlockUserAccount(Long userId){
         User user = userRepository.findById(userId).orElseThrow();
+        if(user.isAccountNonLocked()){
+            return user;
+        }
         user.setAccountNonLocked(true);
         return userRepository.save(user);
     }
 
     public User disableUserAccount(Long userId){
         User user = userRepository.findById(userId).orElseThrow();
+        if(!user.isAccountEnabled()){
+            return user;
+        }
         user.setAccountEnabled(false);
         return userRepository.save(user);
     }

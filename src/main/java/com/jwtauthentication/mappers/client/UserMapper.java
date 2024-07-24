@@ -3,23 +3,31 @@ package com.jwtauthentication.mappers.client;
 import com.jwtauthentication.dtos.client.UserDTO;
 import com.jwtauthentication.entities.client.User;
 import com.jwtauthentication.exceptions.client.LoginFailed;
+import com.jwtauthentication.exceptions.common.BaseException;
 import com.jwtauthentication.security.dtos.RegisterDTO;
 import com.jwtauthentication.services.UserService;
 import com.jwtauthentication.utils.EssConstants;
+import lombok.RequiredArgsConstructor;
 import org.apache.commons.lang3.ObjectUtils;
-import org.mapstruct.*;
+import org.mapstruct.BeforeMapping;
+import org.mapstruct.Mapper;
+import org.mapstruct.Mapping;
+import org.mapstruct.MappingTarget;
+import org.mapstruct.Named;
+import org.mapstruct.ReportingPolicy;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Lazy;
 
 import java.util.List;
 import java.util.Optional;
 
+@RequiredArgsConstructor
 @Mapper(unmappedTargetPolicy = ReportingPolicy.IGNORE, componentModel = "spring")
 public abstract class UserMapper {
 
     @Autowired
     @Lazy
-    private UserService userService;
+    private final UserService userService;
 
     @Named("toDTO")
     public abstract UserDTO toDTO(User user);
@@ -43,14 +51,13 @@ public abstract class UserMapper {
     public abstract List<UserDTO> toDTOList(List<User> userList);
 
     @BeforeMapping
-    protected void validatePassword(RegisterDTO registerDTO, @MappingTarget User user) throws LoginFailed {
-
+    protected void validatePassword(RegisterDTO registerDTO, @MappingTarget User user) throws BaseException {
         if (!isEmailExists(registerDTO.getEmail())) {
             throw new LoginFailed(EssConstants.UserError.EMAIL_EXISTS);
         }
 
         if (!registerDTO.getPassword().equals(registerDTO.getConfirmPassword())) {
-            throw new RuntimeException(EssConstants.UserError.CONFIRM_PASSWORD_DID_NOT_MATCH);
+            throw new BaseException(EssConstants.UserError.CONFIRM_PASSWORD_DID_NOT_MATCH);
         }
     }
 

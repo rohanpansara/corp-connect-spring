@@ -13,4 +13,5 @@ public class RegisterDTO {
     private String password;
     private String confirmPassword;
     private String roles;
+    private String registerModule;
 }

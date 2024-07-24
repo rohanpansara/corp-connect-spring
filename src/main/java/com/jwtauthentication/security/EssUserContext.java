@@ -14,8 +14,11 @@ public class EssUserContext {
         return EssUserContext.loggedUser.get();
     }
 
-    public static synchronized void setCurrentUser(User loggedUser) {
+    public static synchronized void setCurrentUser(User user) {
+        EssUserContext.loggedUser.set(user);
+    }
+
+    public static void clear() {
         EssUserContext.loggedUser.remove();
-        EssUserContext.loggedUser.set(loggedUser);
     }
 }
