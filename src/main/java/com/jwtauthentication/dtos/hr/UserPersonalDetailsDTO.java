@@ -12,6 +12,7 @@ import org.hibernate.validator.constraints.Length;
 @EqualsAndHashCode(callSuper = true)
 @Data
 @RequiredArgsConstructor
+@JsonInclude(JsonInclude.Include.NON_NULL)
 public class UserPersonalDetailsDTO extends BaseDTO {
 
     @NotBlank(message = "Address must not be blank")

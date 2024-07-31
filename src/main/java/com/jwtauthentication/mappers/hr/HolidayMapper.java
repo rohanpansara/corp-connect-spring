@@ -4,13 +4,26 @@ import com.jwtauthentication.dtos.hr.HolidayDTO;
 import com.jwtauthentication.entities.hr.Holiday;
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
+import org.mapstruct.ReportingPolicy;
 
-@Mapper(componentModel = "spring")
+import java.util.List;
+
+@Mapper(unmappedTargetPolicy = ReportingPolicy.IGNORE, componentModel = "spring")
 public abstract class HolidayMapper {
 
-    @Mapping(source = "holiday", target = "name")
+    @Mapping(target = "id", ignore = true)
+    @Mapping(target = "lastUpdatedDate", ignore = true)
+    @Mapping(target = "lastUpdatedBy", ignore = true)
+    @Mapping(target = "createdDate", ignore = true)
+    @Mapping(target = "createdBy", ignore = true)
     public abstract Holiday toEntity(HolidayDTO holidayDTO);
 
-    @Mapping(source = "name", target = "holiday")
+    @Mapping(target = "lastUpdatedDate", ignore = true)
+    @Mapping(target = "lastUpdatedBy", ignore = true)
+    @Mapping(target = "createdDate", ignore = true)
+    @Mapping(target = "createdBy", ignore = true)
     public abstract HolidayDTO toDTO(Holiday holiday);
+
+    public abstract List<Holiday> toEntityList(List<HolidayDTO> holidayDTOList);
+    public abstract List<HolidayDTO> toDTOList(List<Holiday> holidayList);
 }

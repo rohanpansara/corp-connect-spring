@@ -7,7 +7,6 @@ import com.jwtauthentication.exceptions.common.BaseException;
 import com.jwtauthentication.security.dtos.RegisterDTO;
 import com.jwtauthentication.services.UserService;
 import com.jwtauthentication.utils.EssConstants;
-import lombok.RequiredArgsConstructor;
 import org.apache.commons.lang3.ObjectUtils;
 import org.mapstruct.BeforeMapping;
 import org.mapstruct.Mapper;
@@ -21,13 +20,12 @@ import org.springframework.context.annotation.Lazy;
 import java.util.List;
 import java.util.Optional;
 
-@RequiredArgsConstructor
 @Mapper(unmappedTargetPolicy = ReportingPolicy.IGNORE, componentModel = "spring")
 public abstract class UserMapper {
 
     @Autowired
     @Lazy
-    private final UserService userService;
+    private UserService userService;
 
     @Named("toDTO")
     public abstract UserDTO toDTO(User user);

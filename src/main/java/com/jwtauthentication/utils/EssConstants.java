@@ -56,5 +56,16 @@ public class EssConstants {
         public static final String PASSWORD_RESET_EMAIL_SENT = "Password reset link sent to email";
     }
 
+    public static final class Holiday{
+        public static final String HOLIDAY_CREATED = "Holiday created successfully";
+        public static final String HOLIDAY_NOT_CREATED = "Couldn't create holiday";
+    }
+
+    public static final class HrAccessControl{
+        public static final String USER_UNLOCKED = "User was unlocked successfully";
+        public static final String USER_ENABLED = "User was enabled successfully";
+        public static final String USER_LOCKED = "User was locked successfully";
+    }
+
 }
 

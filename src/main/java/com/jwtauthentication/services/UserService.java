@@ -9,6 +9,7 @@ import com.jwtauthentication.repositories.client.UserRepository;
 import com.jwtauthentication.security.EssUserContext;
 import com.jwtauthentication.security.dtos.RegisterDTO;
 import com.jwtauthentication.utils.EssConstants;
+import jakarta.transaction.Transactional;
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
 import lombok.Setter;
@@ -57,7 +58,9 @@ public class UserService {
         user.setAccountNonExpired(true);
         user.setCredentialsNonExpired(true);
         if (Objects.isNull(EssUserContext.getCurrentUser())) {
-            throw new RuntimeException(EssConstants.UserError.NOT_LOGGED_IN);
+            user.setCreatedBy(String.valueOf(1));
+            user.setLastUpdatedBy(String.valueOf(1));
+//            throw new RuntimeException(EssConstants.UserError.NOT_LOGGED_IN);
         } else {
             user.setCreatedBy(String.valueOf(EssUserContext.getCurrentUser().getId()));
             user.setLastUpdatedBy(String.valueOf(EssUserContext.getCurrentUser().getId()));
@@ -86,13 +89,14 @@ public class UserService {
         return userRepository.save(user);
     }
 
-    public User unlockUserAccount(Long userId){
+    @Transactional
+    public void unlockUserAccount(Long userId){
         User user = userRepository.findById(userId).orElseThrow();
         if(user.isAccountNonLocked()){
-            return user;
+            return;
         }
         user.setAccountNonLocked(true);
-        return userRepository.save(user);
+        userRepository.saveAndFlush(user);
     }
 
     public User disableUserAccount(Long userId){

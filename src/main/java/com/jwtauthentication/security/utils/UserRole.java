@@ -14,23 +14,55 @@ import static com.jwtauthentication.security.utils.UserPermission.*;
 @RequiredArgsConstructor
 public enum UserRole {
 
+    // For reference, PMS = Project Management Service
 
     ADMIN(Set.of(
-            ADMIN_READ,
+            ADMIN_READ,             // Admin rights
             ADMIN_UPDATE,
             ADMIN_DELETE,
             ADMIN_CREATE,
-            MANAGER_READ,
-            MANAGER_UPDATE,
-            MANAGER_DELETE,
-            MANAGER_CREATE
+
+            PMS_MANAGER_READ,           // PMS Manager rights
+            PMS_MANAGER_UPDATE,
+            PMS_MANAGER_DELETE,
+            PMS_MANAGER_CREATE,
+
+            HR_ADMIN_READ,          // HR Admin rights
+            HR_ADMIN_UPDATE,
+            HR_ADMIN_DELETE,
+            HR_ADMIN_CREATE,
+
+            HR_MANAGER_READ,        // HR Manager rights
+            HR_MANAGER_UPDATE,
+            HR_MANAGER_DELETE,
+            HR_MANAGER_CREATE
     )),
-    MANAGER(Set.of(
-            MANAGER_READ,
-            MANAGER_UPDATE,
-            MANAGER_DELETE,
-            MANAGER_CREATE
+
+    PMS_MANAGER(Set.of(
+            PMS_MANAGER_READ,
+            PMS_MANAGER_UPDATE,
+            PMS_MANAGER_DELETE,
+            PMS_MANAGER_CREATE
     )),
+
+    HR_ADMIN(Set.of(
+            HR_ADMIN_READ,
+            HR_ADMIN_UPDATE,
+            HR_ADMIN_DELETE,
+            HR_ADMIN_CREATE,
+            HR_MANAGER_READ,
+            HR_MANAGER_UPDATE,
+            HR_MANAGER_DELETE,
+            HR_MANAGER_CREATE
+    )),
+
+    HR_MANAGER(Set.of(
+            HR_MANAGER_READ,
+            HR_MANAGER_UPDATE,
+            HR_MANAGER_DELETE,
+            HR_MANAGER_CREATE
+    )),
+
     USER(Set.of(
             USER_READ,
             USER_UPDATE,

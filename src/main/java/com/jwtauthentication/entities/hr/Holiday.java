@@ -30,6 +30,6 @@ public class Holiday extends NamedEntity {
     private HolidayType type;
 
     @Column(nullable = false)
-    private boolean isRecurring;
+    private boolean isRecurring = false;
 }
 

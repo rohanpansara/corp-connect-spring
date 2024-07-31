@@ -1,30 +1,29 @@
 package com.jwtauthentication.entities.client;
 
 import com.jwtauthentication.entities.common.NamedEntity;
+import com.jwtauthentication.entities.hr.UserPersonalDetail;
 import com.jwtauthentication.security.utils.UserRole;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.EnumType;
 import jakarta.persistence.Enumerated;
+import jakarta.persistence.FetchType;
 import jakarta.persistence.Index;
+import jakarta.persistence.OneToOne;
 import jakarta.persistence.Table;
-import jakarta.persistence.Transient;
-import jakarta.transaction.Transactional;
 import lombok.AllArgsConstructor;
 import lombok.Data;
-import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
 import java.util.Collection;
 
-@EqualsAndHashCode(callSuper = true)
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
 @Entity
-@Table(name = "Users", indexes = @Index(name = "IDX_NAME", columnList = "name"))
+@Table(name = "users", indexes = @Index(name = "IDX_NAME", columnList = "name"))
 public class User extends NamedEntity implements UserDetails {
 
     @Column(name="email", nullable = false, unique = true)
@@ -51,6 +50,13 @@ public class User extends NamedEntity implements UserDetails {
 
     @Column(name = "is_account_enabled")
     private boolean isAccountEnabled;
+
+    private UserPersonalDetail userPersonalDetail;
+
+    @OneToOne(mappedBy = "user_id", fetch = FetchType.LAZY)
+    public UserPersonalDetail getUserPersonalDetail(){
+        return userPersonalDetail;
+    }
 
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {

@@ -1,5 +1,6 @@
 package com.jwtauthentication.controllers.client.user;
 
+import com.jwtauthentication.dtos.client.UserDTO;
 import com.jwtauthentication.dtos.common.ResponseDTO;
 import com.jwtauthentication.exceptions.client.LoginFailed;
 import com.jwtauthentication.exceptions.common.BaseException;
@@ -24,8 +25,8 @@ public class UserController {
     private final UserService userService;
 
     @PostMapping("/register")
-    public ResponseEntity<ResponseDTO<AuthResponseDTO>> register(@RequestBody RegisterDTO registerDTO) throws LoginFailed {
-        AuthResponseDTO response = authenticationService.addUser(registerDTO);
+    public ResponseEntity<ResponseDTO<UserDTO>> register(@RequestBody RegisterDTO registerDTO) throws LoginFailed {
+        UserDTO response = authenticationService.addUser(registerDTO);
         return ResponseEntity.ok(ResponseDTO.success(EssConstants.UserSuccess.REGISTRATION_SUCCESS, response));
     }
 

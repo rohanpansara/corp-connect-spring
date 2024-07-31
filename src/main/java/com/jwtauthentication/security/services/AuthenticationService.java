@@ -1,5 +1,6 @@
 package com.jwtauthentication.security.services;
 
+import com.jwtauthentication.dtos.client.UserDTO;
 import com.jwtauthentication.entities.client.User;
 import com.jwtauthentication.exceptions.client.LoginFailed;
 import com.jwtauthentication.exceptions.client.RegistrationFailed;
@@ -23,16 +24,11 @@ public class AuthenticationService {
     private final JwtService jwtService;
     private final AuthenticationManager authenticationManager;
 
-    public AuthResponseDTO addUser(RegisterDTO registerDTO) {
-
+    public UserDTO addUser(RegisterDTO registerDTO) {
         try {
             var user = userService.getUserFromRegisterDTO(registerDTO);
             var savedUser = userService.finalSave(user);
-            var jwtToken = jwtService.generateTokenForUser(user, savedUser.getEmail(), "HR");
-            return AuthResponseDTO.builder()
-                    .accessToken(jwtToken)
-                    .user(userService.getDTO(user))
-                    .build();
+            return userService.getDTO(savedUser);
         } catch (RegistrationFailed e) {
             throw new RegistrationFailed(EssConstants.UserError.EMAIL_EXISTS);
         } catch (BaseException e) {
@@ -73,8 +69,6 @@ public class AuthenticationService {
 
         var jwtToken = jwtService.generateTokenForUser(user, user.getEmail(), moduleType);
         var refreshToken = jwtService.generateRefreshTokenForUser(user, user.getEmail(), moduleType);
-
-//        EssUserContext.setCurrentUser(user);
 
         return AuthResponseDTO.builder()
                 .accessToken(jwtToken)

@@ -16,19 +16,24 @@ public class ResponseDTO<T> {
     private String message;     // Message providing details about the response
     private T data;             // The actual data to be returned (can be any type)
 
+    public ResponseDTO(String status, String message) {
+        this.status = status;
+        this.message = message;
+    }
 
     public static <T> ResponseDTO<T> success(String message, T data) {
         return new ResponseDTO<>("success", message, data);
     }
 
+    public static <T> ResponseDTO<T> success(String message) {
+        return new ResponseDTO<>("success", message, null);
+    }
 
     public static <T> ResponseDTO<T> error(String message, String errorCode) {
         return new ResponseDTO<>("error", message, null);
     }
 
-
     public static <T> ResponseDTO<T> of(String status, String message, T data) {
         return new ResponseDTO<>(status, message, data);
     }
 }
-

@@ -12,10 +12,10 @@ import java.util.Optional;
 
 
 @NonNullApi
-public class ApplicationAuditAware implements AuditorAware<Long> {
+public class ApplicationAuditAware implements AuditorAware<String> {
 
     @Override
-    public Optional<Long> getCurrentAuditor() {
+    public Optional<String> getCurrentAuditor() {
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
         if (authentication == null ||
                 !authentication.isAuthenticated() ||
@@ -25,6 +25,6 @@ public class ApplicationAuditAware implements AuditorAware<Long> {
         }
 
         User userPrincipal = (User) authentication.getPrincipal();
-        return Optional.ofNullable(userPrincipal.getId());
+        return Optional.ofNullable(String.valueOf(userPrincipal.getId()));
     }
 }

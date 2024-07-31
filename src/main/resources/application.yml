@@ -14,14 +14,8 @@ spring:
     driver-class-name: com.mysql.cj.jdbc.Driver
     url: jdbc:mysql://localhost:3306/ess
     username: root
-    password: r@@T0000        # Office
-#    password: root           # Home
-
-springdoc:
- api-docs:
-  path: /v3/api-docs
- swagger-ui:
-  path: /swagger-ui.html
+#    password: r@@T0000        # Office
+    password: root           # Home
 
   jpa:
     hibernate:
@@ -44,8 +38,8 @@ jwt:
     admin: 72000000     # 20 hours in milliseconds
 
 
-cloudinary:
-  api-key: 132918619484761
+#cloudinary:
+#  api-key: 132918619484761
 
 
 #  mail:
