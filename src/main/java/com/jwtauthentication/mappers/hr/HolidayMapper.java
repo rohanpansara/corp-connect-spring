@@ -2,9 +2,9 @@ package com.jwtauthentication.mappers.hr;
 
 import com.jwtauthentication.dtos.hr.HolidayDTO;
 import com.jwtauthentication.entities.hr.Holiday;
-import org.mapstruct.Mapper;
-import org.mapstruct.Mapping;
-import org.mapstruct.ReportingPolicy;
+import com.jwtauthentication.exceptions.common.BaseException;
+import com.jwtauthentication.utils.CustomDateTimeFormatter;
+import org.mapstruct.*;
 
 import java.util.List;
 
@@ -26,4 +26,11 @@ public abstract class HolidayMapper {
 
     public abstract List<Holiday> toEntityList(List<HolidayDTO> holidayDTOList);
     public abstract List<HolidayDTO> toDTOList(List<Holiday> holidayList);
+
+    @AfterMapping
+    protected void dateFormatting(Holiday holiday, @MappingTarget HolidayDTO holidayDTO) throws BaseException {
+        holidayDTO.setCreatedDate(CustomDateTimeFormatter.getLocalDateTimeString(holiday.getCreatedDate()));
+        holidayDTO.setLastUpdatedDate(CustomDateTimeFormatter.getLocalDateTimeString(holiday.getLastUpdatedDate()));
+        holidayDTO.setDate(CustomDateTimeFormatter.getLocalDateString(holiday.getDate()));
+    }
 }

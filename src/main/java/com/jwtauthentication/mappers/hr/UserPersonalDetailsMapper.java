@@ -3,8 +3,11 @@ package com.jwtauthentication.mappers.hr;
 import com.jwtauthentication.dtos.hr.UserPersonalDetailsDTO;
 import com.jwtauthentication.entities.hr.UserPersonalDetail;
 import com.jwtauthentication.mappers.client.UserMapper;
+import com.jwtauthentication.utils.CustomDateTimeFormatter;
+import org.mapstruct.AfterMapping;
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
+import org.mapstruct.MappingTarget;
 
 import java.util.List;
 
@@ -19,4 +22,10 @@ public abstract class UserPersonalDetailsMapper {
 
     public abstract List<UserPersonalDetailsDTO> toDTOList(List<UserPersonalDetail> userPersonalDetailList);
     public abstract List<UserPersonalDetail> toEntityList(List<UserPersonalDetailsDTO> userPersonalDetailsDTOList);
+
+    @AfterMapping
+    protected void dateFormatting(UserPersonalDetail userPersonalDetail, @MappingTarget UserPersonalDetailsDTO userPersonalDetailsDTO) {
+        userPersonalDetailsDTO.setCreatedDate(CustomDateTimeFormatter.getLocalDateTimeString(userPersonalDetail.getCreatedDate()));
+        userPersonalDetailsDTO.setLastUpdatedDate(CustomDateTimeFormatter.getLocalDateTimeString(userPersonalDetail.getLastUpdatedDate()));
+    }
 }

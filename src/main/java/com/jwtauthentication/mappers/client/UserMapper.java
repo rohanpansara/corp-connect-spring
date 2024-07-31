@@ -6,8 +6,10 @@ import com.jwtauthentication.exceptions.client.LoginFailed;
 import com.jwtauthentication.exceptions.common.BaseException;
 import com.jwtauthentication.security.dtos.RegisterDTO;
 import com.jwtauthentication.services.UserService;
+import com.jwtauthentication.utils.CustomDateTimeFormatter;
 import com.jwtauthentication.utils.EssConstants;
 import org.apache.commons.lang3.ObjectUtils;
+import org.mapstruct.AfterMapping;
 import org.mapstruct.BeforeMapping;
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
@@ -62,6 +64,12 @@ public abstract class UserMapper {
     private boolean isEmailExists(String email) {
         Optional<User> user = userService.getUserByEmail(email);
         return ObjectUtils.isEmpty(user);
+    }
+
+    @AfterMapping
+    protected void dateFormatting(User user, @MappingTarget UserDTO userDTO) {
+        userDTO.setCreatedDate(CustomDateTimeFormatter.getLocalDateTimeString(user.getCreatedDate()));
+        userDTO.setLastUpdatedDate(CustomDateTimeFormatter.getLocalDateTimeString(user.getLastUpdatedDate()));
     }
 
 }
