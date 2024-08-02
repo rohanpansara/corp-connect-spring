@@ -34,6 +34,8 @@ public class EssConstants {
         public static final String CONFIRM_PASSWORD_DID_NOT_MATCH = "Password and Confirm Password doesn't match";
         public static final String EMAIL_EXISTS = "Email already exists";
 
+        public static final String USER_ROLE_NOT_FOUND = "User Role not found";
+
         public static final String NOT_LOGGED_IN = "You need to login first";
         public static final String AUTHORIZATION_FAILED = "Authorization failed";
         public static final String INVALID_CREDENTIALS = "Invalid credentials";
@@ -58,13 +60,19 @@ public class EssConstants {
 
     public static final class Holiday{
         public static final String HOLIDAY_CREATED = "Holiday created successfully";
-        public static final String HOLIDAY_NOT_CREATED = "Couldn't create holiday";
+        public static final String HOLIDAY_FOR_THE_DATE_EXISTS = "Holiday for the given date already exists";
+        public static final String HOLIDAY_FOUND = "Holiday found successfully";
+        public static final String HOLIDAY_NOT_FOUND = "Holiday not found";
+        public static final String HOLIDAY_LIST_FOUND = "All holidays found successfully";
+        public static final String HOLIDAY_LIST_EMPTY = "No holidays found";
+        public static final String TYPE_NOT_FOUND = "No such holiday type found";
     }
 
     public static final class HrAccessControl{
-        public static final String USER_UNLOCKED = "User was unlocked successfully";
-        public static final String USER_ENABLED = "User was enabled successfully";
-        public static final String USER_LOCKED = "User was locked successfully";
+        public static final String USER_UNLOCKED = "User account was unlocked successfully";
+        public static final String USER_ENABLED = "User account was enabled successfully";
+        public static final String USER_LOCKED = "User account was locked successfully";
+        public static final String USER_DISABLED = "User account was disabled successfully";
     }
 
 }

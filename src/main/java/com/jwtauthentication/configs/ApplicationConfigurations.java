@@ -1,6 +1,5 @@
 package com.jwtauthentication.configs;
 
-import com.jwtauthentication.audits.ApplicationAuditAware;
 import com.jwtauthentication.repositories.client.UserRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Bean;
@@ -32,11 +31,6 @@ public class ApplicationConfigurations {
         authProvider.setUserDetailsService(userDetailsService());
         authProvider.setPasswordEncoder(passwordEncoder());
         return authProvider;
-    }
-
-    @Bean
-    public ApplicationAuditAware auditorAware() {
-        return new ApplicationAuditAware();
     }
 
     @Bean

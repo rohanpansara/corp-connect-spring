@@ -2,7 +2,7 @@ package com.jwtauthentication.mappers.client;
 
 import com.jwtauthentication.dtos.client.UserDTO;
 import com.jwtauthentication.entities.client.User;
-import com.jwtauthentication.exceptions.client.LoginFailed;
+import com.jwtauthentication.exceptions.client.LoginFailedException;
 import com.jwtauthentication.exceptions.common.BaseException;
 import com.jwtauthentication.security.dtos.RegisterDTO;
 import com.jwtauthentication.services.UserService;
@@ -53,7 +53,7 @@ public abstract class UserMapper {
     @BeforeMapping
     protected void validatePassword(RegisterDTO registerDTO, @MappingTarget User user) throws BaseException {
         if (!isEmailExists(registerDTO.getEmail())) {
-            throw new LoginFailed(EssConstants.UserError.EMAIL_EXISTS);
+            throw new LoginFailedException(EssConstants.UserError.EMAIL_EXISTS);
         }
 
         if (!registerDTO.getPassword().equals(registerDTO.getConfirmPassword())) {
@@ -67,7 +67,8 @@ public abstract class UserMapper {
     }
 
     @AfterMapping
-    protected void dateFormatting(User user, @MappingTarget UserDTO userDTO) {
+    protected void stringFormatting(User user, @MappingTarget UserDTO userDTO) {
+        userDTO.setRoles(user.getRoles().getLabel());
         userDTO.setCreatedDate(CustomDateTimeFormatter.getLocalDateTimeString(user.getCreatedDate()));
         userDTO.setLastUpdatedDate(CustomDateTimeFormatter.getLocalDateTimeString(user.getLastUpdatedDate()));
     }

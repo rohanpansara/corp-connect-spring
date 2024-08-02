@@ -15,6 +15,6 @@ public class AuthResponseDTO {
     private String accessToken;
     @JsonProperty("refresh_token")
     private String refreshToken;
-    @JsonProperty("user")
+    @JsonProperty("logged_user")
     private UserDTO user;
 }

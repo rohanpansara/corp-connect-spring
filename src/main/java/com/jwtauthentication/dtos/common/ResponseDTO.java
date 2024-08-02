@@ -12,9 +12,9 @@ import lombok.NoArgsConstructor;
 @JsonInclude(JsonInclude.Include.NON_NULL)
 public class ResponseDTO<T> {
 
-    private String status;      // Status of the response (e.g., "success", "error")
-    private String message;     // Message providing details about the response
-    private T data;             // The actual data to be returned (can be any type)
+    private String status;
+    private String message;
+    private T data;
 
     public ResponseDTO(String status, String message) {
         this.status = status;

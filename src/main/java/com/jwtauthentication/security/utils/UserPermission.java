@@ -3,6 +3,7 @@ package com.jwtauthentication.security.utils;
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
 
+@Getter
 @RequiredArgsConstructor
 public enum UserPermission {
 
@@ -32,6 +33,5 @@ public enum UserPermission {
     USER_CREATE("user:create"),
     USER_DELETE("user:delete");
 
-    @Getter
     private final String permission;
 }

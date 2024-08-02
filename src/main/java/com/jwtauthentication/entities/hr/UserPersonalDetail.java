@@ -4,6 +4,7 @@ import com.jwtauthentication.entities.client.User;
 import com.jwtauthentication.entities.common.BaseEntity;
 import com.jwtauthentication.enumerations.Gender;
 import jakarta.persistence.Entity;
+import jakarta.persistence.EntityListeners;
 import jakarta.persistence.FetchType;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
@@ -14,6 +15,7 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
+import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 
 @EqualsAndHashCode(callSuper = true)
 @Data
@@ -21,6 +23,7 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @Entity
 @Table(name = "UserPersonalDetails")
+@EntityListeners(AuditingEntityListener.class)
 public class UserPersonalDetail extends BaseEntity {
 
     @ManyToOne(fetch = FetchType.LAZY)

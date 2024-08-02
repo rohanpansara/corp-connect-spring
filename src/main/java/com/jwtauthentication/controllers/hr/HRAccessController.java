@@ -20,15 +20,29 @@ public class HRAccessController {
 
     @PutMapping("/unlock")
     @PreAuthorize("hasAuthority('hr_admin:update')")
-    public ResponseEntity<ResponseDTO<String>> unlockUserByUserId(@RequestParam("userId") Long userId){
+    public ResponseEntity<ResponseDTO<String>> unlockAccountByUserId(@RequestParam("userId") Long userId){
         userService.unlockUserAccount(userId);
         return ResponseEntity.ok(ResponseDTO.success(EssConstants.HrAccessControl.USER_UNLOCKED));
     }
 
     @PutMapping("/enable")
     @PreAuthorize("hasAuthority('hr_admin:update')")
-    public ResponseEntity<ResponseDTO<String>> enableUserByUserId(@RequestParam("userId") Long userId){
+    public ResponseEntity<ResponseDTO<String>> enableAccountByUserId(@RequestParam("userId") Long userId){
         userService.enableUserAccount(userId);
         return ResponseEntity.ok(ResponseDTO.success(EssConstants.HrAccessControl.USER_ENABLED));
+    }
+
+    @PutMapping("/lock")
+    @PreAuthorize("hasAuthority('hr_admin:update')")
+    public ResponseEntity<ResponseDTO<String>> lockAccountByUserId(@RequestParam("userId") Long userId){
+        userService.lockUserAccount(userId);
+        return ResponseEntity.ok(ResponseDTO.success(EssConstants.HrAccessControl.USER_LOCKED));
+    }
+
+    @PutMapping("/disable")
+    @PreAuthorize("hasAuthority('hr_admin:update')")
+    public ResponseEntity<ResponseDTO<String>> disableAccountByUserId(@RequestParam("userId") Long userId){
+        userService.disableUserAccount(userId);
+        return ResponseEntity.ok(ResponseDTO.success(EssConstants.HrAccessControl.USER_DISABLED));
     }
 }

@@ -12,5 +12,6 @@ import java.util.List;
 public interface HolidayRepository extends JpaRepository<Holiday, Long> {
     Holiday findByDate(LocalDate localDate);
     Holiday findByName(String name);
+    List<Holiday> findByNameContainingIgnoreCase(String name); // for searching filter
     List<Holiday> findByType(HolidayType holidayType);
 }

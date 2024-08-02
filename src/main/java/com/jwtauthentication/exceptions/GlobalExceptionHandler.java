@@ -1,7 +1,7 @@
 package com.jwtauthentication.exceptions;
 
 import com.jwtauthentication.dtos.common.ResponseDTO;
-import com.jwtauthentication.exceptions.client.LoginFailed;
+import com.jwtauthentication.exceptions.client.LoginFailedException;
 import com.jwtauthentication.exceptions.common.BaseException;
 import org.apache.coyote.BadRequestException;
 import org.springframework.http.HttpStatus;
@@ -13,9 +13,9 @@ import org.springframework.web.bind.annotation.ResponseStatus;
 @ControllerAdvice
 public class GlobalExceptionHandler {
 
-    @ExceptionHandler(LoginFailed.class)
+    @ExceptionHandler(LoginFailedException.class)
     @ResponseStatus(HttpStatus.CONFLICT)
-    public ResponseEntity<ResponseDTO<String>> handleEmailAlreadyExistsException(LoginFailed ex) {
+    public ResponseEntity<ResponseDTO<String>> handleEmailAlreadyExistsException(LoginFailedException ex) {
         return buildResponse(ex.getMessage(), ex.getErrorCode(), HttpStatus.CONFLICT);
     }
 

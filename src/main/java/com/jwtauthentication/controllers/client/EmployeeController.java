@@ -19,7 +19,7 @@ import java.util.List;
 
 @RestController
 @RequiredArgsConstructor
-@RequestMapping("/auth/employee")
+@RequestMapping("/employee")
 @PreAuthorize("hasRole('ADMIN')")
 public class EmployeeController {
 
@@ -35,11 +35,5 @@ public class EmployeeController {
     @PreAuthorize("hasAuthority('admin:read')")
     public ResponseEntity<ResponseDTO<UserDTO>> fetchUserByUserId(@PathVariable("userId") Long userId) throws BaseException {
         return ResponseEntity.ok(ResponseDTO.success(EssConstants.UserSuccess.USER_FOUND, userService.getDTO(userService.getUserByUserId(userId))));
-    }
-
-    @GetMapping("/current-user")
-    @PreAuthorize("hasAuthority('admin:read')")
-    public ResponseEntity<ResponseDTO<UserDTO>> fetchCurrentUser(){
-        return ResponseEntity.ok(ResponseDTO.success(EssConstants.UserSuccess.USER_FOUND, userService.getDTO(EssUserContext.getCurrentUser())));
     }
 }

@@ -2,7 +2,7 @@ package com.jwtauthentication.controllers.client.user;
 
 import com.jwtauthentication.dtos.client.UserDTO;
 import com.jwtauthentication.dtos.common.ResponseDTO;
-import com.jwtauthentication.exceptions.client.LoginFailed;
+import com.jwtauthentication.exceptions.client.LoginFailedException;
 import com.jwtauthentication.exceptions.common.BaseException;
 import com.jwtauthentication.security.dtos.AuthRequestDTO;
 import com.jwtauthentication.security.dtos.AuthResponseDTO;
@@ -12,6 +12,7 @@ import com.jwtauthentication.services.UserService;
 import com.jwtauthentication.utils.EssConstants;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -25,7 +26,8 @@ public class UserController {
     private final UserService userService;
 
     @PostMapping("/register")
-    public ResponseEntity<ResponseDTO<UserDTO>> register(@RequestBody RegisterDTO registerDTO) throws LoginFailed {
+    @PreAuthorize("hasAuthority('pms_manager:create')")
+    public ResponseEntity<ResponseDTO<UserDTO>> register(@RequestBody RegisterDTO registerDTO) throws LoginFailedException {
         UserDTO response = authenticationService.addUser(registerDTO);
         return ResponseEntity.ok(ResponseDTO.success(EssConstants.UserSuccess.REGISTRATION_SUCCESS, response));
     }
