@@ -7,6 +7,7 @@ import com.jwtauthentication.utils.EssConstants;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -18,6 +19,7 @@ import org.springframework.web.bind.annotation.RestController;
 import java.util.List;
 
 @RestController
+@CrossOrigin(origins = "http://localhost:3000")
 @RequiredArgsConstructor
 @RequestMapping("/hr/holiday")
 @PreAuthorize("hasRole('HR_ADMIN')")
@@ -26,7 +28,7 @@ public class HolidayController {
     private final HolidayService holidayService;
 
     @PostMapping
-    @PreAuthorize("hasAuthority('admin:create')")
+    @PreAuthorize("hasAuthority('hr_admin:create')")
     public ResponseEntity<ResponseDTO<Void>> createHoliday(@RequestBody HolidayDTO holidayDTO){
         return ResponseEntity.ok(ResponseDTO.success(EssConstants.Holiday.HOLIDAY_CREATED));
     }

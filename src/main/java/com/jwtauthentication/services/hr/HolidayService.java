@@ -45,6 +45,10 @@ public class HolidayService {
         return holidayRepository.findAll();
     }
 
+    public List<Holiday> getAllHolidaysByMonthAndYear(Integer month, Integer year){
+        return holidayRepository.findByMonthAndYear(month, year);
+    }
+
     public void createHoliday(HolidayDTO holidayDTO) {
         holidayRepository.save(this.getEntity(holidayDTO));
     }

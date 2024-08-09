@@ -21,7 +21,7 @@ import java.time.LocalDate;
 @NoArgsConstructor
 @EqualsAndHashCode(callSuper = true)
 @Entity
-@Table(name = "Holidays")
+@Table(name = "HR_Holidays")
 @EntityListeners(AuditingEntityListener.class)
 public class Holiday extends NamedEntity {
 

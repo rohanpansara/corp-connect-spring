@@ -1,12 +1,10 @@
-package com.jwtauthentication.controllers.client;
+package com.jwtauthentication.controllers.client.user;
 
 import com.jwtauthentication.dtos.client.UserDTO;
 import com.jwtauthentication.dtos.common.ResponseDTO;
 import com.jwtauthentication.exceptions.common.BaseException;
-import com.jwtauthentication.security.EssUserContext;
-import com.jwtauthentication.services.UserService;
+import com.jwtauthentication.services.client.UserService;
 import com.jwtauthentication.utils.EssConstants;
-import io.swagger.v3.oas.annotations.Operation;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
@@ -19,8 +17,8 @@ import java.util.List;
 
 @RestController
 @RequiredArgsConstructor
-@RequestMapping("/employee")
 @PreAuthorize("hasRole('ADMIN')")
+@RequestMapping("/employee")
 public class EmployeeController {
 
     private final UserService userService;

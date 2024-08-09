@@ -1,4 +1,4 @@
-package com.jwtauthentication.entities.hr;
+package com.jwtauthentication.entities.hr.user;
 
 import com.jwtauthentication.entities.client.User;
 import com.jwtauthentication.entities.common.BaseEntity;
@@ -22,7 +22,7 @@ import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 @AllArgsConstructor
 @NoArgsConstructor
 @Entity
-@Table(name = "UserPersonalDetails")
+@Table(name = "HR_UserPersonalDetails")
 @EntityListeners(AuditingEntityListener.class)
 public class UserPersonalDetail extends BaseEntity {
 

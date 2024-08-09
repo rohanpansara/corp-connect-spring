@@ -10,7 +10,7 @@ import com.jwtauthentication.security.EssUserContext;
 import com.jwtauthentication.security.dtos.AuthRequestDTO;
 import com.jwtauthentication.security.dtos.AuthResponseDTO;
 import com.jwtauthentication.security.dtos.RegisterDTO;
-import com.jwtauthentication.services.UserService;
+import com.jwtauthentication.services.client.UserService;
 import com.jwtauthentication.utils.EssConstants;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;

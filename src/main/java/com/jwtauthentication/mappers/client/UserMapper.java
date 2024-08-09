@@ -5,7 +5,7 @@ import com.jwtauthentication.entities.client.User;
 import com.jwtauthentication.exceptions.client.LoginFailedException;
 import com.jwtauthentication.exceptions.common.BaseException;
 import com.jwtauthentication.security.dtos.RegisterDTO;
-import com.jwtauthentication.services.UserService;
+import com.jwtauthentication.services.client.UserService;
 import com.jwtauthentication.utils.CustomDateTimeFormatter;
 import com.jwtauthentication.utils.EssConstants;
 import org.apache.commons.lang3.ObjectUtils;

@@ -1,7 +1,7 @@
 package com.jwtauthentication.mappers.hr;
 
 import com.jwtauthentication.dtos.hr.UserPersonalDetailsDTO;
-import com.jwtauthentication.entities.hr.UserPersonalDetail;
+import com.jwtauthentication.entities.hr.user.UserPersonalDetail;
 import com.jwtauthentication.mappers.client.UserMapper;
 import com.jwtauthentication.utils.CustomDateTimeFormatter;
 import org.mapstruct.AfterMapping;

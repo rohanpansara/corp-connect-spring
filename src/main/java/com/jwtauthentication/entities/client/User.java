@@ -1,7 +1,7 @@
 package com.jwtauthentication.entities.client;
 
 import com.jwtauthentication.entities.common.NamedEntity;
-import com.jwtauthentication.entities.hr.UserPersonalDetail;
+import com.jwtauthentication.entities.hr.user.UserPersonalDetail;
 import com.jwtauthentication.security.utils.UserRole;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
@@ -14,6 +14,7 @@ import jakarta.persistence.OneToOne;
 import jakarta.persistence.Table;
 import lombok.AllArgsConstructor;
 import lombok.Data;
+import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
 import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 import org.springframework.security.core.GrantedAuthority;
@@ -21,6 +22,7 @@ import org.springframework.security.core.userdetails.UserDetails;
 
 import java.util.Collection;
 
+@EqualsAndHashCode(callSuper = true)
 @Data
 @AllArgsConstructor
 @NoArgsConstructor

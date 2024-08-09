@@ -1,6 +1,12 @@
 package com.jwtauthentication.utils;
 
 public class EssConstants {
+
+    public static final class Record{
+        public static final String RECORD_FOUND = "Record found successfully";
+        public static final String RECORD_NOT_FOUND = "Record not found";
+    }
+
     public static final class UserSuccess {
         public static final String USER_FOUND = "User found successfully";
         public static final String USER_CREATED = "User created successfully";

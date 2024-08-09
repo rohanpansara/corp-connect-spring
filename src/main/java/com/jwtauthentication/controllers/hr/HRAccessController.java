@@ -1,7 +1,7 @@
 package com.jwtauthentication.controllers.hr;
 
 import com.jwtauthentication.dtos.common.ResponseDTO;
-import com.jwtauthentication.services.UserService;
+import com.jwtauthentication.services.client.UserService;
 import com.jwtauthentication.utils.EssConstants;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;

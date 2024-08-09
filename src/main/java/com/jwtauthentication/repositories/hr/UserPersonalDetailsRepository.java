@@ -1,6 +1,6 @@
 package com.jwtauthentication.repositories.hr;
 
-import com.jwtauthentication.entities.hr.UserPersonalDetail;
+import com.jwtauthentication.entities.hr.user.UserPersonalDetail;
 import com.jwtauthentication.enumerations.Gender;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
