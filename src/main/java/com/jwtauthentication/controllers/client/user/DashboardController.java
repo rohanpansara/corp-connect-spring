@@ -1,6 +1,6 @@
 package com.jwtauthentication.controllers.client.user;
 
-import com.jwtauthentication.dtos.client.dashboard.CardDTO;
+import com.jwtauthentication.dtos.client.card.DashboardCardDTO;
 import com.jwtauthentication.dtos.common.ResponseDTO;
 import com.jwtauthentication.services.client.UserService;
 import com.jwtauthentication.utils.EssConstants;
@@ -22,7 +22,7 @@ public class DashboardController {
 
     @GetMapping(value = "/cards")
     @PreAuthorize("hasAuthority('user:read')")
-    public ResponseEntity<ResponseDTO<Map<String, CardDTO>>> fetchDashboardCardData() {
+    public ResponseEntity<ResponseDTO<DashboardCardDTO>> fetchDashboardCardData() {
         return ResponseEntity.ok(ResponseDTO.success(EssConstants.Record.RECORD_FOUND, userService.getDashboardCards()));
     }
 

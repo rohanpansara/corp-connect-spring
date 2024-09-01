@@ -2,7 +2,8 @@ package com.jwtauthentication.services.impl;
 
 import com.jwtauthentication.audits.ApplicationAuditAware;
 import com.jwtauthentication.dtos.client.UserDTO;
-import com.jwtauthentication.dtos.client.dashboard.CardDTO;
+import com.jwtauthentication.dtos.client.card.CardDataDTO;
+import com.jwtauthentication.dtos.client.card.DashboardCardDTO;
 import com.jwtauthentication.entities.client.User;
 import com.jwtauthentication.exceptions.client.UserNotFoundException;
 import com.jwtauthentication.exceptions.common.BaseException;
@@ -13,24 +14,27 @@ import com.jwtauthentication.services.client.UserService;
 import com.jwtauthentication.services.hr.HolidayService;
 import com.jwtauthentication.utils.EssConstants;
 import jakarta.transaction.Transactional;
-import lombok.RequiredArgsConstructor;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
-import java.time.LocalDate;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 import java.util.Optional;
 
 @Service
-@RequiredArgsConstructor
 public class UserServiceImpl implements UserService {
     private final PasswordEncoder passwordEncoder;
     private final ApplicationAuditAware applicationAuditAware;
     private final UserMapper userMapper;
     private final UserRepository userRepository;
     private final HolidayService holidayService;
+
+    public UserServiceImpl(PasswordEncoder passwordEncoder, ApplicationAuditAware applicationAuditAware, UserMapper userMapper, UserRepository userRepository, HolidayService holidayService) {
+        this.passwordEncoder = passwordEncoder;
+        this.applicationAuditAware = applicationAuditAware;
+        this.userMapper = userMapper;
+        this.userRepository = userRepository;
+        this.holidayService = holidayService;
+    }
 
     @Override
     public User getUserFromRegisterDTO(RegisterDTO registerDTO) throws BaseException {
@@ -141,24 +145,28 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public Map<String, CardDTO> getDashboardCards() {
-        Map<String, CardDTO> cardDTOMap = new HashMap<>(3);
-        CardDTO holidayCard = new CardDTO(
-                "Yearly", String.valueOf(holidayService.getAllHolidays().size()),
-                "Monthly", String.valueOf(holidayService.getAllHolidaysByMonthAndYear(LocalDate.now().getMonthValue(), LocalDate.now().getYear()).size())
-        );
-        cardDTOMap.put("holiday", holidayCard);
-
-        CardDTO shiftCard = new CardDTO(
-                "Type", "GS",
-                "Duration", "7:30"
-        );
-
-        CardDTO leaveCard = new CardDTO(
-                "Yearly", 3 +"/"+ 18,
-                "Monthly", 2 +"/"+ 1.5
-        );
-        cardDTOMap.put("leave", leaveCard);
-        return cardDTOMap;
+    public DashboardCardDTO getDashboardCards() {
+        DashboardCardDTO dashboardCard = new DashboardCardDTO();
+        dashboardCard.setDailyHoursCard(new CardDataDTO(
+                "Time Worked Today",
+                "4h 45m",
+                "24 hours logged this week"
+        ));
+        dashboardCard.setShiftDetailsCard(new CardDataDTO(
+                "Shift Details",
+                "7h 30m",
+                "General Shift | 8AM to 10PM"
+        ));
+        dashboardCard.setLeaveDetailsCard(new CardDataDTO(
+                "Leaves Available",
+                "12",
+                "3 leaves taken last month"
+        ));
+        dashboardCard.setUpcomingMeetingCard(new CardDataDTO(
+                "Upcoming Meeting",
+                "Daily Scrum @ 3PM",
+                "Place: Conference room"
+        ));
+        return dashboardCard;
     }
 }

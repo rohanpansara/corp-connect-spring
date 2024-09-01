@@ -1,4 +1,4 @@
-package com.jwtauthentication.dtos.client.dashboard;
+package com.jwtauthentication.dtos.client.card;
 
 import com.fasterxml.jackson.annotation.JsonInclude;
 import lombok.AllArgsConstructor;
@@ -9,9 +9,8 @@ import lombok.RequiredArgsConstructor;
 @RequiredArgsConstructor
 @AllArgsConstructor
 @JsonInclude(JsonInclude.Include.NON_NULL)
-public class CardDTO {
-    private String titleOne;
-    private String contentOne;
-    private String titleTwo;
-    private String contentTwo;
+public class CardDataDTO {
+    private String title;
+    private String value;
+    private String description;
 }

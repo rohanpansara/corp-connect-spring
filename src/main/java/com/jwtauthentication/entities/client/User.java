@@ -1,16 +1,13 @@
 package com.jwtauthentication.entities.client;
 
 import com.jwtauthentication.entities.common.NamedEntity;
-import com.jwtauthentication.entities.hr.user.UserPersonalDetail;
 import com.jwtauthentication.security.utils.UserRole;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.EntityListeners;
 import jakarta.persistence.EnumType;
 import jakarta.persistence.Enumerated;
-import jakarta.persistence.FetchType;
 import jakarta.persistence.Index;
-import jakarta.persistence.OneToOne;
 import jakarta.persistence.Table;
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -55,13 +52,6 @@ public class User extends NamedEntity implements UserDetails {
 
     @Column(name = "is_account_enabled")
     private boolean isAccountEnabled;
-
-    private UserPersonalDetail userPersonalDetail;
-
-    @OneToOne(mappedBy = "user_id", fetch = FetchType.LAZY)
-    public UserPersonalDetail getUserPersonalDetail(){
-        return userPersonalDetail;
-    }
 
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
