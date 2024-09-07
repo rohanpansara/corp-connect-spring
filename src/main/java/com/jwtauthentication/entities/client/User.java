@@ -1,6 +1,6 @@
 package com.jwtauthentication.entities.client;
 
-import com.jwtauthentication.entities.common.NamedEntity;
+import com.jwtauthentication.entities.common.NameWithDeleteEntity;
 import com.jwtauthentication.security.utils.UserRole;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
@@ -24,9 +24,9 @@ import java.util.Collection;
 @AllArgsConstructor
 @NoArgsConstructor
 @Entity
-@Table(name = "users", indexes = @Index(name = "IDX_NAME", columnList = "name"))
 @EntityListeners(AuditingEntityListener.class)
-public class User extends NamedEntity implements UserDetails {
+@Table(name = "USERS", indexes = @Index(name = "IDX_NAME", columnList = "name"))
+public class User extends NameWithDeleteEntity implements UserDetails {
 
     @Column(name="email", nullable = false, unique = true)
     private String email;
@@ -83,3 +83,4 @@ public class User extends NamedEntity implements UserDetails {
         return isAccountEnabled;
     }
 }
+

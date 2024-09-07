@@ -1,4 +1,4 @@
-package com.jwtauthentication.services.impl;
+package com.jwtauthentication.services.client.impl;
 
 import com.jwtauthentication.audits.ApplicationAuditAware;
 import com.jwtauthentication.dtos.client.UserDTO;

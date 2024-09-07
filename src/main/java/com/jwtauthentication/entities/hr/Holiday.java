@@ -1,5 +1,6 @@
 package com.jwtauthentication.entities.hr;
 
+import com.jwtauthentication.entities.common.NameWithDeleteEntity;
 import com.jwtauthentication.entities.common.NamedEntity;
 import com.jwtauthentication.enumerations.HolidayType;
 import jakarta.persistence.Column;
@@ -21,9 +22,9 @@ import java.time.LocalDate;
 @NoArgsConstructor
 @EqualsAndHashCode(callSuper = true)
 @Entity
-@Table(name = "HR_Holidays")
 @EntityListeners(AuditingEntityListener.class)
-public class Holiday extends NamedEntity {
+@Table(name = "HOLIDAYS")
+public class Holiday extends NameWithDeleteEntity {
 
     @Column(nullable = false)
     private LocalDate date;

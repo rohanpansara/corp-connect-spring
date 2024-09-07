@@ -1,6 +1,7 @@
 package com.jwtauthentication.entities.hr;
 
 import com.jwtauthentication.entities.common.BaseEntity;
+import com.jwtauthentication.entities.common.NamedEntity;
 import jakarta.persistence.Entity;
 import jakarta.persistence.EntityListeners;
 import jakarta.persistence.Table;
@@ -17,10 +18,9 @@ import java.time.LocalTime;
 @AllArgsConstructor
 @NoArgsConstructor
 @Entity
-@Table(name = "HR_ShiftSchedule")
 @EntityListeners(AuditingEntityListener.class)
-public class ShiftSchedule extends BaseEntity {
-    private String type;
+@Table(name = "SHIFT_SCHEDULES")
+public class ShiftSchedule extends NamedEntity {
     private String duration;
     private LocalTime startTime;
     private LocalTime endTime;
