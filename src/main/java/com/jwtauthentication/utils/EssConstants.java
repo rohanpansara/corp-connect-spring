@@ -33,9 +33,6 @@ public class EssConstants {
 
     public static final class UserError {
         public static final String USER_NOT_FOUND = "User not found";
-        public static final String USER_NOT_CREATED = "User not created";
-        public static final String USER_NOT_UPDATED = "User not updated";
-        public static final String USER_NOT_DELETED = "User not deleted";
 
         public static final String CONFIRM_PASSWORD_DID_NOT_MATCH = "Password and Confirm Password doesn't match";
         public static final String EMAIL_EXISTS = "Email already exists";
@@ -50,8 +47,6 @@ public class EssConstants {
         public static final String ACCOUNT_EXPIRED = "Account has expired. Please contact HR.";
 
         public static final String LOGIN_FAILED = "Login failed";
-        public static final String REGISTRATION_FAILED = "Registration failed";
-
         public static final String PASSWORD_RESET_FAILED = "Password reset failed";
         public static final String PROFILE_UPDATE_FAILED = "Profile update failed";
 
@@ -71,14 +66,26 @@ public class EssConstants {
         public static final String HOLIDAY_NOT_FOUND = "Holiday not found";
         public static final String HOLIDAY_LIST_FOUND = "All holidays found successfully";
         public static final String HOLIDAY_LIST_EMPTY = "No holidays found";
+        public static final String HOLIDAY_DELETED = "Holiday deleted successfully";
         public static final String TYPE_NOT_FOUND = "No such holiday type found";
     }
 
     public static final class HrAccessControl{
+        public static final String USER_LOCKED = "User account was locked successfully";
         public static final String USER_UNLOCKED = "User account was unlocked successfully";
         public static final String USER_ENABLED = "User account was enabled successfully";
-        public static final String USER_LOCKED = "User account was locked successfully";
         public static final String USER_DISABLED = "User account was disabled successfully";
+    }
+
+    public static final class CompanyConfiguration{
+        public static final String CONFIGURATION_CREATED = "Company configuration created successfully";
+        public static final String CONFIGURATION_EXISTS = "Company configuration exists with same name";
+        public static final String CONFIGURATION_FOUND = "Company configuration found successfully";
+        public static final String CONFIGURATION_NOT_FOUND = "Company configuration not found";
+        public static final String CONFIGURATION_DELETED = "Company configuration deleted successfully";
+        public static final String CONFIGURATION_LIST_FOUND = "All company configurations found successfully";
+        public static final String CONFIGURATION_LIST_EMPTY = "No company configurations found";
+
     }
 
 }
