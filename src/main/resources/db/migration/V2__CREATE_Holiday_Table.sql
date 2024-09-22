@@ -1,4 +1,4 @@
-CREATE TABLE HOLIDAYS (
+CREATE TABLE IF NOT EXISTS HR_HOLIDAYS (
     id BIGINT AUTO_INCREMENT PRIMARY KEY, -- from BaseEntity
     name VARCHAR(150), -- from NamedEntity
     date DATE NOT NULL, -- LocalDate (holiday date)

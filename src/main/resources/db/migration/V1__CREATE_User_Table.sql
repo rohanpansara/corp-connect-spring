@@ -1,6 +1,6 @@
-CREATE TABLE USERS (
+CREATE TABLE IF NOT EXISTS `USER` (
     id BIGINT AUTO_INCREMENT PRIMARY KEY, -- from BaseEntity
-    name VARCHAR(255), -- from NamedEntity
+    name VARCHAR(150), -- from NamedEntity
     email VARCHAR(255) NOT NULL UNIQUE, -- from User
     password VARCHAR(255) NOT NULL, -- from User
     roles VARCHAR(50) NOT NULL, -- Enum type (UserRole)

@@ -1,6 +1,6 @@
-CREATE TABLE SHIFT_SCHEDULES (
+CREATE TABLE IF NOT EXISTS HR_SHIFT_SCHEDULES (
     id BIGINT AUTO_INCREMENT PRIMARY KEY, -- Inherited from NamedEntity
-    name VARCHAR(255) NOT NULL, -- Inherited from NamedEntity
+    name VARCHAR(150) NOT NULL, -- Inherited from NamedEntity
     duration VARCHAR(20), -- Duration of the shift (e.g., "8 hours")
     start_time TIME, -- Start time of the shift
     end_time TIME, -- End time of the shift
