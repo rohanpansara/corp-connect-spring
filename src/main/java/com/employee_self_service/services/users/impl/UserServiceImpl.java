@@ -1,4 +1,4 @@
-package com.employee_self_service.services.client.impl;
+package com.employee_self_service.services.users.impl;
 
 import com.employee_self_service.audits.ApplicationAuditAware;
 import com.employee_self_service.dtos.users.UserDTO;
@@ -10,7 +10,7 @@ import com.employee_self_service.exceptions.common.BaseException;
 import com.employee_self_service.mappers.client.UserMapper;
 import com.employee_self_service.repositories.users.UserRepository;
 import com.employee_self_service.security.dtos.RegisterDTO;
-import com.employee_self_service.services.client.UserService;
+import com.employee_self_service.services.users.UserService;
 import com.employee_self_service.services.hr.HolidayService;
 import com.employee_self_service.utils.EssConstants;
 import jakarta.transaction.Transactional;
@@ -26,14 +26,12 @@ public class UserServiceImpl implements UserService {
     private final ApplicationAuditAware applicationAuditAware;
     private final UserMapper userMapper;
     private final UserRepository userRepository;
-    private final HolidayService holidayService;
 
-    public UserServiceImpl(PasswordEncoder passwordEncoder, ApplicationAuditAware applicationAuditAware, UserMapper userMapper, UserRepository userRepository, HolidayService holidayService) {
+    public UserServiceImpl(PasswordEncoder passwordEncoder, ApplicationAuditAware applicationAuditAware, UserMapper userMapper, UserRepository userRepository) {
         this.passwordEncoder = passwordEncoder;
         this.applicationAuditAware = applicationAuditAware;
         this.userMapper = userMapper;
         this.userRepository = userRepository;
-        this.holidayService = holidayService;
     }
 
     @Override
@@ -93,6 +91,33 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
+    public DashboardCardDTO getDashboardCards() {
+        DashboardCardDTO dashboardCard = new DashboardCardDTO();
+        dashboardCard.setDailyHoursCard(new CardDataDTO(
+                "Time Worked Today",
+                "4h 45m",
+                "24 hours logged this week"
+        ));
+        dashboardCard.setShiftDetailsCard(new CardDataDTO(
+                "Shift Details",
+                "7h 30m",
+                "General Shift | 8AM to 10PM"
+        ));
+        dashboardCard.setLeaveDetailsCard(new CardDataDTO(
+                "Leaves Available",
+                "12",
+                "3 leaves taken last month"
+        ));
+        dashboardCard.setUpcomingMeetingCard(new CardDataDTO(
+                "Upcoming Meeting",
+                "Daily Scrum @ 3PM",
+                "Place: Conference room"
+        ));
+        return dashboardCard;
+    }
+
+
+    @Override
     @Transactional
     public void unlockUserAccount(Long userId) {
         User user = userRepository.findById(userId).orElseThrow(
@@ -142,31 +167,5 @@ public class UserServiceImpl implements UserService {
         }
         user.setAccountNonLocked(false);
         userRepository.saveAndFlush(user);
-    }
-
-    @Override
-    public DashboardCardDTO getDashboardCards() {
-        DashboardCardDTO dashboardCard = new DashboardCardDTO();
-        dashboardCard.setDailyHoursCard(new CardDataDTO(
-                "Time Worked Today",
-                "4h 45m",
-                "24 hours logged this week"
-        ));
-        dashboardCard.setShiftDetailsCard(new CardDataDTO(
-                "Shift Details",
-                "7h 30m",
-                "General Shift | 8AM to 10PM"
-        ));
-        dashboardCard.setLeaveDetailsCard(new CardDataDTO(
-                "Leaves Available",
-                "12",
-                "3 leaves taken last month"
-        ));
-        dashboardCard.setUpcomingMeetingCard(new CardDataDTO(
-                "Upcoming Meeting",
-                "Daily Scrum @ 3PM",
-                "Place: Conference room"
-        ));
-        return dashboardCard;
     }
 }

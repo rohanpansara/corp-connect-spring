@@ -5,7 +5,7 @@ import com.employee_self_service.entities.users.User;
 import com.employee_self_service.exceptions.client.LoginFailedException;
 import com.employee_self_service.exceptions.common.BaseException;
 import com.employee_self_service.security.dtos.RegisterDTO;
-import com.employee_self_service.services.client.UserService;
+import com.employee_self_service.services.users.UserService;
 import com.employee_self_service.utils.CustomDateTimeFormatter;
 import com.employee_self_service.utils.EssConstants;
 import org.apache.commons.lang3.ObjectUtils;

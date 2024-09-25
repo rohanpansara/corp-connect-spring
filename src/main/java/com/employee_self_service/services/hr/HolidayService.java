@@ -16,61 +16,30 @@ import org.springframework.stereotype.Service;
 import java.util.Collections;
 import java.util.List;
 
-@Getter
-@Setter
-@RequiredArgsConstructor
-@Service
-public class HolidayService {
+public interface HolidayService {
 
-    private final HolidayMapper holidayMapper;
-    private final HolidayRepository holidayRepository;
+    // Holiday Mapper
+    Holiday getEntity(HolidayDTO holidayDTO);
 
-    public Holiday getEntity(HolidayDTO holidayDTO) {
-        return holidayMapper.toEntity(holidayDTO);
-    }
+    HolidayDTO getDTO(Holiday holiday);
 
-    public HolidayDTO getDTO(Holiday holiday) {
-        return holidayMapper.toDTO(holiday);
-    }
+    List<HolidayDTO> getDTOList(List<Holiday> holidayList);
 
-    public List<HolidayDTO> getDTOList(List<Holiday> holidayList) {
-        return holidayMapper.toDTOList(holidayList);
-    }
+    List<Holiday> getEntityList(List<HolidayDTO> holidayDTOList);
 
-    public List<Holiday> getEntityList(List<HolidayDTO> holidayDTOList) {
-        return holidayMapper.toEntityList(holidayDTOList);
-    }
+    List<Holiday> getAllHolidays();
 
-    public List<Holiday> getAllHolidays() {
-        return holidayRepository.findAll();
-    }
+    List<Holiday> getAllHolidaysByMonthAndYear(Integer month, Integer year);
 
-    public List<Holiday> getAllHolidaysByMonthAndYear(Integer month, Integer year){
-        return holidayRepository.findByMonthAndYear(month, year);
-    }
+    void createHoliday(HolidayDTO holidayDTO);
 
-    public void createHoliday(HolidayDTO holidayDTO) {
-        holidayRepository.save(this.getEntity(holidayDTO));
-    }
+    List<Holiday> getHolidayByHolidayId(Long holidayId);
 
-    public List<Holiday> getHolidayByHolidayId(Long holidayId){
-        return Collections.singletonList(holidayRepository.findById(holidayId).orElseThrow(
-                () -> new HolidayNotFoundException(EssConstants.Holiday.HOLIDAY_NOT_FOUND)
-        ));
-    }
+    List<Holiday> getHolidayByHolidayName(String holidayName);
 
-    public List<Holiday> getHolidayByHolidayName(String holidayName){
-        return holidayRepository.findByNameContainingIgnoreCase(holidayName);
-    }
+    List<Holiday> getHolidayByHolidayDate(String holidayDate);
 
-    public List<Holiday> getHolidayByHolidayDate(String holidayDate){
-        return Collections.singletonList(holidayRepository.findByDate(CustomDateTimeFormatter.getLocalDateObject(holidayDate)));
-    }
-
-    public List<Holiday> getAllHolidaysByHolidayType(String label) {
-        HolidayType type = HolidayType.getByLabel(label);
-        return holidayRepository.findByType(type);
-    }
+    List<Holiday> getAllHolidaysByHolidayType(String label);
 }
 
 

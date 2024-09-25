@@ -10,7 +10,7 @@ import com.employee_self_service.security.EssUserContext;
 import com.employee_self_service.security.dtos.AuthRequestDTO;
 import com.employee_self_service.security.dtos.AuthResponseDTO;
 import com.employee_self_service.security.dtos.RegisterDTO;
-import com.employee_self_service.services.client.UserService;
+import com.employee_self_service.services.users.UserService;
 import com.employee_self_service.utils.EssConstants;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;

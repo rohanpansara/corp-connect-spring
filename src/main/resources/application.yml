@@ -22,7 +22,7 @@ spring:
 
   jpa:
 #    hibernate:
-#      ddl-auto: update       # if we are not using flyway migration then it should be configured, else not required.
+#      ddl-auto: update       # if we are not using flyway migration then it should be configured, otherwise it's not required.
     show-sql: true
     database-platform: org.hibernate.dialect.MySQL8Dialect
 

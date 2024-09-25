@@ -2,7 +2,7 @@ package com.employee_self_service.controllers.client.user;
 
 import com.employee_self_service.dtos.users.card.DashboardCardDTO;
 import com.employee_self_service.dtos.common.ResponseDTO;
-import com.employee_self_service.services.client.UserService;
+import com.employee_self_service.services.users.UserService;
 import com.employee_self_service.utils.EssConstants;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
