@@ -32,6 +32,9 @@ public interface HolidayService {
     List<Holiday> getAllHolidaysByMonthAndYear(Integer month, Integer year);
 
     void createHoliday(HolidayDTO holidayDTO);
+    void updateHoliday(Long holidayId, HolidayDTO holidayDTO);
+    void deleteHoliday(HolidayDTO holidayDTO);
+    void deleteHolidayById(Long holidayId);
 
     List<Holiday> getHolidayByHolidayId(Long holidayId);
 

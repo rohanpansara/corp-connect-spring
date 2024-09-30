@@ -14,6 +14,7 @@ import com.employee_self_service.services.users.UserService;
 import com.employee_self_service.services.hr.HolidayService;
 import com.employee_self_service.utils.EssConstants;
 import jakarta.transaction.Transactional;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
@@ -22,11 +23,13 @@ import java.util.Optional;
 
 @Service
 public class UserServiceImpl implements UserService {
+
     private final PasswordEncoder passwordEncoder;
     private final ApplicationAuditAware applicationAuditAware;
     private final UserMapper userMapper;
     private final UserRepository userRepository;
 
+    @Autowired
     public UserServiceImpl(PasswordEncoder passwordEncoder, ApplicationAuditAware applicationAuditAware, UserMapper userMapper, UserRepository userRepository) {
         this.passwordEncoder = passwordEncoder;
         this.applicationAuditAware = applicationAuditAware;

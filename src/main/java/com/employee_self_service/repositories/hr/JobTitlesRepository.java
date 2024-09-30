@@ -9,7 +9,7 @@ import java.util.List;
 @Repository
 public interface JobTitlesRepository extends JpaRepository<JobTitles, Long> {
 
-    List<JobTitles> findByGradeContaining(String grade);
+    List<JobTitles> findByGrade(String grade);
     List<JobTitles> findByIsDeleted(boolean isDeleted);
     List<JobTitles> findByNameContaining(String jobTitleName);
 

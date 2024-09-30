@@ -30,6 +30,7 @@ public class HolidayController {
     @PostMapping
     @PreAuthorize("hasAuthority('hr_admin:create')")
     public ResponseEntity<ResponseDTO<Void>> createHoliday(@RequestBody HolidayDTO holidayDTO){
+        holidayService.createHoliday(holidayDTO);
         return ResponseEntity.ok(ResponseDTO.success(EssConstants.Holiday.HOLIDAY_CREATED));
     }
 

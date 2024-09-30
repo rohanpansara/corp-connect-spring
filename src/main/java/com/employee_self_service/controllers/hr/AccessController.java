@@ -15,7 +15,7 @@ import org.springframework.web.bind.annotation.RestController;
 @RequiredArgsConstructor
 @RequestMapping("/auth/access-control")
 @PreAuthorize("hasRole('HR_ADMIN')")
-public class HRAccessController {
+public class AccessController {
     private final UserService userService;
 
     @PutMapping("/unlock")

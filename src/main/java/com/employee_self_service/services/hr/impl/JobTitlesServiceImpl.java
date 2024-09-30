@@ -7,6 +7,8 @@ import com.employee_self_service.mappers.hr.JobTitlesMapper;
 import com.employee_self_service.repositories.hr.JobTitlesRepository;
 import com.employee_self_service.services.hr.JobTitlesService;
 import com.employee_self_service.utils.EssConstants;
+import lombok.RequiredArgsConstructor;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.stereotype.Service;
 
@@ -14,15 +16,11 @@ import java.util.List;
 import java.util.Optional;
 
 @Service
+@RequiredArgsConstructor
 public class JobTitlesServiceImpl implements JobTitlesService {
 
     private final JobTitlesMapper jobTitlesMapper;
     private final JobTitlesRepository jobTitlesRepository;
-
-    public JobTitlesServiceImpl(JobTitlesMapper jobTitlesMapper, JobTitlesRepository jobTitlesRepository) {
-        this.jobTitlesMapper = jobTitlesMapper;
-        this.jobTitlesRepository = jobTitlesRepository;
-    }
 
     @Override
     public JobTitles getEntity(JobTitlesDTO jobTitlesDTO) {
@@ -46,23 +44,32 @@ public class JobTitlesServiceImpl implements JobTitlesService {
 
     @Override
     public void createJobTitles(JobTitlesDTO jobTitlesDTO) {
-        jobTitlesRepository.save(this.getEntity(jobTitlesDTO));
+        try {
+            jobTitlesRepository.save(this.getEntity(jobTitlesDTO));
+        } catch (Exception e) {
+            throw new RuntimeException(EssConstants.JobTitles.JOB_TITLE_ALREADY_EXISTS);
+        }
     }
 
     @Override
     public void updateJobTitles(Long oldJobTitleId, JobTitlesDTO jobTitlesDTO) {
         JobTitles oldJobTitle = jobTitlesRepository.findById(oldJobTitleId).orElseThrow(
-                () -> new JobTitleNotFoundException(EssConstants.JobTitles.JOB_TITLE_NOT_FOUND)
-        );
-        jobTitlesMapper.updateEntityFromDTO(jobTitlesDTO, oldJobTitle);
+                () -> new JobTitleNotFoundException(EssConstants.JobTitles.JOB_TITLE_NOT_FOUND));
+
+        try {
+            jobTitlesMapper.updateEntityFromDTO(jobTitlesDTO, oldJobTitle);
+            jobTitlesRepository.save(oldJobTitle);
+        } catch (DataIntegrityViolationException e) {
+            throw new RuntimeException(EssConstants.JobTitles.JOB_TITLE_ALREADY_EXISTS);
+        }
     }
 
     @Override
     public void deleteJobTitles(JobTitlesDTO jobTitlesDTO) {
         try {
-            jobTitlesRepository.delete(jobTitlesMapper.toEntity(jobTitlesDTO));
-        } catch (Exception e) {
-            throw new DataIntegrityViolationException(EssConstants.JobTitles.DataIntegrityViolation);
+            jobTitlesRepository.delete(this.getEntity(jobTitlesDTO));
+        } catch (DataIntegrityViolationException e) {
+            throw new RuntimeException(EssConstants.JobTitles.DataIntegrityViolation);
         }
     }
 
@@ -70,8 +77,8 @@ public class JobTitlesServiceImpl implements JobTitlesService {
     public void deleteJobTitlesById(Long jobTitlesId) {
         try {
             jobTitlesRepository.deleteById(jobTitlesId);
-        } catch (Exception e) {
-            throw new DataIntegrityViolationException(EssConstants.JobTitles.DataIntegrityViolation);
+        } catch (DataIntegrityViolationException e) {
+            throw new RuntimeException(EssConstants.JobTitles.DataIntegrityViolation);
         }
     }
 
@@ -93,6 +100,6 @@ public class JobTitlesServiceImpl implements JobTitlesService {
 
     @Override
     public List<JobTitles> getJobTitlesByGrade(String grade) {
-        return jobTitlesRepository.findByGradeContaining(grade);
+        return jobTitlesRepository.findByGrade(grade);
     }
 }

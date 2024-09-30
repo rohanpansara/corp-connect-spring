@@ -9,21 +9,20 @@ import com.employee_self_service.repositories.hr.HolidayRepository;
 import com.employee_self_service.services.hr.HolidayService;
 import com.employee_self_service.utils.CustomDateTimeFormatter;
 import com.employee_self_service.utils.EssConstants;
+import lombok.RequiredArgsConstructor;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.stereotype.Service;
 
 import java.util.Collections;
 import java.util.List;
 
 @Service
+@RequiredArgsConstructor
 public class HolidayServiceImpl implements HolidayService {
 
     private final HolidayMapper holidayMapper;
     private final HolidayRepository holidayRepository;
-
-    public HolidayServiceImpl(HolidayMapper holidayMapper, HolidayRepository holidayRepository) {
-        this.holidayMapper = holidayMapper;
-        this.holidayRepository = holidayRepository;
-    }
 
     @Override
     public Holiday getEntity(HolidayDTO holidayDTO) {
@@ -55,9 +54,63 @@ public class HolidayServiceImpl implements HolidayService {
         return holidayRepository.findByMonthAndYear(month, year);
     }
 
+    private void validateHoliday(HolidayDTO holidayDTO) {
+        if (holidayRepository.findByName(holidayDTO.getName()) != null) {
+            throw new RuntimeException(EssConstants.Holiday.HOLIDAY_OF_THE_NAME_EXISTS);
+        }
+
+        if (holidayRepository.findByDate(CustomDateTimeFormatter.getLocalDateObject(holidayDTO.getDate())) != null) {
+            throw new RuntimeException(EssConstants.Holiday.HOLIDAY_FOR_THE_DATE_EXISTS);
+        }
+    }
+
+    private void handleIntegrityViolation(DataIntegrityViolationException e) {
+        if (e.getMessage().contains("name")) {
+            throw new RuntimeException(EssConstants.Holiday.HOLIDAY_OF_THE_NAME_EXISTS);
+        } else {
+            throw new RuntimeException(EssConstants.Holiday.HOLIDAY_FOR_THE_DATE_EXISTS);
+        }
+    }
+
     @Override
     public void createHoliday(HolidayDTO holidayDTO) {
-        holidayRepository.save(this.getEntity(holidayDTO));
+        validateHoliday(holidayDTO);
+        try {
+            holidayRepository.save(this.getEntity(holidayDTO));
+        } catch (DataIntegrityViolationException e) {
+            handleIntegrityViolation(e);
+        }
+    }
+
+    @Override
+    public void updateHoliday(Long holidayId, HolidayDTO holidayDTO) {
+        Holiday oldHoliday = holidayRepository.findById(holidayId)
+                .orElseThrow(() -> new HolidayNotFoundException(EssConstants.Holiday.HOLIDAY_NOT_FOUND));
+
+        try {
+            holidayMapper.updateEntityFromDTO(holidayDTO, oldHoliday);
+            holidayRepository.save(oldHoliday);
+        } catch (DataIntegrityViolationException e) {
+            handleIntegrityViolation(e);
+        }
+    }
+
+    @Override
+    public void deleteHoliday(HolidayDTO holidayDTO) {
+        try {
+            holidayRepository.delete(this.getEntity(holidayDTO));
+        } catch (DataIntegrityViolationException e) {
+            throw new RuntimeException(EssConstants.Holiday.DataIntegrityViolation);
+        }
+    }
+
+    @Override
+    public void deleteHolidayById(Long holidayId) {
+        try {
+            holidayRepository.deleteById(holidayId);
+        } catch (DataIntegrityViolationException e) {
+            throw new RuntimeException(EssConstants.Holiday.DataIntegrityViolation);
+        }
     }
 
     @Override
@@ -80,5 +133,7 @@ public class HolidayServiceImpl implements HolidayService {
     @Override
     public List<Holiday> getAllHolidaysByHolidayType(String label) {
         HolidayType type = HolidayType.getByLabel(label);
-        return holidayRepository.findByType(type);}
+        return holidayRepository.findByType(type);
+    }
 }
+

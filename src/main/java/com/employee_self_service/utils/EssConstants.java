@@ -68,6 +68,7 @@ public class EssConstants {
     public static final class Holiday{
         public static final String HOLIDAY_CREATED = "Holiday created successfully";
         public static final String HOLIDAY_FOR_THE_DATE_EXISTS = "Holiday for the given date already exists";
+        public static final String HOLIDAY_OF_THE_NAME_EXISTS = "Holiday of the given name already exists";
         public static final String HOLIDAY_FOUND = "Holiday found successfully";
         public static final String HOLIDAY_NOT_FOUND = "Holiday not found";
         public static final String HOLIDAY_LIST_FOUND = "All holidays found successfully";
@@ -96,6 +97,7 @@ public class EssConstants {
     }
 
     public static final class JobTitles{
+        public static final String JOB_TITLE_CREATED = "Job title created successfully";
         public static final String JOB_TITLE_FOUND = "Job title found successfully";
         public static final String JOB_TITLE_NOT_FOUND = "Job title not found";
         public static final String JOB_TITLE_UPDATED = "Job title updated successfully";

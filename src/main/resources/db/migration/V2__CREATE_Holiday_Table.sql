@@ -1,7 +1,7 @@
 CREATE TABLE IF NOT EXISTS HR_HOLIDAYS (
     id BIGINT AUTO_INCREMENT PRIMARY KEY, -- from BaseEntity
-    name VARCHAR(150), -- from NamedEntity
-    date DATE NOT NULL, -- LocalDate (holiday date)
+    name VARCHAR(150) NOT NULL UNIQUE, -- from NamedEntity
+    date DATE NOT NULL UNIQUE, -- LocalDate (holiday date)
     description LONGTEXT, -- Description of the holiday
     type VARCHAR(50), -- Enum type (HolidayType)
     is_recurring BOOLEAN NOT NULL DEFAULT false, -- Indicates if the holiday is recurring
