@@ -2,6 +2,10 @@ package com.employee_self_service.utils;
 
 public class EssConstants {
 
+    private static String getDataIntegrityViolationMessage(String className){
+        return "This " + className + " is already used. Please check again before deleting";
+    }
+
     public static final class Record{
         public static final String RECORD_FOUND = "Record found successfully";
         public static final String RECORD_NOT_FOUND = "Record not found";
@@ -50,6 +54,8 @@ public class EssConstants {
         public static final String PASSWORD_RESET_FAILED = "Password reset failed";
         public static final String PROFILE_UPDATE_FAILED = "Profile update failed";
 
+        public static final String DataIntegrityViolation = getDataIntegrityViolationMessage("user");
+
     }
 
     public static final class EmailSuccess {
@@ -68,6 +74,7 @@ public class EssConstants {
         public static final String HOLIDAY_LIST_EMPTY = "No holidays found";
         public static final String HOLIDAY_DELETED = "Holiday deleted successfully";
         public static final String TYPE_NOT_FOUND = "No such holiday type found";
+        public static final String DataIntegrityViolation = getDataIntegrityViolationMessage("holiday");
     }
 
     public static final class HrAccessControl{
@@ -85,7 +92,17 @@ public class EssConstants {
         public static final String CONFIGURATION_DELETED = "Company configuration deleted successfully";
         public static final String CONFIGURATION_LIST_FOUND = "All company configurations found successfully";
         public static final String CONFIGURATION_LIST_EMPTY = "No company configurations found";
+        public static final String DataIntegrityViolation = getDataIntegrityViolationMessage("company configuration");
+    }
 
+    public static final class JobTitles{
+        public static final String JOB_TITLE_FOUND = "Job title found successfully";
+        public static final String JOB_TITLE_NOT_FOUND = "Job title not found";
+        public static final String JOB_TITLE_UPDATED = "Job title updated successfully";
+        public static final String JOB_TITLE_DELETED = "Job title deleted successfully";
+        public static final String JOB_TITLE_ALREADY_EXISTS = "Job title with the same name already exists";
+        public static final String JOB_TITLE_LIST_FOUND = "All job titles found successfully";
+        public static final String DataIntegrityViolation = getDataIntegrityViolationMessage("job title");
     }
 
 }

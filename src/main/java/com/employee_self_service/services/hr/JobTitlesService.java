@@ -13,12 +13,12 @@ public interface JobTitlesService {
     List<JobTitlesDTO> getDTOList(List<JobTitles> jobTitlesList);
 
     void createJobTitles(JobTitlesDTO jobTitlesDTO);
-    void updateJobTitles(JobTitlesDTO jobTitlesDTO);
+    void updateJobTitles(Long oldJobTitleId, JobTitlesDTO jobTitlesDTO);
     void deleteJobTitles(JobTitlesDTO jobTitlesDTO);
     void deleteJobTitlesById(Long jobTitlesId);
 
     List<JobTitles> getAllJobTitles();
     List<JobTitles> getJobTitlesById(Long jobTitlesId);
     List<JobTitles> getJobTitlesByName(String jobTitlesName);
-    List<JobTitles> getJobTitlesByGrade(String jobTitlesName);
+    List<JobTitles> getJobTitlesByGrade(String grade);
 }
