@@ -8,10 +8,10 @@ import com.employee_self_service.repositories.hr.JobTitlesRepository;
 import com.employee_self_service.services.hr.JobTitlesService;
 import com.employee_self_service.utils.EssConstants;
 import lombok.RequiredArgsConstructor;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.stereotype.Service;
 
+import java.util.Collections;
 import java.util.List;
 import java.util.Optional;
 
@@ -74,9 +74,17 @@ public class JobTitlesServiceImpl implements JobTitlesService {
     }
 
     @Override
-    public void deleteJobTitlesById(Long jobTitlesId) {
+    public void deleteJobTitlesById(Long jobTitlesId, Boolean isPermanentDelete) {
         try {
-            jobTitlesRepository.deleteById(jobTitlesId);
+            JobTitles jobTitleToDelete = jobTitlesRepository.findById(jobTitlesId).orElseThrow(
+                    () -> new JobTitleNotFoundException(EssConstants.JobTitles.JOB_TITLE_NOT_FOUND));
+
+            if(isPermanentDelete){
+                jobTitlesRepository.delete(jobTitleToDelete);
+            } else {
+                jobTitleToDelete.setDeleted(true);
+                jobTitlesRepository.save(jobTitleToDelete);
+            }
         } catch (DataIntegrityViolationException e) {
             throw new RuntimeException(EssConstants.JobTitles.DataIntegrityViolation);
         }
@@ -90,7 +98,10 @@ public class JobTitlesServiceImpl implements JobTitlesService {
     @Override
     public List<JobTitles> getJobTitlesById(Long jobTitlesId) {
         Optional<JobTitles> jobTitlesOptional = jobTitlesRepository.findById(jobTitlesId);
-        return jobTitlesOptional.map(List::of).orElseGet(List::of);
+        if(jobTitlesOptional.isEmpty()){
+            throw new JobTitleNotFoundException(EssConstants.JobTitles.JOB_TITLE_NOT_FOUND);
+        }
+        return Collections.singletonList(jobTitlesOptional.get());
     }
 
     @Override

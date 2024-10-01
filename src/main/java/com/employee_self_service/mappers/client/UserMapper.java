@@ -62,7 +62,7 @@ public abstract class UserMapper {
     }
 
     private boolean isEmailExists(String email) {
-        Optional<User> user = userService.getUserByEmail(email);
+        User user = userService.getUserByEmail(email);
         return ObjectUtils.isEmpty(user);
     }
 

@@ -21,6 +21,6 @@ public class Configurations extends NameWithDeleteEntity {
 
     private String configMaxValue;
     private String configMinValue;
-    private boolean isEnabled = true;
+    private boolean isEnabled = false;
 
 }

@@ -2,6 +2,7 @@ package com.employee_self_service.entities.hr;
 
 import com.employee_self_service.entities.users.User;
 import com.employee_self_service.entities.common.NameWithDeleteEntity;
+import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.EntityListeners;
 import jakarta.persistence.Table;
@@ -22,7 +23,10 @@ public class MeetingRooms extends NameWithDeleteEntity {
 
     private String buildingName;
     private Integer floorNumber;
+
+    @Column(name = "point_of_contact_id")
     private User pointOfContact;
+
     private Integer capacity;
     private String equipment;
 

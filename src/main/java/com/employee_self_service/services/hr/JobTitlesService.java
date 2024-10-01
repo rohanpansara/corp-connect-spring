@@ -15,7 +15,7 @@ public interface JobTitlesService {
     void createJobTitles(JobTitlesDTO jobTitlesDTO);
     void updateJobTitles(Long oldJobTitleId, JobTitlesDTO jobTitlesDTO);
     void deleteJobTitles(JobTitlesDTO jobTitlesDTO);
-    void deleteJobTitlesById(Long jobTitlesId);
+    void deleteJobTitlesById(Long jobTitlesId, Boolean isPermanentDelete);
 
     List<JobTitles> getAllJobTitles();
     List<JobTitles> getJobTitlesById(Long jobTitlesId);

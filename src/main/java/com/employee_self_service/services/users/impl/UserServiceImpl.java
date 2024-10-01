@@ -68,14 +68,15 @@ public class UserServiceImpl implements UserService {
         user.setPassword(passwordEncoder.encode(user.getPassword()));
         user.setAccountNonExpired(true);
         user.setCredentialsNonExpired(true);
-        user.setCreatedBy(applicationAuditAware.getCurrentAuditor().orElse("unknown"));
-        user.setLastUpdatedBy(applicationAuditAware.getCurrentAuditor().orElse("unknown"));
+        user.setCreatedBy(applicationAuditAware.getCurrentAuditor().orElse("system"));
+        user.setLastUpdatedBy(applicationAuditAware.getCurrentAuditor().orElse("system"));
         return userRepository.save(user);
     }
 
     @Override
-    public Optional<User> getUserByEmail(String email) {
-        return userRepository.findByEmail(email);
+    public User getUserByEmail(String email) {
+        Optional<User> foundUser = userRepository.findByEmail(email);
+        return foundUser.orElse(null);
     }
 
     @Override

@@ -102,6 +102,7 @@ public class EssConstants {
         public static final String JOB_TITLE_NOT_FOUND = "Job title not found";
         public static final String JOB_TITLE_UPDATED = "Job title updated successfully";
         public static final String JOB_TITLE_DELETED = "Job title deleted successfully";
+        public static final String JOB_TITLE_DELETED_PERMANENTLY = "Job title deleted permanently";
         public static final String JOB_TITLE_ALREADY_EXISTS = "Job title with the same name already exists";
         public static final String JOB_TITLE_LIST_FOUND = "All job titles found successfully";
         public static final String DataIntegrityViolation = getDataIntegrityViolationMessage("job title");

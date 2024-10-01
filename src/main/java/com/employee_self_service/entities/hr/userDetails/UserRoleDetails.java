@@ -27,11 +27,16 @@ import java.time.LocalDate;
 @Table(name = "USER_ROLE_DETAILS")
 public class UserRoleDetails extends BaseEntity {
 
+    @Column(name = "user_id")
     private User user;
+
     @Enumerated(EnumType.STRING)
     @Column(name = "userStatus", nullable = false)
     private UserStatus userStatus;
+
+    @Column(name = "current_job_title_id")
     private JobTitles currentJobTitle;
+
     private LocalDate onboardingDate;
     private String department;
     private String reportingManager;

@@ -20,7 +20,7 @@ public interface UserService {
 
     // User Repository
     User finalSave(User user);
-    Optional<User> getUserByEmail(String email);
+    User getUserByEmail(String email);
     User getUserByUserId(Long userId);
     List<User> getUserByAccountExpiration(Boolean isExpired);
     List<User> getAllUsers();

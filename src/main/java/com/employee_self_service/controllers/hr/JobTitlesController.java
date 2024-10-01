@@ -56,9 +56,16 @@ public class JobTitlesController {
 
     @DeleteMapping(value = "/{job-title-id}")
     @PreAuthorize("hasAuthority('hr_admin:delete')")
-    public ResponseEntity<ResponseDTO<Void>> deleteJobTitle(@PathVariable("job-title-id") Long jobTitleId) {
-        jobTitlesService.deleteJobTitlesById(jobTitleId);
+    public ResponseEntity<ResponseDTO<Void>> softDeleteJobTitle(@PathVariable("job-title-id") Long jobTitleId) {
+        jobTitlesService.deleteJobTitlesById(jobTitleId, false);
         return ResponseEntity.ok(ResponseDTO.success(EssConstants.JobTitles.JOB_TITLE_DELETED));
+    }
+
+    @DeleteMapping(value = "/{job-title-id}/permanent")
+    @PreAuthorize("hasAuthority('hr_admin:delete')")
+    public ResponseEntity<ResponseDTO<Void>> permanentDeleteJobTitle(@PathVariable("job-title-id") Long jobTitleId) {
+        jobTitlesService.deleteJobTitlesById(jobTitleId, true);
+        return ResponseEntity.ok(ResponseDTO.success(EssConstants.JobTitles.JOB_TITLE_DELETED_PERMANENTLY));
     }
 
 }

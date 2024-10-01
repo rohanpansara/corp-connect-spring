@@ -2,6 +2,7 @@ package com.employee_self_service.entities.hr.userDetails;
 
 import com.employee_self_service.entities.common.BaseEntity;
 import com.employee_self_service.entities.users.User;
+import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.EntityListeners;
 import jakarta.persistence.Table;
@@ -22,7 +23,9 @@ import java.time.LocalDate;
 @Table(name = "USER_EXPERIENCE_DETAILS")
 public class UserExperienceDetails extends BaseEntity {
 
+    @Column(name = "user_id")
     private User user;
+
     private String previousCompany;
     private String previousCompanyLocation;
     private String previousJobTitle;
