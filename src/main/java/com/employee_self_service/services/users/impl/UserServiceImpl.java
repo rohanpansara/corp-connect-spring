@@ -4,16 +4,17 @@ import com.employee_self_service.audits.ApplicationAuditAware;
 import com.employee_self_service.dtos.users.UserDTO;
 import com.employee_self_service.dtos.users.card.CardDataDTO;
 import com.employee_self_service.dtos.users.card.DashboardCardDTO;
-import com.employee_self_service.entities.users.User;
+import com.employee_self_service.entities.users.Users;
 import com.employee_self_service.exceptions.client.UserNotFoundException;
 import com.employee_self_service.exceptions.common.BaseException;
 import com.employee_self_service.mappers.client.UserMapper;
 import com.employee_self_service.repositories.users.UserRepository;
 import com.employee_self_service.security.dtos.RegisterDTO;
 import com.employee_self_service.services.users.UserService;
-import com.employee_self_service.services.hr.HolidayService;
 import com.employee_self_service.utils.EssConstants;
 import jakarta.transaction.Transactional;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
@@ -23,6 +24,8 @@ import java.util.Optional;
 
 @Service
 public class UserServiceImpl implements UserService {
+
+    private static final Logger logger = LoggerFactory.getLogger(UserServiceImpl.class);
 
     private final PasswordEncoder passwordEncoder;
     private final ApplicationAuditAware applicationAuditAware;
@@ -38,59 +41,72 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public User getUserFromRegisterDTO(RegisterDTO registerDTO) throws BaseException {
+    public Users getUserFromRegisterDTO(RegisterDTO registerDTO) throws BaseException {
         return userMapper.toEntityFromRegisterDTO(registerDTO);
     }
 
     @Override
-    public User getEntity(UserDTO userDTO) {
+    public Users getEntity(UserDTO userDTO) {
         return userMapper.toEntity(userDTO);
     }
 
     @Override
-    public UserDTO getDTO(User user) {
-        return userMapper.toDTO(user);
+    public UserDTO getDTO(Users users) {
+        return userMapper.toDTO(users);
     }
 
     @Override
-    public List<User> getEntityList(List<UserDTO> userDTOList) {
+    public List<Users> getEntityList(List<UserDTO> userDTOList) {
         return userMapper.toEntityList(userDTOList);
     }
 
     @Override
-    public List<UserDTO> getDTOList(List<User> userList) {
-        return userMapper.toDTOList(userList);
+    public List<UserDTO> getDTOList(List<Users> usersList) {
+        return userMapper.toDTOList(usersList);
     }
 
     @Override
     @Transactional
-    public User finalSave(User user) {
-        user.setPassword(passwordEncoder.encode(user.getPassword()));
-        user.setAccountNonExpired(true);
-        user.setCredentialsNonExpired(true);
-        user.setCreatedBy(applicationAuditAware.getCurrentAuditor().orElse("system"));
-        user.setLastUpdatedBy(applicationAuditAware.getCurrentAuditor().orElse("system"));
-        return userRepository.save(user);
+    public Users finalSave(Users users) {
+        users.setPassword(passwordEncoder.encode(users.getPassword()));
+        users.setAccountNonExpired(true);
+        users.setCredentialsNonExpired(true);
+        Optional<String> currentAuditor = applicationAuditAware.getCurrentAuditor();
+        if (currentAuditor.isEmpty()) {
+            logger.info("No auditor found. Setting createdBy and lastUpdatedBy to 'system'.");
+            users.setCreatedBy("system");
+            users.setLastUpdatedBy("system");
+        } else {
+            String auditor = currentAuditor.get();
+            logger.info("Auditor found. Setting createdBy and lastUpdatedBy to {}.", auditor);
+            users.setCreatedBy(currentAuditor.get());
+            users.setLastUpdatedBy(currentAuditor.get());
+        }
+        return userRepository.save(users);
     }
 
     @Override
-    public User getUserByEmail(String email) {
-        Optional<User> foundUser = userRepository.findByEmail(email);
-        return foundUser.orElse(null);
+    public Users getUserByEmail(String email) {
+        Optional<Users> foundUser = userRepository.findByEmail(email);
+        if(foundUser.isEmpty()){
+            logger.error("Not Found: Attempt to get user with email: {}", email);
+            return null;
+        }
+        return foundUser.get();
     }
 
     @Override
-    public User getUserByUserId(Long userId) {
+    public Users getUserByUserId(Long userId) {
         return userRepository.findUserById(userId);
     }
 
     @Override
-    public List<User> getUserByAccountExpiration(Boolean isExpired) {
+    public List<Users> getUserByAccountExpiration(Boolean isExpired) {
         return userRepository.findByIsAccountNonExpired(isExpired);
     }
 
     @Override
-    public List<User> getAllUsers() {
+    public List<Users> getAllUsers() {
         return userRepository.findAll();
     }
 
@@ -124,52 +140,72 @@ public class UserServiceImpl implements UserService {
     @Override
     @Transactional
     public void unlockUserAccount(Long userId) {
-        User user = userRepository.findById(userId).orElseThrow(
-                () -> new UserNotFoundException(EssConstants.UserError.USER_NOT_FOUND)
+        Users user = userRepository.findById(userId).orElseThrow(
+                () -> {
+                    logger.error("Not Found: Attempt to unlock user with id: {}", userId);
+                    return new UserNotFoundException(EssConstants.UserError.USER_NOT_FOUND);
+                }
         );
         if (user.isAccountNonLocked()) {
+            logger.error("Already Updated: Attempt to unlock user with id: {}", userId);
             return;
         }
         user.setAccountNonLocked(true);
         userRepository.saveAndFlush(user);
+        logger.error("Updated: Attempt to unlock with id: {} by user with id: {}", userId, applicationAuditAware.getCurrentAuditor().orElse("system"));
     }
 
     @Override
     @Transactional
     public void enableUserAccount(Long userId) {
-        User user = userRepository.findById(userId).orElseThrow(
-                () -> new UserNotFoundException(EssConstants.UserError.USER_NOT_FOUND)
+        Users user = userRepository.findById(userId).orElseThrow(
+                () -> {
+                    logger.error("Not Found: Attempt to enable user with id: {}", userId);
+                    return new UserNotFoundException(EssConstants.UserError.USER_NOT_FOUND);
+                }
         );
         if (user.isAccountEnabled()) {
+            logger.error("Already Updated: Attempt to enable user with id: {}", userId);
             return;
         }
         user.setAccountEnabled(true);
         userRepository.saveAndFlush(user);
+        logger.error("Updated: Attempt to enable with id: {} by user with id: {}", userId, applicationAuditAware.getCurrentAuditor().orElse("system"));
     }
 
     @Override
     @Transactional
     public void disableUserAccount(Long userId) {
-        User user = userRepository.findById(userId).orElseThrow(
-                () -> new UserNotFoundException(EssConstants.UserError.USER_NOT_FOUND)
+        Users user = userRepository.findById(userId).orElseThrow(
+                () -> {
+                    logger.error("Not Found: Attempt to disable user with id: {}", userId);
+                    return new UserNotFoundException(EssConstants.UserError.USER_NOT_FOUND);
+                }
         );
         if (!user.isAccountEnabled()) {
+            logger.error("Already Updated: Attempt to disable user with id: {}", userId);
             return;
         }
         user.setAccountEnabled(false);
         userRepository.saveAndFlush(user);
+        logger.error("Updated: Attempt to disable with id: {} by user with id: {}", userId, applicationAuditAware.getCurrentAuditor().orElse("system"));
     }
 
     @Override
     @Transactional
     public void lockUserAccount(Long userId) {
-        User user = userRepository.findById(userId).orElseThrow(
-                () -> new UserNotFoundException(EssConstants.UserError.USER_NOT_FOUND)
+        Users user = userRepository.findById(userId).orElseThrow(
+                () -> {
+                    logger.error("Not Found: Attempt to lock user with id: {}", userId);
+                    return new UserNotFoundException(EssConstants.UserError.USER_NOT_FOUND);
+                }
         );
         if (!user.isAccountNonLocked()) {
+            logger.error("Already Updated: Attempt to lock user with id: {}", userId);
             return;
         }
         user.setAccountNonLocked(false);
         userRepository.saveAndFlush(user);
+        logger.error("Updated: Attempt to lock with id: {} by user with id: {}", userId, applicationAuditAware.getCurrentAuditor().orElse("system"));
     }
 }

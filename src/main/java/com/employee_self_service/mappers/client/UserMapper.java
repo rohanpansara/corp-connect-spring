@@ -1,7 +1,7 @@
 package com.employee_self_service.mappers.client;
 
 import com.employee_self_service.dtos.users.UserDTO;
-import com.employee_self_service.entities.users.User;
+import com.employee_self_service.entities.users.Users;
 import com.employee_self_service.exceptions.client.LoginFailedException;
 import com.employee_self_service.exceptions.common.BaseException;
 import com.employee_self_service.security.dtos.RegisterDTO;
@@ -20,7 +20,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Lazy;
 
 import java.util.List;
-import java.util.Optional;
 
 @Mapper(unmappedTargetPolicy = ReportingPolicy.IGNORE, componentModel = "spring")
 public abstract class UserMapper {
@@ -30,14 +29,14 @@ public abstract class UserMapper {
     private UserService userService;
 
     @Named("toDTO")
-    public abstract UserDTO toDTO(User user);
+    public abstract UserDTO toDTO(Users users);
 
     @Named("toEntity")
     @Mapping(target = "authorities", ignore = true)
     @Mapping(target = "accountNonLocked", ignore = true)
     @Mapping(target = "accountNonExpired", ignore = true)
     @Mapping(target = "password", ignore = true)
-    public abstract User toEntity(UserDTO userDTO);
+    public abstract Users toEntity(UserDTO userDTO);
 
     @Mapping(target = "id", ignore = true)
     @Mapping(target = "lastUpdatedDate", ignore = true)
@@ -45,13 +44,13 @@ public abstract class UserMapper {
     @Mapping(target = "createdDate", ignore = true)
     @Mapping(target = "createdBy", ignore = true)
     @Mapping(target = "authorities", ignore = true)
-    public abstract User toEntityFromRegisterDTO(RegisterDTO registerDTO);
+    public abstract Users toEntityFromRegisterDTO(RegisterDTO registerDTO);
 
-    public abstract List<User> toEntityList(List<UserDTO> userDTOList);
-    public abstract List<UserDTO> toDTOList(List<User> userList);
+    public abstract List<Users> toEntityList(List<UserDTO> userDTOList);
+    public abstract List<UserDTO> toDTOList(List<Users> usersList);
 
     @BeforeMapping
-    protected void validatePassword(RegisterDTO registerDTO, @MappingTarget User user) throws BaseException {
+    protected void validatePassword(RegisterDTO registerDTO, @MappingTarget Users users) throws BaseException {
         if (!isEmailExists(registerDTO.getEmail())) {
             throw new LoginFailedException(EssConstants.UserError.EMAIL_EXISTS);
         }
@@ -62,15 +61,15 @@ public abstract class UserMapper {
     }
 
     private boolean isEmailExists(String email) {
-        User user = userService.getUserByEmail(email);
-        return ObjectUtils.isEmpty(user);
+        Users users = userService.getUserByEmail(email);
+        return ObjectUtils.isEmpty(users);
     }
 
     @AfterMapping
-    protected void stringFormatting(User user, @MappingTarget UserDTO userDTO) {
-        userDTO.setRoles(user.getRoles().getLabel());
-        userDTO.setCreatedDate(CustomDateTimeFormatter.getLocalDateTimeString(user.getCreatedDate()));
-        userDTO.setLastUpdatedDate(CustomDateTimeFormatter.getLocalDateTimeString(user.getLastUpdatedDate()));
+    protected void stringFormatting(Users users, @MappingTarget UserDTO userDTO) {
+        userDTO.setRoles(users.getRoles().getLabel());
+        userDTO.setCreatedDate(CustomDateTimeFormatter.getLocalDateTimeString(users.getCreatedDate()));
+        userDTO.setLastUpdatedDate(CustomDateTimeFormatter.getLocalDateTimeString(users.getLastUpdatedDate()));
     }
 
 }

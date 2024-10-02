@@ -1,8 +1,10 @@
 package com.employee_self_service.entities.hr.userDetails;
 
 import com.employee_self_service.entities.common.BaseEntity;
+import com.employee_self_service.entities.hr.Departments;
 import com.employee_self_service.entities.hr.JobTitles;
-import com.employee_self_service.entities.users.User;
+import com.employee_self_service.entities.hr.WorkShifts;
+import com.employee_self_service.entities.users.Users;
 import com.employee_self_service.enumerations.UserStatus;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
@@ -28,7 +30,7 @@ import java.time.LocalDate;
 public class UserRoleDetails extends BaseEntity {
 
     @Column(name = "user_id")
-    private User user;
+    private Users users;
 
     @Enumerated(EnumType.STRING)
     @Column(name = "userStatus", nullable = false)
@@ -38,13 +40,23 @@ public class UserRoleDetails extends BaseEntity {
     private JobTitles currentJobTitle;
 
     private LocalDate onboardingDate;
-    private String department;
-    private String reportingManager;
+
+    @Column(name = "department_id")
+    private Departments departments;
+
+    @Column(name = "reporting_manager_id")
+    private Users reportingManager;
+
     private String probationPeriod;
     private LocalDate probationEndDate;
-    private String workShift;
+
+    @Column(name = "work_shift_id")
+    private WorkShifts workShift;
+
     private String currentProjects;
     private String currentJobResponsibilities;
     private String workLocation;
+
+    private Boolean isDeleted;
 
 }

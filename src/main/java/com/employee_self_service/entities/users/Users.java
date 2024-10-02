@@ -26,7 +26,7 @@ import java.util.Collection;
 @Entity
 @EntityListeners(AuditingEntityListener.class)
 @Table(name = "USER", schema = "ESS", indexes = @Index(name = "IDX_NAME", columnList = "name"))
-public class User extends NameWithDeleteEntity implements UserDetails {
+public class Users extends NameWithDeleteEntity implements UserDetails {
 
     private String email;
     private String password;

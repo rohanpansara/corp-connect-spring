@@ -29,9 +29,9 @@ public class EmployeeController {
         return ResponseEntity.ok(ResponseDTO.success(EssConstants.UserSuccess.USER_LIST_FOUND, userService.getDTOList(userService.getAllUsers())));
     }
 
-    @GetMapping("/{userId}")
+    @GetMapping("/{user-id}")
     @PreAuthorize("hasAuthority('admin:read')")
-    public ResponseEntity<ResponseDTO<UserDTO>> fetchUserByUserId(@PathVariable("userId") Long userId) throws BaseException {
+    public ResponseEntity<ResponseDTO<UserDTO>> fetchUserByUserId(@PathVariable("user-id") Long userId) throws BaseException {
         return ResponseEntity.ok(ResponseDTO.success(EssConstants.UserSuccess.USER_FOUND, userService.getDTO(userService.getUserByUserId(userId))));
     }
 }

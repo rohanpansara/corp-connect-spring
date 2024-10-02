@@ -23,7 +23,7 @@ import java.time.LocalDate;
 @Entity
 @EntityListeners(AuditingEntityListener.class)
 @Table(name = "HR_HOLIDAYS")
-public class Holiday extends NameWithDeleteEntity {
+public class Holidays extends NameWithDeleteEntity {
 
     @Column(nullable = false)
     private LocalDate date;

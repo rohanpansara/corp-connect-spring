@@ -1,6 +1,6 @@
 package com.employee_self_service.audits;
 
-import com.employee_self_service.entities.users.User;
+import com.employee_self_service.entities.users.Users;
 
 import io.micrometer.common.lang.NonNullApi;
 import org.springframework.data.domain.AuditorAware;
@@ -21,7 +21,7 @@ public class ApplicationAuditAware implements AuditorAware<String> {
             return Optional.empty();
         }
 
-        User userPrincipal = (User) authentication.getPrincipal();
-        return Optional.ofNullable(String.valueOf(userPrincipal.getId()));
+        Users usersPrincipal = (Users) authentication.getPrincipal();
+        return Optional.ofNullable(String.valueOf(usersPrincipal.getId()));
     }
 }

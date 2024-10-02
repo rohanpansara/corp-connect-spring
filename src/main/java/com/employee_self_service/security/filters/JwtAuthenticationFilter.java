@@ -1,6 +1,6 @@
 package com.employee_self_service.security.filters;
 
-import com.employee_self_service.entities.users.User;
+import com.employee_self_service.entities.users.Users;
 import com.employee_self_service.security.EssUserContext;
 import com.employee_self_service.security.services.JwtService;
 import com.employee_self_service.utils.EssConstants;
@@ -66,7 +66,7 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
                     );
                     authToken.setDetails(new WebAuthenticationDetailsSource().buildDetails(request));
                     SecurityContextHolder.getContext().setAuthentication(authToken);
-                    EssUserContext.setCurrentUser((User) userDetails);
+                    EssUserContext.setCurrentUser((Users) userDetails);
                 }
             }
             filterChain.doFilter(request, response);

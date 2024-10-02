@@ -1,4 +1,4 @@
-CREATE TABLE IF NOT EXISTS ESS.HR_SHIFT_SCHEDULES (
+CREATE TABLE IF NOT EXISTS ESS.HR_WORK_SHIFTS (
     id BIGINT AUTO_INCREMENT PRIMARY KEY, -- Inherited from NamedEntity
     name VARCHAR(150) NOT NULL, -- Inherited from NamedEntity
     duration VARCHAR(20), -- Duration of the shift (e.g., "8 hours")

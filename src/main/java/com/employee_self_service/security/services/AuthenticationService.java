@@ -1,7 +1,7 @@
 package com.employee_self_service.security.services;
 
 import com.employee_self_service.dtos.users.UserDTO;
-import com.employee_self_service.entities.users.User;
+import com.employee_self_service.entities.users.Users;
 import com.employee_self_service.exceptions.client.LoginFailedException;
 import com.employee_self_service.exceptions.client.RegistrationFailedException;
 import com.employee_self_service.exceptions.common.BaseException;
@@ -11,7 +11,10 @@ import com.employee_self_service.security.dtos.AuthRequestDTO;
 import com.employee_self_service.security.dtos.AuthResponseDTO;
 import com.employee_self_service.security.dtos.RegisterDTO;
 import com.employee_self_service.services.users.UserService;
+import com.employee_self_service.services.users.impl.UserServiceImpl;
 import com.employee_self_service.utils.EssConstants;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import lombok.RequiredArgsConstructor;
@@ -20,6 +23,9 @@ import org.springframework.stereotype.Service;
 @Service
 @RequiredArgsConstructor
 public class AuthenticationService {
+
+    private static final Logger logger = LoggerFactory.getLogger(AuthenticationService.class);
+
     private final UserRepository userRepository;
     private final UserService userService;
     private final JwtService jwtService;
@@ -29,51 +35,61 @@ public class AuthenticationService {
         try {
             var user = userService.getUserFromRegisterDTO(registerDTO);
             var savedUser = userService.finalSave(user);
+            logger.info("Created: Attempt to create a user with registerDto: {}", registerDTO);
             return userService.getDTO(savedUser);
         } catch (RegistrationFailedException e) {
+            logger.error("Already Exists: Attempt to create a user with email: {}", registerDTO.getEmail());
             throw new RegistrationFailedException(EssConstants.UserError.EMAIL_EXISTS);
         } catch (BaseException e) {
+            logger.error("Did Not Match: Attempt to create a user with password: {} and confirmPassword: {}", registerDTO.getPassword(), registerDTO.getConfirmPassword());
             throw new RegistrationFailedException(EssConstants.UserError.CONFIRM_PASSWORD_DID_NOT_MATCH);
         }
     }
 
+
     public AuthResponseDTO authenticate(AuthRequestDTO request, String moduleType) {
 
-        User user = userRepository.findByEmail(request.getEmail())
-                .orElseThrow(() -> new LoginFailedException(EssConstants.UserError.USER_NOT_FOUND));
+        Users users = userRepository.findByEmail(request.getEmail())
+                .orElseThrow(() -> {
+                    logger.error("Not Found: Attempt to authenticate user with email: {}", request.getEmail());
+                    return new LoginFailedException(EssConstants.UserError.USER_NOT_FOUND);
+                });
 
-        if (!user.isAccountEnabled()) {
+        if (!users.isAccountEnabled()) {
+            logger.error("Account Disabled: Attempt to authenticate user with email: {}", request.getEmail());
             throw new LoginFailedException(EssConstants.UserError.ACCOUNT_DISABLED);
-        } else if (!user.isAccountNonLocked()) {
+        } else if (!users.isAccountNonLocked()) {
+            logger.error("Account Locked: Attempt to authenticate user with email: {}", request.getEmail());
             throw new LoginFailedException(EssConstants.UserError.ACCOUNT_LOCKED);
         }
 
-        if (user.getLoginAttempts() >= 3) {
-            user.setAccountNonLocked(false);
-            user.setLoginAttempts(0);
-            userRepository.save(user);
+        if (users.getLoginAttempts() >= 3) {
+            users.setAccountNonLocked(false);
+            users.setLoginAttempts(0);
+            userRepository.save(users);
+            logger.error("Account Locked: Max login attempt limit exceeded for user with email: {}", request.getEmail());
             throw new LoginFailedException(EssConstants.UserError.ACCOUNT_LOCKED);
         }
 
         try {
             authenticationManager.authenticate(
-                    new UsernamePasswordAuthenticationToken(request.getEmail(), request.getPassword())
-            );
+                    new UsernamePasswordAuthenticationToken(request.getEmail(), request.getPassword()));
         } catch (Exception e) {
-            user.setLoginAttempts(user.getLoginAttempts() + 1);
-            userRepository.save(user);
+            users.setLoginAttempts(users.getLoginAttempts() + 1);
+            userRepository.save(users);
+            logger.error("Invalid Credentials: Attempt to login with email: {}", request.getEmail());
             throw new LoginFailedException(EssConstants.UserError.INVALID_CREDENTIALS);
         }
 
-        user.setLoginAttempts(0);
-        User loggedUser = userRepository.save(user);
+        users.setLoginAttempts(0);
+        Users loggedUsers = userRepository.save(users);
 
-        var jwtToken = jwtService.generateTokenForUser(user, user.getEmail(), moduleType);
-        EssUserContext.setCurrentUser(loggedUser);
+        var jwtToken = jwtService.generateTokenForUser(users, users.getEmail(), moduleType);
+        EssUserContext.setCurrentUser(loggedUsers);
 
         return AuthResponseDTO.builder()
                 .accessToken(jwtToken)
-                .user(userService.getDTO(user))
+                .user(userService.getDTO(users))
                 .build();
     }
 }

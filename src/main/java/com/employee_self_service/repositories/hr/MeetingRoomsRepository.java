@@ -1,7 +1,7 @@
 package com.employee_self_service.repositories.hr;
 
 import com.employee_self_service.entities.hr.MeetingRooms;
-import com.employee_self_service.entities.users.User;
+import com.employee_self_service.entities.users.Users;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
@@ -13,7 +13,7 @@ public interface MeetingRoomsRepository extends JpaRepository<MeetingRooms, Long
     MeetingRooms findByName(String name);
 
     List<MeetingRooms> findByFloorNumber(Integer floorNumber);
-    List<MeetingRooms> findByPointOfContact(User pointOfContact);
+    List<MeetingRooms> findByPointOfContact(Users pointOfContact);
 
     List<MeetingRooms> findByCapacityGreaterThan(Integer capacity);
     List<MeetingRooms> findByEquipmentContaining(String equipmentName);

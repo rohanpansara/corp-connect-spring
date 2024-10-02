@@ -1,7 +1,8 @@
 package com.employee_self_service.entities.hr.userDetails;
 
 import com.employee_self_service.entities.common.BaseEntity;
-import com.employee_self_service.entities.users.User;
+import com.employee_self_service.entities.hr.JobTitles;
+import com.employee_self_service.entities.users.Users;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.EntityListeners;
@@ -24,19 +25,26 @@ import java.time.LocalDate;
 public class UserExperienceDetails extends BaseEntity {
 
     @Column(name = "user_id")
-    private User user;
+    private Users users;
 
     private String previousCompany;
     private String previousCompanyLocation;
+
     private String previousJobTitle;
+
     private String previousManager;
-    private String previousManagerContact;
+    private String previousManagerContactNumber;
+
     private Float experienceYears;
     private String jobResponsibilities;
     private String technologiesWorkedOn;
+
     private LocalDate previousJobStartDate;
     private LocalDate previousJobEndDate;
+
     private String reasonForLeaving;
-    private String consideredRole;
+
+    @Column(name = "considered_role_id")
+    private JobTitles consideredRole;
 
 }

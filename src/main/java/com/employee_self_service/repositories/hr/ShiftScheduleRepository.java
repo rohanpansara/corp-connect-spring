@@ -1,6 +1,6 @@
 package com.employee_self_service.repositories.hr;
 
-import com.employee_self_service.entities.hr.ShiftSchedule;
+import com.employee_self_service.entities.hr.WorkShifts;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
@@ -8,15 +8,15 @@ import java.time.LocalTime;
 import java.util.List;
 
 @Repository
-public interface ShiftScheduleRepository extends JpaRepository<ShiftSchedule, Long> {
+public interface ShiftScheduleRepository extends JpaRepository<WorkShifts, Long> {
 
-    ShiftSchedule findByName(String name);
+    WorkShifts findByName(String name);
 
-    List<ShiftSchedule> findByStartTime(LocalTime startTime);
-    List<ShiftSchedule> findByEndTime(LocalTime endTime);
+    List<WorkShifts> findByStartTime(LocalTime startTime);
+    List<WorkShifts> findByEndTime(LocalTime endTime);
 
-    List<ShiftSchedule> findByDuration(String duration);
-    List<ShiftSchedule> findByDurationContaining(String durationPart); // For partial matches
-    List<ShiftSchedule> findByDurationGreaterThanEqual(String duration); // For minimum duration
+    List<WorkShifts> findByDuration(String duration);
+    List<WorkShifts> findByDurationContaining(String durationPart); // For partial matches
+    List<WorkShifts> findByDurationGreaterThanEqual(String duration); // For minimum duration
 
 }

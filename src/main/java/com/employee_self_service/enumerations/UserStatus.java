@@ -5,8 +5,8 @@ import lombok.Getter;
 @Getter
 public enum UserStatus{
     INTERN("Intern"),
-    FULL_TIME("Full Time"),
     CONTRACT("Contract"),
+    FULL_TIME("Full Time"),
     NOTICE_PERIOD("Notice Period");
 
     private final String label;
