@@ -3,7 +3,7 @@ package com.employee_self_service.security.filters;
 import com.employee_self_service.entities.users.Users;
 import com.employee_self_service.security.EssUserContext;
 import com.employee_self_service.security.services.JwtService;
-import com.employee_self_service.utils.EssConstants;
+import com.employee_self_service.utils.constants.EssConstants;
 import jakarta.servlet.FilterChain;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;

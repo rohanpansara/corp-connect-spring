@@ -10,12 +10,14 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
+import lombok.ToString;
 import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 
-@EqualsAndHashCode(callSuper = true)
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
+@EqualsAndHashCode(callSuper = true)
+@ToString
 @Entity
 @EntityListeners(AuditingEntityListener.class)
 @Table(name = "HR_MEETING_ROOMS")
@@ -31,3 +33,5 @@ public class MeetingRooms extends NameWithDeleteEntity {
     private String equipment;
 
 }
+
+

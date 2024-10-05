@@ -1,9 +1,9 @@
 package com.employee_self_service.mappers.hr;
 
-import com.employee_self_service.dtos.hr.ShiftScheduleDTO;
+import com.employee_self_service.dtos.hr.WorkShiftsDTO;
 import com.employee_self_service.entities.hr.WorkShifts;
 import com.employee_self_service.exceptions.common.BaseException;
-import com.employee_self_service.utils.CustomDateTimeFormatter;
+import com.employee_self_service.utils.functions.CustomDateTimeFormatter;
 import org.mapstruct.AfterMapping;
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
@@ -20,21 +20,21 @@ public abstract class ShiftScheduleMapper {
     @Mapping(target = "lastUpdatedBy", ignore = true)
     @Mapping(target = "createdDate", ignore = true)
     @Mapping(target = "createdBy", ignore = true)
-    public abstract WorkShifts toEntity(ShiftScheduleDTO shiftScheduleDTO);
+    public abstract WorkShifts toEntity(WorkShiftsDTO workShiftsDTO);
 
     @Mapping(target = "lastUpdatedDate", ignore = true)
     @Mapping(target = "lastUpdatedBy", ignore = true)
     @Mapping(target = "createdDate", ignore = true)
     @Mapping(target = "createdBy", ignore = true)
-    public abstract ShiftScheduleDTO toDTO(WorkShifts workShifts);
+    public abstract WorkShiftsDTO toDTO(WorkShifts workShifts);
 
-    public abstract List<WorkShifts> toEntityList(List<ShiftScheduleDTO> shiftScheduleDTOList);
+    public abstract List<WorkShifts> toEntityList(List<WorkShiftsDTO> workShiftsDTOList);
 
-    public abstract List<ShiftScheduleDTO> toDTOList(List<WorkShifts> workShiftsList);
+    public abstract List<WorkShiftsDTO> toDTOList(List<WorkShifts> workShiftsList);
 
     @AfterMapping
-    protected void dateFormatting(WorkShifts workShifts, @MappingTarget ShiftScheduleDTO shiftScheduleDTO) throws BaseException {
-        shiftScheduleDTO.setCreatedDate(CustomDateTimeFormatter.getLocalDateTimeString(workShifts.getCreatedDate()));
-        shiftScheduleDTO.setLastUpdatedDate(CustomDateTimeFormatter.getLocalDateTimeString(workShifts.getLastUpdatedDate()));
+    protected void dateFormatting(WorkShifts workShifts, @MappingTarget WorkShiftsDTO workShiftsDTO) throws BaseException {
+        workShiftsDTO.setCreatedDate(CustomDateTimeFormatter.getLocalDateTimeString(workShifts.getCreatedDate()));
+        workShiftsDTO.setLastUpdatedDate(CustomDateTimeFormatter.getLocalDateTimeString(workShifts.getLastUpdatedDate()));
     }
 }

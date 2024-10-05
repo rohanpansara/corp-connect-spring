@@ -18,6 +18,8 @@ public interface JobTitlesService {
     void deleteJobTitlesById(Long jobTitlesId, Boolean isPermanentDelete);
 
     List<JobTitles> getAllJobTitles();
+    List<JobTitles> getAllNonDeletedJobTitles();
+    List<JobTitles> getAllDeletedJobTitles();
     List<JobTitles> getJobTitlesById(Long jobTitlesId);
     List<JobTitles> getJobTitlesByName(String jobTitlesName);
     List<JobTitles> getJobTitlesByGrade(String grade);

@@ -8,7 +8,7 @@ import com.employee_self_service.security.dtos.AuthRequestDTO;
 import com.employee_self_service.security.dtos.AuthResponseDTO;
 import com.employee_self_service.security.dtos.RegisterDTO;
 import com.employee_self_service.security.services.AuthenticationService;
-import com.employee_self_service.utils.EssConstants;
+import com.employee_self_service.utils.constants.EssConstants;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;

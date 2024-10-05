@@ -6,7 +6,8 @@ import com.employee_self_service.exceptions.hr.JobTitleNotFoundException;
 import com.employee_self_service.mappers.hr.JobTitlesMapper;
 import com.employee_self_service.repositories.hr.JobTitlesRepository;
 import com.employee_self_service.services.hr.JobTitlesService;
-import com.employee_self_service.utils.EssConstants;
+import com.employee_self_service.utils.constants.EssConstants;
+import com.employee_self_service.utils.constants.LogConstants;
 import lombok.RequiredArgsConstructor;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -50,9 +51,9 @@ public class JobTitlesServiceImpl implements JobTitlesService {
     public void createJobTitles(JobTitlesDTO jobTitlesDTO) {
         try {
             jobTitlesRepository.save(this.getEntity(jobTitlesDTO));
-            logger.info("Created: Attempt to delete a job title with dto: {}", jobTitlesDTO);
+            logger.info(LogConstants.getCreatedSuccessfullyMessage("Job Title", "DTO", jobTitlesDTO, null));
         } catch (DataIntegrityViolationException e) {
-            logger.error("Already Exists: Attempt to create a job title with dto: {}", jobTitlesDTO);
+            logger.error(LogConstants.getAlreadyExistsWhileCreatingMessage("Job Title", jobTitlesDTO.getName(), null));
             throw new RuntimeException(EssConstants.JobTitles.JOB_TITLE_ALREADY_EXISTS);
         }
     }
@@ -61,16 +62,16 @@ public class JobTitlesServiceImpl implements JobTitlesService {
     public void updateJobTitles(Long oldJobTitleId, JobTitlesDTO jobTitlesDTO) {
         JobTitles oldJobTitle = jobTitlesRepository.findById(oldJobTitleId).orElseThrow(
                 () -> {
-                    logger.error("Not Found: Attempt to update a job title with id: {}", oldJobTitleId);
+                    logger.error(LogConstants.getNotFoundMessage("Job Title", "ID", oldJobTitleId, "while updating"));
                     return new JobTitleNotFoundException(EssConstants.JobTitles.JOB_TITLE_NOT_FOUND);
                 });
 
         try {
             jobTitlesMapper.updateEntityFromDTO(jobTitlesDTO, oldJobTitle);
             jobTitlesRepository.save(oldJobTitle);
-            logger.info("Updated: Attempt to update a job title with dto: {}", jobTitlesDTO);
+            logger.info(LogConstants.getUpdatedSuccessfullyMessage("Job Title", "DTO", jobTitlesDTO, "ID", oldJobTitleId, "while updating"));
         } catch (DataIntegrityViolationException e) {
-            logger.error("Already Exists: Attempt to update a job title with name: {}", jobTitlesDTO.getName());
+            logger.error(LogConstants.getAlreadyExistsWhileCreatingMessage("Job Title", jobTitlesDTO.getName(), "while updating"));
             throw new RuntimeException(EssConstants.JobTitles.JOB_TITLE_ALREADY_EXISTS);
         }
     }
@@ -79,9 +80,9 @@ public class JobTitlesServiceImpl implements JobTitlesService {
     public void deleteJobTitles(JobTitlesDTO jobTitlesDTO) {
         try {
             jobTitlesRepository.delete(this.getEntity(jobTitlesDTO));
-            logger.info("Permanent Delete: Attempt to delete a job title with dto: {}", jobTitlesDTO);
+            logger.info(LogConstants.getDeletedSuccessfullyMessage("Job Title", "Permanent", "DTO", jobTitlesDTO, null));
         } catch (DataIntegrityViolationException e) {
-            logger.error("In Use: Attempt to delete a job title with DTO: {}", jobTitlesDTO);
+            logger.error(LogConstants.getIsUsedSomewhereMessage("Job Title", "DTO", jobTitlesDTO, null));
             throw new RuntimeException(EssConstants.JobTitles.DataIntegrityViolation);
         }
     }
@@ -91,20 +92,20 @@ public class JobTitlesServiceImpl implements JobTitlesService {
         try {
             JobTitles jobTitleToDelete = jobTitlesRepository.findById(jobTitlesId).orElseThrow(
                     () -> {
-                        logger.error("Not Found: Attempt to delete a job title with id: {}", jobTitlesId);
+                        logger.error(LogConstants.getNotFoundMessage("Job Title", "ID", jobTitlesId, "while deleting"));
                         return new JobTitleNotFoundException(EssConstants.JobTitles.JOB_TITLE_NOT_FOUND);
                     });
 
-            if(isPermanentDelete){
+            if (isPermanentDelete) {
                 jobTitlesRepository.delete(jobTitleToDelete);
-                logger.info("Soft Delete: Attempt to delete a job title with id: {}", jobTitlesId);
+                logger.info(LogConstants.getDeletedSuccessfullyMessage("Job Title", "Permanent", "ID", jobTitlesId, null));
             } else {
                 jobTitleToDelete.setDeleted(true);
                 jobTitlesRepository.save(jobTitleToDelete);
-                logger.info("Permanent Delete: Attempt to delete a job title with id: {}", jobTitlesId);
+                logger.info(LogConstants.getDeletedSuccessfullyMessage("Job Title", "Soft", "ID", jobTitlesId, null));
             }
         } catch (DataIntegrityViolationException e) {
-            logger.error("In Use: Attempt to delete a job title with id: {}", jobTitlesId);
+            logger.error(LogConstants.getIsUsedSomewhereMessage("Job Title", "ID", jobTitlesId, null));
             throw new RuntimeException(EssConstants.JobTitles.DataIntegrityViolation);
         }
     }
@@ -115,13 +116,19 @@ public class JobTitlesServiceImpl implements JobTitlesService {
     }
 
     @Override
+    public List<JobTitles> getAllNonDeletedJobTitles() {
+        return jobTitlesRepository.findByIsDeleted(false);
+    }
+
+    @Override
+    public List<JobTitles> getAllDeletedJobTitles() {
+        return jobTitlesRepository.findByIsDeleted(true);
+    }
+
+    @Override
     public List<JobTitles> getJobTitlesById(Long jobTitlesId) {
         Optional<JobTitles> jobTitlesOptional = jobTitlesRepository.findById(jobTitlesId);
-        if(jobTitlesOptional.isEmpty()){
-            logger.error("Not Found: Attempt to get a job title with id: {}", jobTitlesId);
-            throw new JobTitleNotFoundException(EssConstants.JobTitles.JOB_TITLE_NOT_FOUND);
-        }
-        return Collections.singletonList(jobTitlesOptional.get());
+        return jobTitlesOptional.map(Collections::singletonList).orElseGet(List::of);
     }
 
     @Override

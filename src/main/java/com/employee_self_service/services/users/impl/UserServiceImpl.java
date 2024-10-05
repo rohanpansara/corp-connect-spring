@@ -11,7 +11,8 @@ import com.employee_self_service.mappers.client.UserMapper;
 import com.employee_self_service.repositories.users.UserRepository;
 import com.employee_self_service.security.dtos.RegisterDTO;
 import com.employee_self_service.services.users.UserService;
-import com.employee_self_service.utils.EssConstants;
+import com.employee_self_service.utils.constants.EssConstants;
+import com.employee_self_service.utils.constants.LogConstants;
 import jakarta.transaction.Transactional;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -73,14 +74,13 @@ public class UserServiceImpl implements UserService {
         users.setCredentialsNonExpired(true);
         Optional<String> currentAuditor = applicationAuditAware.getCurrentAuditor();
         if (currentAuditor.isEmpty()) {
-            logger.info("No auditor found. Setting createdBy and lastUpdatedBy to 'system'.");
             users.setCreatedBy("system");
             users.setLastUpdatedBy("system");
+            logger.error(LogConstants.getAuditorNotFoundMessage("User", users.getId(), "while creating"));
         } else {
             String auditor = currentAuditor.get();
-            logger.info("Auditor found. Setting createdBy and lastUpdatedBy to {}.", auditor);
-            users.setCreatedBy(currentAuditor.get());
-            users.setLastUpdatedBy(currentAuditor.get());
+            users.setCreatedBy(auditor);
+            users.setLastUpdatedBy(auditor);
         }
         return userRepository.save(users);
     }
@@ -89,7 +89,7 @@ public class UserServiceImpl implements UserService {
     public Users getUserByEmail(String email) {
         Optional<Users> foundUser = userRepository.findByEmail(email);
         if(foundUser.isEmpty()){
-            logger.error("Not Found: Attempt to get user with email: {}", email);
+            logger.error(LogConstants.getNotFoundMessage("User", "get", "Email", email, null));
             return null;
         }
         return foundUser.get();

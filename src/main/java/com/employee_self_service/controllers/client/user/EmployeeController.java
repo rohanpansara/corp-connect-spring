@@ -4,7 +4,7 @@ import com.employee_self_service.dtos.users.UserDTO;
 import com.employee_self_service.dtos.common.ResponseDTO;
 import com.employee_self_service.exceptions.common.BaseException;
 import com.employee_self_service.services.users.UserService;
-import com.employee_self_service.utils.EssConstants;
+import com.employee_self_service.utils.constants.EssConstants;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;

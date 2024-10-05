@@ -3,7 +3,7 @@ package com.employee_self_service.mappers.hr;
 import com.employee_self_service.dtos.hr.MeetingRoomsDTO;
 import com.employee_self_service.entities.hr.MeetingRooms;
 import com.employee_self_service.exceptions.common.BaseException;
-import com.employee_self_service.utils.CustomDateTimeFormatter;
+import com.employee_self_service.utils.functions.CustomDateTimeFormatter;
 import org.mapstruct.AfterMapping;
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;

@@ -2,8 +2,7 @@ package com.employee_self_service.mappers.hr;
 
 import com.employee_self_service.dtos.hr.JobTitlesDTO;
 import com.employee_self_service.entities.hr.JobTitles;
-import com.employee_self_service.exceptions.common.BaseException;
-import com.employee_self_service.utils.CustomDateTimeFormatter;
+import com.employee_self_service.utils.functions.CustomDateTimeFormatter;
 import org.mapstruct.AfterMapping;
 import org.mapstruct.BeanMapping;
 import org.mapstruct.Mapper;

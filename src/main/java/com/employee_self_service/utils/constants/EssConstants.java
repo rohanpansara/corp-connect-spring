@@ -1,4 +1,4 @@
-package com.employee_self_service.utils;
+package com.employee_self_service.utils.constants;
 
 public class EssConstants {
 

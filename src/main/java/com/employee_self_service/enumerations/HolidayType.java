@@ -1,7 +1,7 @@
 package com.employee_self_service.enumerations;
 
 import com.employee_self_service.exceptions.hr.HolidayNotFoundException;
-import com.employee_self_service.utils.EssConstants;
+import com.employee_self_service.utils.constants.EssConstants;
 import lombok.Getter;
 
 @Getter

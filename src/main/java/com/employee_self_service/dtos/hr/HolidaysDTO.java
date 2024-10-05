@@ -2,20 +2,20 @@ package com.employee_self_service.dtos.hr;
 
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.employee_self_service.dtos.common.NamedDTO;
-import jakarta.validation.constraints.Pattern;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.RequiredArgsConstructor;
+import lombok.ToString;
 
 @EqualsAndHashCode(callSuper = true)
 @Data
 @RequiredArgsConstructor
+@ToString
 @JsonInclude(JsonInclude.Include.NON_NULL)
-public class ShiftScheduleDTO extends NamedDTO {
+public class HolidaysDTO extends NamedDTO {
 
-    @Pattern(regexp = "^\\d{1,2}hrs \\d{1,2}mins$", message = "Duration must be in the format 'XXhrs XXmins'")
-    private String duration;
-    private String startTime;
-    private String endTime;
-
+    private String date;
+    private String description;
+    private String type;
+    private boolean isRecurring;
 }

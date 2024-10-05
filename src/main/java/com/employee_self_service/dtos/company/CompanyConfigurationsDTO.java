@@ -5,10 +5,12 @@ import com.employee_self_service.dtos.common.BaseDTO;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.RequiredArgsConstructor;
+import lombok.ToString;
 
-@EqualsAndHashCode(callSuper = true)
 @Data
+@EqualsAndHashCode(callSuper = true)
 @RequiredArgsConstructor
+@ToString
 @JsonInclude(JsonInclude.Include.NON_NULL)
 public class CompanyConfigurationsDTO extends BaseDTO {
 

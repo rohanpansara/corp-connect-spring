@@ -1,7 +1,7 @@
 package com.employee_self_service.security.utils;
 
 import com.employee_self_service.exceptions.client.RecordNotFoundException;
-import com.employee_self_service.utils.EssConstants;
+import com.employee_self_service.utils.constants.EssConstants;
 import lombok.Getter;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 

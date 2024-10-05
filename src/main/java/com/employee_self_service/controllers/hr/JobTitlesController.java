@@ -3,7 +3,7 @@ package com.employee_self_service.controllers.hr;
 import com.employee_self_service.dtos.common.ResponseDTO;
 import com.employee_self_service.dtos.hr.JobTitlesDTO;
 import com.employee_self_service.services.hr.JobTitlesService;
-import com.employee_self_service.utils.EssConstants;
+import com.employee_self_service.utils.constants.EssConstants;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
