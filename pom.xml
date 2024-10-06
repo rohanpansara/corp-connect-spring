@@ -8,10 +8,10 @@
         <version>3.3.1</version>
         <relativePath/> <!-- lookup parent from repository -->
     </parent>
-    <groupId>com.jwtauthentication</groupId>
-    <artifactId>JWT-Auth</artifactId>
+    <groupId>com.corpConnect</groupId>
+    <artifactId>Corp Connect</artifactId>
     <version>0.0.1-SNAPSHOT</version>
-    <name>Employee Self Service Web Application</name>
+    <name>Corp Connect Web Application</name>
     <description>Developed using Java 21 And Spring Boot 3.3.1</description>
     <url/>
     <licenses>
