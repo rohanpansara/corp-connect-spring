@@ -1,6 +1,6 @@
 package com.corpConnect.repositories.hr;
 
-import com.corpConnect.entities.hr.Holidays;
+import com.corpConnect.entities.hr.Holiday;
 import com.corpConnect.enumerations.HolidayType;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
@@ -11,12 +11,12 @@ import java.time.LocalDate;
 import java.util.List;
 
 @Repository
-public interface HolidayRepository extends JpaRepository<Holidays, Long> {
-    Holidays findByDate(LocalDate localDate);
-    Holidays findByName(String name);
-    List<Holidays> findByNameContainingIgnoreCase(String name); // for searching filter
-    List<Holidays> findByType(HolidayType holidayType);
+public interface HolidayRepository extends JpaRepository<Holiday, Long> {
+    Holiday findByDate(LocalDate localDate);
+    Holiday findByName(String name);
+    List<Holiday> findByNameContainingIgnoreCase(String name); // for searching filter
+    List<Holiday> findByType(HolidayType holidayType);
 
-    @Query("SELECT h FROM Holidays h WHERE MONTH(h.date) = :month AND YEAR(h.date) = :year")
-    List<Holidays> findByMonthAndYear(@Param("month") int month, @Param("year") int year);
+    @Query("SELECT h FROM Holiday h WHERE MONTH(h.date) = :month AND YEAR(h.date) = :year")
+    List<Holiday> findByMonthAndYear(@Param("month") int month, @Param("year") int year);
 }

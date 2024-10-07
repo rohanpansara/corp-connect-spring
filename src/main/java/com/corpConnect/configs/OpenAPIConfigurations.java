@@ -16,8 +16,8 @@ import io.swagger.v3.oas.annotations.servers.Server;
                         email = "rohan@gmail.com",
                         url = "#"
                 ),
-                description = "ESS (Employee Self Service) Web Application APIs",
-                title = "ESS APIs",
+                description = "CC (Corp Connect) Web Application APIs",
+                title = "CC APIs",
                 version = "v1",
                 termsOfService = "You have to like the repository before cloning ;)"
         ),

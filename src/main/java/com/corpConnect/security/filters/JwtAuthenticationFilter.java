@@ -1,6 +1,6 @@
 package com.corpConnect.security.filters;
 
-import com.corpConnect.entities.users.Users;
+import com.corpConnect.entities.user.User;
 import com.corpConnect.security.EssUserContext;
 import com.corpConnect.security.services.JwtService;
 import com.corpConnect.utils.constants.CorpConnectConstants;
@@ -66,7 +66,7 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
                     );
                     authToken.setDetails(new WebAuthenticationDetailsSource().buildDetails(request));
                     SecurityContextHolder.getContext().setAuthentication(authToken);
-                    EssUserContext.setCurrentUser((Users) userDetails);
+                    EssUserContext.setCurrentUser((User) userDetails);
                 }
             }
             filterChain.doFilter(request, response);

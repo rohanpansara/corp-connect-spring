@@ -1,6 +1,6 @@
 package com.corpConnect.controllers;
 
-import com.corpConnect.dtos.users.UserDTO;
+import com.corpConnect.dtos.user.UserDTO;
 import com.corpConnect.dtos.common.ResponseDTO;
 import com.corpConnect.exceptions.client.LoginFailedException;
 import com.corpConnect.exceptions.common.BaseException;

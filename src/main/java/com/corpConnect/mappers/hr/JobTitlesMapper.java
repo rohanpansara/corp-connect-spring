@@ -1,7 +1,7 @@
 package com.corpConnect.mappers.hr;
 
-import com.corpConnect.dtos.hr.JobTitlesDTO;
-import com.corpConnect.entities.hr.JobTitles;
+import com.corpConnect.dtos.hr.JobTitleDTO;
+import com.corpConnect.entities.hr.JobTitle;
 import com.corpConnect.utils.functions.CustomDateTimeFormatter;
 import org.mapstruct.AfterMapping;
 import org.mapstruct.BeanMapping;
@@ -21,24 +21,24 @@ public abstract class JobTitlesMapper {
     @Mapping(target = "lastUpdatedBy", ignore = true)
     @Mapping(target = "createdDate", ignore = true)
     @Mapping(target = "createdBy", ignore = true)
-    public abstract JobTitles toEntity(JobTitlesDTO jobTitlesDTO);
+    public abstract JobTitle toEntity(JobTitleDTO jobTitleDTO);
 
     @Mapping(target = "lastUpdatedDate", ignore = true)
     @Mapping(target = "lastUpdatedBy", ignore = true)
     @Mapping(target = "createdDate", ignore = true)
     @Mapping(target = "createdBy", ignore = true)
-    public abstract JobTitlesDTO toDTO(JobTitles jobTitles);
+    public abstract JobTitleDTO toDTO(JobTitle jobTitle);
 
-    public abstract List<JobTitles> toEntityList(List<JobTitlesDTO> jobTitlesDTOList);
+    public abstract List<JobTitle> toEntityList(List<JobTitleDTO> jobTitleDTOList);
 
-    public abstract List<JobTitlesDTO> toDTOList(List<JobTitles> jobTitlesList);
+    public abstract List<JobTitleDTO> toDTOList(List<JobTitle> jobTitleList);
 
     @BeanMapping(nullValuePropertyMappingStrategy = NullValuePropertyMappingStrategy.IGNORE)
-    public abstract void updateEntityFromDTO(JobTitlesDTO jobTitlesDTO, @MappingTarget JobTitles jobTitles);
+    public abstract void updateEntityFromDTO(JobTitleDTO jobTitleDTO, @MappingTarget JobTitle jobTitle);
 
     @AfterMapping
-    protected void dateFormatting(JobTitles jobTitles, @MappingTarget JobTitlesDTO jobTitlesDTO) {
-        jobTitlesDTO.setCreatedDate(CustomDateTimeFormatter.getLocalDateTimeString(jobTitles.getCreatedDate()));
-        jobTitlesDTO.setLastUpdatedDate(CustomDateTimeFormatter.getLocalDateTimeString(jobTitles.getLastUpdatedDate()));
+    protected void dateFormatting(JobTitle jobTitle, @MappingTarget JobTitleDTO jobTitleDTO) {
+        jobTitleDTO.setCreatedDate(CustomDateTimeFormatter.getLocalDateTimeString(jobTitle.getCreatedDate()));
+        jobTitleDTO.setLastUpdatedDate(CustomDateTimeFormatter.getLocalDateTimeString(jobTitle.getLastUpdatedDate()));
     }
 }

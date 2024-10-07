@@ -1,7 +1,7 @@
 package com.corpConnect.mappers.hr;
 
-import com.corpConnect.dtos.hr.WorkShiftsDTO;
-import com.corpConnect.entities.hr.WorkShifts;
+import com.corpConnect.dtos.hr.WorkShiftDTO;
+import com.corpConnect.entities.hr.WorkShift;
 import com.corpConnect.exceptions.common.BaseException;
 import com.corpConnect.utils.functions.CustomDateTimeFormatter;
 import org.mapstruct.AfterMapping;
@@ -20,21 +20,21 @@ public abstract class ShiftScheduleMapper {
     @Mapping(target = "lastUpdatedBy", ignore = true)
     @Mapping(target = "createdDate", ignore = true)
     @Mapping(target = "createdBy", ignore = true)
-    public abstract WorkShifts toEntity(WorkShiftsDTO workShiftsDTO);
+    public abstract WorkShift toEntity(WorkShiftDTO workShiftDTO);
 
     @Mapping(target = "lastUpdatedDate", ignore = true)
     @Mapping(target = "lastUpdatedBy", ignore = true)
     @Mapping(target = "createdDate", ignore = true)
     @Mapping(target = "createdBy", ignore = true)
-    public abstract WorkShiftsDTO toDTO(WorkShifts workShifts);
+    public abstract WorkShiftDTO toDTO(WorkShift workShift);
 
-    public abstract List<WorkShifts> toEntityList(List<WorkShiftsDTO> workShiftsDTOList);
+    public abstract List<WorkShift> toEntityList(List<WorkShiftDTO> workShiftDTOList);
 
-    public abstract List<WorkShiftsDTO> toDTOList(List<WorkShifts> workShiftsList);
+    public abstract List<WorkShiftDTO> toDTOList(List<WorkShift> workShiftList);
 
     @AfterMapping
-    protected void dateFormatting(WorkShifts workShifts, @MappingTarget WorkShiftsDTO workShiftsDTO) throws BaseException {
-        workShiftsDTO.setCreatedDate(CustomDateTimeFormatter.getLocalDateTimeString(workShifts.getCreatedDate()));
-        workShiftsDTO.setLastUpdatedDate(CustomDateTimeFormatter.getLocalDateTimeString(workShifts.getLastUpdatedDate()));
+    protected void dateFormatting(WorkShift workShift, @MappingTarget WorkShiftDTO workShiftDTO) throws BaseException {
+        workShiftDTO.setCreatedDate(CustomDateTimeFormatter.getLocalDateTimeString(workShift.getCreatedDate()));
+        workShiftDTO.setLastUpdatedDate(CustomDateTimeFormatter.getLocalDateTimeString(workShift.getLastUpdatedDate()));
     }
 }

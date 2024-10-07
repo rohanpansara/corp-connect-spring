@@ -1,6 +1,6 @@
 package com.corpConnect.security;
 
-import com.corpConnect.entities.users.Users;
+import com.corpConnect.entities.user.User;
 import org.springframework.stereotype.Component;
 
 @Component
@@ -8,14 +8,14 @@ public class EssUserContext {
 
     private EssUserContext() {}
 
-    private static final ThreadLocal<Users> loggedUser = ThreadLocal.withInitial(() -> null);
+    private static final ThreadLocal<User> loggedUser = ThreadLocal.withInitial(() -> null);
 
-    public static Users getCurrentUser() {
+    public static User getCurrentUser() {
         return EssUserContext.loggedUser.get();
     }
 
-    public static synchronized void setCurrentUser(Users users) {
-        EssUserContext.loggedUser.set(users);
+    public static synchronized void setCurrentUser(User user) {
+        EssUserContext.loggedUser.set(user);
     }
 
     public static void clear() {

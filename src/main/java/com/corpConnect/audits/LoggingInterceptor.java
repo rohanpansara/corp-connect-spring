@@ -10,13 +10,9 @@ import org.springframework.stereotype.Component;
 import org.springframework.web.servlet.HandlerInterceptor;
 import org.springframework.web.method.HandlerMethod;
 
-import java.text.SimpleDateFormat;
-import java.util.Date;
-
 import static com.corpConnect.utils.constants.InterceptorColors.BLUE;
 import static com.corpConnect.utils.constants.InterceptorColors.GREEN;
 import static com.corpConnect.utils.constants.InterceptorColors.MAGENTA;
-import static com.corpConnect.utils.constants.InterceptorColors.RED;
 import static com.corpConnect.utils.constants.InterceptorColors.RESET;
 import static com.corpConnect.utils.constants.InterceptorColors.YELLOW;
 
@@ -26,7 +22,7 @@ public class LoggingInterceptor implements HandlerInterceptor {
     private static final Logger logger = LoggerFactory.getLogger(LoggingInterceptor.class);
 
     @Value("${colored-logs}")
-    private static boolean USE_COLOR_LOGGING;
+    private boolean USE_COLOR_LOGGING;
 
     @Override
     public boolean preHandle(@NonNull HttpServletRequest request, @NonNull HttpServletResponse response, @NonNull Object handler) {
@@ -38,32 +34,29 @@ public class LoggingInterceptor implements HandlerInterceptor {
 
             // Construct a well-formatted log message without colors
             String logMessage = String.format(
-                    "[%s] Controller: %s | Method: %s | HTTP Method: %s | URL: %s",
-                    new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").format(new Date()), // Timestamp
-                    controllerName,
-                    methodName,
+                    "HTTP Method: %s | URL: %s | Controller: %s | Method: %s",
                     httpMethod,
-                    requestURI
+                    requestURI,
+                    controllerName,
+                    methodName
             );
 
             // Apply colors if toggle is enabled
             if (USE_COLOR_LOGGING) {
                 logMessage = String.format(
-                        "%s[%s] %sController:%s %s %s| Method:%s %s %s| HTTP Method:%s %s %s| URL:%s %s%s",
-                        RED, // Reset color
-                        new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").format(new Date()), // Timestamp
+                        "%sHTTP Method:%s %s %s| URL:%s %s %s| Controller:%s %s %s| Method:%s %s%s",
                         RESET,
                         BLUE, // Color for Controller
-                        controllerName,
-                        RESET,
-                        YELLOW, // Color for Method
-                        methodName,
-                        RESET,
-                        GREEN, // Color for HTTP Method
                         httpMethod,
                         RESET,
-                        MAGENTA, // Color for URL
+                        YELLOW, // Color for Method
                         requestURI,
+                        RESET,
+                        GREEN, // Color for HTTP Method
+                        controllerName,
+                        RESET,
+                        MAGENTA, // Color for URL
+                        methodName,
                         RESET // Reset color at the end
                 );
             }

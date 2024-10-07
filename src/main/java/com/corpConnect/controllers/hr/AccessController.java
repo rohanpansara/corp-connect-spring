@@ -1,7 +1,7 @@
 package com.corpConnect.controllers.hr;
 
 import com.corpConnect.dtos.common.ResponseDTO;
-import com.corpConnect.services.users.UserService;
+import com.corpConnect.services.user.UserService;
 import com.corpConnect.utils.constants.CorpConnectConstants;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;

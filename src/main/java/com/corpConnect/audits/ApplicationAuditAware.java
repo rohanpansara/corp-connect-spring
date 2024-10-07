@@ -1,6 +1,6 @@
 package com.corpConnect.audits;
 
-import com.corpConnect.entities.users.Users;
+import com.corpConnect.entities.user.User;
 
 import io.micrometer.common.lang.NonNullApi;
 import org.springframework.data.domain.AuditorAware;
@@ -21,7 +21,7 @@ public class ApplicationAuditAware implements AuditorAware<String> {
             return Optional.empty();
         }
 
-        Users usersPrincipal = (Users) authentication.getPrincipal();
-        return Optional.ofNullable(String.valueOf(usersPrincipal.getId()));
+        User userPrincipal = (User) authentication.getPrincipal();
+        return Optional.ofNullable(String.valueOf(userPrincipal.getId()));
     }
 }

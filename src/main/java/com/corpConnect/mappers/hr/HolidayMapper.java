@@ -1,7 +1,7 @@
 package com.corpConnect.mappers.hr;
 
-import com.corpConnect.dtos.hr.HolidaysDTO;
-import com.corpConnect.entities.hr.Holidays;
+import com.corpConnect.dtos.hr.HolidayDTO;
+import com.corpConnect.entities.hr.Holiday;
 import com.corpConnect.utils.functions.CustomDateTimeFormatter;
 import org.mapstruct.AfterMapping;
 import org.mapstruct.BeanMapping;
@@ -21,24 +21,24 @@ public abstract class HolidayMapper {
     @Mapping(target = "lastUpdatedBy", ignore = true)
     @Mapping(target = "createdDate", ignore = true)
     @Mapping(target = "createdBy", ignore = true)
-    public abstract Holidays toEntity(HolidaysDTO holidaysDTO);
+    public abstract Holiday toEntity(HolidayDTO holidayDTO);
 
     @Mapping(target = "lastUpdatedDate", ignore = true)
     @Mapping(target = "lastUpdatedBy", ignore = true)
     @Mapping(target = "createdDate", ignore = true)
     @Mapping(target = "createdBy", ignore = true)
-    public abstract HolidaysDTO toDTO(Holidays holidays);
+    public abstract HolidayDTO toDTO(Holiday holiday);
 
-    public abstract List<Holidays> toEntityList(List<HolidaysDTO> holidaysDTOList);
-    public abstract List<HolidaysDTO> toDTOList(List<Holidays> holidaysList);
+    public abstract List<Holiday> toEntityList(List<HolidayDTO> holidayDTOList);
+    public abstract List<HolidayDTO> toDTOList(List<Holiday> holidayList);
 
     @BeanMapping(nullValuePropertyMappingStrategy = NullValuePropertyMappingStrategy.IGNORE)
-    public abstract void updateEntityFromDTO(HolidaysDTO holidaysDTO, @MappingTarget Holidays holidays);
+    public abstract void updateEntityFromDTO(HolidayDTO holidayDTO, @MappingTarget Holiday holiday);
 
     @AfterMapping
-    protected void dateFormatting(Holidays holidays, @MappingTarget HolidaysDTO holidaysDTO) {
-        holidaysDTO.setCreatedDate(CustomDateTimeFormatter.getLocalDateTimeString(holidays.getCreatedDate()));
-        holidaysDTO.setLastUpdatedDate(CustomDateTimeFormatter.getLocalDateTimeString(holidays.getLastUpdatedDate()));
-        holidaysDTO.setDate(CustomDateTimeFormatter.getLocalDateString(holidays.getDate()));
+    protected void dateFormatting(Holiday holiday, @MappingTarget HolidayDTO holidayDTO) {
+        holidayDTO.setCreatedDate(CustomDateTimeFormatter.getLocalDateTimeString(holiday.getCreatedDate()));
+        holidayDTO.setLastUpdatedDate(CustomDateTimeFormatter.getLocalDateTimeString(holiday.getLastUpdatedDate()));
+        holidayDTO.setDate(CustomDateTimeFormatter.getLocalDateString(holiday.getDate()));
     }
 }

@@ -1,7 +1,7 @@
 package com.corpConnect.mappers.hr;
 
-import com.corpConnect.dtos.hr.MeetingRoomsDTO;
-import com.corpConnect.entities.hr.MeetingRooms;
+import com.corpConnect.dtos.hr.MeetingRoomDTO;
+import com.corpConnect.entities.hr.MeetingRoom;
 import com.corpConnect.exceptions.common.BaseException;
 import com.corpConnect.utils.functions.CustomDateTimeFormatter;
 import org.mapstruct.AfterMapping;
@@ -20,24 +20,24 @@ public abstract class MeetingRoomsMapper {
     @Mapping(target = "lastUpdatedBy", ignore = true)
     @Mapping(target = "createdDate", ignore = true)
     @Mapping(target = "createdBy", ignore = true)
-    public abstract MeetingRooms toEntity(MeetingRoomsDTO meetingRoomsDTO);
+    public abstract MeetingRoom toEntity(MeetingRoomDTO meetingRoomDTO);
 
     @Mapping(target = "lastUpdatedDate", ignore = true)
     @Mapping(target = "lastUpdatedBy", ignore = true)
     @Mapping(target = "createdDate", ignore = true)
     @Mapping(target = "createdBy", ignore = true)
-    public abstract MeetingRoomsDTO toDTO(MeetingRooms meetingRooms);
+    public abstract MeetingRoomDTO toDTO(MeetingRoom meetingRoom);
 
-    public abstract List<MeetingRooms> toEntityList(List<MeetingRoomsDTO> meetingRoomsDTOList);
+    public abstract List<MeetingRoom> toEntityList(List<MeetingRoomDTO> meetingRoomDTOList);
 
-    public abstract List<MeetingRoomsDTO> toDTOList(List<MeetingRooms> meetingRoomsList);
+    public abstract List<MeetingRoomDTO> toDTOList(List<MeetingRoom> meetingRoomList);
 
     @AfterMapping
-    protected void dateFormatting(MeetingRooms meetingRooms, @MappingTarget MeetingRoomsDTO meetingRoomsDTO) throws BaseException {
-        meetingRoomsDTO.setCreatedDate(CustomDateTimeFormatter.getLocalDateTimeString(meetingRooms.getCreatedDate()));
-        meetingRoomsDTO.setLastUpdatedDate(CustomDateTimeFormatter.getLocalDateTimeString(meetingRooms.getLastUpdatedDate()));
-        if(meetingRooms.getCapacity()==null){
-            meetingRoomsDTO.setCapacity(0);
+    protected void dateFormatting(MeetingRoom meetingRoom, @MappingTarget MeetingRoomDTO meetingRoomDTO) throws BaseException {
+        meetingRoomDTO.setCreatedDate(CustomDateTimeFormatter.getLocalDateTimeString(meetingRoom.getCreatedDate()));
+        meetingRoomDTO.setLastUpdatedDate(CustomDateTimeFormatter.getLocalDateTimeString(meetingRoom.getLastUpdatedDate()));
+        if(meetingRoom.getCapacity()==null){
+            meetingRoomDTO.setCapacity(0);
         }
     }
 

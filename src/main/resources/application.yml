@@ -28,8 +28,8 @@ spring:
     properties:
       hibernate:
 #        format_sql: true         # to show the sql queries in a readable format rather than single line
-        default_schema: ESS       # Ensure schema is set
-    show-sql: true
+        default_schema: CorpConnect       # Ensure schema is set
+#    show-sql: true
     database-platform: org.hibernate.dialect.MySQL8Dialect
 
   jackson:

@@ -1,7 +1,7 @@
 package com.corpConnect.mappers.hr;
 
-import com.corpConnect.dtos.hr.DepartmentsDTO;
-import com.corpConnect.entities.hr.Departments;
+import com.corpConnect.dtos.hr.DepartmentDTO;
+import com.corpConnect.entities.hr.Department;
 import com.corpConnect.exceptions.common.BaseException;
 import com.corpConnect.utils.functions.CustomDateTimeFormatter;
 import org.mapstruct.AfterMapping;
@@ -22,25 +22,25 @@ public abstract class DepartmentsMapper {
     @Mapping(target = "lastUpdatedBy", ignore = true)
     @Mapping(target = "createdDate", ignore = true)
     @Mapping(target = "createdBy", ignore = true)
-    public abstract Departments toEntity(DepartmentsDTO departmentsDTO);
+    public abstract Department toEntity(DepartmentDTO departmentDTO);
 
     @Mapping(target = "lastUpdatedDate", ignore = true)
     @Mapping(target = "lastUpdatedBy", ignore = true)
     @Mapping(target = "createdDate", ignore = true)
     @Mapping(target = "createdBy", ignore = true)
-    public abstract DepartmentsDTO toDTO(Departments departments);
+    public abstract DepartmentDTO toDTO(Department department);
 
-    public abstract List<Departments> toEntityList(List<DepartmentsDTO> departmentsDTOList);
+    public abstract List<Department> toEntityList(List<DepartmentDTO> departmentDTOList);
 
-    public abstract List<DepartmentsDTO> toDTOList(List<Departments> departmentsList);
+    public abstract List<DepartmentDTO> toDTOList(List<Department> departmentList);
 
     @BeanMapping(nullValuePropertyMappingStrategy = NullValuePropertyMappingStrategy.IGNORE)
-    public abstract void updateEntityFromDTO(DepartmentsDTO departmentsDTO, @MappingTarget Departments departments);
+    public abstract void updateEntityFromDTO(DepartmentDTO departmentDTO, @MappingTarget Department department);
 
     @AfterMapping
-    protected void dateFormatting(Departments departments, @MappingTarget DepartmentsDTO departmentsDTO) throws BaseException {
-        departmentsDTO.setCreatedDate(CustomDateTimeFormatter.getLocalDateTimeString(departments.getCreatedDate()));
-        departmentsDTO.setLastUpdatedDate(CustomDateTimeFormatter.getLocalDateTimeString(departments.getLastUpdatedDate()));
+    protected void dateFormatting(Department department, @MappingTarget DepartmentDTO departmentDTO) throws BaseException {
+        departmentDTO.setCreatedDate(CustomDateTimeFormatter.getLocalDateTimeString(department.getCreatedDate()));
+        departmentDTO.setLastUpdatedDate(CustomDateTimeFormatter.getLocalDateTimeString(department.getLastUpdatedDate()));
     }
 
 }

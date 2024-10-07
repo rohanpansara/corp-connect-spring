@@ -1,37 +1,37 @@
 package com.corpConnect.services.hr;
 
-import com.corpConnect.dtos.hr.HolidaysDTO;
-import com.corpConnect.entities.hr.Holidays;
+import com.corpConnect.dtos.hr.HolidayDTO;
+import com.corpConnect.entities.hr.Holiday;
 
 import java.util.List;
 
 public interface HolidayService {
 
     // Holiday Mapper
-    Holidays getEntity(HolidaysDTO holidaysDTO);
+    Holiday getEntity(HolidayDTO holidayDTO);
 
-    HolidaysDTO getDTO(Holidays holidays);
+    HolidayDTO getDTO(Holiday holiday);
 
-    List<HolidaysDTO> getDTOList(List<Holidays> holidaysList);
+    List<HolidayDTO> getDTOList(List<Holiday> holidayList);
 
-    List<Holidays> getEntityList(List<HolidaysDTO> holidaysDTOList);
+    List<Holiday> getEntityList(List<HolidayDTO> holidayDTOList);
 
-    List<Holidays> getAllHolidays();
+    List<Holiday> getAllHolidays();
 
-    List<Holidays> getAllHolidaysByMonthAndYear(Integer month, Integer year);
+    List<Holiday> getAllHolidaysByMonthAndYear(Integer month, Integer year);
 
-    void createHoliday(HolidaysDTO holidaysDTO);
-    void updateHoliday(Long holidayId, HolidaysDTO holidaysDTO);
-    void deleteHoliday(HolidaysDTO holidaysDTO, boolean isPermanentDelete);
+    void createHoliday(HolidayDTO holidayDTO);
+    void updateHoliday(Long holidayId, HolidayDTO holidayDTO);
+    void deleteHoliday(HolidayDTO holidayDTO, boolean isPermanentDelete);
     void deleteHolidayById(Long holidayId, boolean isPermanentDelete);
 
-    List<Holidays> getHolidayByHolidayId(Long holidayId);
+    List<Holiday> getHolidayByHolidayId(Long holidayId);
 
-    List<Holidays> getHolidayByHolidayName(String holidayName);
+    List<Holiday> getHolidayByHolidayName(String holidayName);
 
-    List<Holidays> getHolidayByHolidayDate(String holidayDate);
+    List<Holiday> getHolidayByHolidayDate(String holidayDate);
 
-    List<Holidays> getAllHolidaysByHolidayType(String label);
+    List<Holiday> getAllHolidaysByHolidayType(String label);
 }
 
 

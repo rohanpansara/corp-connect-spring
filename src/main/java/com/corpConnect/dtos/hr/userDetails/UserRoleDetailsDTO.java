@@ -2,7 +2,7 @@ package com.corpConnect.dtos.hr.userDetails;
 
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.corpConnect.dtos.common.BaseDTO;
-import com.corpConnect.dtos.users.UserDTO;
+import com.corpConnect.dtos.user.UserDTO;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.RequiredArgsConstructor;

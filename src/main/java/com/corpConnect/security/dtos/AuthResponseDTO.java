@@ -2,7 +2,7 @@ package com.corpConnect.security.dtos;
 
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonProperty;
-import com.corpConnect.dtos.users.UserDTO;
+import com.corpConnect.dtos.user.UserDTO;
 import lombok.*;
 
 @Getter

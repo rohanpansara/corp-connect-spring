@@ -1,6 +1,7 @@
 package com.corpConnect.configs;
 
-import com.corpConnect.repositories.users.UserRepository;
+import com.corpConnect.repositories.user.UserRepository;
+import com.corpConnect.utils.constants.LogConstants;
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -22,7 +23,7 @@ public class ApplicationConfigurations {
     @Bean
     public UserDetailsService userDetailsService() {
         return username -> userRepository.findByEmail(username)
-                .orElseThrow(() -> new UsernameNotFoundException("User not found"));
+                .orElseThrow(() -> new UsernameNotFoundException(LogConstants.getNotFoundMessage("User", "get", "Email", username, "from user detail service")));
     }
 
     @Bean

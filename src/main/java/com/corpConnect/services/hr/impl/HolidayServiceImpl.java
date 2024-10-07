@@ -1,7 +1,7 @@
 package com.corpConnect.services.hr.impl;
 
-import com.corpConnect.dtos.hr.HolidaysDTO;
-import com.corpConnect.entities.hr.Holidays;
+import com.corpConnect.dtos.hr.HolidayDTO;
+import com.corpConnect.entities.hr.Holiday;
 import com.corpConnect.enumerations.HolidayType;
 import com.corpConnect.exceptions.hr.HolidayNotFoundException;
 import com.corpConnect.mappers.hr.HolidayMapper;
@@ -29,85 +29,85 @@ public class HolidayServiceImpl implements HolidayService {
     private final HolidayRepository holidayRepository;
 
     @Override
-    public Holidays getEntity(HolidaysDTO holidaysDTO) {
-        return holidayMapper.toEntity(holidaysDTO);
+    public Holiday getEntity(HolidayDTO holidayDTO) {
+        return holidayMapper.toEntity(holidayDTO);
     }
 
     @Override
-    public HolidaysDTO getDTO(Holidays holidays) {
-        return holidayMapper.toDTO(holidays);
+    public HolidayDTO getDTO(Holiday holiday) {
+        return holidayMapper.toDTO(holiday);
     }
 
     @Override
-    public List<HolidaysDTO> getDTOList(List<Holidays> holidaysList) {
-        return holidayMapper.toDTOList(holidaysList);
+    public List<HolidayDTO> getDTOList(List<Holiday> holidayList) {
+        return holidayMapper.toDTOList(holidayList);
     }
 
     @Override
-    public List<Holidays> getEntityList(List<HolidaysDTO> holidaysDTOList) {
-        return holidayMapper.toEntityList(holidaysDTOList);
+    public List<Holiday> getEntityList(List<HolidayDTO> holidayDTOList) {
+        return holidayMapper.toEntityList(holidayDTOList);
     }
 
     @Override
-    public List<Holidays> getAllHolidays() {
+    public List<Holiday> getAllHolidays() {
         return holidayRepository.findAll();
     }
 
     @Override
-    public List<Holidays> getAllHolidaysByMonthAndYear(Integer month, Integer year) {
+    public List<Holiday> getAllHolidaysByMonthAndYear(Integer month, Integer year) {
         return holidayRepository.findByMonthAndYear(month, year);
     }
 
-    private void handleIntegrityViolation(DataIntegrityViolationException e, boolean isWhileCreating, HolidaysDTO holidaysDTO) {
+    private void handleIntegrityViolation(DataIntegrityViolationException e, boolean isWhileCreating, HolidayDTO holidayDTO) {
         if (e.getMessage().contains("name")) {
             if(isWhileCreating){
-                logger.error(LogConstants.getAlreadyExistsWhileCreatingMessage("Holiday", "Name", holidaysDTO.getName(), null));
+                logger.error(LogConstants.getAlreadyExistsWhileCreatingMessage("Holiday", "Name", holidayDTO.getName(), null));
             } else {
-                logger.error(LogConstants.getAlreadyExistsWhileUpdatingMessage("Holiday", "Name", holidaysDTO.getName(), null));
+                logger.error(LogConstants.getAlreadyExistsWhileUpdatingMessage("Holiday", "Name", holidayDTO.getName(), null));
             }
             throw new RuntimeException(CorpConnectConstants.Holiday.HOLIDAY_OF_THE_NAME_EXISTS);
         } else {
             if(isWhileCreating){
-                logger.error(LogConstants.getAlreadyExistsWhileCreatingMessage("Holiday", "Date", holidaysDTO.getDate(), null));
+                logger.error(LogConstants.getAlreadyExistsWhileCreatingMessage("Holiday", "Date", holidayDTO.getDate(), null));
             } else {
-                logger.error(LogConstants.getAlreadyExistsWhileUpdatingMessage("Holiday", "Date", holidaysDTO.getDate(), null));
+                logger.error(LogConstants.getAlreadyExistsWhileUpdatingMessage("Holiday", "Date", holidayDTO.getDate(), null));
             }
             throw new RuntimeException(CorpConnectConstants.Holiday.HOLIDAY_FOR_THE_DATE_EXISTS);
         }
     }
 
     @Override
-    public void createHoliday(HolidaysDTO holidaysDTO) {
+    public void createHoliday(HolidayDTO holidayDTO) {
         try {
-            holidayRepository.save(this.getEntity(holidaysDTO));
+            holidayRepository.save(this.getEntity(holidayDTO));
         } catch (DataIntegrityViolationException e) {
-            handleIntegrityViolation(e, true, holidaysDTO);
+            handleIntegrityViolation(e, true, holidayDTO);
         }
     }
 
     @Override
-    public void updateHoliday(Long holidayId, HolidaysDTO holidaysDTO) {
-        Holidays oldHolidays = holidayRepository.findById(holidayId)
+    public void updateHoliday(Long holidayId, HolidayDTO holidayDTO) {
+        Holiday oldHoliday = holidayRepository.findById(holidayId)
                 .orElseThrow(() -> {
                     logger.error(LogConstants.getNotFoundMessage("Holiday", "update", "ID", holidayId, "while updating"));
                     return new HolidayNotFoundException(CorpConnectConstants.Holiday.HOLIDAY_NOT_FOUND);
                 });
         try {
-            holidayMapper.updateEntityFromDTO(holidaysDTO, oldHolidays);
-            holidayRepository.save(oldHolidays);
-            logger.info(LogConstants.getUpdatedSuccessfullyMessage("Holiday", "DTO", holidaysDTO, "ID", holidayId, null));
+            holidayMapper.updateEntityFromDTO(holidayDTO, oldHoliday);
+            holidayRepository.save(oldHoliday);
+            logger.info(LogConstants.getUpdatedSuccessfullyMessage("Holiday", "DTO", holidayDTO, "ID", holidayId, null));
         } catch (DataIntegrityViolationException e) {
-            handleIntegrityViolation(e, false, holidaysDTO);
+            handleIntegrityViolation(e, false, holidayDTO);
         }
     }
 
     @Override
-    public void deleteHoliday(HolidaysDTO holidaysDTO, boolean isPermanentDelete) {
+    public void deleteHoliday(HolidayDTO holidayDTO, boolean isPermanentDelete) {
         try {
-            holidayRepository.delete(this.getEntity(holidaysDTO));
-            logger.info(LogConstants.getDeletedSuccessfullyMessage("Holiday", "Permanently", "DTO", holidaysDTO, null));
+            holidayRepository.delete(this.getEntity(holidayDTO));
+            logger.info(LogConstants.getDeletedSuccessfullyMessage("Holiday", "Permanently", "DTO", holidayDTO, null));
         } catch (DataIntegrityViolationException e) {
-            logger.error(LogConstants.getIsUsedSomewhereMessage("Holiday", "DTO", holidaysDTO, null));
+            logger.error(LogConstants.getIsUsedSomewhereMessage("Holiday", "DTO", holidayDTO, null));
             throw new RuntimeException(CorpConnectConstants.Holiday.DataIntegrityViolation);
         }
     }
@@ -115,7 +115,7 @@ public class HolidayServiceImpl implements HolidayService {
     @Override
     public void deleteHolidayById(Long holidayId, boolean isPermanentDelete) {
         try {
-            Holidays holiday = holidayRepository.findById(holidayId).orElseThrow(
+            Holiday holiday = holidayRepository.findById(holidayId).orElseThrow(
                     () -> {
                         logger.error(LogConstants.getNotFoundMessage("Holiday", "delete", "ID", holidayId, "while deleting"));
                         return new HolidayNotFoundException(CorpConnectConstants.Holiday.HOLIDAY_NOT_FOUND);
@@ -136,7 +136,7 @@ public class HolidayServiceImpl implements HolidayService {
     }
 
     @Override
-    public List<Holidays> getHolidayByHolidayId(Long holidayId) {
+    public List<Holiday> getHolidayByHolidayId(Long holidayId) {
         return Collections.singletonList(holidayRepository.findById(holidayId).orElseThrow(
                 () -> {
                     logger.error(LogConstants.getNotFoundMessage("Holiday", "get", "ID", holidayId, null));
@@ -146,17 +146,17 @@ public class HolidayServiceImpl implements HolidayService {
     }
 
     @Override
-    public List<Holidays> getHolidayByHolidayName(String holidayName) {
+    public List<Holiday> getHolidayByHolidayName(String holidayName) {
         return holidayRepository.findByNameContainingIgnoreCase(holidayName);
     }
 
     @Override
-    public List<Holidays> getHolidayByHolidayDate(String holidayDate) {
+    public List<Holiday> getHolidayByHolidayDate(String holidayDate) {
         return Collections.singletonList(holidayRepository.findByDate(CustomDateTimeFormatter.getLocalDateObject(holidayDate)));
     }
 
     @Override
-    public List<Holidays> getAllHolidaysByHolidayType(String label) {
+    public List<Holiday> getAllHolidaysByHolidayType(String label) {
         HolidayType type = HolidayType.getByLabel(label);
         return holidayRepository.findByType(type);
     }

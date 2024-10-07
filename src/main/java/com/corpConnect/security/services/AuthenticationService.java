@@ -1,16 +1,16 @@
 package com.corpConnect.security.services;
 
-import com.corpConnect.dtos.users.UserDTO;
-import com.corpConnect.entities.users.Users;
+import com.corpConnect.dtos.user.UserDTO;
+import com.corpConnect.entities.user.User;
 import com.corpConnect.exceptions.client.LoginFailedException;
 import com.corpConnect.exceptions.client.RegistrationFailedException;
 import com.corpConnect.exceptions.common.BaseException;
-import com.corpConnect.repositories.users.UserRepository;
+import com.corpConnect.repositories.user.UserRepository;
 import com.corpConnect.security.EssUserContext;
 import com.corpConnect.security.dtos.AuthRequestDTO;
 import com.corpConnect.security.dtos.AuthResponseDTO;
 import com.corpConnect.security.dtos.RegisterDTO;
-import com.corpConnect.services.users.UserService;
+import com.corpConnect.services.user.UserService;
 import com.corpConnect.utils.constants.CorpConnectConstants;
 import com.corpConnect.utils.constants.LogConstants;
 import org.slf4j.Logger;
@@ -49,7 +49,7 @@ public class AuthenticationService {
 
     public AuthResponseDTO authenticate(AuthRequestDTO request, String moduleType) {
 
-        Users user = userRepository.findByEmail(request.getEmail())
+        User user = userRepository.findByEmail(request.getEmail())
                 .orElseThrow(() -> {
                     logger.error(LogConstants.getNotFoundMessage("User", "login", "Email", request.getEmail(), "while authenticating"));
                     return new LoginFailedException(CorpConnectConstants.UserError.USER_NOT_FOUND);
@@ -82,12 +82,12 @@ public class AuthenticationService {
         }
 
         user.setLoginAttempts(0);
-        Users loggedUsers = userRepository.save(user);
+        User loggedUser = userRepository.save(user);
 
         var jwtToken = jwtService.generateTokenForUser(user, user.getEmail(), moduleType);
-        EssUserContext.setCurrentUser(loggedUsers);
+        EssUserContext.setCurrentUser(loggedUser);
 
-        logger.info(LogConstants.getLoggedInMessage(loggedUsers.getEmail(), loggedUsers.getId()));
+        logger.info(LogConstants.getLoggedInMessage(loggedUser.getEmail(), loggedUser.getId()));
         return AuthResponseDTO.builder()
                 .accessToken(jwtToken)
                 .user(userService.getDTO(user))
