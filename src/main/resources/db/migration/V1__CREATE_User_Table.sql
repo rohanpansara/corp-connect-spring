@@ -1,4 +1,4 @@
-CREATE TABLE IF NOT EXISTS ESS.`USER` (
+CREATE TABLE IF NOT EXISTS CorpConnect.`USER` (
     id BIGINT AUTO_INCREMENT PRIMARY KEY, -- from BaseEntity
     name VARCHAR(150), -- from NamedEntity
     email VARCHAR(255) NOT NULL UNIQUE, -- from User

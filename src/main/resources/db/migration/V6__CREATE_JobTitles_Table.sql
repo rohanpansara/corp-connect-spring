@@ -1,4 +1,4 @@
-CREATE TABLE IF NOT EXISTS ESS.HR_JOB_TITLES (
+CREATE TABLE IF NOT EXISTS CorpConnect.HR_JOB_TITLES (
     id BIGINT AUTO_INCREMENT PRIMARY KEY, -- assuming id is inherited from NameWithDeleteEntity
     name VARCHAR(150) NOT NULL UNIQUE, -- assuming name is inherited from NameWithDeleteEntity
     grade VARCHAR(50), -- grade field

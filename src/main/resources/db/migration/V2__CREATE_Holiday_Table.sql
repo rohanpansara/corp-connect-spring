@@ -1,4 +1,4 @@
-CREATE TABLE IF NOT EXISTS ESS.HR_HOLIDAYS (
+CREATE TABLE IF NOT EXISTS CorpConnect.HR_HOLIDAYS (
     id BIGINT AUTO_INCREMENT PRIMARY KEY, -- from BaseEntity
     name VARCHAR(150) NOT NULL UNIQUE, -- from NamedEntity
     `date` DATE NOT NULL UNIQUE, -- LocalDate (holiday date)

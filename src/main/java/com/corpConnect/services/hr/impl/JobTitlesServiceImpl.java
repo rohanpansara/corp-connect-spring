@@ -53,7 +53,7 @@ public class JobTitlesServiceImpl implements JobTitlesService {
             jobTitlesRepository.save(this.getEntity(jobTitlesDTO));
             logger.info(LogConstants.getCreatedSuccessfullyMessage("Job Title", "DTO", jobTitlesDTO, null));
         } catch (DataIntegrityViolationException e) {
-            logger.error(LogConstants.getAlreadyExistsWhileCreatingMessage("Job Title", jobTitlesDTO.getName(), null));
+            logger.error(LogConstants.getAlreadyExistsWhileCreatingMessage("Job Title", jobTitlesDTO.getName(), "while creating"));
             throw new RuntimeException(CorpConnectConstants.JobTitles.JOB_TITLE_ALREADY_EXISTS);
         }
     }
@@ -62,14 +62,14 @@ public class JobTitlesServiceImpl implements JobTitlesService {
     public void updateJobTitles(Long oldJobTitleId, JobTitlesDTO jobTitlesDTO) {
         JobTitles oldJobTitle = jobTitlesRepository.findById(oldJobTitleId).orElseThrow(
                 () -> {
-                    logger.error(LogConstants.getNotFoundMessage("Job Title", "ID", oldJobTitleId, "while updating"));
+                    logger.error(LogConstants.getNotFoundMessage("Job Title", "update", "ID", oldJobTitleId, null));
                     return new JobTitleNotFoundException(CorpConnectConstants.JobTitles.JOB_TITLE_NOT_FOUND);
                 });
 
         try {
             jobTitlesMapper.updateEntityFromDTO(jobTitlesDTO, oldJobTitle);
             jobTitlesRepository.save(oldJobTitle);
-            logger.info(LogConstants.getUpdatedSuccessfullyMessage("Job Title", "DTO", jobTitlesDTO, "ID", oldJobTitleId, "while updating"));
+            logger.info(LogConstants.getUpdatedSuccessfullyMessage("Job Title", "DTO", jobTitlesDTO, "ID", oldJobTitleId, null));
         } catch (DataIntegrityViolationException e) {
             logger.error(LogConstants.getAlreadyExistsWhileCreatingMessage("Job Title", jobTitlesDTO.getName(), "while updating"));
             throw new RuntimeException(CorpConnectConstants.JobTitles.JOB_TITLE_ALREADY_EXISTS);
@@ -92,7 +92,7 @@ public class JobTitlesServiceImpl implements JobTitlesService {
         try {
             JobTitles jobTitleToDelete = jobTitlesRepository.findById(jobTitlesId).orElseThrow(
                     () -> {
-                        logger.error(LogConstants.getNotFoundMessage("Job Title", "ID", jobTitlesId, "while deleting"));
+                        logger.error(LogConstants.getNotFoundMessage("Job Title", "delete", "ID", jobTitlesId, null));
                         return new JobTitleNotFoundException(CorpConnectConstants.JobTitles.JOB_TITLE_NOT_FOUND);
                     });
 

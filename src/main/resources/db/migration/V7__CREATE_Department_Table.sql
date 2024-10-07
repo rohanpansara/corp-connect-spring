@@ -1,4 +1,4 @@
-CREATE TABLE IF NOT EXISTS ESS.HR_DEPARTMENTS (
+CREATE TABLE IF NOT EXISTS CorpConnect.HR_DEPARTMENTS (
     id BIGINT AUTO_INCREMENT PRIMARY KEY, -- From NameWithDeleteEntity
     name VARCHAR(150) NOT NULL, -- From NameWithDeleteEntity
     code VARCHAR(50), -- Department code

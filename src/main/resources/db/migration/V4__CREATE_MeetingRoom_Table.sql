@@ -1,4 +1,4 @@
-CREATE TABLE IF NOT EXISTS ESS.HR_MEETING_ROOMS (
+CREATE TABLE IF NOT EXISTS CorpConnect.HR_MEETING_ROOMS (
     id BIGINT AUTO_INCREMENT PRIMARY KEY, -- Inherited from BaseEntity
     name VARCHAR(150) NOT NULL, -- Inherited from NameWithDeleteEntity
     buildingName VARCHAR(150),

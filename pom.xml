@@ -9,7 +9,7 @@
         <relativePath/> <!-- lookup parent from repository -->
     </parent>
     <groupId>com.corpConnect</groupId>
-    <artifactId>Corp Connect</artifactId>
+    <artifactId>Corp-Connect</artifactId>
     <version>0.0.1-SNAPSHOT</version>
     <name>Corp Connect Web Application</name>
     <description>Developed using Java 21 And Spring Boot 3.3.1</description>

@@ -1,4 +1,4 @@
-CREATE TABLE IF NOT EXISTS ESS.USER_ROLE_DETAILS (
+CREATE TABLE IF NOT EXISTS CorpConnect.USER_ROLE_DETAILS (
     id BIGINT AUTO_INCREMENT PRIMARY KEY, -- from BaseEntity
     user_id BIGINT NOT NULL, -- Foreign key to USER table
     reporting_manager_id BIGINT, -- Foreign key to USER table

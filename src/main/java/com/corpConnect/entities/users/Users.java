@@ -27,7 +27,7 @@ import java.util.Collection;
 @ToString
 @Entity
 @EntityListeners(AuditingEntityListener.class)
-@Table(name = "USER", schema = "ESS", indexes = @Index(name = "IDX_NAME", columnList = "name"))
+@Table(name = "USER", schema = "CorpConnect", indexes = @Index(name = "IDX_NAME", columnList = "name"))
 public class Users extends NameWithDeleteEntity implements UserDetails {
 
     private String email;
