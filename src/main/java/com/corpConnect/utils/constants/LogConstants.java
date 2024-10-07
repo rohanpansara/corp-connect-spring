@@ -2,6 +2,26 @@ package com.corpConnect.utils.constants;
 
 public class LogConstants {
 
+    public static String getLoggedInMessage(String email, Long userId) {
+        return buildMessage("LOGGED IN", null, "Attempt to login user with Email-" + email + " and ID-" + userId);
+    }
+
+    public static String getInvalidCredentialMessage(String email, Long userId) {
+        return buildMessage("INVALID CREDENTIALS", null, "Attempt to login user with Email-" + email + " and ID-" + userId);
+    }
+
+    public static String getMaxLoginReachedMessage(String email, Long userId) {
+        return buildMessage("MAX LOGIN ATTEMPTS REACHED", "Account Locked", "Attempt to login user with Email-" + email + " and ID-" + userId);
+    }
+
+    public static String getAccountLockedMessage(String email, Long userId, String specificMessage) {
+        return buildMessage("ACCOUNT LOCKED", specificMessage, "Attempt to login user with Email-" + email + " and ID-" + userId);
+    }
+
+    public static String getAccountDisabledMessage(String email, Long userId, String specificMessage) {
+        return buildMessage("ACCOUNT DISABLED", specificMessage, "Attempt to login user with Email-" + email + " and ID-" + userId);
+    }
+
     public static String getAuditorNotFoundMessage(String className, Long id, String specificMessage) {
         return buildMessage("Auditor Not Found", specificMessage, "Setting 'createdBy' or 'lastUpdatedBy' to the value 'system' for " + className + " with ID-" + id);
     }
@@ -10,16 +30,16 @@ public class LogConstants {
         return buildMessage("Created Successfully", specificMessage, "Attempt to create a " + className + " with " + fieldName + "-" + fieldValue);
     }
 
-    public static String getAlreadyExistsWhileCreatingMessage(String className, Object field, String specificMessage) {
-        return buildMessage("Already Exists", specificMessage, "Attempt to create a " + className + " with value '" + field + "'");
+    public static String getAlreadyExistsWhileCreatingMessage(String className, String fieldName, Object fieldValue, String specificMessage) {
+        return buildMessage("Already Exists", specificMessage, "Attempt to create a " + className + " with " + fieldName + "-" + fieldValue);
     }
 
     public static String getUpdatedSuccessfullyMessage(String className, String fieldName, Object fieldValue, String toUpdateField, Object toUpdateValue, String specificMessage) {
         return buildMessage("Updated Successfully", specificMessage, "Attempt to update a " + className + " of " + fieldName + "-" + fieldValue + " with " + toUpdateField + "-" + toUpdateValue);
     }
 
-    public static String getAlreadyExistsWhileUpdatingMessage(String className, Object field, String specificMessage) {
-        return buildMessage("Already Exists", specificMessage, "Attempt to update a " + className + " with value '" + field + "'");
+    public static String getAlreadyExistsWhileUpdatingMessage(String className, String fieldName, Object fieldValue, String specificMessage) {
+        return buildMessage("Already Exists", specificMessage, "Attempt to update a " + className + " with " + fieldName + "-" + fieldValue);
     }
 
     public static String getAlreadyUpdatedByIdMessage(String className, Long id, String specificMessage) {

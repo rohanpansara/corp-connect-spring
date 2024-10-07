@@ -58,19 +58,19 @@ public class HolidayServiceImpl implements HolidayService {
         return holidayRepository.findByMonthAndYear(month, year);
     }
 
-    private void handleIntegrityViolation(DataIntegrityViolationException e, boolean isWhileCreating) {
+    private void handleIntegrityViolation(DataIntegrityViolationException e, boolean isWhileCreating, HolidaysDTO holidaysDTO) {
         if (e.getMessage().contains("name")) {
             if(isWhileCreating){
-                logger.error(LogConstants.getAlreadyExistsWhileCreatingMessage("Holiday", "Name", null));
+                logger.error(LogConstants.getAlreadyExistsWhileCreatingMessage("Holiday", "Name", holidaysDTO.getName(), null));
             } else {
-                logger.error(LogConstants.getAlreadyExistsWhileUpdatingMessage("Holiday", "Name", null));
+                logger.error(LogConstants.getAlreadyExistsWhileUpdatingMessage("Holiday", "Name", holidaysDTO.getName(), null));
             }
             throw new RuntimeException(CorpConnectConstants.Holiday.HOLIDAY_OF_THE_NAME_EXISTS);
         } else {
             if(isWhileCreating){
-                logger.error(LogConstants.getAlreadyExistsWhileCreatingMessage("Holiday", "Date", null));
+                logger.error(LogConstants.getAlreadyExistsWhileCreatingMessage("Holiday", "Date", holidaysDTO.getDate(), null));
             } else {
-                logger.error(LogConstants.getAlreadyExistsWhileUpdatingMessage("Holiday", "Date", null));
+                logger.error(LogConstants.getAlreadyExistsWhileUpdatingMessage("Holiday", "Date", holidaysDTO.getDate(), null));
             }
             throw new RuntimeException(CorpConnectConstants.Holiday.HOLIDAY_FOR_THE_DATE_EXISTS);
         }
@@ -81,7 +81,7 @@ public class HolidayServiceImpl implements HolidayService {
         try {
             holidayRepository.save(this.getEntity(holidaysDTO));
         } catch (DataIntegrityViolationException e) {
-            handleIntegrityViolation(e, true);
+            handleIntegrityViolation(e, true, holidaysDTO);
         }
     }
 
@@ -97,7 +97,7 @@ public class HolidayServiceImpl implements HolidayService {
             holidayRepository.save(oldHolidays);
             logger.info(LogConstants.getUpdatedSuccessfullyMessage("Holiday", "DTO", holidaysDTO, "ID", holidayId, null));
         } catch (DataIntegrityViolationException e) {
-            handleIntegrityViolation(e, false);
+            handleIntegrityViolation(e, false, holidaysDTO);
         }
     }
 

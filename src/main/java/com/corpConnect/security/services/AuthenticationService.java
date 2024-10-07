@@ -12,6 +12,7 @@ import com.corpConnect.security.dtos.AuthResponseDTO;
 import com.corpConnect.security.dtos.RegisterDTO;
 import com.corpConnect.services.users.UserService;
 import com.corpConnect.utils.constants.CorpConnectConstants;
+import com.corpConnect.utils.constants.LogConstants;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.security.authentication.AuthenticationManager;
@@ -34,10 +35,10 @@ public class AuthenticationService {
         try {
             var user = userService.getUserFromRegisterDTO(registerDTO);
             var savedUser = userService.finalSave(user);
-            logger.info("Created: Attempt to create a user with registerDto: {}", registerDTO);
+            logger.info(LogConstants.getCreatedSuccessfullyMessage("User", "DTO", registerDTO, "new user"));
             return userService.getDTO(savedUser);
         } catch (RegistrationFailedException e) {
-            logger.error("Already Exists: Attempt to create a user with email: {}", registerDTO.getEmail());
+            logger.error(LogConstants.getAlreadyExistsWhileCreatingMessage("User", "Email", registerDTO.getEmail(), "while registering"));
             throw new RegistrationFailedException(CorpConnectConstants.UserError.EMAIL_EXISTS);
         } catch (BaseException e) {
             logger.error("Did Not Match: Attempt to create a user with password: {} and confirmPassword: {}", registerDTO.getPassword(), registerDTO.getConfirmPassword());
@@ -48,25 +49,25 @@ public class AuthenticationService {
 
     public AuthResponseDTO authenticate(AuthRequestDTO request, String moduleType) {
 
-        Users users = userRepository.findByEmail(request.getEmail())
+        Users user = userRepository.findByEmail(request.getEmail())
                 .orElseThrow(() -> {
-                    logger.error("Not Found: Attempt to authenticate user with email: {}", request.getEmail());
+                    logger.error(LogConstants.getNotFoundMessage("User", "login", "Email", request.getEmail(), "while authenticating"));
                     return new LoginFailedException(CorpConnectConstants.UserError.USER_NOT_FOUND);
                 });
 
-        if (!users.isAccountEnabled()) {
-            logger.error("Account Disabled: Attempt to authenticate user with email: {}", request.getEmail());
+        if (!user.isAccountEnabled()) {
+            logger.error(LogConstants.getAccountDisabledMessage(user.getEmail(), user.getId(), "while authenticating"));
             throw new LoginFailedException(CorpConnectConstants.UserError.ACCOUNT_DISABLED);
-        } else if (!users.isAccountNonLocked()) {
-            logger.error("Account Locked: Attempt to authenticate user with email: {}", request.getEmail());
+        } else if (!user.isAccountNonLocked()) {
+            logger.error(LogConstants.getAccountLockedMessage(user.getEmail(), user.getId(), "while authenticating"));
             throw new LoginFailedException(CorpConnectConstants.UserError.ACCOUNT_LOCKED);
         }
 
-        if (users.getLoginAttempts() >= 3) {
-            users.setAccountNonLocked(false);
-            users.setLoginAttempts(0);
-            userRepository.save(users);
-            logger.error("Account Locked: Max login attempt limit exceeded for user with email: {}", request.getEmail());
+        if (user.getLoginAttempts() >= 3) {
+            user.setAccountNonLocked(false);
+            user.setLoginAttempts(0);
+            userRepository.save(user);
+            logger.error(LogConstants.getMaxLoginReachedMessage(user.getEmail(), user.getId()));
             throw new LoginFailedException(CorpConnectConstants.UserError.ACCOUNT_LOCKED);
         }
 
@@ -74,21 +75,22 @@ public class AuthenticationService {
             authenticationManager.authenticate(
                     new UsernamePasswordAuthenticationToken(request.getEmail(), request.getPassword()));
         } catch (Exception e) {
-            users.setLoginAttempts(users.getLoginAttempts() + 1);
-            userRepository.save(users);
-            logger.error("Invalid Credentials: Attempt to login with email: {}", request.getEmail());
+            user.setLoginAttempts(user.getLoginAttempts() + 1);
+            userRepository.save(user);
+            logger.error(LogConstants.getInvalidCredentialMessage(user.getEmail(), user.getId()));
             throw new LoginFailedException(CorpConnectConstants.UserError.INVALID_CREDENTIALS);
         }
 
-        users.setLoginAttempts(0);
-        Users loggedUsers = userRepository.save(users);
+        user.setLoginAttempts(0);
+        Users loggedUsers = userRepository.save(user);
 
-        var jwtToken = jwtService.generateTokenForUser(users, users.getEmail(), moduleType);
+        var jwtToken = jwtService.generateTokenForUser(user, user.getEmail(), moduleType);
         EssUserContext.setCurrentUser(loggedUsers);
 
+        logger.info(LogConstants.getLoggedInMessage(loggedUsers.getEmail(), loggedUsers.getId()));
         return AuthResponseDTO.builder()
                 .accessToken(jwtToken)
-                .user(userService.getDTO(users))
+                .user(userService.getDTO(user))
                 .build();
     }
 }

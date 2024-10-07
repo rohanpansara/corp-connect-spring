@@ -45,6 +45,7 @@ jwt:
     user: 144000000     # 40 hours in milliseconds
     admin: 72000000     # 20 hours in milliseconds
 
+colored-logs: true
 
 #cloudinary:
 #  api-key: 132918619484761

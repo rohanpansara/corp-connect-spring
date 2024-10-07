@@ -53,7 +53,7 @@ public class JobTitlesServiceImpl implements JobTitlesService {
             jobTitlesRepository.save(this.getEntity(jobTitlesDTO));
             logger.info(LogConstants.getCreatedSuccessfullyMessage("Job Title", "DTO", jobTitlesDTO, null));
         } catch (DataIntegrityViolationException e) {
-            logger.error(LogConstants.getAlreadyExistsWhileCreatingMessage("Job Title", jobTitlesDTO.getName(), "while creating"));
+            logger.error(LogConstants.getAlreadyExistsWhileCreatingMessage("Job Title", "Name", jobTitlesDTO.getName(), "while creating"));
             throw new RuntimeException(CorpConnectConstants.JobTitles.JOB_TITLE_ALREADY_EXISTS);
         }
     }
@@ -71,7 +71,7 @@ public class JobTitlesServiceImpl implements JobTitlesService {
             jobTitlesRepository.save(oldJobTitle);
             logger.info(LogConstants.getUpdatedSuccessfullyMessage("Job Title", "DTO", jobTitlesDTO, "ID", oldJobTitleId, null));
         } catch (DataIntegrityViolationException e) {
-            logger.error(LogConstants.getAlreadyExistsWhileCreatingMessage("Job Title", jobTitlesDTO.getName(), "while updating"));
+            logger.error(LogConstants.getAlreadyExistsWhileCreatingMessage("Job Title", "Name", jobTitlesDTO.getName(), "while updating"));
             throw new RuntimeException(CorpConnectConstants.JobTitles.JOB_TITLE_ALREADY_EXISTS);
         }
     }
