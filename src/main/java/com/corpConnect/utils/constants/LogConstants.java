@@ -30,16 +30,12 @@ public class LogConstants {
         return buildMessage("Created Successfully", specificMessage, "Attempt to create a " + className + " with " + fieldName + "-" + fieldValue);
     }
 
-    public static String getAlreadyExistsWhileCreatingMessage(String className, String fieldName, Object fieldValue, String specificMessage) {
+    public static String getAlreadyExistsMessage(String className, String fieldName, Object fieldValue, String specificMessage) {
         return buildMessage("Already Exists", specificMessage, "Attempt to create a " + className + " with " + fieldName + "-" + fieldValue);
     }
 
     public static String getUpdatedSuccessfullyMessage(String className, String fieldName, Object fieldValue, String toUpdateField, Object toUpdateValue, String specificMessage) {
         return buildMessage("Updated Successfully", specificMessage, "Attempt to update a " + className + " of " + fieldName + "-" + fieldValue + " with " + toUpdateField + "-" + toUpdateValue);
-    }
-
-    public static String getAlreadyExistsWhileUpdatingMessage(String className, String fieldName, Object fieldValue, String specificMessage) {
-        return buildMessage("Already Exists", specificMessage, "Attempt to update a " + className + " with " + fieldName + "-" + fieldValue);
     }
 
     public static String getAlreadyUpdatedByIdMessage(String className, Long id, String specificMessage) {

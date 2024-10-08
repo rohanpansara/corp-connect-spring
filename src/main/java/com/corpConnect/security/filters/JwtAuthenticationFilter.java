@@ -3,7 +3,7 @@ package com.corpConnect.security.filters;
 import com.corpConnect.entities.user.User;
 import com.corpConnect.security.EssUserContext;
 import com.corpConnect.security.services.JwtService;
-import com.corpConnect.utils.constants.CorpConnectConstants;
+import com.corpConnect.utils.constants.MessageConstants;
 import jakarta.servlet.FilterChain;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;
@@ -71,7 +71,7 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
             }
             filterChain.doFilter(request, response);
         } catch (Exception e){
-            throw new RuntimeException(CorpConnectConstants.UserError.AUTHORIZATION_FAILED);
+            throw new RuntimeException(MessageConstants.UserError.AUTHORIZATION_FAILED);
         } finally {
             EssUserContext.clear();
         }

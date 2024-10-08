@@ -6,7 +6,7 @@ import com.corpConnect.exceptions.hr.JobTitleNotFoundException;
 import com.corpConnect.mappers.hr.JobTitlesMapper;
 import com.corpConnect.repositories.hr.JobTitleRepository;
 import com.corpConnect.services.hr.JobTitleService;
-import com.corpConnect.utils.constants.CorpConnectConstants;
+import com.corpConnect.utils.constants.MessageConstants;
 import com.corpConnect.utils.constants.LogConstants;
 import lombok.RequiredArgsConstructor;
 import org.slf4j.Logger;
@@ -53,8 +53,8 @@ public class JobTitleServiceImpl implements JobTitleService {
             jobTitleRepository.save(this.getEntity(jobTitleDTO));
             logger.info(LogConstants.getCreatedSuccessfullyMessage("Job Title", "DTO", jobTitleDTO, null));
         } catch (DataIntegrityViolationException e) {
-            logger.error(LogConstants.getAlreadyExistsWhileCreatingMessage("Job Title", "Name", jobTitleDTO.getName(), "while creating"));
-            throw new RuntimeException(CorpConnectConstants.JobTitles.JOB_TITLE_ALREADY_EXISTS);
+            logger.error(LogConstants.getAlreadyExistsMessage("Job Title", "Name", jobTitleDTO.getName(), "while creating"));
+            throw new RuntimeException(MessageConstants.JobTitle.JOB_TITLE_ALREADY_EXISTS);
         }
     }
 
@@ -63,7 +63,7 @@ public class JobTitleServiceImpl implements JobTitleService {
         JobTitle oldJobTitle = jobTitleRepository.findById(oldJobTitleId).orElseThrow(
                 () -> {
                     logger.error(LogConstants.getNotFoundMessage("Job Title", "update", "ID", oldJobTitleId, null));
-                    return new JobTitleNotFoundException(CorpConnectConstants.JobTitles.JOB_TITLE_NOT_FOUND);
+                    return new JobTitleNotFoundException(MessageConstants.JobTitle.JOB_TITLE_NOT_FOUND);
                 });
 
         try {
@@ -71,19 +71,26 @@ public class JobTitleServiceImpl implements JobTitleService {
             jobTitleRepository.save(oldJobTitle);
             logger.info(LogConstants.getUpdatedSuccessfullyMessage("Job Title", "DTO", jobTitleDTO, "ID", oldJobTitleId, null));
         } catch (DataIntegrityViolationException e) {
-            logger.error(LogConstants.getAlreadyExistsWhileCreatingMessage("Job Title", "Name", jobTitleDTO.getName(), "while updating"));
-            throw new RuntimeException(CorpConnectConstants.JobTitles.JOB_TITLE_ALREADY_EXISTS);
+            logger.error(LogConstants.getAlreadyExistsMessage("Job Title", "Name", jobTitleDTO.getName(), "while updating"));
+            throw new RuntimeException(MessageConstants.JobTitle.JOB_TITLE_ALREADY_EXISTS);
         }
     }
 
     @Override
-    public void deleteJobTitles(JobTitleDTO jobTitleDTO) {
+    public void deleteJobTitles(JobTitleDTO jobTitleDTO, Boolean isPermanentDelete) {
         try {
-            jobTitleRepository.delete(this.getEntity(jobTitleDTO));
-            logger.info(LogConstants.getDeletedSuccessfullyMessage("Job Title", "Permanent", "DTO", jobTitleDTO, null));
+            JobTitle jobTitleToDelete = this.getEntity(jobTitleDTO);
+            if (isPermanentDelete) {
+                jobTitleRepository.delete(jobTitleToDelete);
+                logger.info(LogConstants.getDeletedSuccessfullyMessage("Job Title", "Permanent", "DTO", jobTitleDTO, null));
+            } else {
+                jobTitleToDelete.setDeleted(true);
+                jobTitleRepository.save(jobTitleToDelete);
+                logger.info(LogConstants.getDeletedSuccessfullyMessage("Job Title", "Soft", "DTO", jobTitleDTO, null));
+            }
         } catch (DataIntegrityViolationException e) {
             logger.error(LogConstants.getIsUsedSomewhereMessage("Job Title", "DTO", jobTitleDTO, null));
-            throw new RuntimeException(CorpConnectConstants.JobTitles.DataIntegrityViolation);
+            throw new RuntimeException(MessageConstants.JobTitle.DataIntegrityViolation);
         }
     }
 
@@ -93,7 +100,7 @@ public class JobTitleServiceImpl implements JobTitleService {
             JobTitle jobTitleToDelete = jobTitleRepository.findById(jobTitlesId).orElseThrow(
                     () -> {
                         logger.error(LogConstants.getNotFoundMessage("Job Title", "delete", "ID", jobTitlesId, null));
-                        return new JobTitleNotFoundException(CorpConnectConstants.JobTitles.JOB_TITLE_NOT_FOUND);
+                        return new JobTitleNotFoundException(MessageConstants.JobTitle.JOB_TITLE_NOT_FOUND);
                     });
 
             if (isPermanentDelete) {
@@ -106,7 +113,7 @@ public class JobTitleServiceImpl implements JobTitleService {
             }
         } catch (DataIntegrityViolationException e) {
             logger.error(LogConstants.getIsUsedSomewhereMessage("Job Title", "ID", jobTitlesId, null));
-            throw new RuntimeException(CorpConnectConstants.JobTitles.DataIntegrityViolation);
+            throw new RuntimeException(MessageConstants.JobTitle.DataIntegrityViolation);
         }
     }
 

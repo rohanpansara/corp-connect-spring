@@ -1,7 +1,7 @@
 package com.corpConnect.security.utils;
 
 import com.corpConnect.exceptions.client.RecordNotFoundException;
-import com.corpConnect.utils.constants.CorpConnectConstants;
+import com.corpConnect.utils.constants.MessageConstants;
 import lombok.Getter;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 
@@ -114,7 +114,7 @@ public enum UserRole {
                 return role;
             }
         }
-        throw new RecordNotFoundException(CorpConnectConstants.UserError.USER_ROLE_NOT_FOUND);
+        throw new RecordNotFoundException(MessageConstants.UserError.USER_ROLE_NOT_FOUND);
     }
 }
 

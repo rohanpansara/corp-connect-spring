@@ -23,6 +23,8 @@ public interface UserService {
     User getUserByUserId(Long userId);
     List<User> getUserByAccountExpiration(Boolean isExpired);
     List<User> getAllUsers();
+    List<User> getAllNonDeletedUsers();
+    List<User> getAllDeletedUsers();
 
     // Dashboard
     DashboardCardDTO getDashboardCards();

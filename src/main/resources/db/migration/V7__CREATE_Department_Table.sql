@@ -10,5 +10,5 @@ CREATE TABLE IF NOT EXISTS CorpConnect.HR_DEPARTMENTS (
     createdBy VARCHAR(50), -- Auditing field
     lastUpdatedDate TIMESTAMP, -- Auditing field
     lastUpdatedBy VARCHAR(50), -- Auditing field
-    CONSTRAINT fk_department_head FOREIGN KEY (department_head_id) REFERENCES `USER`(id) -- Foreign key constraint to USER table
+    CONSTRAINT fk_department_head FOREIGN KEY (department_head_id) REFERENCES `USERS`(id) -- Foreign key constraint to USER table
 );

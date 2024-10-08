@@ -12,4 +12,6 @@ public interface UserRepository extends JpaRepository<User, Long> {
     Optional<User> findByEmail(String email);
     User findUserById(Long userId);
     List<User> findByIsAccountNonExpired(boolean isAccountNonExpired);
+
+    List<User> findByIsDeleted(boolean isDeleted);
 }

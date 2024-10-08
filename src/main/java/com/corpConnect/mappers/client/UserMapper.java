@@ -7,7 +7,7 @@ import com.corpConnect.exceptions.common.BaseException;
 import com.corpConnect.security.dtos.RegisterDTO;
 import com.corpConnect.services.user.UserService;
 import com.corpConnect.utils.functions.CustomDateTimeFormatter;
-import com.corpConnect.utils.constants.CorpConnectConstants;
+import com.corpConnect.utils.constants.MessageConstants;
 import org.apache.commons.lang3.ObjectUtils;
 import org.mapstruct.AfterMapping;
 import org.mapstruct.BeforeMapping;
@@ -52,11 +52,11 @@ public abstract class UserMapper {
     @BeforeMapping
     protected void validatePassword(RegisterDTO registerDTO, @MappingTarget User user) throws BaseException {
         if (!isEmailExists(registerDTO.getEmail())) {
-            throw new LoginFailedException(CorpConnectConstants.UserError.EMAIL_EXISTS);
+            throw new LoginFailedException(MessageConstants.UserError.EMAIL_EXISTS);
         }
 
         if (!registerDTO.getPassword().equals(registerDTO.getConfirmPassword())) {
-            throw new BaseException(CorpConnectConstants.UserError.CONFIRM_PASSWORD_DID_NOT_MATCH);
+            throw new BaseException(MessageConstants.UserError.CONFIRM_PASSWORD_DID_NOT_MATCH);
         }
     }
 

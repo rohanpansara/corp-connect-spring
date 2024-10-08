@@ -1,12 +1,12 @@
 package com.corpConnect.utils.constants;
 
-public class CorpConnectConstants {
+public class MessageConstants {
 
-    private static String getDataIntegrityViolationMessage(String className){
+    private static String getDataIntegrityViolationMessage(String className) {
         return "This " + className + " is already used. Please check again before deleting";
     }
 
-    public static final class Record{
+    public static final class Record {
         public static final String RECORD_FOUND = "Record found successfully";
         public static final String RECORD_NOT_FOUND = "Record not found";
     }
@@ -65,7 +65,7 @@ public class CorpConnectConstants {
         public static final String PASSWORD_RESET_EMAIL_SENT = "Password reset link sent to email";
     }
 
-    public static final class Holiday{
+    public static final class Holiday {
         public static final String HOLIDAY_CREATED = "Holiday created successfully";
         public static final String HOLIDAY_FOR_THE_DATE_EXISTS = "Holiday for the given date already exists";
         public static final String HOLIDAY_OF_THE_NAME_EXISTS = "Holiday of the given name already exists";
@@ -78,14 +78,14 @@ public class CorpConnectConstants {
         public static final String DataIntegrityViolation = getDataIntegrityViolationMessage("holiday");
     }
 
-    public static final class HrAccessControl{
+    public static final class HrAccessControl {
         public static final String USER_LOCKED = "User account was locked successfully";
         public static final String USER_UNLOCKED = "User account was unlocked successfully";
         public static final String USER_ENABLED = "User account was enabled successfully";
         public static final String USER_DISABLED = "User account was disabled successfully";
     }
 
-    public static final class CompanyConfiguration{
+    public static final class CompanyConfiguration {
         public static final String CONFIGURATION_CREATED = "Company configuration created successfully";
         public static final String CONFIGURATION_EXISTS = "Company configuration exists with same name";
         public static final String CONFIGURATION_FOUND = "Company configuration found successfully";
@@ -96,7 +96,7 @@ public class CorpConnectConstants {
         public static final String DataIntegrityViolation = getDataIntegrityViolationMessage("company configuration");
     }
 
-    public static final class JobTitles{
+    public static final class JobTitle {
         public static final String JOB_TITLE_CREATED = "Job title created successfully";
         public static final String JOB_TITLE_FOUND = "Job title found successfully";
         public static final String JOB_TITLE_NOT_FOUND = "Job title not found";
@@ -106,6 +106,13 @@ public class CorpConnectConstants {
         public static final String JOB_TITLE_ALREADY_EXISTS = "Job title with the same name already exists";
         public static final String JOB_TITLE_LIST_FOUND = "All job titles found successfully";
         public static final String DataIntegrityViolation = getDataIntegrityViolationMessage("job title");
+    }
+
+    public static final class WorkShift {
+        public static final String WORK_SHIFT_NOT_FOUND = "Work shift not found";
+        public static final String WORK_SHIFT_CREATED = "Work shift created successfully";
+        public static final String WORK_SHIFT_UPDATED = "Work shift updated successfully";
+        public static final String WORK_SHIFT_ALREADY_EXISTS = "Work shift with same name already exists";
     }
 
 }

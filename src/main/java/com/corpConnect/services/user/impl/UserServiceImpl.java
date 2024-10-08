@@ -11,9 +11,10 @@ import com.corpConnect.mappers.client.UserMapper;
 import com.corpConnect.repositories.user.UserRepository;
 import com.corpConnect.security.dtos.RegisterDTO;
 import com.corpConnect.services.user.UserService;
-import com.corpConnect.utils.constants.CorpConnectConstants;
+import com.corpConnect.utils.constants.MessageConstants;
 import com.corpConnect.utils.constants.LogConstants;
 import jakarta.transaction.Transactional;
+import lombok.RequiredArgsConstructor;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -24,6 +25,7 @@ import java.util.List;
 import java.util.Optional;
 
 @Service
+@RequiredArgsConstructor
 public class UserServiceImpl implements UserService {
 
     private static final Logger logger = LoggerFactory.getLogger(UserServiceImpl.class);
@@ -32,14 +34,6 @@ public class UserServiceImpl implements UserService {
     private final ApplicationAuditAware applicationAuditAware;
     private final UserMapper userMapper;
     private final UserRepository userRepository;
-
-    @Autowired
-    public UserServiceImpl(PasswordEncoder passwordEncoder, ApplicationAuditAware applicationAuditAware, UserMapper userMapper, UserRepository userRepository) {
-        this.passwordEncoder = passwordEncoder;
-        this.applicationAuditAware = applicationAuditAware;
-        this.userMapper = userMapper;
-        this.userRepository = userRepository;
-    }
 
     @Override
     public User getUserFromRegisterDTO(RegisterDTO registerDTO) throws BaseException {
@@ -76,7 +70,7 @@ public class UserServiceImpl implements UserService {
         if (currentAuditor.isEmpty()) {
             user.setCreatedBy("system");
             user.setLastUpdatedBy("system");
-            logger.error(LogConstants.getAuditorNotFoundMessage("User", user.getId(), "while creating"));
+            logger.info(LogConstants.getAuditorNotFoundMessage("User", user.getId(), "while creating"));
         } else {
             String auditor = currentAuditor.get();
             user.setCreatedBy(auditor);
@@ -104,6 +98,16 @@ public class UserServiceImpl implements UserService {
     @Override
     public List<User> getAllUsers() {
         return userRepository.findAll();
+    }
+
+    @Override
+    public List<User> getAllNonDeletedUsers() {
+        return userRepository.findByIsDeleted(false);
+    }
+
+    @Override
+    public List<User> getAllDeletedUsers() {
+        return userRepository.findByIsDeleted(true);
     }
 
     @Override
@@ -139,7 +143,7 @@ public class UserServiceImpl implements UserService {
         User user = userRepository.findById(userId).orElseThrow(
                 () -> {
                     logger.error("Not Found: Attempt to unlock user with id: {}", userId);
-                    return new UserNotFoundException(CorpConnectConstants.UserError.USER_NOT_FOUND);
+                    return new UserNotFoundException(MessageConstants.UserError.USER_NOT_FOUND);
                 }
         );
         if (user.isAccountNonLocked()) {
@@ -157,7 +161,7 @@ public class UserServiceImpl implements UserService {
         User user = userRepository.findById(userId).orElseThrow(
                 () -> {
                     logger.error("Not Found: Attempt to enable user with id: {}", userId);
-                    return new UserNotFoundException(CorpConnectConstants.UserError.USER_NOT_FOUND);
+                    return new UserNotFoundException(MessageConstants.UserError.USER_NOT_FOUND);
                 }
         );
         if (user.isAccountEnabled()) {
@@ -175,7 +179,7 @@ public class UserServiceImpl implements UserService {
         User user = userRepository.findById(userId).orElseThrow(
                 () -> {
                     logger.error("Not Found: Attempt to disable user with id: {}", userId);
-                    return new UserNotFoundException(CorpConnectConstants.UserError.USER_NOT_FOUND);
+                    return new UserNotFoundException(MessageConstants.UserError.USER_NOT_FOUND);
                 }
         );
         if (!user.isAccountEnabled()) {
@@ -193,7 +197,7 @@ public class UserServiceImpl implements UserService {
         User user = userRepository.findById(userId).orElseThrow(
                 () -> {
                     logger.error("Not Found: Attempt to lock user with id: {}", userId);
-                    return new UserNotFoundException(CorpConnectConstants.UserError.USER_NOT_FOUND);
+                    return new UserNotFoundException(MessageConstants.UserError.USER_NOT_FOUND);
                 }
         );
         if (!user.isAccountNonLocked()) {

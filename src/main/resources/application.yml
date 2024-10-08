@@ -1,5 +1,5 @@
 server:
-  port: 8080
+  port: 8089
   servlet:
     session:
       cookie:
@@ -30,7 +30,8 @@ spring:
 #        format_sql: true         # to show the sql queries in a readable format rather than single line
         default_schema: CorpConnect       # Ensure schema is set
 #    show-sql: true
-    database-platform: org.hibernate.dialect.MySQL8Dialect
+#    database-platform: org.hibernate.dialect.MySQLDialect
+    open-in-view: false
 
   jackson:
     serialization:

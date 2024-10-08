@@ -3,7 +3,7 @@ package com.corpConnect.controllers.hr;
 import com.corpConnect.dtos.common.ResponseDTO;
 import com.corpConnect.dtos.hr.HolidayDTO;
 import com.corpConnect.services.hr.HolidayService;
-import com.corpConnect.utils.constants.CorpConnectConstants;
+import com.corpConnect.utils.constants.MessageConstants;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
@@ -31,36 +31,36 @@ public class HolidayController {
     @PreAuthorize("hasAuthority('hr_admin:create')")
     public ResponseEntity<ResponseDTO<Void>> createHoliday(@RequestBody HolidayDTO holidayDTO){
         holidayService.createHoliday(holidayDTO);
-        return ResponseEntity.ok(ResponseDTO.success(CorpConnectConstants.Holiday.HOLIDAY_CREATED));
+        return ResponseEntity.ok(ResponseDTO.success(MessageConstants.Holiday.HOLIDAY_CREATED));
     }
 
     @GetMapping
     @PreAuthorize("hasAuthority('user:read')")
     public ResponseEntity<ResponseDTO<List<HolidayDTO>>> fetchAllHolidays(){
-        return ResponseEntity.ok(ResponseDTO.success(CorpConnectConstants.Holiday.HOLIDAY_LIST_FOUND, holidayService.getDTOList(holidayService.getAllHolidays())));
+        return ResponseEntity.ok(ResponseDTO.success(MessageConstants.Holiday.HOLIDAY_LIST_FOUND, holidayService.getDTOList(holidayService.getAllHolidays())));
     }
 
     @GetMapping("/{id}")
     @PreAuthorize("hasAuthority('user:read')")
     public ResponseEntity<ResponseDTO<List<HolidayDTO>>> fetchHolidayByHolidayId(@PathVariable("id") Long holidayId){
-        return ResponseEntity.ok(ResponseDTO.success(CorpConnectConstants.Holiday.HOLIDAY_FOUND, holidayService.getDTOList(holidayService.getHolidayByHolidayId(holidayId))));
+        return ResponseEntity.ok(ResponseDTO.success(MessageConstants.Holiday.HOLIDAY_FOUND, holidayService.getDTOList(holidayService.getHolidayByHolidayId(holidayId))));
     }
 
     @GetMapping("/name")
     @PreAuthorize("hasAuthority('user:read')")
     public ResponseEntity<ResponseDTO<List<HolidayDTO>>> fetchAllHolidaysByHolidayName(@RequestParam("holidayName") String holidayName){
-        return ResponseEntity.ok(ResponseDTO.success(CorpConnectConstants.Holiday.HOLIDAY_LIST_FOUND, holidayService.getDTOList(holidayService.getHolidayByHolidayName(holidayName))));
+        return ResponseEntity.ok(ResponseDTO.success(MessageConstants.Holiday.HOLIDAY_LIST_FOUND, holidayService.getDTOList(holidayService.getHolidayByHolidayName(holidayName))));
     }
 
     @GetMapping("/date")
     @PreAuthorize("hasAuthority('user:read')")
     public ResponseEntity<ResponseDTO<List<HolidayDTO>>> fetchHolidayByHolidayDate(@RequestParam("holidayDate") String holidayDate){
-        return ResponseEntity.ok(ResponseDTO.success(CorpConnectConstants.Holiday.HOLIDAY_FOUND, holidayService.getDTOList(holidayService.getHolidayByHolidayDate(holidayDate))));
+        return ResponseEntity.ok(ResponseDTO.success(MessageConstants.Holiday.HOLIDAY_FOUND, holidayService.getDTOList(holidayService.getHolidayByHolidayDate(holidayDate))));
     }
 
     @GetMapping("/type")
     @PreAuthorize("hasAuthority('user:read')")
     public ResponseEntity<ResponseDTO<List<HolidayDTO>>> fetchAllHolidaysByHolidayType(@RequestParam("holidayType") String label){
-        return ResponseEntity.ok(ResponseDTO.success(CorpConnectConstants.Holiday.HOLIDAY_LIST_FOUND, holidayService.getDTOList(holidayService.getAllHolidaysByHolidayType(label))));
+        return ResponseEntity.ok(ResponseDTO.success(MessageConstants.Holiday.HOLIDAY_LIST_FOUND, holidayService.getDTOList(holidayService.getAllHolidaysByHolidayType(label))));
     }
 }

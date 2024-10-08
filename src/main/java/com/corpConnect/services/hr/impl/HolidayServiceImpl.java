@@ -9,13 +9,14 @@ import com.corpConnect.repositories.hr.HolidayRepository;
 import com.corpConnect.services.hr.HolidayService;
 import com.corpConnect.utils.constants.LogConstants;
 import com.corpConnect.utils.functions.CustomDateTimeFormatter;
-import com.corpConnect.utils.constants.CorpConnectConstants;
+import com.corpConnect.utils.constants.MessageConstants;
 import lombok.RequiredArgsConstructor;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalDate;
 import java.util.Collections;
 import java.util.List;
 
@@ -58,21 +59,26 @@ public class HolidayServiceImpl implements HolidayService {
         return holidayRepository.findByMonthAndYear(month, year);
     }
 
+    @Override
+    public boolean isAHoliday(LocalDate date) {
+        return holidayRepository.existsByDate(date);
+    }
+
     private void handleIntegrityViolation(DataIntegrityViolationException e, boolean isWhileCreating, HolidayDTO holidayDTO) {
         if (e.getMessage().contains("name")) {
-            if(isWhileCreating){
-                logger.error(LogConstants.getAlreadyExistsWhileCreatingMessage("Holiday", "Name", holidayDTO.getName(), null));
+            if (isWhileCreating) {
+                logger.error(LogConstants.getAlreadyExistsMessage("Holiday", "Name", holidayDTO.getName(), "while creating"));
             } else {
-                logger.error(LogConstants.getAlreadyExistsWhileUpdatingMessage("Holiday", "Name", holidayDTO.getName(), null));
+                logger.error(LogConstants.getAlreadyExistsMessage("Holiday", "Name", holidayDTO.getName(), "while updating"));
             }
-            throw new RuntimeException(CorpConnectConstants.Holiday.HOLIDAY_OF_THE_NAME_EXISTS);
+            throw new RuntimeException(MessageConstants.Holiday.HOLIDAY_OF_THE_NAME_EXISTS);
         } else {
-            if(isWhileCreating){
-                logger.error(LogConstants.getAlreadyExistsWhileCreatingMessage("Holiday", "Date", holidayDTO.getDate(), null));
+            if (isWhileCreating) {
+                logger.error(LogConstants.getAlreadyExistsMessage("Holiday", "Date", holidayDTO.getDate(), "while creating"));
             } else {
-                logger.error(LogConstants.getAlreadyExistsWhileUpdatingMessage("Holiday", "Date", holidayDTO.getDate(), null));
+                logger.error(LogConstants.getAlreadyExistsMessage("Holiday", "Date", holidayDTO.getDate(), "while updating"));
             }
-            throw new RuntimeException(CorpConnectConstants.Holiday.HOLIDAY_FOR_THE_DATE_EXISTS);
+            throw new RuntimeException(MessageConstants.Holiday.HOLIDAY_FOR_THE_DATE_EXISTS);
         }
     }
 
@@ -90,7 +96,7 @@ public class HolidayServiceImpl implements HolidayService {
         Holiday oldHoliday = holidayRepository.findById(holidayId)
                 .orElseThrow(() -> {
                     logger.error(LogConstants.getNotFoundMessage("Holiday", "update", "ID", holidayId, "while updating"));
-                    return new HolidayNotFoundException(CorpConnectConstants.Holiday.HOLIDAY_NOT_FOUND);
+                    return new HolidayNotFoundException(MessageConstants.Holiday.HOLIDAY_NOT_FOUND);
                 });
         try {
             holidayMapper.updateEntityFromDTO(holidayDTO, oldHoliday);
@@ -102,36 +108,30 @@ public class HolidayServiceImpl implements HolidayService {
     }
 
     @Override
-    public void deleteHoliday(HolidayDTO holidayDTO, boolean isPermanentDelete) {
+    public void deleteHoliday(HolidayDTO holidayDTO) {
         try {
             holidayRepository.delete(this.getEntity(holidayDTO));
             logger.info(LogConstants.getDeletedSuccessfullyMessage("Holiday", "Permanently", "DTO", holidayDTO, null));
         } catch (DataIntegrityViolationException e) {
             logger.error(LogConstants.getIsUsedSomewhereMessage("Holiday", "DTO", holidayDTO, null));
-            throw new RuntimeException(CorpConnectConstants.Holiday.DataIntegrityViolation);
+            throw new RuntimeException(MessageConstants.Holiday.DataIntegrityViolation);
         }
     }
 
     @Override
-    public void deleteHolidayById(Long holidayId, boolean isPermanentDelete) {
+    public void deleteHolidayById(Long holidayId) {
         try {
             Holiday holiday = holidayRepository.findById(holidayId).orElseThrow(
                     () -> {
                         logger.error(LogConstants.getNotFoundMessage("Holiday", "delete", "ID", holidayId, "while deleting"));
-                        return new HolidayNotFoundException(CorpConnectConstants.Holiday.HOLIDAY_NOT_FOUND);
+                        return new HolidayNotFoundException(MessageConstants.Holiday.HOLIDAY_NOT_FOUND);
                     }
             );
-            if(isPermanentDelete){
-                holidayRepository.delete(holiday);
-                logger.info(LogConstants.getDeletedSuccessfullyMessage("Holiday", "Permanent", "ID", holidayId, null));
-            } else {
-                holiday.setDeleted(true);
-                holidayRepository.save(holiday);
-                logger.info(LogConstants.getDeletedSuccessfullyMessage("Holiday", "Soft", "ID", holidayId, null));
-            }
+            holidayRepository.delete(holiday);
+            logger.info(LogConstants.getDeletedSuccessfullyMessage("Holiday", "Permanent", "ID", holidayId, null));
         } catch (DataIntegrityViolationException e) {
             logger.error(LogConstants.getIsUsedSomewhereMessage("Holiday", "ID", holidayId, null));
-            throw new RuntimeException(CorpConnectConstants.Holiday.DataIntegrityViolation);
+            throw new RuntimeException(MessageConstants.Holiday.DataIntegrityViolation);
         }
     }
 
@@ -140,7 +140,7 @@ public class HolidayServiceImpl implements HolidayService {
         return Collections.singletonList(holidayRepository.findById(holidayId).orElseThrow(
                 () -> {
                     logger.error(LogConstants.getNotFoundMessage("Holiday", "get", "ID", holidayId, null));
-                    return new HolidayNotFoundException(CorpConnectConstants.Holiday.HOLIDAY_NOT_FOUND);
+                    return new HolidayNotFoundException(MessageConstants.Holiday.HOLIDAY_NOT_FOUND);
                 }
         ));
     }

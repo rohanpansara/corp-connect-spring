@@ -11,7 +11,7 @@ import com.corpConnect.security.dtos.AuthRequestDTO;
 import com.corpConnect.security.dtos.AuthResponseDTO;
 import com.corpConnect.security.dtos.RegisterDTO;
 import com.corpConnect.services.user.UserService;
-import com.corpConnect.utils.constants.CorpConnectConstants;
+import com.corpConnect.utils.constants.MessageConstants;
 import com.corpConnect.utils.constants.LogConstants;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -38,11 +38,11 @@ public class AuthenticationService {
             logger.info(LogConstants.getCreatedSuccessfullyMessage("User", "DTO", registerDTO, "new user"));
             return userService.getDTO(savedUser);
         } catch (RegistrationFailedException e) {
-            logger.error(LogConstants.getAlreadyExistsWhileCreatingMessage("User", "Email", registerDTO.getEmail(), "while registering"));
-            throw new RegistrationFailedException(CorpConnectConstants.UserError.EMAIL_EXISTS);
+            logger.error(LogConstants.getAlreadyExistsMessage("User", "Email", registerDTO.getEmail(), "while registering"));
+            throw new RegistrationFailedException(MessageConstants.UserError.EMAIL_EXISTS);
         } catch (BaseException e) {
             logger.error("Did Not Match: Attempt to create a user with password: {} and confirmPassword: {}", registerDTO.getPassword(), registerDTO.getConfirmPassword());
-            throw new RegistrationFailedException(CorpConnectConstants.UserError.CONFIRM_PASSWORD_DID_NOT_MATCH);
+            throw new RegistrationFailedException(MessageConstants.UserError.CONFIRM_PASSWORD_DID_NOT_MATCH);
         }
     }
 
@@ -52,15 +52,15 @@ public class AuthenticationService {
         User user = userRepository.findByEmail(request.getEmail())
                 .orElseThrow(() -> {
                     logger.error(LogConstants.getNotFoundMessage("User", "login", "Email", request.getEmail(), "while authenticating"));
-                    return new LoginFailedException(CorpConnectConstants.UserError.USER_NOT_FOUND);
+                    return new LoginFailedException(MessageConstants.UserError.USER_NOT_FOUND);
                 });
 
         if (!user.isAccountEnabled()) {
             logger.error(LogConstants.getAccountDisabledMessage(user.getEmail(), user.getId(), "while authenticating"));
-            throw new LoginFailedException(CorpConnectConstants.UserError.ACCOUNT_DISABLED);
+            throw new LoginFailedException(MessageConstants.UserError.ACCOUNT_DISABLED);
         } else if (!user.isAccountNonLocked()) {
             logger.error(LogConstants.getAccountLockedMessage(user.getEmail(), user.getId(), "while authenticating"));
-            throw new LoginFailedException(CorpConnectConstants.UserError.ACCOUNT_LOCKED);
+            throw new LoginFailedException(MessageConstants.UserError.ACCOUNT_LOCKED);
         }
 
         if (user.getLoginAttempts() >= 3) {
@@ -68,7 +68,7 @@ public class AuthenticationService {
             user.setLoginAttempts(0);
             userRepository.save(user);
             logger.error(LogConstants.getMaxLoginReachedMessage(user.getEmail(), user.getId()));
-            throw new LoginFailedException(CorpConnectConstants.UserError.ACCOUNT_LOCKED);
+            throw new LoginFailedException(MessageConstants.UserError.ACCOUNT_LOCKED);
         }
 
         try {
@@ -78,7 +78,7 @@ public class AuthenticationService {
             user.setLoginAttempts(user.getLoginAttempts() + 1);
             userRepository.save(user);
             logger.error(LogConstants.getInvalidCredentialMessage(user.getEmail(), user.getId()));
-            throw new LoginFailedException(CorpConnectConstants.UserError.INVALID_CREDENTIALS);
+            throw new LoginFailedException(MessageConstants.UserError.INVALID_CREDENTIALS);
         }
 
         user.setLoginAttempts(0);

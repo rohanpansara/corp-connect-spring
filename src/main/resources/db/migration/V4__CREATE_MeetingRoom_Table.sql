@@ -11,5 +11,5 @@ CREATE TABLE IF NOT EXISTS CorpConnect.HR_MEETING_ROOMS (
     createdBy VARCHAR(50), -- from BaseEntity (auditing)
     lastUpdatedDate TIMESTAMP, -- from BaseEntity (auditing)
     lastUpdatedBy VARCHAR(50), -- from BaseEntity (auditing)
-    FOREIGN KEY fk_point_of_contact (point_of_contact_id) REFERENCES `USER`(id) -- Foreign key constraint
+    FOREIGN KEY fk_point_of_contact (point_of_contact_id) REFERENCES `USERS`(id) -- Foreign key constraint
 );
