@@ -99,10 +99,12 @@ public class MessageConstants {
     }
 
     public static final class WorkShift {
-        public static final String WORK_SHIFT_NOT_FOUND = "Work shift not found";
-        public static final String WORK_SHIFT_CREATED = "Work shift created successfully";
-        public static final String WORK_SHIFT_UPDATED = "Work shift updated successfully";
-        public static final String WORK_SHIFT_ALREADY_EXISTS = "Work shift with same name already exists";
+        public static final String WORK_SHIFT_LIST_FOUND = MessageCreator.getListFoundMessage("Work shift");
+        public static final String WORK_SHIFT_NOT_FOUND = MessageCreator.getNotFoundMessage("Work shift");
+        public static final String WORK_SHIFT_CREATED = MessageCreator.getCreatedMessage("Work shift");
+        public static final String WORK_SHIFT_DELETED = MessageCreator.getDeletedMessage("Work shift");
+        public static final String WORK_SHIFT_UPDATED = MessageCreator.getUpdatedMessage("Work shift");
+        public static final String WORK_SHIFT_ALREADY_EXISTS = MessageCreator.getExistsMessage("Work shift", "name");
     }
 
 }

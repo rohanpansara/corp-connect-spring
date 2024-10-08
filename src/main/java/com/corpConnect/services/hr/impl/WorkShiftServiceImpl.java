@@ -100,4 +100,9 @@ public class WorkShiftServiceImpl implements WorkShiftService {
             throw new RuntimeException(MessageConstants.JobTitle.DataIntegrityViolation);
         }
     }
+
+    @Override
+    public List<WorkShift> getAllWorkShifts() {
+        return workShiftRepository.findAll();
+    }
 }

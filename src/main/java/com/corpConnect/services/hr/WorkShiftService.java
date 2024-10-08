@@ -19,4 +19,6 @@ public interface WorkShiftService {
     void deleteWorkShift(WorkShiftDTO workShiftDTO);
     void deleteWorkShiftById(Long workShiftId);
 
+    List<WorkShift> getAllWorkShifts();
+
 }
