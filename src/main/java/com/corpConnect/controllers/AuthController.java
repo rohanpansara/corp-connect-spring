@@ -23,13 +23,14 @@ import org.springframework.web.bind.annotation.RestController;
 @RequiredArgsConstructor
 @RequestMapping("/user")
 public class AuthController {
+
     private final AuthenticationService authenticationService;
 
-    @PostMapping("/register")
+    @PostMapping("/new-user")
     @PreAuthorize("hasAuthority('pms_manager:create') || hasAuthority('hr_manager:create')")
-    public ResponseEntity<ResponseDTO<UserDTO>> register(@RequestBody RegisterDTO registerDTO) throws LoginFailedException {
+    public ResponseEntity<ResponseDTO<UserDTO>> newUser(@RequestBody RegisterDTO registerDTO) throws LoginFailedException {
         UserDTO response = authenticationService.addUser(registerDTO);
-        return ResponseEntity.ok(ResponseDTO.success(MessageConstants.UserSuccess.REGISTRATION_SUCCESS, response));
+        return ResponseEntity.ok(ResponseDTO.success(MessageConstants.UserSuccess.USER_CREATED, response));
     }
 
     @PostMapping("/login")

@@ -78,8 +78,9 @@ public class JobTitleServiceImpl implements JobTitleService {
 
     @Override
     public void deleteJobTitles(JobTitleDTO jobTitleDTO, Boolean isPermanentDelete) {
+        JobTitle jobTitleToDelete = this.getEntity(jobTitleDTO);
+
         try {
-            JobTitle jobTitleToDelete = this.getEntity(jobTitleDTO);
             if (isPermanentDelete) {
                 jobTitleRepository.delete(jobTitleToDelete);
                 logger.info(LogConstants.getDeletedSuccessfullyMessage("Job Title", "Permanent", "DTO", jobTitleDTO, null));

@@ -40,7 +40,7 @@ import static org.springframework.security.config.http.SessionCreationPolicy.STA
 public class SecurityConfigurations {
     private static final String[] publicUrls = {
             "/user/login",
-            "/user/register"
+            "/user/new-user"
     };
 
     private final AuthenticationProvider authenticationProvider;

@@ -1,5 +1,7 @@
 package com.corpConnect.utils.constants;
 
+import com.corpConnect.utils.functions.MessageCreator;
+
 public class MessageConstants {
 
     private static String getDataIntegrityViolationMessage(String className) {
@@ -7,52 +9,40 @@ public class MessageConstants {
     }
 
     public static final class Record {
-        public static final String RECORD_FOUND = "Record found successfully";
-        public static final String RECORD_NOT_FOUND = "Record not found";
+        public static final String RECORD_FOUND = MessageCreator.getFoundMessage("Record");
+        public static final String RECORD_NOT_FOUND = MessageCreator.getNotFoundMessage("Record");
     }
 
     public static final class UserSuccess {
-        public static final String USER_FOUND = "User found successfully";
-        public static final String USER_CREATED = "User created successfully";
-        public static final String USER_UPDATED = "User updated successfully";
-        public static final String USER_DELETED = "User deleted successfully";
+        public static final String USER_FOUND = MessageCreator.getFoundMessage("User");
+        public static final String USER_CREATED = MessageCreator.getCreatedMessage("User");
+        public static final String USER_UPDATED = MessageCreator.getUpdatedMessage("User");
+        public static final String USER_DELETED = MessageCreator.getDeletedMessage("User");
 
-        public static final String USER_LIST_FOUND = "User list found successfully";
+        public static final String USER_LIST_FOUND = MessageCreator.getListFoundMessage("User");
+        public static final String USER_LIST_EMPTY = MessageCreator.getListEmptyMessage("User");
 
-        public static final String LOGIN_SUCCESS = "Login successful";
-        public static final String LOGOUT_SUCCESS = "Logout successful";
+        public static final String LOGIN_SUCCESS = MessageCreator.getLoggedInMessage();
 
-        public static final String REGISTRATION_SUCCESS = "Registration successful";
-
-        public static final String PASSWORD_UPDATED_SUCCESSFULLY = "Password updated successfully";
-        public static final String PASSWORD_RESET_SUCCESS = "Password reset successful";
-
-        public static final String PROFILE_UPDATED_SUCCESSFULLY = "Profile updated successfully";
-
-        public static final String USER_DEACTIVATED = "User account deactivated";
-        public static final String USER_ACTIVATED = "User account activated";
-
-        public static final String USER_ROLE_UPDATED = "User role updated successfully";
+        public static final String PASSWORD_UPDATED_SUCCESSFULLY = MessageCreator.getCustomCRUDMessage("Password", "updated");
+        public static final String PASSWORD_RESET_SUCCESS = MessageCreator.getCustomCRUDMessage("Password", "reset");
+        public static final String PROFILE_UPDATED_SUCCESSFULLY = MessageCreator.getUpdatedMessage("User profile");
     }
 
     public static final class UserError {
-        public static final String USER_NOT_FOUND = "User not found";
+        public static final String USER_NOT_FOUND = MessageCreator.getNotFoundMessage("User");
 
         public static final String CONFIRM_PASSWORD_DID_NOT_MATCH = "Password and Confirm Password doesn't match";
-        public static final String EMAIL_EXISTS = "Email already exists";
+        public static final String EMAIL_EXISTS = MessageCreator.getExistsMessage("User", "email");
 
-        public static final String USER_ROLE_NOT_FOUND = "User Role not found";
+        public static final String USER_ROLE_NOT_FOUND = MessageCreator.getNotFoundMessage("User role");
 
-        public static final String NOT_LOGGED_IN = "You need to login first";
+        public static final String USER_NOT_LOGGED_IN = "You need to login first";
         public static final String AUTHORIZATION_FAILED = "Authorization failed";
         public static final String INVALID_CREDENTIALS = "Invalid credentials";
         public static final String ACCOUNT_LOCKED = "Account is locked. Please contact HR.";
         public static final String ACCOUNT_DISABLED = "Account is disabled. Please contact HR.";
         public static final String ACCOUNT_EXPIRED = "Account has expired. Please contact HR.";
-
-        public static final String LOGIN_FAILED = "Login failed";
-        public static final String PASSWORD_RESET_FAILED = "Password reset failed";
-        public static final String PROFILE_UPDATE_FAILED = "Profile update failed";
 
         public static final String DataIntegrityViolation = getDataIntegrityViolationMessage("user");
 
@@ -66,15 +56,15 @@ public class MessageConstants {
     }
 
     public static final class Holiday {
-        public static final String HOLIDAY_CREATED = "Holiday created successfully";
-        public static final String HOLIDAY_FOR_THE_DATE_EXISTS = "Holiday for the given date already exists";
-        public static final String HOLIDAY_OF_THE_NAME_EXISTS = "Holiday of the given name already exists";
-        public static final String HOLIDAY_FOUND = "Holiday found successfully";
-        public static final String HOLIDAY_NOT_FOUND = "Holiday not found";
-        public static final String HOLIDAY_LIST_FOUND = "All holidays found successfully";
-        public static final String HOLIDAY_LIST_EMPTY = "No holidays found";
-        public static final String HOLIDAY_DELETED = "Holiday deleted successfully";
-        public static final String TYPE_NOT_FOUND = "No such holiday type found";
+        public static final String HOLIDAY_CREATED = MessageCreator.getCreatedMessage("Holiday");
+        public static final String HOLIDAY_FOR_THE_DATE_EXISTS = MessageCreator.getExistsMessage("Holiday", "date");
+        public static final String HOLIDAY_OF_THE_NAME_EXISTS = MessageCreator.getExistsMessage("Holiday", "name");
+        public static final String HOLIDAY_FOUND = MessageCreator.getFoundMessage("Holiday");
+        public static final String HOLIDAY_NOT_FOUND = MessageCreator.getNotFoundMessage("Holiday");
+        public static final String HOLIDAY_LIST_FOUND = MessageCreator.getListFoundMessage("Holiday");
+        public static final String HOLIDAY_LIST_EMPTY = MessageCreator.getListEmptyMessage("Holiday");
+        public static final String HOLIDAY_DELETED = MessageCreator.getDeletedMessage("Holiday");
+        public static final String TYPE_NOT_FOUND = MessageCreator.getNotFoundMessage("Holiday type");
         public static final String DataIntegrityViolation = getDataIntegrityViolationMessage("holiday");
     }
 
