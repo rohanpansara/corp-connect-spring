@@ -15,7 +15,7 @@ import lombok.ToString;
 @JsonInclude(JsonInclude.Include.NON_NULL)
 public class WorkShiftDTO extends NamedDTO {
 
-    @Pattern(regexp = "^\\d{1,2}hrs \\d{1,2}mins$", message = "Duration must be in the format 'XXhrs XXmins'")
+    @Pattern(regexp = "^\\d{1,2}\\s?hrs\\s?\\d{1,2}\\s?mins$", message = "Duration must be in the format 'XXhrs XXmins'")
     private String duration;
     private String startTime;
     private String endTime;

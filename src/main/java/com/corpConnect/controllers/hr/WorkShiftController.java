@@ -4,6 +4,7 @@ import com.corpConnect.dtos.common.ResponseDTO;
 import com.corpConnect.dtos.hr.WorkShiftDTO;
 import com.corpConnect.services.hr.WorkShiftService;
 import com.corpConnect.utils.constants.MessageConstants;
+import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
@@ -15,7 +16,6 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import java.util.List;
@@ -35,16 +35,22 @@ public class WorkShiftController {
         return ResponseEntity.ok(ResponseDTO.success(MessageConstants.WorkShift.WORK_SHIFT_LIST_FOUND, workShiftService.getDTOList(workShiftService.getAllWorkShifts())));
     }
 
+    @GetMapping(value = "/{work-shift-id}")
+    @PreAuthorize("hasAuthority('hr_manager:read')")
+    public ResponseEntity<ResponseDTO<List<WorkShiftDTO>>> fetchWorkShiftByWorkShiftId(@PathVariable("work-shift-id") Long workShiftId) {
+        return ResponseEntity.ok(ResponseDTO.success(MessageConstants.WorkShift.WORK_SHIFT_FOUND, workShiftService.getDTOList(workShiftService.getWorkShiftById(workShiftId))));
+    }
+
     @PostMapping
     @PreAuthorize("hasAuthority('hr_admin:create')")
-    public ResponseEntity<ResponseDTO<Void>> createWorkShift(@RequestBody WorkShiftDTO workShiftDTO) {
+    public ResponseEntity<ResponseDTO<Void>> createWorkShift(@Valid @RequestBody WorkShiftDTO workShiftDTO) {
         workShiftService.createWorkShift(workShiftDTO);
         return ResponseEntity.ok(ResponseDTO.success(MessageConstants.WorkShift.WORK_SHIFT_CREATED));
     }
 
     @PutMapping(value = "/{work-shift-id}")
     @PreAuthorize("hasAuthority('hr_admin:update')")
-    public ResponseEntity<ResponseDTO<Void>> updateWorkShift(@PathVariable("work-shift-id") Long oldWorkShiftId, @RequestBody WorkShiftDTO newWorkShiftDTO) {
+    public ResponseEntity<ResponseDTO<Void>> updateWorkShift(@PathVariable("work-shift-id") Long oldWorkShiftId, @Valid @RequestBody WorkShiftDTO newWorkShiftDTO) {
         workShiftService.updateWorkShift(oldWorkShiftId, newWorkShiftDTO);
         return ResponseEntity.ok(ResponseDTO.success(MessageConstants.WorkShift.WORK_SHIFT_UPDATED));
     }

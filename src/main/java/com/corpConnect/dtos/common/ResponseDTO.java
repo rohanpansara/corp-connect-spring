@@ -33,6 +33,10 @@ public class ResponseDTO<T> {
         return new ResponseDTO<>("error", message, null);
     }
 
+    public static <T> ResponseDTO<T> error(T data, String errorCode) {
+        return new ResponseDTO<>("error", errorCode, data);
+    }
+
     public static <T> ResponseDTO<T> of(String status, String message, T data) {
         return new ResponseDTO<>(status, message, data);
     }

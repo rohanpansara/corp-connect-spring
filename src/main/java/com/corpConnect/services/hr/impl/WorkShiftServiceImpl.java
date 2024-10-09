@@ -1,7 +1,9 @@
 package com.corpConnect.services.hr.impl;
 
 import com.corpConnect.dtos.hr.WorkShiftDTO;
+import com.corpConnect.entities.hr.JobTitle;
 import com.corpConnect.entities.hr.WorkShift;
+import com.corpConnect.exceptions.hr.HolidayNotFoundException;
 import com.corpConnect.exceptions.hr.WorkShiftNotFoundException;
 import com.corpConnect.mappers.hr.WorkShiftMapper;
 import com.corpConnect.repositories.hr.WorkShiftRepository;
@@ -14,7 +16,9 @@ import org.slf4j.LoggerFactory;
 import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.stereotype.Service;
 
+import java.util.Collections;
 import java.util.List;
+import java.util.Optional;
 
 @Service
 @RequiredArgsConstructor
@@ -104,5 +108,15 @@ public class WorkShiftServiceImpl implements WorkShiftService {
     @Override
     public List<WorkShift> getAllWorkShifts() {
         return workShiftRepository.findAll();
+    }
+
+    @Override
+    public List<WorkShift> getWorkShiftById(Long workShiftId) {
+        return Collections.singletonList(workShiftRepository.findById(workShiftId).orElseThrow(
+                () -> {
+                    logger.error(LogConstants.getNotFoundMessage("Work shift", "get", "ID", workShiftId, null));
+                    return new HolidayNotFoundException(MessageConstants.WorkShift.WORK_SHIFT_NOT_FOUND);
+                }
+        ));
     }
 }

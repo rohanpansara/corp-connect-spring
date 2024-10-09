@@ -32,8 +32,11 @@ public class MessageCreator {
         return entityName + " not found";
     }
 
-    public static String getDeletedMessage(String entityName) {
-        return entityName + " deleted successfully";
+    public static String getDeletedMessage(String entityName, Boolean isPermanent) {
+        if(isPermanent)
+            return entityName + " deleted successfully [Permanent]";
+        else
+            return entityName + " deleted successfully";
     }
 
     public static String getListFoundMessage(String entityName) {

@@ -6,6 +6,7 @@ import com.corpConnect.exceptions.common.BaseException;
 import org.apache.coyote.BadRequestException;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.ResponseStatus;
@@ -33,6 +34,13 @@ public class GlobalExceptionHandler {
     @ExceptionHandler(Exception.class)
     public ResponseEntity<ResponseDTO<String>> handleException(Exception ex) {
         return buildResponse(ex.getMessage(), "GENERAL_ERROR", HttpStatus.INTERNAL_SERVER_ERROR);
+    }
+
+    @ExceptionHandler(MethodArgumentNotValidException.class)
+    @ResponseStatus(HttpStatus.BAD_REQUEST)
+    public ResponseEntity<ResponseDTO<String>> handleValidationExceptions(MethodArgumentNotValidException ex) {
+        String errorMessage = ex.getBindingResult().getAllErrors().getFirst().getDefaultMessage();
+        return new ResponseEntity<>(ResponseDTO.error(errorMessage, "VALIDATION_ERROR"), HttpStatus.BAD_REQUEST);
     }
 
     private ResponseEntity<ResponseDTO<String>> buildResponse(String message, String errorCode, HttpStatus status) {

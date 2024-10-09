@@ -2,6 +2,7 @@ package com.corpConnect.services.hr.impl;
 
 import com.corpConnect.dtos.hr.JobTitleDTO;
 import com.corpConnect.entities.hr.JobTitle;
+import com.corpConnect.exceptions.hr.HolidayNotFoundException;
 import com.corpConnect.exceptions.hr.JobTitleNotFoundException;
 import com.corpConnect.mappers.hr.JobTitlesMapper;
 import com.corpConnect.repositories.hr.JobTitleRepository;
@@ -134,14 +135,18 @@ public class JobTitleServiceImpl implements JobTitleService {
     }
 
     @Override
-    public List<JobTitle> getJobTitlesById(Long jobTitlesId) {
-        Optional<JobTitle> jobTitlesOptional = jobTitleRepository.findById(jobTitlesId);
-        return jobTitlesOptional.map(Collections::singletonList).orElseGet(List::of);
+    public List<JobTitle> getJobTitlesById(Long jobTitleId) {
+        return Collections.singletonList(jobTitleRepository.findById(jobTitleId).orElseThrow(
+                () -> {
+                    logger.error(LogConstants.getNotFoundMessage("Job Title", "get", "ID", jobTitleId, null));
+                    return new HolidayNotFoundException(MessageConstants.JobTitle.JOB_TITLE_NOT_FOUND);
+                }
+        ));
     }
 
     @Override
-    public List<JobTitle> getJobTitlesByName(String jobTitlesName) {
-        return jobTitleRepository.findByNameContaining(jobTitlesName);
+    public List<JobTitle> getJobTitlesByName(String name) {
+        return jobTitleRepository.findByNameContaining(name);
     }
 
     @Override

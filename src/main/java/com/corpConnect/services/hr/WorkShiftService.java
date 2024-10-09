@@ -20,5 +20,6 @@ public interface WorkShiftService {
     void deleteWorkShiftById(Long workShiftId);
 
     List<WorkShift> getAllWorkShifts();
+    List<WorkShift> getWorkShiftById(Long workShiftId);
 
 }

@@ -40,9 +40,9 @@ public class HolidayController {
         return ResponseEntity.ok(ResponseDTO.success(MessageConstants.Holiday.HOLIDAY_LIST_FOUND, holidayService.getDTOList(holidayService.getAllHolidays())));
     }
 
-    @GetMapping("/{id}")
+    @GetMapping("/{holiday-id}")
     @PreAuthorize("hasAuthority('user:read')")
-    public ResponseEntity<ResponseDTO<List<HolidayDTO>>> fetchHolidayByHolidayId(@PathVariable("id") Long holidayId){
+    public ResponseEntity<ResponseDTO<List<HolidayDTO>>> fetchHolidayByHolidayId(@PathVariable("holiday-id") Long holidayId){
         return ResponseEntity.ok(ResponseDTO.success(MessageConstants.Holiday.HOLIDAY_FOUND, holidayService.getDTOList(holidayService.getHolidayByHolidayId(holidayId))));
     }
 

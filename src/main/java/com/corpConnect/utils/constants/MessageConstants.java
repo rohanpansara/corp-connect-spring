@@ -17,7 +17,8 @@ public class MessageConstants {
         public static final String USER_FOUND = MessageCreator.getFoundMessage("User");
         public static final String USER_CREATED = MessageCreator.getCreatedMessage("User");
         public static final String USER_UPDATED = MessageCreator.getUpdatedMessage("User");
-        public static final String USER_DELETED = MessageCreator.getDeletedMessage("User");
+        public static final String USER_DELETED = MessageCreator.getDeletedMessage("User", false);
+        public static final String USER_DELETED_PERMANENTLY = MessageCreator.getDeletedMessage("User", true);
 
         public static final String USER_LIST_FOUND = MessageCreator.getListFoundMessage("User");
         public static final String USER_LIST_EMPTY = MessageCreator.getListEmptyMessage("User");
@@ -63,7 +64,7 @@ public class MessageConstants {
         public static final String HOLIDAY_NOT_FOUND = MessageCreator.getNotFoundMessage("Holiday");
         public static final String HOLIDAY_LIST_FOUND = MessageCreator.getListFoundMessage("Holiday");
         public static final String HOLIDAY_LIST_EMPTY = MessageCreator.getListEmptyMessage("Holiday");
-        public static final String HOLIDAY_DELETED = MessageCreator.getDeletedMessage("Holiday");
+        public static final String HOLIDAY_DELETED = MessageCreator.getDeletedMessage("Holiday", false);
         public static final String TYPE_NOT_FOUND = MessageCreator.getNotFoundMessage("Holiday type");
         public static final String DataIntegrityViolation = getDataIntegrityViolationMessage("holiday");
     }
@@ -87,22 +88,23 @@ public class MessageConstants {
     }
 
     public static final class JobTitle {
-        public static final String JOB_TITLE_CREATED = "Job title created successfully";
-        public static final String JOB_TITLE_FOUND = "Job title found successfully";
-        public static final String JOB_TITLE_NOT_FOUND = "Job title not found";
-        public static final String JOB_TITLE_UPDATED = "Job title updated successfully";
-        public static final String JOB_TITLE_DELETED = "Job title deleted successfully";
-        public static final String JOB_TITLE_DELETED_PERMANENTLY = "Job title deleted permanently";
-        public static final String JOB_TITLE_ALREADY_EXISTS = "Job title with the same name already exists";
-        public static final String JOB_TITLE_LIST_FOUND = "All job titles found successfully";
+        public static final String JOB_TITLE_CREATED = MessageCreator.getCreatedMessage("Job title");
+        public static final String JOB_TITLE_FOUND = MessageCreator.getFoundMessage("Job title");
+        public static final String JOB_TITLE_NOT_FOUND = MessageCreator.getNotFoundMessage("Job title");
+        public static final String JOB_TITLE_UPDATED = MessageCreator.getUpdatedMessage("Job title");
+        public static final String JOB_TITLE_DELETED = MessageCreator.getDeletedMessage("Job title", false);
+        public static final String JOB_TITLE_DELETED_PERMANENTLY = MessageCreator.getDeletedMessage("Job title", true);
+        public static final String JOB_TITLE_ALREADY_EXISTS = MessageCreator.getExistsMessage("Job title", "name");
+        public static final String JOB_TITLE_LIST_FOUND = MessageCreator.getListFoundMessage("job title");
         public static final String DataIntegrityViolation = getDataIntegrityViolationMessage("job title");
     }
 
     public static final class WorkShift {
-        public static final String WORK_SHIFT_LIST_FOUND = MessageCreator.getListFoundMessage("Work shift");
+        public static final String WORK_SHIFT_FOUND = MessageCreator.getFoundMessage("Work shift");
+        public static final String WORK_SHIFT_LIST_FOUND = MessageCreator.getListFoundMessage("work shift");
         public static final String WORK_SHIFT_NOT_FOUND = MessageCreator.getNotFoundMessage("Work shift");
         public static final String WORK_SHIFT_CREATED = MessageCreator.getCreatedMessage("Work shift");
-        public static final String WORK_SHIFT_DELETED = MessageCreator.getDeletedMessage("Work shift");
+        public static final String WORK_SHIFT_DELETED = MessageCreator.getDeletedMessage("Work shift", false);
         public static final String WORK_SHIFT_UPDATED = MessageCreator.getUpdatedMessage("Work shift");
         public static final String WORK_SHIFT_ALREADY_EXISTS = MessageCreator.getExistsMessage("Work shift", "name");
     }
