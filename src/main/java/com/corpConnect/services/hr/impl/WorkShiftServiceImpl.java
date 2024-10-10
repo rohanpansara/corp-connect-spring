@@ -83,7 +83,7 @@ public class WorkShiftServiceImpl implements WorkShiftService {
             logger.info(LogConstants.getDeletedSuccessfullyMessage("Work Shift", "Permanent", "DTO", workShiftDTO, null));
         } catch (DataIntegrityViolationException e) {
             logger.error(LogConstants.getIsUsedSomewhereMessage("Work Shift", "DTO", workShiftDTO, null));
-            throw new RuntimeException(MessageConstants.JobTitle.DataIntegrityViolation);
+            throw new RuntimeException(MessageConstants.WorkShift.DataIntegrityViolation);
         }
     }
 
@@ -99,7 +99,7 @@ public class WorkShiftServiceImpl implements WorkShiftService {
             logger.info(LogConstants.getDeletedSuccessfullyMessage("Work Shift", "Permanent", "ID", workShiftId, null));
         } catch (DataIntegrityViolationException e) {
             logger.error(LogConstants.getIsUsedSomewhereMessage("Work Shift", "ID", workShiftId, null));
-            throw new RuntimeException(MessageConstants.JobTitle.DataIntegrityViolation);
+            throw new RuntimeException(MessageConstants.WorkShift.DataIntegrityViolation);
         }
     }
 

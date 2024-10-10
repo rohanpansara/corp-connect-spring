@@ -107,6 +107,7 @@ public class MessageConstants {
         public static final String WORK_SHIFT_DELETED = MessageCreator.getDeletedMessage("Work shift", false);
         public static final String WORK_SHIFT_UPDATED = MessageCreator.getUpdatedMessage("Work shift");
         public static final String WORK_SHIFT_ALREADY_EXISTS = MessageCreator.getExistsMessage("Work shift", "name");
+        public static final String DataIntegrityViolation = getDataIntegrityViolationMessage("work shift");
     }
 
     public static final class Department {
@@ -117,6 +118,7 @@ public class MessageConstants {
         public static final String DEPARTMENT_DELETED = MessageCreator.getDeletedMessage("Department", false);
         public static final String DEPARTMENT_UPDATED = MessageCreator.getUpdatedMessage("Department");
         public static final String DEPARTMENT_ALREADY_EXISTS = MessageCreator.getExistsMessage("Department", "name");
+        public static final String DataIntegrityViolation = getDataIntegrityViolationMessage("department");
     }
 
 }

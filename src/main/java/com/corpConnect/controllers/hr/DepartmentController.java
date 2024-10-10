@@ -9,6 +9,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -26,7 +27,12 @@ public class DepartmentController {
     @GetMapping
     @PreAuthorize("hasAuthority('hr_manager:read')")
     public ResponseEntity<ResponseDTO<List<DepartmentDTO>>> fetchAllDepartments(){
-        return ResponseEntity.of(ResponseDTO.success(MessageConstants.Department.DEPARTMENT_LIST_FOUND, departmentService.getDTOList(departmentService.getAllDepartments())));`
+        return ResponseEntity.ok(ResponseDTO.success(MessageConstants.Department.DEPARTMENT_LIST_FOUND, departmentService.getDTOList(departmentService.getAllDepartments())));
     }
 
+    @GetMapping(value = "/{department-id}")
+    @PreAuthorize("hasAuthority('hr_manager:read')")
+    public  ResponseEntity<ResponseDTO<List<DepartmentDTO>>> fetchDepartmentByDepartmentId(@PathVariable("department-id") Long departmentId){
+        return ResponseEntity.ok(ResponseDTO.success(MessageConstants.Department.DEPARTMENT_FOUND, departmentService.getDTOList(departmentService.getDepartmentById(departmentId))));
+    }
 }

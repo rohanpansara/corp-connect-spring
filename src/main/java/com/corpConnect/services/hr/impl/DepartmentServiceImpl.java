@@ -3,6 +3,7 @@ package com.corpConnect.services.hr.impl;
 import com.corpConnect.dtos.hr.DepartmentDTO;
 import com.corpConnect.entities.hr.Department;
 import com.corpConnect.entities.hr.JobTitle;
+import com.corpConnect.exceptions.hr.HolidayNotFoundException;
 import com.corpConnect.exceptions.hr.JobTitleNotFoundException;
 import com.corpConnect.mappers.hr.DepartmentMapper;
 import com.corpConnect.repositories.hr.DepartmentRepository;
@@ -15,6 +16,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.stereotype.Service;
 
+import java.util.Collections;
 import java.util.List;
 
 @Service
@@ -71,47 +73,79 @@ public class DepartmentServiceImpl implements DepartmentService {
             logger.info(LogConstants.getUpdatedSuccessfullyMessage("Department", "DTO", departmentDTO, "ID", oldDepartmentId, null));
         } catch (DataIntegrityViolationException e) {
             logger.error(LogConstants.getAlreadyExistsMessage("Department", "Name", departmentDTO.getName(), "while updating"));
-            throw new RuntimeException(MessageConstants.JobTitle.JOB_TITLE_ALREADY_EXISTS);
+            throw new RuntimeException(MessageConstants.Department.DEPARTMENT_ALREADY_EXISTS);
         }
     }
 
     @Override
-    public void deleteDepartment(DepartmentDTO departmentDTO) {
-
+    public void deleteDepartment(DepartmentDTO departmentDTO, Boolean isPermanentDelete) {
+        Department departmentToDelete = this.getEntity(departmentDTO);
+        try {
+            if(isPermanentDelete){
+                logger.info(LogConstants.getDeletedSuccessfullyMessage("Department", "Permanent", "DTO", departmentDTO, null));
+                departmentRepository.delete(departmentToDelete);
+            } else {
+                departmentToDelete.setDeleted(true);
+                departmentRepository.save(departmentToDelete);
+                logger.info(LogConstants.getDeletedSuccessfullyMessage("Department", "Soft", "DTO", departmentDTO, null));
+            }
+        } catch (DataIntegrityViolationException e) {
+            logger.error(LogConstants.getIsUsedSomewhereMessage("Department", "DTO", departmentDTO, null));
+            throw new RuntimeException(MessageConstants.Department.DataIntegrityViolation);
+        }
     }
 
     @Override
     public void deleteDepartmentById(Long departmentId, Boolean isPermanentDelete) {
+        Department departmentToDelete = departmentRepository.findById(departmentId).orElseThrow(
+                () -> {
+                    logger.error(LogConstants.getNotFoundMessage("Department", "delete", "ID", departmentId, null));
+                    return new JobTitleNotFoundException(MessageConstants.Department.DEPARTMENT_NOT_FOUND);
+                });
 
+        try {
+            if(isPermanentDelete){
+                logger.info(LogConstants.getDeletedSuccessfullyMessage("Department", "Permanent", "ID", departmentId, null));
+                departmentRepository.delete(departmentToDelete);
+            } else {
+                departmentToDelete.setDeleted(true);
+                departmentRepository.save(departmentToDelete);
+                logger.info(LogConstants.getDeletedSuccessfullyMessage("Department", "Soft", "ID", departmentId, null));
+            }
+        } catch (DataIntegrityViolationException e) {
+            logger.error(LogConstants.getIsUsedSomewhereMessage("Department", "ID", departmentId, null));
+            throw new RuntimeException(MessageConstants.Department.DataIntegrityViolation);
+        }
     }
 
     @Override
     public List<Department> getAllDepartments() {
-        return List.of();
+        return departmentRepository.findAll();
     }
 
     @Override
     public List<Department> getAllNonDeletedDepartments() {
-        return List.of();
+        return departmentRepository.findByIsDeleted(false);
     }
 
     @Override
     public List<Department> getAllDeletedDepartments() {
-        return List.of();
+        return departmentRepository.findByIsDeleted(true);
     }
 
     @Override
-    public List<Department> getDepartmentById(Long jobTitlesId) {
-        return List.of();
+    public List<Department> getDepartmentById(Long departmentId) {
+        return Collections.singletonList(departmentRepository.findById(departmentId).orElseThrow(
+                () -> {
+                    logger.error(LogConstants.getNotFoundMessage("Department", "get", "ID", departmentId, null));
+                    return new HolidayNotFoundException(MessageConstants.Department.DEPARTMENT_NOT_FOUND);
+                }
+        ));
     }
 
     @Override
-    public List<Department> getDepartmentByName(String jobTitlesName) {
-        return List.of();
+    public List<Department> getDepartmentByName(String departmentName) {
+        return departmentRepository.findByNameContaining(departmentName);
     }
 
-    @Override
-    public List<Department> getDepartmentByGrade(String grade) {
-        return List.of();
-    }
 }
