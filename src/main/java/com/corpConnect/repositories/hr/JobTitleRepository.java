@@ -13,6 +13,4 @@ public interface JobTitleRepository extends JpaRepository<JobTitle, Long> {
     List<JobTitle> findByIsDeleted(boolean isDeleted);
     List<JobTitle> findByNameContaining(String jobTitleName);
 
-    boolean existsDeletedByName(String name);
-
 }

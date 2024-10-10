@@ -9,7 +9,7 @@ import lombok.ToString;
 @Setter
 @ToString
 @RequiredArgsConstructor
-public class RegisterDTO {
+public class NewUserDTO {
     private String name;
     private String email;
     private String password;

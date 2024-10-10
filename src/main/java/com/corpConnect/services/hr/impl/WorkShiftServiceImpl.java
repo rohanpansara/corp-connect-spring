@@ -1,7 +1,6 @@
 package com.corpConnect.services.hr.impl;
 
 import com.corpConnect.dtos.hr.WorkShiftDTO;
-import com.corpConnect.entities.hr.JobTitle;
 import com.corpConnect.entities.hr.WorkShift;
 import com.corpConnect.exceptions.hr.HolidayNotFoundException;
 import com.corpConnect.exceptions.hr.WorkShiftNotFoundException;
@@ -18,7 +17,6 @@ import org.springframework.stereotype.Service;
 
 import java.util.Collections;
 import java.util.List;
-import java.util.Optional;
 
 @Service
 @RequiredArgsConstructor

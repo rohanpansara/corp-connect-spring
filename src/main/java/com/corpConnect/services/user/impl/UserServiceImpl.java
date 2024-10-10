@@ -9,7 +9,7 @@ import com.corpConnect.exceptions.client.UserNotFoundException;
 import com.corpConnect.exceptions.common.BaseException;
 import com.corpConnect.mappers.client.UserMapper;
 import com.corpConnect.repositories.user.UserRepository;
-import com.corpConnect.security.dtos.RegisterDTO;
+import com.corpConnect.security.dtos.NewUserDTO;
 import com.corpConnect.services.user.UserService;
 import com.corpConnect.utils.constants.MessageConstants;
 import com.corpConnect.utils.constants.LogConstants;
@@ -17,7 +17,6 @@ import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
@@ -36,8 +35,8 @@ public class UserServiceImpl implements UserService {
     private final UserRepository userRepository;
 
     @Override
-    public User getUserFromRegisterDTO(RegisterDTO registerDTO) throws BaseException {
-        return userMapper.toEntityFromRegisterDTO(registerDTO);
+    public User getUserFromRegisterDTO(NewUserDTO newUserDTO) throws BaseException {
+        return userMapper.toEntityFromRegisterDTO(newUserDTO);
     }
 
     @Override

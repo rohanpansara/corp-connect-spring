@@ -4,7 +4,7 @@ import com.corpConnect.dtos.user.UserDTO;
 import com.corpConnect.entities.user.User;
 import com.corpConnect.exceptions.client.LoginFailedException;
 import com.corpConnect.exceptions.common.BaseException;
-import com.corpConnect.security.dtos.RegisterDTO;
+import com.corpConnect.security.dtos.NewUserDTO;
 import com.corpConnect.services.user.UserService;
 import com.corpConnect.utils.functions.CustomDateTimeFormatter;
 import com.corpConnect.utils.constants.MessageConstants;
@@ -44,18 +44,18 @@ public abstract class UserMapper {
     @Mapping(target = "createdDate", ignore = true)
     @Mapping(target = "createdBy", ignore = true)
     @Mapping(target = "authorities", ignore = true)
-    public abstract User toEntityFromRegisterDTO(RegisterDTO registerDTO);
+    public abstract User toEntityFromRegisterDTO(NewUserDTO newUserDTO);
 
     public abstract List<User> toEntityList(List<UserDTO> userDTOList);
     public abstract List<UserDTO> toDTOList(List<User> userList);
 
     @BeforeMapping
-    protected void validatePassword(RegisterDTO registerDTO, @MappingTarget User user) throws BaseException {
-        if (!isEmailExists(registerDTO.getEmail())) {
+    protected void validatePassword(NewUserDTO newUserDTO, @MappingTarget User user) throws BaseException {
+        if (!isEmailExists(newUserDTO.getEmail())) {
             throw new LoginFailedException(MessageConstants.UserError.EMAIL_EXISTS);
         }
 
-        if (!registerDTO.getPassword().equals(registerDTO.getConfirmPassword())) {
+        if (!newUserDTO.getPassword().equals(newUserDTO.getConfirmPassword())) {
             throw new BaseException(MessageConstants.UserError.CONFIRM_PASSWORD_DID_NOT_MATCH);
         }
     }

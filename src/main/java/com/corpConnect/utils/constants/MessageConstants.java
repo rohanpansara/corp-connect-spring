@@ -109,5 +109,15 @@ public class MessageConstants {
         public static final String WORK_SHIFT_ALREADY_EXISTS = MessageCreator.getExistsMessage("Work shift", "name");
     }
 
+    public static final class Department {
+        public static final String DEPARTMENT_FOUND = MessageCreator.getFoundMessage("Department");
+        public static final String DEPARTMENT_LIST_FOUND = MessageCreator.getListFoundMessage("department");
+        public static final String DEPARTMENT_NOT_FOUND = MessageCreator.getNotFoundMessage("Department");
+        public static final String DEPARTMENT_CREATED = MessageCreator.getCreatedMessage("Department");
+        public static final String DEPARTMENT_DELETED = MessageCreator.getDeletedMessage("Department", false);
+        public static final String DEPARTMENT_UPDATED = MessageCreator.getUpdatedMessage("Department");
+        public static final String DEPARTMENT_ALREADY_EXISTS = MessageCreator.getExistsMessage("Department", "name");
+    }
+
 }
 

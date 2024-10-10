@@ -4,7 +4,7 @@ import com.corpConnect.dtos.hr.JobTitleDTO;
 import com.corpConnect.entities.hr.JobTitle;
 import com.corpConnect.exceptions.hr.HolidayNotFoundException;
 import com.corpConnect.exceptions.hr.JobTitleNotFoundException;
-import com.corpConnect.mappers.hr.JobTitlesMapper;
+import com.corpConnect.mappers.hr.JobTitleMapper;
 import com.corpConnect.repositories.hr.JobTitleRepository;
 import com.corpConnect.services.hr.JobTitleService;
 import com.corpConnect.utils.constants.MessageConstants;
@@ -17,7 +17,6 @@ import org.springframework.stereotype.Service;
 
 import java.util.Collections;
 import java.util.List;
-import java.util.Optional;
 
 @Service
 @RequiredArgsConstructor
@@ -25,27 +24,27 @@ public class JobTitleServiceImpl implements JobTitleService {
 
     private static final Logger logger = LoggerFactory.getLogger(JobTitleServiceImpl.class);
 
-    private final JobTitlesMapper jobTitlesMapper;
+    private final JobTitleMapper jobTitleMapper;
     private final JobTitleRepository jobTitleRepository;
 
     @Override
     public JobTitle getEntity(JobTitleDTO jobTitleDTO) {
-        return jobTitlesMapper.toEntity(jobTitleDTO);
+        return jobTitleMapper.toEntity(jobTitleDTO);
     }
 
     @Override
     public JobTitleDTO getDTO(JobTitle jobTitle) {
-        return jobTitlesMapper.toDTO(jobTitle);
+        return jobTitleMapper.toDTO(jobTitle);
     }
 
     @Override
     public List<JobTitle> getEntityList(List<JobTitleDTO> jobTitleDTOList) {
-        return jobTitlesMapper.toEntityList(jobTitleDTOList);
+        return jobTitleMapper.toEntityList(jobTitleDTOList);
     }
 
     @Override
     public List<JobTitleDTO> getDTOList(List<JobTitle> jobTitleList) {
-        return jobTitlesMapper.toDTOList(jobTitleList);
+        return jobTitleMapper.toDTOList(jobTitleList);
     }
 
     @Override
@@ -68,7 +67,7 @@ public class JobTitleServiceImpl implements JobTitleService {
                 });
 
         try {
-            jobTitlesMapper.updateEntityFromDTO(jobTitleDTO, oldJobTitle);
+            jobTitleMapper.updateEntityFromDTO(jobTitleDTO, oldJobTitle);
             jobTitleRepository.save(oldJobTitle);
             logger.info(LogConstants.getUpdatedSuccessfullyMessage("Job Title", "DTO", jobTitleDTO, "ID", oldJobTitleId, null));
         } catch (DataIntegrityViolationException e) {

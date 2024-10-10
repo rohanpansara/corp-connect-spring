@@ -1,6 +1,6 @@
 CREATE TABLE IF NOT EXISTS CorpConnect.HR_DEPARTMENTS (
     id BIGINT AUTO_INCREMENT PRIMARY KEY, -- From NameWithDeleteEntity
-    name VARCHAR(150) NOT NULL, -- From NameWithDeleteEntity
+    name VARCHAR(150) NOT NULL UNIQUE, -- From NameWithDeleteEntity
     code VARCHAR(50), -- Department code
     department_head_id BIGINT, -- Foreign key to User table
     location VARCHAR(255), -- Department location

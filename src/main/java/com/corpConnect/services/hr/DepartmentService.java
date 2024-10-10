@@ -18,11 +18,11 @@ public interface DepartmentService {
     void deleteDepartment(DepartmentDTO departmentDTO);
     void deleteDepartmentById(Long departmentId, Boolean isPermanentDelete);
 
-    List<JobTitle> getAllDepartments();
-    List<JobTitle> getAllNonDeletedDepartments();
-    List<JobTitle> getAllDeletedDepartments();
-    List<JobTitle> getDepartmentById(Long jobTitlesId);
-    List<JobTitle> getDepartmentByName(String jobTitlesName);
-    List<JobTitle> getDepartmentByGrade(String grade);
+    List<Department> getAllDepartments();
+    List<Department> getAllNonDeletedDepartments();
+    List<Department> getAllDeletedDepartments();
+    List<Department> getDepartmentById(Long jobTitlesId);
+    List<Department> getDepartmentByName(String jobTitlesName);
+    List<Department> getDepartmentByGrade(String grade);
 
 }

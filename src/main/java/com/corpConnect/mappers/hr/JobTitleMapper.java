@@ -1,8 +1,7 @@
 package com.corpConnect.mappers.hr;
 
-import com.corpConnect.dtos.hr.DepartmentDTO;
-import com.corpConnect.entities.hr.Department;
-import com.corpConnect.exceptions.common.BaseException;
+import com.corpConnect.dtos.hr.JobTitleDTO;
+import com.corpConnect.entities.hr.JobTitle;
 import com.corpConnect.utils.functions.CustomDateTimeFormatter;
 import org.mapstruct.AfterMapping;
 import org.mapstruct.BeanMapping;
@@ -15,32 +14,31 @@ import org.mapstruct.ReportingPolicy;
 import java.util.List;
 
 @Mapper(unmappedTargetPolicy = ReportingPolicy.IGNORE, componentModel = "spring")
-public abstract class DepartmentsMapper {
+public abstract class JobTitleMapper {
 
     @Mapping(target = "id", ignore = true)
     @Mapping(target = "lastUpdatedDate", ignore = true)
     @Mapping(target = "lastUpdatedBy", ignore = true)
     @Mapping(target = "createdDate", ignore = true)
     @Mapping(target = "createdBy", ignore = true)
-    public abstract Department toEntity(DepartmentDTO departmentDTO);
+    public abstract JobTitle toEntity(JobTitleDTO jobTitleDTO);
 
     @Mapping(target = "lastUpdatedDate", ignore = true)
     @Mapping(target = "lastUpdatedBy", ignore = true)
     @Mapping(target = "createdDate", ignore = true)
     @Mapping(target = "createdBy", ignore = true)
-    public abstract DepartmentDTO toDTO(Department department);
+    public abstract JobTitleDTO toDTO(JobTitle jobTitle);
 
-    public abstract List<Department> toEntityList(List<DepartmentDTO> departmentDTOList);
+    public abstract List<JobTitle> toEntityList(List<JobTitleDTO> jobTitleDTOList);
 
-    public abstract List<DepartmentDTO> toDTOList(List<Department> departmentList);
+    public abstract List<JobTitleDTO> toDTOList(List<JobTitle> jobTitleList);
 
     @BeanMapping(nullValuePropertyMappingStrategy = NullValuePropertyMappingStrategy.IGNORE)
-    public abstract void updateEntityFromDTO(DepartmentDTO departmentDTO, @MappingTarget Department department);
+    public abstract void updateEntityFromDTO(JobTitleDTO jobTitleDTO, @MappingTarget JobTitle jobTitle);
 
     @AfterMapping
-    protected void dateFormatting(Department department, @MappingTarget DepartmentDTO departmentDTO) throws BaseException {
-        departmentDTO.setCreatedDate(CustomDateTimeFormatter.getLocalDateTimeString(department.getCreatedDate()));
-        departmentDTO.setLastUpdatedDate(CustomDateTimeFormatter.getLocalDateTimeString(department.getLastUpdatedDate()));
+    protected void dateFormatting(JobTitle jobTitle, @MappingTarget JobTitleDTO jobTitleDTO) {
+        jobTitleDTO.setCreatedDate(CustomDateTimeFormatter.getLocalDateTimeString(jobTitle.getCreatedDate()));
+        jobTitleDTO.setLastUpdatedDate(CustomDateTimeFormatter.getLocalDateTimeString(jobTitle.getLastUpdatedDate()));
     }
-
 }

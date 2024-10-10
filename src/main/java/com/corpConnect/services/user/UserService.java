@@ -4,14 +4,14 @@ import com.corpConnect.dtos.user.UserDTO;
 import com.corpConnect.dtos.user.card.DashboardCardDTO;
 import com.corpConnect.entities.user.User;
 import com.corpConnect.exceptions.common.BaseException;
-import com.corpConnect.security.dtos.RegisterDTO;
+import com.corpConnect.security.dtos.NewUserDTO;
 
 import java.util.List;
 
 public interface UserService {
 
     // User Mapper
-    User getUserFromRegisterDTO(RegisterDTO registerDTO) throws BaseException;
+    User getUserFromRegisterDTO(NewUserDTO newUserDTO) throws BaseException;
     User getEntity(UserDTO userDTO);
     UserDTO getDTO(User user);
     List<User> getEntityList(List<UserDTO> userDTOList);

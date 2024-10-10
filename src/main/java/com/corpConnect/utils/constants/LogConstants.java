@@ -2,24 +2,16 @@ package com.corpConnect.utils.constants;
 
 public class LogConstants {
 
-    public static String getLoggedInMessage(String email, Long userId) {
-        return buildMessage("LOGGED IN", null, "Attempt to login user with Email-" + email + " and ID-" + userId);
+    public static String getLoggedInSuccessMessage(String email, Long userId) {
+        return buildMessage("Log In Successful", null, "Attempt to login user with Email-" + email + " and ID-" + userId);
     }
 
-    public static String getInvalidCredentialMessage(String email, Long userId) {
-        return buildMessage("INVALID CREDENTIALS", null, "Attempt to login user with Email-" + email + " and ID-" + userId);
+    public static String getLogInFailedMessage(String email, Long userId, String specificMessage) {
+        return buildMessage("Log In Failed", specificMessage, "Attempt to login user with Email-" + email + " and ID-" + userId);
     }
 
-    public static String getMaxLoginReachedMessage(String email, Long userId) {
-        return buildMessage("MAX LOGIN ATTEMPTS REACHED", "Account Locked", "Attempt to login user with Email-" + email + " and ID-" + userId);
-    }
-
-    public static String getAccountLockedMessage(String email, Long userId, String specificMessage) {
-        return buildMessage("ACCOUNT LOCKED", specificMessage, "Attempt to login user with Email-" + email + " and ID-" + userId);
-    }
-
-    public static String getAccountDisabledMessage(String email, Long userId, String specificMessage) {
-        return buildMessage("ACCOUNT DISABLED", specificMessage, "Attempt to login user with Email-" + email + " and ID-" + userId);
+    public static String getAccountActionTakenMessage(String email, String action, Long userId, String specificMessage) {
+        return buildMessage("Account " + action , specificMessage, "Attempt to login user with Email-" + email + " and ID-" + userId);
     }
 
     public static String getAuditorNotFoundMessage(String className, Long id, String specificMessage) {

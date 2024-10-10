@@ -1,8 +1,6 @@
 package com.corpConnect.mappers.hr;
 
-import com.corpConnect.dtos.hr.JobTitleDTO;
 import com.corpConnect.dtos.hr.MeetingRoomDTO;
-import com.corpConnect.entities.hr.JobTitle;
 import com.corpConnect.entities.hr.MeetingRoom;
 import com.corpConnect.exceptions.common.BaseException;
 import com.corpConnect.utils.functions.CustomDateTimeFormatter;
@@ -17,7 +15,7 @@ import org.mapstruct.ReportingPolicy;
 import java.util.List;
 
 @Mapper(unmappedTargetPolicy = ReportingPolicy.IGNORE, componentModel = "spring")
-public abstract class MeetingRoomsMapper {
+public abstract class MeetingRoomMapper {
 
     @Mapping(target = "id", ignore = true)
     @Mapping(target = "lastUpdatedDate", ignore = true)

@@ -6,7 +6,7 @@ import com.corpConnect.exceptions.client.LoginFailedException;
 import com.corpConnect.exceptions.common.BaseException;
 import com.corpConnect.security.dtos.AuthRequestDTO;
 import com.corpConnect.security.dtos.AuthResponseDTO;
-import com.corpConnect.security.dtos.RegisterDTO;
+import com.corpConnect.security.dtos.NewUserDTO;
 import com.corpConnect.security.services.AuthenticationService;
 import com.corpConnect.utils.constants.MessageConstants;
 import lombok.RequiredArgsConstructor;
@@ -28,8 +28,8 @@ public class AuthController {
 
     @PostMapping("/new-user")
     @PreAuthorize("hasAuthority('pms_manager:create') || hasAuthority('hr_manager:create')")
-    public ResponseEntity<ResponseDTO<UserDTO>> newUser(@RequestBody RegisterDTO registerDTO) throws LoginFailedException {
-        UserDTO response = authenticationService.addUser(registerDTO);
+    public ResponseEntity<ResponseDTO<UserDTO>> newUser(@RequestBody NewUserDTO newUserDTO) throws LoginFailedException {
+        UserDTO response = authenticationService.addNewUser(newUserDTO);
         return ResponseEntity.ok(ResponseDTO.success(MessageConstants.UserSuccess.USER_CREATED, response));
     }
 
