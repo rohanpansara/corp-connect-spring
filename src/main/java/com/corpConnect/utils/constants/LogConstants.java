@@ -11,7 +11,11 @@ public class LogConstants {
     }
 
     public static String getAccountActionTakenMessage(String email, String action, Long userId, String specificMessage) {
-        return buildMessage("Account " + action , specificMessage, "Attempt to login user with Email-" + email + " and ID-" + userId);
+        return buildMessage("Account " + action, specificMessage, "Attempt to login user with Email-" + email + " and ID-" + userId);
+    }
+
+    public static String getEntityMapperLogPrefix(String mapperClass, String specificMessage) {
+        return buildMessage(mapperClass + " Mapper", specificMessage, "Attempt to map a dto to an entity");
     }
 
     public static String getAuditorNotFoundMessage(String className, Long id, String specificMessage) {
@@ -36,6 +40,14 @@ public class LogConstants {
 
     public static String getIsUsedSomewhereMessage(String className, String fieldName, Object fieldValue, String specificMessage) {
         return buildMessage("Is Used", specificMessage, "Attempt to delete a " + className + " with " + fieldName + "-" + fieldValue);
+    }
+
+    public static String getFoundAllMessage(String className, String action, String specificMessage) {
+        return buildMessage("Found All", specificMessage, "Attempt to " + action + " " + className);
+    }
+
+    public static String getFoundMessage(String className, String action, String fieldName, Object fieldValue, String specificMessage) {
+        return buildMessage("Found", specificMessage, "Attempt to " + action + " " + className + " with " + fieldName + "-" + fieldValue);
     }
 
     public static String getNotFoundMessage(String className, String action, String fieldName, Object fieldValue, String specificMessage) {

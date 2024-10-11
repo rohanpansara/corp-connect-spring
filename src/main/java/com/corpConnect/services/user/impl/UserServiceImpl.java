@@ -95,17 +95,26 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public List<User> getAllUsers() {
-        return userRepository.findAll();
+    public List<User> getAllUsers(Boolean isDeleted) {
+        if (isDeleted == null) {
+            logger.info(LogConstants.getFoundAllMessage("User", "get", "without deleted check"));
+            return userRepository.findAll();
+        } else if (isDeleted) {
+            return this.getAllDeletedUsers();
+        } else {
+            return this.getAllNonDeletedUsers();
+        }
     }
 
     @Override
     public List<User> getAllNonDeletedUsers() {
+        logger.info(LogConstants.getFoundAllMessage("User", "get", "deleted check-" + false));
         return userRepository.findByIsDeleted(false);
     }
 
     @Override
     public List<User> getAllDeletedUsers() {
+        logger.info(LogConstants.getFoundAllMessage("User", "get", "deleted check-" + true));
         return userRepository.findByIsDeleted(true);
     }
 

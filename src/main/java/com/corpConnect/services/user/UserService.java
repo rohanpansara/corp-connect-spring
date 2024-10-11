@@ -22,13 +22,12 @@ public interface UserService {
     User getUserByEmail(String email);
     User getUserByUserId(Long userId);
     List<User> getUserByAccountExpiration(Boolean isExpired);
-    List<User> getAllUsers();
+    List<User> getAllUsers(Boolean isDeleted);
     List<User> getAllNonDeletedUsers();
     List<User> getAllDeletedUsers();
 
     // Dashboard
     DashboardCardDTO getDashboardCards();
-
 
     // HR Access Control
     void unlockUserAccount(Long userId);

@@ -16,7 +16,7 @@ import lombok.ToString;
 public class MeetingRoomDTO extends NamedDTO {
 
     private String floorNumber;
-    private UserDTO pointOfContactId;
+    private NamedDTO pointOfContactId;
     private Integer capacity;
     private String equipment;
 

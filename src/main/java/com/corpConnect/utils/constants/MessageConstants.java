@@ -121,5 +121,16 @@ public class MessageConstants {
         public static final String DataIntegrityViolation = getDataIntegrityViolationMessage("department");
     }
 
+    public static final class MeetingRoom {
+        public static final String MEETING_ROOM_FOUND = MessageCreator.getFoundMessage("Meeting room");
+        public static final String MEETING_ROOM_LIST_FOUND = MessageCreator.getListFoundMessage("meeting room");
+        public static final String MEETING_ROOM_NOT_FOUND = MessageCreator.getNotFoundMessage("Meeting room");
+        public static final String MEETING_ROOM_CREATED = MessageCreator.getCreatedMessage("Meeting room");
+        public static final String MEETING_ROOM_DELETED = MessageCreator.getDeletedMessage("Meeting room", false);
+        public static final String MEETING_ROOM_UPDATED = MessageCreator.getUpdatedMessage("Meeting room");
+        public static final String MEETING_ROOM_ALREADY_EXISTS = MessageCreator.getExistsMessage("Meeting room", "name");
+        public static final String DataIntegrityViolation = getDataIntegrityViolationMessage("meeting room");
+    }
+
 }
 

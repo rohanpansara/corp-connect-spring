@@ -15,7 +15,7 @@ import lombok.ToString;
 @JsonInclude(JsonInclude.Include.NON_NULL)
 public class DepartmentDTO extends NamedDTO {
 
-    private UserDTO departmentHead;
+    private NamedDTO departmentHead;
     private String code;
     private String location;
     private String phoneExtension;

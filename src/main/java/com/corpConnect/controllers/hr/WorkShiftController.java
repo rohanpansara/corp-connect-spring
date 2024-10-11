@@ -24,7 +24,7 @@ import java.util.List;
 @CrossOrigin(origins = "http://localhost:3000")
 @RequiredArgsConstructor
 @RequestMapping("/hr/work-shift")
-@PreAuthorize("hasRole('HR_ADMIN')")
+@PreAuthorize("hasRole('HR_MANAGER')")
 public class WorkShiftController {
 
     private final WorkShiftService workShiftService;

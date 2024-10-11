@@ -17,7 +17,7 @@ public interface DepartmentService {
     void deleteDepartment(DepartmentDTO departmentDTO, Boolean isPermanentDelete);
     void deleteDepartmentById(Long departmentId, Boolean isPermanentDelete);
 
-    List<Department> getAllDepartments();
+    List<Department> getAllDepartments(Boolean isDeleted);
     List<Department> getAllNonDeletedDepartments();
     List<Department> getAllDeletedDepartments();
     List<Department> getDepartmentById(Long departmentId);

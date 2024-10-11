@@ -11,6 +11,7 @@ import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import java.util.List;
@@ -25,8 +26,8 @@ public class EmployeeController {
 
     @GetMapping
     @PreAuthorize("hasAuthority('admin:read')")
-    public ResponseEntity<ResponseDTO<List<UserDTO>>> fetchAllUsers(){
-        return ResponseEntity.ok(ResponseDTO.success(MessageConstants.UserSuccess.USER_LIST_FOUND, userService.getDTOList(userService.getAllUsers())));
+    public ResponseEntity<ResponseDTO<List<UserDTO>>> fetchAllUsers(@RequestParam(required = false, value = "deleted") Boolean isDeleted){
+        return ResponseEntity.ok(ResponseDTO.success(MessageConstants.UserSuccess.USER_LIST_FOUND, userService.getDTOList(userService.getAllUsers(isDeleted))));
     }
 
     @GetMapping("/{user-id}")

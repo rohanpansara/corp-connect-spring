@@ -2,7 +2,7 @@ package com.corpConnect.services.hr.impl;
 
 import com.corpConnect.dtos.hr.DepartmentDTO;
 import com.corpConnect.entities.hr.Department;
-import com.corpConnect.entities.hr.JobTitle;
+import com.corpConnect.exceptions.hr.DepartmentNotFoundException;
 import com.corpConnect.exceptions.hr.HolidayNotFoundException;
 import com.corpConnect.exceptions.hr.JobTitleNotFoundException;
 import com.corpConnect.mappers.hr.DepartmentMapper;
@@ -64,7 +64,7 @@ public class DepartmentServiceImpl implements DepartmentService {
         Department oldDepartment = departmentRepository.findById(oldDepartmentId).orElseThrow(
                 () -> {
                     logger.error(LogConstants.getNotFoundMessage("Department", "update", "ID", oldDepartmentId, null));
-                    return new JobTitleNotFoundException(MessageConstants.Department.DEPARTMENT_NOT_FOUND);
+                    return new DepartmentNotFoundException(MessageConstants.Department.DEPARTMENT_NOT_FOUND);
                 });
 
         try {
@@ -100,7 +100,7 @@ public class DepartmentServiceImpl implements DepartmentService {
         Department departmentToDelete = departmentRepository.findById(departmentId).orElseThrow(
                 () -> {
                     logger.error(LogConstants.getNotFoundMessage("Department", "delete", "ID", departmentId, null));
-                    return new JobTitleNotFoundException(MessageConstants.Department.DEPARTMENT_NOT_FOUND);
+                    return new DepartmentNotFoundException(MessageConstants.Department.DEPARTMENT_NOT_FOUND);
                 });
 
         try {
@@ -119,17 +119,26 @@ public class DepartmentServiceImpl implements DepartmentService {
     }
 
     @Override
-    public List<Department> getAllDepartments() {
-        return departmentRepository.findAll();
+    public List<Department> getAllDepartments(Boolean isDeleted) {
+        if(isDeleted == null){
+            logger.info(LogConstants.getFoundAllMessage("Department", "get", "without deleted check"));
+            return departmentRepository.findAll();
+        } else if(isDeleted){
+            return this.getAllDeletedDepartments();
+        } else {
+            return this.getAllNonDeletedDepartments();
+        }
     }
 
     @Override
     public List<Department> getAllNonDeletedDepartments() {
+        logger.info(LogConstants.getFoundAllMessage("Department", "get", "deleted check-"+ true));
         return departmentRepository.findByIsDeleted(false);
     }
 
     @Override
     public List<Department> getAllDeletedDepartments() {
+        logger.info(LogConstants.getFoundAllMessage("Department", "get", "deleted check-"+ false));
         return departmentRepository.findByIsDeleted(true);
     }
 
@@ -145,6 +154,7 @@ public class DepartmentServiceImpl implements DepartmentService {
 
     @Override
     public List<Department> getDepartmentByName(String departmentName) {
+        logger.info(LogConstants.getFoundAllMessage("Department", "get", "name containing-"+ departmentName));
         return departmentRepository.findByNameContaining(departmentName);
     }
 

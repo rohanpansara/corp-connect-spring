@@ -22,7 +22,7 @@ import java.util.List;
 @CrossOrigin(origins = "http://localhost:3000")
 @RequiredArgsConstructor
 @RequestMapping("/hr/holiday")
-@PreAuthorize("hasRole('HR_ADMIN')")
+@PreAuthorize("hasRole('HR_MANAGER')")
 public class HolidayController {
 
     private final HolidayService holidayService;

@@ -5,6 +5,9 @@ import com.corpConnect.entities.user.User;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.EntityListeners;
+import jakarta.persistence.FetchType;
+import jakarta.persistence.JoinColumn;
+import jakarta.persistence.ManyToOne;
 import jakarta.persistence.Table;
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -23,7 +26,8 @@ import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 @Table(name = "HR_DEPARTMENTS")
 public class Department extends NameWithDeleteEntity {
 
-    @Column(name = "department_head_id")
+    @ManyToOne(fetch = FetchType.EAGER)
+    @JoinColumn(name = "department_head_id")
     private User departmentHead;
 
     private String code;
