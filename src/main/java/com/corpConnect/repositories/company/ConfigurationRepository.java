@@ -18,5 +18,6 @@ public interface ConfigurationRepository extends JpaRepository<Configuration, Lo
 
     boolean existsEnabledByName(String name);
     boolean existsDeletedByName(String name);
+
 }
 

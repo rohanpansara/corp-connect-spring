@@ -10,7 +10,7 @@ import java.util.List;
 @Repository
 public interface MeetingRoomRepository extends JpaRepository<MeetingRoom, Long> {
 
-    MeetingRoom findByMeetingRoomId(Long meetingRoomId);
+    MeetingRoom findMeetingRoomById(Long meetingRoomId);
     MeetingRoom findByNameContaining(String name);
 
     List<MeetingRoom> findByIsDeleted(boolean isDeleted);

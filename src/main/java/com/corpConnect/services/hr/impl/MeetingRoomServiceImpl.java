@@ -1,7 +1,6 @@
 package com.corpConnect.services.hr.impl;
 
 import com.corpConnect.dtos.hr.MeetingRoomDTO;
-import com.corpConnect.entities.hr.Department;
 import com.corpConnect.entities.hr.MeetingRoom;
 import com.corpConnect.exceptions.hr.JobTitleNotFoundException;
 import com.corpConnect.exceptions.hr.MeetingRoomNotFoundException;
@@ -145,7 +144,7 @@ public class MeetingRoomServiceImpl implements MeetingRoomService {
     @Override
     public List<MeetingRoom> getMeetingRoomById(Long meetingRoomId) {
         logger.info(LogConstants.getFoundMessage("Meeting Room", "get", "ID", meetingRoomId, null));
-        return Collections.singletonList(meetingRoomRepository.findByMeetingRoomId(meetingRoomId));
+        return Collections.singletonList(meetingRoomRepository.findMeetingRoomById(meetingRoomId));
     }
 
     @Override
