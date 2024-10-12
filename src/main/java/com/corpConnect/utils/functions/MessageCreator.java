@@ -2,9 +2,14 @@ package com.corpConnect.utils.functions;
 
 public class MessageCreator {
 
-    private MessageCreator() {    }
+    private MessageCreator() {
+    }
 
-    public static String getLoggedInMessage(){
+    public static String getJWTErrorMessage(String exceptionName, String message) {
+        return "JWT Exception [" + exceptionName + "]: " + message;
+    }
+
+    public static String getLoggedInMessage() {
         return "User logged in successfully";
     }
 
@@ -33,7 +38,7 @@ public class MessageCreator {
     }
 
     public static String getDeletedMessage(String entityName, Boolean isPermanent) {
-        if(isPermanent)
+        if (isPermanent)
             return entityName + " deleted successfully [Permanent]";
         else
             return entityName + " deleted successfully";

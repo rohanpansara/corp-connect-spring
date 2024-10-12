@@ -1,7 +1,11 @@
 package com.corpConnect.security.services;
 
+import com.corpConnect.utils.constants.MessageConstants;
 import io.jsonwebtoken.Claims;
+import io.jsonwebtoken.ExpiredJwtException;
 import io.jsonwebtoken.Jwts;
+import io.jsonwebtoken.MalformedJwtException;
+import io.jsonwebtoken.UnsupportedJwtException;
 import io.jsonwebtoken.security.InvalidKeyException;
 import io.jsonwebtoken.security.Keys;
 
@@ -80,7 +84,7 @@ public class JwtService {
                 .subject(subject != null ? subject : userDetails.getUsername())
                 .issuedAt(new Date(System.currentTimeMillis()))
                 .expiration(new Date(System.currentTimeMillis() + expiration))
-                .signWith(getSignInKey())   //By default, it will use HS512. If you want to use any other, add 'SignatureAlgorithm.X' as second parameter.
+                .signWith(getSignInKey())   // By default, it will use HS512. If you want to use any other, add 'SignatureAlgorithm.X' as second parameter.
                 .compact();
     }
 
@@ -98,13 +102,26 @@ public class JwtService {
     }
 
     private Claims extractAllClaims(String token) {
-        return Jwts
-                .parser()
-                .verifyWith((SecretKey) getSignInKey())
-                .build()
-                .parseSignedClaims(token)
-                .getPayload();
+        try {
+            return Jwts
+                    .parser()
+                    .verifyWith((SecretKey) getSignInKey())
+                    .build()
+                    .parseSignedClaims(token)
+                    .getPayload();
+        } catch (SecurityException e) {
+            throw new RuntimeException(MessageConstants.JWT.SECURITY_EXCEPTION, e);
+        } catch (MalformedJwtException e) {
+            throw new RuntimeException(MessageConstants.JWT.MALFORMED_JWT_EXCEPTION, e);
+        } catch (ExpiredJwtException e) {
+            throw new RuntimeException(MessageConstants.JWT.EXPIRED_JWT_EXCEPTION, e);
+        } catch (UnsupportedJwtException e) {
+            throw new RuntimeException(MessageConstants.JWT.UNSUPPORTED_JWT_EXCEPTION, e);
+        } catch (IllegalArgumentException e) {
+            throw new RuntimeException(MessageConstants.JWT.ILLEGAL_ARGUMENT_EXCEPTION, e);
+        }
     }
+
 
     private Map<String, Object> getHeader(String moduleType) {
         Map<String, Object> headerMap = new HashMap<>();

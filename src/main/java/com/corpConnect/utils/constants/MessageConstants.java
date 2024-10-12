@@ -8,6 +8,14 @@ public class MessageConstants {
         return "This " + className + " is already used. Please check again before deleting";
     }
 
+    public static final class JWT {
+        public static final String SECURITY_EXCEPTION = MessageCreator.getJWTErrorMessage("Security" ,"The token's signature is not valid");
+        public static final String MALFORMED_JWT_EXCEPTION = MessageCreator.getJWTErrorMessage("Malformed Jwt" ,"The token structure is not valid");
+        public static final String EXPIRED_JWT_EXCEPTION = MessageCreator.getJWTErrorMessage("Expired Jwt" ,"The token has expired and is no longer valid");
+        public static final String UNSUPPORTED_JWT_EXCEPTION = MessageCreator.getJWTErrorMessage("Unsupported Jwt" ,"The token type is not supported");
+        public static final String ILLEGAL_ARGUMENT_EXCEPTION = MessageCreator.getJWTErrorMessage("Illegal Argument" ,"The token is missing claims or the claims are empty");
+    }
+
     public static final class Record {
         public static final String RECORD_FOUND = MessageCreator.getFoundMessage("Record");
         public static final String RECORD_NOT_FOUND = MessageCreator.getNotFoundMessage("Record");
