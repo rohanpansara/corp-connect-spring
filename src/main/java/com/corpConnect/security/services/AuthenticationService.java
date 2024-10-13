@@ -10,6 +10,7 @@ import com.corpConnect.security.EssUserContext;
 import com.corpConnect.security.dtos.AuthRequestDTO;
 import com.corpConnect.security.dtos.AuthResponseDTO;
 import com.corpConnect.security.dtos.NewUserDTO;
+import com.corpConnect.services.company.EmailService;
 import com.corpConnect.services.user.UserService;
 import com.corpConnect.utils.constants.MessageConstants;
 import com.corpConnect.utils.constants.LogConstants;
@@ -28,6 +29,7 @@ public class AuthenticationService {
 
     private final UserRepository userRepository;
     private final UserService userService;
+    private final EmailService emailService;
     private final JwtService jwtService;
     private final AuthenticationManager authenticationManager;
 
@@ -37,6 +39,7 @@ public class AuthenticationService {
             var savedUser = userService.finalSave(user);
 
             logger.info(LogConstants.getCreatedSuccessfullyMessage("User", "DTO", newUserDTO, "new user"));
+            emailService.sendWelcomeEmail(savedUser.getEmail(), savedUser.getName());
             return userService.getDTO(savedUser);
         } catch (RegistrationFailedException e) {
             logger.error(LogConstants.getAlreadyExistsMessage("User", "Email", newUserDTO.getEmail(), "while registering"));

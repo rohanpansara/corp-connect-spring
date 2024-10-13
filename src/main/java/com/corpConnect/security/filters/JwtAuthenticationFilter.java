@@ -25,7 +25,8 @@ import java.io.IOException;
 public class JwtAuthenticationFilter extends OncePerRequestFilter {
 
     private static final String[] PUBLIC_URLS = {
-            "/user/login"
+            "/user/login",
+            "/user/new-user"
     };
 
     private final JwtService jwtService;

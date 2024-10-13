@@ -37,6 +37,18 @@ spring:
     serialization:
       indent_output: true
 
+  mail:
+    host: smtp.gmail.com
+    port: 587
+    username: rohanpansara2632@gmail.com
+    password: chraojnuutnfzckn
+    properties:
+      mail:
+        smtp:
+          auth: true
+          starttls:
+            enable: true
+
 jwt:
   secret: 5367566B59703373367639792F423F4528482B4D6251655468576D5A71347437
   token-expiration-time:
@@ -52,14 +64,3 @@ colored-logs: true
 #  api-key: 132918619484761
 
 
-#  mail:
-#    host: smtp.gmail.com
-#    port: 587
-#    username: rohanpansara2632@gmail.com
-#    password: chraojnuutnfzckn
-#    properties:
-#      mail:
-#        smtp:
-#          auth: true
-#          starttls:
-#            enable: true

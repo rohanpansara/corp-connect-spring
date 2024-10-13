@@ -24,7 +24,6 @@ import java.util.Collection;
 @AllArgsConstructor
 @NoArgsConstructor
 @EqualsAndHashCode(callSuper = true)
-@ToString
 @Entity
 @EntityListeners(AuditingEntityListener.class)
 @Table(name = "USERS", schema = "CorpConnect", indexes = @Index(name = "IDX_NAME", columnList = "name"))

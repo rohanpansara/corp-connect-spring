@@ -21,7 +21,6 @@ import java.time.LocalDate;
 @AllArgsConstructor
 @NoArgsConstructor
 @EqualsAndHashCode(callSuper = true)
-@ToString
 @Entity
 @EntityListeners(AuditingEntityListener.class)
 @Table(name = "HR_HOLIDAYS")
