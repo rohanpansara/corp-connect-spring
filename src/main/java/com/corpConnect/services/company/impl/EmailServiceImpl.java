@@ -3,8 +3,11 @@ package com.corpConnect.services.company.impl;
 import com.corpConnect.entities.company.EmailTemplate;
 import com.corpConnect.repositories.company.EmailTemplateRepository;
 import com.corpConnect.services.company.EmailService;
+import com.corpConnect.utils.constants.LogConstants;
 import jakarta.mail.internet.MimeMessage;
 import lombok.RequiredArgsConstructor;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.mail.javamail.MimeMessageHelper;
 import org.springframework.scheduling.annotation.Async;
@@ -16,6 +19,8 @@ import java.time.LocalDate;
 @RequiredArgsConstructor
 public class EmailServiceImpl implements EmailService {
 
+    private static final Logger logger = LoggerFactory.getLogger(EmailServiceImpl.class);
+
     private final JavaMailSender javaMailSender;
     private final EmailTemplateRepository emailTemplateRepository;
 
@@ -26,7 +31,6 @@ public class EmailServiceImpl implements EmailService {
         String subject = template.getSubject()
                 .replace("{{employeeName}}", name);
 
-        // Replace placeholders with actual values
         String body = template.getBody()
                 .replace("{{employeeName}}", name)
                 .replace("{{companyName}}", "Corp Connect")
@@ -42,8 +46,9 @@ public class EmailServiceImpl implements EmailService {
             helper.setSubject(subject);
             helper.setText(body, true);
             javaMailSender.send(message);
+            logger.info(LogConstants.getWelcomeMailSentSuccessfullyMessage(toEmail));
         } catch (Exception e) {
-            throw new RuntimeException("Error while sending email", e);
+            logger.error(LogConstants.getEmailNotSentMessage("user", "add", toEmail, e.getLocalizedMessage()));
         }
     }
 }

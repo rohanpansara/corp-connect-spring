@@ -1,15 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
 <configuration>
 
-    <!-- Console appender -->
+    <conversionRule conversionWord="truncatedThread" converterClass="com.corpConnect.configs.logConfigs.ConsoleConfigurations"/>
+
     <appender name="CONSOLE" class="ch.qos.logback.core.ConsoleAppender">
+        <withJansi>true</withJansi>
         <encoder>
-            <pattern>
-                %d{yyyy-MM-dd HH:mm:ss} [%thread] | %highlight(%-5level{WARN=yellow, ERROR=red, DEBUG=blue, INFO=green}) | %-50logger{0} | %msg --> at %M:%L%n
+            <pattern class="com.corpConnect.configs.logConfigs.ColorAwarePatternLayout">
+                %d{yyyy-MM-dd HH:mm:ss} [%truncatedThread] | %highlight(%-5level) | %cyan(%-50logger{0}) | %msg --> at %M:%L%n
             </pattern>
         </encoder>
     </appender>
 
-    <!-- File appender for application logs -->
     <appender name="FILE" class="ch.qos.logback.core.rolling.RollingFileAppender">
         <file>logs/corp-connect-application.log</file>
         <rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
@@ -21,10 +23,8 @@
         </encoder>
     </appender>
 
-    <!-- Logger for your application package -->
     <logger name="com.corpConnect" level="DEBUG" />
 
-    <!-- Root logger -->
     <root level="INFO">
         <appender-ref ref="CONSOLE" />
         <appender-ref ref="FILE" />

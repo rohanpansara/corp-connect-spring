@@ -38,8 +38,9 @@ public class AuthenticationService {
             var user = userService.getUserFromRegisterDTO(newUserDTO);
             var savedUser = userService.finalSave(user);
 
-            logger.info(LogConstants.getCreatedSuccessfullyMessage("User", "DTO", newUserDTO, "new user"));
             emailService.sendWelcomeEmail(savedUser.getEmail(), savedUser.getName());
+
+            logger.info(LogConstants.getCreatedSuccessfullyMessage("User", "DTO", newUserDTO, "new user"));
             return userService.getDTO(savedUser);
         } catch (RegistrationFailedException e) {
             logger.error(LogConstants.getAlreadyExistsMessage("User", "Email", newUserDTO.getEmail(), "while registering"));

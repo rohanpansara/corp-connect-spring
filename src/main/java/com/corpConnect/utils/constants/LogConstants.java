@@ -58,6 +58,14 @@ public class LogConstants {
         return buildMessage("Deleted " + deleteType, specificMessage, "Attempt to delete a " + className + " with " + fieldName + "-" + fieldValue);
     }
 
+    public static String getWelcomeMailSentSuccessfullyMessage(String email) {
+        return buildMessage("Email Sent", null, "New user added to the system with email-" + email);
+    }
+
+    public static String getEmailNotSentMessage(String className, String action, String email, String specificMessage) {
+        return buildMessage("Email Not Sent", specificMessage, "Attempt to " + action + " " + className + " and send email to-" + email);
+    }
+
     // Helper method to dynamically build the message
     private static String buildMessage(String action, String specificMessage, String baseMessage) {
         if (specificMessage != null && !specificMessage.isEmpty()) {
