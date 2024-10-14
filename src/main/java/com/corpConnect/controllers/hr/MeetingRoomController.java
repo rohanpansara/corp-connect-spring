@@ -1,16 +1,13 @@
 package com.corpConnect.controllers.hr;
 
 import com.corpConnect.dtos.common.ResponseDTO;
-import com.corpConnect.dtos.hr.DepartmentDTO;
 import com.corpConnect.dtos.hr.MeetingRoomDTO;
-import com.corpConnect.dtos.hr.WorkShiftDTO;
 import com.corpConnect.services.hr.MeetingRoomService;
 import com.corpConnect.utils.constants.MessageConstants;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
-import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -43,7 +40,7 @@ public class MeetingRoomController {
 
     @PostMapping
     @PreAuthorize("hasAuthority('hr_admin:create')")
-    public ResponseEntity<ResponseDTO<Void>> createWorkShift(@Valid @RequestBody MeetingRoomDTO meetingRoomDTO) {
+    public ResponseEntity<ResponseDTO<Void>> createMeetingRoom(@Valid @RequestBody MeetingRoomDTO meetingRoomDTO) {
         meetingRoomService.createMeetingRoom(meetingRoomDTO);
         return ResponseEntity.ok(ResponseDTO.success(MessageConstants.MeetingRoom.MEETING_ROOM_CREATED));
     }
