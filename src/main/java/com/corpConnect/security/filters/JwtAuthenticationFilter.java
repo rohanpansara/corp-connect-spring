@@ -28,6 +28,8 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
             "/user/login"
     };
 
+    private static final String BEARER_PREFIX = "Bearer ";
+
     private final JwtService jwtService;
     private final UserDetailsService userDetailsService;
 
@@ -53,7 +55,7 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
                 filterChain.doFilter(request, response);
                 throw new RuntimeException("Authorization token missing");
             }
-            jwt = authHeader.substring(7);
+            jwt = authHeader.substring(BEARER_PREFIX.length());
             userEmail = jwtService.extractEmail(jwt);
             if (userEmail != null && SecurityContextHolder.getContext().getAuthentication() == null) {
                 UserDetails userDetails = this.userDetailsService.loadUserByUsername(userEmail);

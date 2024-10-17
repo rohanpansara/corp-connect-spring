@@ -98,11 +98,13 @@ public class AuthenticationService {
 
         // token generation
         var jwtToken = jwtService.generateTokenForUser(user, user.getEmail(), moduleType);
+        var refreshToken = jwtService.generateRefreshTokenForUser(user, user.getEmail(), moduleType);
         EssUserContext.setCurrentUser(loggedUser);
 
         logger.info(LogConstants.getLoggedInSuccessMessage(loggedUser.getEmail(), loggedUser.getId()));
         return AuthResponseDTO.builder()
                 .accessToken(jwtToken)
+                .refreshToken(refreshToken)
                 .user(userService.getDTO(user))
                 .build();
     }
@@ -126,7 +128,7 @@ public class AuthenticationService {
                 .orElseThrow(() -> new LoginFailedException(MessageConstants.UserError.USER_NOT_FOUND));
 
         // Generate a new access token
-        String newAccessToken = jwtService.generateTokenForUser(userDetails, email, "HR");
+        String newAccessToken = jwtService.generateTokenForUser(user, email, "HR");
 
         logger.info("Refresh token successfully used for user: {}", email);
 

@@ -39,8 +39,9 @@ public class AuthController {
     }
 
     @PostMapping(value = "/refresh-token")
-    public ResponseEntity<ResponseDTO<AuthResponseDTO>> refreshToken(@RequestParam String refreshToken) {
-
+    public ResponseEntity<ResponseDTO<AuthResponseDTO>> refreshToken(@RequestParam("refresh-token") String refreshToken) {
+        AuthResponseDTO response = authenticationService.refreshToken(refreshToken);
+        return ResponseEntity.ok(ResponseDTO.success(MessageConstants.UserSuccess.TOKEN_REFRESHED, response));
     }
 
 }
