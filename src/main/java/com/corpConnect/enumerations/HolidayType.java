@@ -1,6 +1,6 @@
 package com.corpConnect.enumerations;
 
-import com.corpConnect.exceptions.hr.HolidayNotFoundException;
+import com.corpConnect.exceptions.hr.HolidayRelatedException;
 import com.corpConnect.utils.constants.MessageConstants;
 import lombok.Getter;
 
@@ -30,6 +30,6 @@ public enum HolidayType {
                 return type;
             }
         }
-        throw new HolidayNotFoundException(MessageConstants.Holiday.TYPE_NOT_FOUND);
+        throw new HolidayRelatedException(MessageConstants.Holiday.TYPE_NOT_FOUND);
     }
 }

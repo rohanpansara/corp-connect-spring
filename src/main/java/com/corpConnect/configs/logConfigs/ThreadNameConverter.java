@@ -3,7 +3,7 @@ package com.corpConnect.configs.logConfigs;
 import ch.qos.logback.classic.spi.ILoggingEvent;
 import ch.qos.logback.classic.pattern.ClassicConverter;
 
-public class ConsoleConfigurations extends ClassicConverter {
+public class ThreadNameConverter extends ClassicConverter {
 
     private static final int THREAD_NAME_LIMIT = 15; // Set your limit here
 

@@ -1,12 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <configuration>
 
-    <conversionRule conversionWord="truncatedThread" converterClass="com.corpConnect.configs.logConfigs.ConsoleConfigurations"/>
+    <conversionRule conversionWord="truncatedThread" converterClass="com.corpConnect.configs.logConfigs.ThreadNameConverter"/>
 
     <appender name="CONSOLE" class="ch.qos.logback.core.ConsoleAppender">
-        <withJansi>true</withJansi>
         <encoder>
-            <pattern class="com.corpConnect.configs.logConfigs.ColorAwarePatternLayout">
+            <pattern>
                 %d{yyyy-MM-dd HH:mm:ss} [%truncatedThread] | %highlight(%-5level) | %cyan(%-50logger{0}) | %msg --> at %M:%L%n
             </pattern>
         </encoder>

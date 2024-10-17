@@ -2,8 +2,8 @@ package com.corpConnect.services.hr.impl;
 
 import com.corpConnect.dtos.hr.JobTitleDTO;
 import com.corpConnect.entities.hr.JobTitle;
-import com.corpConnect.exceptions.hr.HolidayNotFoundException;
-import com.corpConnect.exceptions.hr.JobTitleNotFoundException;
+import com.corpConnect.exceptions.hr.HolidayRelatedException;
+import com.corpConnect.exceptions.hr.JobTitleRelatedException;
 import com.corpConnect.mappers.hr.JobTitleMapper;
 import com.corpConnect.repositories.hr.JobTitleRepository;
 import com.corpConnect.services.hr.JobTitleService;
@@ -63,7 +63,7 @@ public class JobTitleServiceImpl implements JobTitleService {
         JobTitle oldJobTitle = jobTitleRepository.findById(oldJobTitleId).orElseThrow(
                 () -> {
                     logger.error(LogConstants.getNotFoundMessage("Job Title", "update", "ID", oldJobTitleId, null));
-                    return new JobTitleNotFoundException(MessageConstants.JobTitle.JOB_TITLE_NOT_FOUND);
+                    return new JobTitleRelatedException(MessageConstants.JobTitle.JOB_TITLE_NOT_FOUND);
                 });
 
         try {
@@ -101,7 +101,7 @@ public class JobTitleServiceImpl implements JobTitleService {
             JobTitle jobTitleToDelete = jobTitleRepository.findById(jobTitlesId).orElseThrow(
                     () -> {
                         logger.error(LogConstants.getNotFoundMessage("Job Title", "delete", "ID", jobTitlesId, null));
-                        return new JobTitleNotFoundException(MessageConstants.JobTitle.JOB_TITLE_NOT_FOUND);
+                        return new JobTitleRelatedException(MessageConstants.JobTitle.JOB_TITLE_NOT_FOUND);
                     });
 
             if (isPermanentDelete) {
@@ -138,7 +138,7 @@ public class JobTitleServiceImpl implements JobTitleService {
         return Collections.singletonList(jobTitleRepository.findById(jobTitleId).orElseThrow(
                 () -> {
                     logger.error(LogConstants.getNotFoundMessage("Job Title", "get", "ID", jobTitleId, null));
-                    return new HolidayNotFoundException(MessageConstants.JobTitle.JOB_TITLE_NOT_FOUND);
+                    return new HolidayRelatedException(MessageConstants.JobTitle.JOB_TITLE_NOT_FOUND);
                 }
         ));
     }

@@ -1,5 +1,6 @@
 package com.corpConnect.security.services;
 
+import com.corpConnect.exceptions.jwt.JwtAuthenticationException;
 import com.corpConnect.utils.constants.MessageConstants;
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.ExpiredJwtException;
@@ -90,7 +91,16 @@ public class JwtService {
 
     public boolean isTokenValid(String token, UserDetails userDetails) {
         final String username = extractEmail(token);
-        return (username.equals(userDetails.getUsername())) && !isTokenExpired(token);
+
+        if (!username.equals(userDetails.getUsername())) {
+            throw new JwtAuthenticationException(MessageConstants.JWT.INVALID_TOKEN);
+        }
+
+        if (isTokenExpired(token)) {
+            throw new JwtAuthenticationException(MessageConstants.JWT.EXPIRED_JWT_EXCEPTION);
+        }
+
+        return true;
     }
 
     private boolean isTokenExpired(String token) {

@@ -19,6 +19,8 @@ import org.slf4j.LoggerFactory;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import lombok.RequiredArgsConstructor;
+import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.stereotype.Service;
 
 @Service
@@ -31,6 +33,7 @@ public class AuthenticationService {
     private final UserService userService;
     private final EmailService emailService;
     private final JwtService jwtService;
+    private final UserDetailsService userDetailsService;
     private final AuthenticationManager authenticationManager;
 
     public UserDTO addNewUser(NewUserDTO newUserDTO) {
@@ -93,6 +96,7 @@ public class AuthenticationService {
         user.setLoginAttempts(0);
         User loggedUser = userRepository.save(user);
 
+        // token generation
         var jwtToken = jwtService.generateTokenForUser(user, user.getEmail(), moduleType);
         EssUserContext.setCurrentUser(loggedUser);
 
@@ -102,4 +106,35 @@ public class AuthenticationService {
                 .user(userService.getDTO(user))
                 .build();
     }
+
+    public AuthResponseDTO refreshToken(String refreshToken) {
+
+        // Extract email from the refresh token
+        String email = jwtService.extractEmail(refreshToken);
+
+        // Load the user details using the email extracted from the token
+        UserDetails userDetails = userDetailsService.loadUserByUsername(email);
+
+        // Validate the refresh token
+        if (!jwtService.isTokenValid(refreshToken, userDetails)) {
+            logger.error("Invalid or expired refresh token for user: {}", email);
+            throw new LoginFailedException(MessageConstants.JWT.EXPIRED_JWT_EXCEPTION);
+        }
+
+        // Fetch the user from the database
+        User user = userRepository.findByEmail(email)
+                .orElseThrow(() -> new LoginFailedException(MessageConstants.UserError.USER_NOT_FOUND));
+
+        // Generate a new access token
+        String newAccessToken = jwtService.generateTokenForUser(userDetails, email, "HR");
+
+        logger.info("Refresh token successfully used for user: {}", email);
+
+        // Return the new tokens in the response
+        return AuthResponseDTO.builder()
+                .accessToken(newAccessToken)
+                .user(userService.getDTO(user))
+                .build();
+    }
+
 }

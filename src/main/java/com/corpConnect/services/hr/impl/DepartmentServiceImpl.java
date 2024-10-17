@@ -2,9 +2,8 @@ package com.corpConnect.services.hr.impl;
 
 import com.corpConnect.dtos.hr.DepartmentDTO;
 import com.corpConnect.entities.hr.Department;
-import com.corpConnect.exceptions.hr.DepartmentNotFoundException;
-import com.corpConnect.exceptions.hr.HolidayNotFoundException;
-import com.corpConnect.exceptions.hr.JobTitleNotFoundException;
+import com.corpConnect.exceptions.hr.DepartmentRelatedException;
+import com.corpConnect.exceptions.hr.HolidayRelatedException;
 import com.corpConnect.mappers.hr.DepartmentMapper;
 import com.corpConnect.repositories.hr.DepartmentRepository;
 import com.corpConnect.services.hr.DepartmentService;
@@ -64,7 +63,7 @@ public class DepartmentServiceImpl implements DepartmentService {
         Department oldDepartment = departmentRepository.findById(oldDepartmentId).orElseThrow(
                 () -> {
                     logger.error(LogConstants.getNotFoundMessage("Department", "update", "ID", oldDepartmentId, null));
-                    return new DepartmentNotFoundException(MessageConstants.Department.DEPARTMENT_NOT_FOUND);
+                    return new DepartmentRelatedException(MessageConstants.Department.DEPARTMENT_NOT_FOUND);
                 });
 
         try {
@@ -100,7 +99,7 @@ public class DepartmentServiceImpl implements DepartmentService {
         Department departmentToDelete = departmentRepository.findById(departmentId).orElseThrow(
                 () -> {
                     logger.error(LogConstants.getNotFoundMessage("Department", "delete", "ID", departmentId, null));
-                    return new DepartmentNotFoundException(MessageConstants.Department.DEPARTMENT_NOT_FOUND);
+                    return new DepartmentRelatedException(MessageConstants.Department.DEPARTMENT_NOT_FOUND);
                 });
 
         try {
@@ -147,7 +146,7 @@ public class DepartmentServiceImpl implements DepartmentService {
         return Collections.singletonList(departmentRepository.findById(departmentId).orElseThrow(
                 () -> {
                     logger.error(LogConstants.getNotFoundMessage("Department", "get", "ID", departmentId, null));
-                    return new HolidayNotFoundException(MessageConstants.Department.DEPARTMENT_NOT_FOUND);
+                    return new HolidayRelatedException(MessageConstants.Department.DEPARTMENT_NOT_FOUND);
                 }
         ));
     }

@@ -3,7 +3,7 @@ package com.corpConnect.services.hr.impl;
 import com.corpConnect.dtos.hr.HolidayDTO;
 import com.corpConnect.entities.hr.Holiday;
 import com.corpConnect.enumerations.HolidayType;
-import com.corpConnect.exceptions.hr.HolidayNotFoundException;
+import com.corpConnect.exceptions.hr.HolidayRelatedException;
 import com.corpConnect.mappers.hr.HolidayMapper;
 import com.corpConnect.repositories.hr.HolidayRepository;
 import com.corpConnect.services.hr.HolidayService;
@@ -96,7 +96,7 @@ public class HolidayServiceImpl implements HolidayService {
         Holiday oldHoliday = holidayRepository.findById(holidayId)
                 .orElseThrow(() -> {
                     logger.error(LogConstants.getNotFoundMessage("Holiday", "update", "ID", holidayId, "while updating"));
-                    return new HolidayNotFoundException(MessageConstants.Holiday.HOLIDAY_NOT_FOUND);
+                    return new HolidayRelatedException(MessageConstants.Holiday.HOLIDAY_NOT_FOUND);
                 });
         try {
             holidayMapper.updateEntityFromDTO(holidayDTO, oldHoliday);
@@ -124,7 +124,7 @@ public class HolidayServiceImpl implements HolidayService {
             Holiday holiday = holidayRepository.findById(holidayId).orElseThrow(
                     () -> {
                         logger.error(LogConstants.getNotFoundMessage("Holiday", "delete", "ID", holidayId, "while deleting"));
-                        return new HolidayNotFoundException(MessageConstants.Holiday.HOLIDAY_NOT_FOUND);
+                        return new HolidayRelatedException(MessageConstants.Holiday.HOLIDAY_NOT_FOUND);
                     }
             );
             holidayRepository.delete(holiday);
@@ -140,7 +140,7 @@ public class HolidayServiceImpl implements HolidayService {
         return Collections.singletonList(holidayRepository.findById(holidayId).orElseThrow(
                 () -> {
                     logger.error(LogConstants.getNotFoundMessage("Holiday", "get", "ID", holidayId, null));
-                    return new HolidayNotFoundException(MessageConstants.Holiday.HOLIDAY_NOT_FOUND);
+                    return new HolidayRelatedException(MessageConstants.Holiday.HOLIDAY_NOT_FOUND);
                 }
         ));
     }

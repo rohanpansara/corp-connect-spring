@@ -15,6 +15,7 @@ import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
@@ -24,17 +25,22 @@ public class AuthController {
 
     private final AuthenticationService authenticationService;
 
-    @PostMapping("/new-user")
+    @PostMapping(value = "/new-user")
     @PreAuthorize("hasAuthority('pms_manager:create') || hasAuthority('hr_manager:create')")
     public ResponseEntity<ResponseDTO<UserDTO>> newUser(@RequestBody NewUserDTO newUserDTO) throws LoginFailedException {
         UserDTO response = authenticationService.addNewUser(newUserDTO);
         return ResponseEntity.ok(ResponseDTO.success(MessageConstants.UserSuccess.USER_CREATED, response));
     }
 
-    @PostMapping("/login")
+    @PostMapping(value = "/login")
     public ResponseEntity<ResponseDTO<AuthResponseDTO>> login(@RequestBody AuthRequestDTO authRequestDTO) throws BaseException{
         AuthResponseDTO response = authenticationService.authenticate(authRequestDTO, "HR");
         return ResponseEntity.ok(ResponseDTO.success(MessageConstants.UserSuccess.LOGIN_SUCCESS, response));
+    }
+
+    @PostMapping(value = "/refresh-token")
+    public ResponseEntity<ResponseDTO<AuthResponseDTO>> refreshToken(@RequestParam String refreshToken) {
+
     }
 
 }

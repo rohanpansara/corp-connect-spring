@@ -9,6 +9,7 @@ public class MessageConstants {
     }
 
     public static final class JWT {
+        public static final String INVALID_TOKEN = MessageCreator.getJWTErrorMessage("Invalid", "The token is not valid for the user");
         public static final String SECURITY_EXCEPTION = MessageCreator.getJWTErrorMessage("Security" ,"The token's signature is not valid");
         public static final String MALFORMED_JWT_EXCEPTION = MessageCreator.getJWTErrorMessage("Malformed Jwt" ,"The token structure is not valid");
         public static final String EXPIRED_JWT_EXCEPTION = MessageCreator.getJWTErrorMessage("Expired Jwt" ,"The token has expired and is no longer valid");

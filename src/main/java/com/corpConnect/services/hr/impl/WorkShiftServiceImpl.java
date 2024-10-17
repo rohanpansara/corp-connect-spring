@@ -2,8 +2,8 @@ package com.corpConnect.services.hr.impl;
 
 import com.corpConnect.dtos.hr.WorkShiftDTO;
 import com.corpConnect.entities.hr.WorkShift;
-import com.corpConnect.exceptions.hr.HolidayNotFoundException;
-import com.corpConnect.exceptions.hr.WorkShiftNotFoundException;
+import com.corpConnect.exceptions.hr.HolidayRelatedException;
+import com.corpConnect.exceptions.hr.WorkShiftRelatedException;
 import com.corpConnect.mappers.hr.WorkShiftMapper;
 import com.corpConnect.repositories.hr.WorkShiftRepository;
 import com.corpConnect.services.hr.WorkShiftService;
@@ -63,7 +63,7 @@ public class WorkShiftServiceImpl implements WorkShiftService {
         WorkShift oldWorkShift = workShiftRepository.findById(oldWorkShiftId).orElseThrow(
                 () -> {
                     logger.error(LogConstants.getNotFoundMessage("Work Shift", "update", "ID", oldWorkShiftId, null));
-                    return new WorkShiftNotFoundException(MessageConstants.WorkShift.WORK_SHIFT_NOT_FOUND);
+                    return new WorkShiftRelatedException(MessageConstants.WorkShift.WORK_SHIFT_NOT_FOUND);
                 });
 
         try {
@@ -92,7 +92,7 @@ public class WorkShiftServiceImpl implements WorkShiftService {
         WorkShift workShiftToDelete = workShiftRepository.findById(workShiftId).orElseThrow(
                 () -> {
                     logger.error(LogConstants.getNotFoundMessage("Work Shift", "delete", "ID", workShiftId, null));
-                    return new WorkShiftNotFoundException(MessageConstants.WorkShift.WORK_SHIFT_NOT_FOUND);
+                    return new WorkShiftRelatedException(MessageConstants.WorkShift.WORK_SHIFT_NOT_FOUND);
                 });
         try {
             workShiftRepository.delete(workShiftToDelete);
@@ -113,7 +113,7 @@ public class WorkShiftServiceImpl implements WorkShiftService {
         return Collections.singletonList(workShiftRepository.findById(workShiftId).orElseThrow(
                 () -> {
                     logger.error(LogConstants.getNotFoundMessage("Work shift", "get", "ID", workShiftId, null));
-                    return new HolidayNotFoundException(MessageConstants.WorkShift.WORK_SHIFT_NOT_FOUND);
+                    return new HolidayRelatedException(MessageConstants.WorkShift.WORK_SHIFT_NOT_FOUND);
                 }
         ));
     }

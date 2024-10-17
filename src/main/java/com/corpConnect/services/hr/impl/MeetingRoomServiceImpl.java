@@ -2,8 +2,8 @@ package com.corpConnect.services.hr.impl;
 
 import com.corpConnect.dtos.hr.MeetingRoomDTO;
 import com.corpConnect.entities.hr.MeetingRoom;
-import com.corpConnect.exceptions.hr.JobTitleNotFoundException;
-import com.corpConnect.exceptions.hr.MeetingRoomNotFoundException;
+import com.corpConnect.exceptions.hr.JobTitleRelatedException;
+import com.corpConnect.exceptions.hr.MeetingRoomRelatedException;
 import com.corpConnect.mappers.hr.MeetingRoomMapper;
 import com.corpConnect.repositories.hr.MeetingRoomRepository;
 import com.corpConnect.services.hr.MeetingRoomService;
@@ -63,7 +63,7 @@ public class MeetingRoomServiceImpl implements MeetingRoomService {
         MeetingRoom oldMeetingRoom = meetingRoomRepository.findById(oldMeetingRoomId).orElseThrow(
                 () -> {
                     logger.error(LogConstants.getNotFoundMessage("Meeting Room", "update", "ID", oldMeetingRoomId, null));
-                    return new JobTitleNotFoundException(MessageConstants.MeetingRoom.MEETING_ROOM_UPDATED);
+                    return new JobTitleRelatedException(MessageConstants.MeetingRoom.MEETING_ROOM_UPDATED);
                 });
 
         try {
@@ -99,7 +99,7 @@ public class MeetingRoomServiceImpl implements MeetingRoomService {
         MeetingRoom meetingRoomToDelete = meetingRoomRepository.findById(meetingRoomId).orElseThrow(
                 () -> {
                     logger.error(LogConstants.getNotFoundMessage("Meeting Room", "delete", "ID", meetingRoomId, null));
-                    return new MeetingRoomNotFoundException(MessageConstants.MeetingRoom.MEETING_ROOM_NOT_FOUND);
+                    return new MeetingRoomRelatedException(MessageConstants.MeetingRoom.MEETING_ROOM_NOT_FOUND);
                 });
 
         try {
