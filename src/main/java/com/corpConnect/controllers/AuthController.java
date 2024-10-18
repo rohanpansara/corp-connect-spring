@@ -10,8 +10,9 @@ import com.corpConnect.security.dtos.NewUserDTO;
 import com.corpConnect.security.services.AuthenticationService;
 import com.corpConnect.utils.constants.MessageConstants;
 import lombok.RequiredArgsConstructor;
+import org.springframework.http.HttpHeaders;
+import org.springframework.http.ResponseCookie;
 import org.springframework.http.ResponseEntity;
-import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -26,16 +27,16 @@ public class AuthController {
     private final AuthenticationService authenticationService;
 
     @PostMapping(value = "/new-user")
-    @PreAuthorize("hasAuthority('pms_manager:create') || hasAuthority('hr_manager:create')")
+//    @PreAuthorize("hasAuthority('pms_manager:create') || hasAuthority('hr_manager:create')")
     public ResponseEntity<ResponseDTO<UserDTO>> newUser(@RequestBody NewUserDTO newUserDTO) throws LoginFailedException {
         UserDTO response = authenticationService.addNewUser(newUserDTO);
         return ResponseEntity.ok(ResponseDTO.success(MessageConstants.UserSuccess.USER_CREATED, response));
     }
 
     @PostMapping(value = "/login")
-    public ResponseEntity<ResponseDTO<AuthResponseDTO>> login(@RequestBody AuthRequestDTO authRequestDTO) throws BaseException{
+    public ResponseEntity<AuthResponseDTO> login(@RequestBody AuthRequestDTO authRequestDTO) throws BaseException{
         AuthResponseDTO response = authenticationService.authenticate(authRequestDTO, "HR");
-        return ResponseEntity.ok(ResponseDTO.success(MessageConstants.UserSuccess.LOGIN_SUCCESS, response));
+        return ResponseEntity.ok().header(HttpHeaders.SET_COOKIE, String.valueOf(ResponseCookie.from("Token", response.getAccessToken()).path("/api/auth").maxAge(24*60*60).httpOnly(true).build())).body(response);
     }
 
     @PostMapping(value = "/refresh-token")

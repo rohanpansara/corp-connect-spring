@@ -6,6 +6,7 @@ import com.corpConnect.security.services.JwtService;
 import com.corpConnect.utils.constants.MessageConstants;
 import jakarta.servlet.FilterChain;
 import jakarta.servlet.ServletException;
+import jakarta.servlet.http.Cookie;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import lombok.RequiredArgsConstructor;
@@ -17,15 +18,19 @@ import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.web.authentication.WebAuthenticationDetailsSource;
 import org.springframework.stereotype.Component;
 import org.springframework.web.filter.OncePerRequestFilter;
+import org.springframework.web.util.WebUtils;
 
 import java.io.IOException;
+import java.util.Arrays;
+import java.util.Optional;
 
 @Component
 @RequiredArgsConstructor
 public class JwtAuthenticationFilter extends OncePerRequestFilter {
 
     private static final String[] PUBLIC_URLS = {
-            "/user/login"
+            "/user/login",
+            "/user/new-user"
     };
 
     private static final String BEARER_PREFIX = "Bearer ";
@@ -49,18 +54,18 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
             }
 
             final String authHeader = request.getHeader("Authorization");
-            final String jwt;
+            final String jwtToken;
             final String userEmail;
             if (authHeader == null || !authHeader.startsWith("Bearer ")) {
                 filterChain.doFilter(request, response);
                 throw new RuntimeException("Authorization token missing");
             }
-            jwt = authHeader.substring(BEARER_PREFIX.length());
-            userEmail = jwtService.extractEmail(jwt);
+            jwtToken = authHeader.substring(BEARER_PREFIX.length());
+            userEmail = jwtService.extractEmail(jwtToken);
             if (userEmail != null && SecurityContextHolder.getContext().getAuthentication() == null) {
                 UserDetails userDetails = this.userDetailsService.loadUserByUsername(userEmail);
 
-                if (jwtService.isTokenValid(jwt, userDetails)) {
+                if (jwtService.isTokenValid(jwtToken, userDetails)) {
                     UsernamePasswordAuthenticationToken authToken = new UsernamePasswordAuthenticationToken(
                             userDetails,
                             null,
