@@ -9,6 +9,7 @@ import com.corpConnect.security.dtos.AuthResponseDTO;
 import com.corpConnect.security.dtos.NewUserDTO;
 import com.corpConnect.security.services.AuthenticationService;
 import com.corpConnect.utils.constants.MessageConstants;
+import com.corpConnect.utils.functions.CookieUtils;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.ResponseCookie;
@@ -25,6 +26,7 @@ import org.springframework.web.bind.annotation.RestController;
 public class AuthController {
 
     private final AuthenticationService authenticationService;
+    private final CookieUtils cookieUtils;
 
     @PostMapping(value = "/new-user")
 //    @PreAuthorize("hasAuthority('pms_manager:create') || hasAuthority('hr_manager:create')")
@@ -34,9 +36,10 @@ public class AuthController {
     }
 
     @PostMapping(value = "/login")
-    public ResponseEntity<AuthResponseDTO> login(@RequestBody AuthRequestDTO authRequestDTO) throws BaseException{
+    public ResponseEntity<ResponseDTO<AuthResponseDTO>> login(@RequestBody AuthRequestDTO authRequestDTO) throws BaseException{
         AuthResponseDTO response = authenticationService.authenticate(authRequestDTO, "HR");
-        return ResponseEntity.ok().header(HttpHeaders.SET_COOKIE, String.valueOf(ResponseCookie.from("Token", response.getAccessToken()).path("/api/auth").maxAge(24*60*60).httpOnly(true).build())).body(response);
+        ResponseCookie cookie = cookieUtils.generateCookie("Token", response.getAccessToken(), "/api/auth");
+        return ResponseEntity.ok().header(HttpHeaders.SET_COOKIE, cookie.toString()).body(ResponseDTO.success(MessageConstants.UserSuccess.LOGIN_SUCCESS, response));
     }
 
     @PostMapping(value = "/refresh-token")

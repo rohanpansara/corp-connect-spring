@@ -52,6 +52,7 @@ public class JwtService {
         return generateTokenForUser(new HashMap<>(), userDetails, subject, moduleType);
     }
 
+    //    TOKEN BUILDER FOR USER
     public String generateTokenForUser(Map<String, Object> extraClaims, UserDetails userDetails, String subject, String moduleType) {
         return buildToken(extraClaims, userDetails, jwtExpirationUser, subject, moduleType);
     }
@@ -62,21 +63,24 @@ public class JwtService {
         return generateTokenForAdmin(new HashMap<>(), userDetails, subject, moduleType);
     }
 
+    //    TOKEN BUILDER FOR ADMIN
     public String generateTokenForAdmin(Map<String, Object> extraClaims, UserDetails userDetails, String subject, String moduleType) {
         return buildToken(extraClaims, userDetails, jwtExpirationAdmin, subject, moduleType);
     }
 
 
-    //    CREATE REFRESH TOKEN FOR USER
+    //    REFRESH TOKEN BUILDER FOR USER
     public String generateRefreshTokenForUser(UserDetails userDetails, String subject, String moduleType) {
         return buildToken(new HashMap<>(), userDetails, refreshExpirationUser, subject, moduleType);
     }
 
+    //    REFRESH TOKEN BUILDER FOR ADMIN
     public String generateRefreshTokenForAdmin(UserDetails userDetails, String subject, String moduleType) {
         return buildToken(new HashMap<>(), userDetails, refreshExpirationAdmin, subject, moduleType);
     }
 
 
+    // TOKEN BUILDER METHOD
     private String buildToken(Map<String, Object> extraClaims, UserDetails userDetails, long expiration, String subject, String moduleType) throws InvalidKeyException {
         return Jwts
                 .builder()
@@ -89,6 +93,8 @@ public class JwtService {
                 .compact();
     }
 
+
+    // CHECK IF TOKEN IS VALID
     public boolean isTokenValid(String token, UserDetails userDetails) {
         final String username = extractEmail(token);
 
@@ -133,13 +139,17 @@ public class JwtService {
     }
 
 
+    // GETTING THE JWT HEADER
     private Map<String, Object> getHeader(String moduleType) {
         Map<String, Object> headerMap = new HashMap<>();
-        headerMap.put("token", "JWT".toUpperCase().trim());
+        headerMap.put("alg", "HS512"); // Specifying the algorithm
+        headerMap.put("typ", "JWT"); // Token type
         headerMap.put("creator", moduleType.toUpperCase().trim());
         return headerMap;
     }
 
+
+    // GETTING THE SIGNING KEY
     private Key getSignInKey() {
         return Keys.hmacShaKeyFor(secretKey.getBytes(StandardCharsets.UTF_8));
     }

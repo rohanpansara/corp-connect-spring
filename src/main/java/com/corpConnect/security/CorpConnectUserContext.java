@@ -4,21 +4,21 @@ import com.corpConnect.entities.user.User;
 import org.springframework.stereotype.Component;
 
 @Component
-public class EssUserContext {
+public class CorpConnectUserContext {
 
-    private EssUserContext() {}
+    private CorpConnectUserContext() {}
 
     private static final ThreadLocal<User> loggedUser = ThreadLocal.withInitial(() -> null);
 
     public static User getCurrentUser() {
-        return EssUserContext.loggedUser.get();
+        return CorpConnectUserContext.loggedUser.get();
     }
 
     public static synchronized void setCurrentUser(User user) {
-        EssUserContext.loggedUser.set(user);
+        CorpConnectUserContext.loggedUser.set(user);
     }
 
     public static void clear() {
-        EssUserContext.loggedUser.remove();
+        CorpConnectUserContext.loggedUser.remove();
     }
 }

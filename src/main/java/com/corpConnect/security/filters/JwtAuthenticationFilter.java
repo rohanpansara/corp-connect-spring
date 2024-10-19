@@ -1,12 +1,11 @@
 package com.corpConnect.security.filters;
 
 import com.corpConnect.entities.user.User;
-import com.corpConnect.security.EssUserContext;
+import com.corpConnect.security.CorpConnectUserContext;
 import com.corpConnect.security.services.JwtService;
 import com.corpConnect.utils.constants.MessageConstants;
 import jakarta.servlet.FilterChain;
 import jakarta.servlet.ServletException;
-import jakarta.servlet.http.Cookie;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import lombok.RequiredArgsConstructor;
@@ -18,11 +17,8 @@ import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.web.authentication.WebAuthenticationDetailsSource;
 import org.springframework.stereotype.Component;
 import org.springframework.web.filter.OncePerRequestFilter;
-import org.springframework.web.util.WebUtils;
 
 import java.io.IOException;
-import java.util.Arrays;
-import java.util.Optional;
 
 @Component
 @RequiredArgsConstructor
@@ -73,14 +69,14 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
                     );
                     authToken.setDetails(new WebAuthenticationDetailsSource().buildDetails(request));
                     SecurityContextHolder.getContext().setAuthentication(authToken);
-                    EssUserContext.setCurrentUser((User) userDetails);
+                    CorpConnectUserContext.setCurrentUser((User) userDetails);
                 }
             }
             filterChain.doFilter(request, response);
         } catch (Exception e){
             throw new RuntimeException(MessageConstants.UserError.AUTHORIZATION_FAILED);
         } finally {
-            EssUserContext.clear();
+            CorpConnectUserContext.clear();
         }
     }
 }

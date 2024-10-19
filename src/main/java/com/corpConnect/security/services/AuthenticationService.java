@@ -6,7 +6,7 @@ import com.corpConnect.exceptions.client.LoginFailedException;
 import com.corpConnect.exceptions.client.RegistrationFailedException;
 import com.corpConnect.exceptions.common.BaseException;
 import com.corpConnect.repositories.user.UserRepository;
-import com.corpConnect.security.EssUserContext;
+import com.corpConnect.security.CorpConnectUserContext;
 import com.corpConnect.security.dtos.AuthRequestDTO;
 import com.corpConnect.security.dtos.AuthResponseDTO;
 import com.corpConnect.security.dtos.NewUserDTO;
@@ -99,7 +99,7 @@ public class AuthenticationService {
         // token generation
         var jwtToken = jwtService.generateTokenForUser(user, user.getEmail(), moduleType);
         var refreshToken = jwtService.generateRefreshTokenForUser(user, user.getEmail(), moduleType);
-        EssUserContext.setCurrentUser(loggedUser);
+        CorpConnectUserContext.setCurrentUser(loggedUser);
 
         logger.info(LogConstants.getLoggedInSuccessMessage(loggedUser.getEmail(), loggedUser.getId()));
         return AuthResponseDTO.builder()

@@ -28,7 +28,7 @@ spring:
     properties:
       hibernate:
 #        format_sql: true         # to show the sql queries in a readable format rather than single line
-        default_schema: CorpConnect       # Ensure schema is set
+        default_schema: CorpConnect
 #    show-sql: true
 #    database-platform: org.hibernate.dialect.MySQLDialect
     open-in-view: false
@@ -59,6 +59,10 @@ jwt:
     admin: 72000000     # 20 hours in milliseconds
 
 colored-logs: true
+
+logging:
+  level:
+    com.corpConnect.utils.functions.CookieUtils: DEBUG
 
 #cloudinary:
 #  api-key: 132918619484761

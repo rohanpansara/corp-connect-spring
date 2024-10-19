@@ -1,0 +1,43 @@
+package com.corpConnect.utils.functions;
+
+import com.corpConnect.security.CorpConnectUserContext;
+import jakarta.servlet.http.Cookie;
+import jakarta.servlet.http.HttpServletRequest;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.http.ResponseCookie;
+import org.springframework.stereotype.Component;
+import org.springframework.web.util.WebUtils;
+
+@Component
+public class CookieUtils {
+
+    private static final Logger logger = LoggerFactory.getLogger(CookieUtils.class);
+
+    @Value("${jwt.token-expiration-time.user}")
+    private long jwtExpirationUser;
+
+    public ResponseCookie generateCookie(String name, String value, String path) {
+        ResponseCookie cookie = ResponseCookie.from(name, value)
+                .path(path)
+                .maxAge(jwtExpirationUser/1000)
+                .httpOnly(true)
+                .build();
+
+        logger.debug("Cookie [{}] generated for user with id: {}", cookie, CorpConnectUserContext.getCurrentUser().getId());
+
+        return cookie;
+    }
+
+    public String getCookieValueByName(HttpServletRequest request, String name) {
+        Cookie cookie = WebUtils.getCookie(request, name);
+        if (cookie != null) {
+            logger.info("Found cookie with name: {}, value: {}", name, cookie.getValue());
+            return cookie.getValue();
+        } else {
+            logger.warn("No cookie found with name: {}", name);
+            return null;
+        }
+    }
+}
