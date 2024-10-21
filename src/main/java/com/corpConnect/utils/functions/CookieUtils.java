@@ -23,6 +23,7 @@ public class CookieUtils {
                 .path(path)
                 .maxAge(jwtExpirationUser/1000)
                 .httpOnly(true)
+                .sameSite("Strict")
                 .build();
 
         logger.debug("Cookie [{}] generated for user with id: {}", cookie, CorpConnectUserContext.getCurrentUser().getId());
@@ -39,5 +40,14 @@ public class CookieUtils {
             logger.warn("No cookie found with name: {}", name);
             return null;
         }
+    }
+
+    // Method to clear a cookie by name
+    public static ResponseCookie clearCookie(String name, String path) {
+        return ResponseCookie.from(name, "")
+                .path(path)
+                .maxAge(0)
+                .httpOnly(true)
+                .build();
     }
 }

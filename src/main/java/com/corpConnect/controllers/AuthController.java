@@ -36,11 +36,14 @@ public class AuthController {
     }
 
     @PostMapping(value = "/login")
-    public ResponseEntity<ResponseDTO<AuthResponseDTO>> login(@RequestBody AuthRequestDTO authRequestDTO) throws BaseException{
+    public ResponseEntity<ResponseDTO<AuthResponseDTO>> login(@RequestBody AuthRequestDTO authRequestDTO) throws BaseException {
         AuthResponseDTO response = authenticationService.authenticate(authRequestDTO, "HR");
-        ResponseCookie cookie = cookieUtils.generateCookie("Token", response.getAccessToken(), "/api/auth");
-        return ResponseEntity.ok().header(HttpHeaders.SET_COOKIE, cookie.toString()).body(ResponseDTO.success(MessageConstants.UserSuccess.LOGIN_SUCCESS, response));
+        ResponseCookie cookie = cookieUtils.generateCookie("Token", response.getAccessToken(), "/");
+        return ResponseEntity.ok()
+                .header(HttpHeaders.SET_COOKIE, cookie.toString())
+                .body(ResponseDTO.success(MessageConstants.UserSuccess.LOGIN_SUCCESS, response));
     }
+
 
     @PostMapping(value = "/refresh-token")
     public ResponseEntity<ResponseDTO<AuthResponseDTO>> refreshToken(@RequestParam("refresh-token") String refreshToken) {
