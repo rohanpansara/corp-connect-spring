@@ -1,6 +1,8 @@
 package com.corpConnect.security.services;
 
+import com.corpConnect.entities.user.User;
 import com.corpConnect.exceptions.jwt.JwtAuthenticationException;
+import com.corpConnect.repositories.user.UserRepository;
 import com.corpConnect.utils.constants.MessageConstants;
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.ExpiredJwtException;
@@ -15,8 +17,10 @@ import java.security.Key;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Optional;
 import java.util.function.Function;
 
+import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Service;
@@ -24,6 +28,7 @@ import org.springframework.stereotype.Service;
 import javax.crypto.SecretKey;
 
 @Service
+@RequiredArgsConstructor
 public class JwtService {
 
     @Value("${jwt.secret}")
@@ -36,6 +41,8 @@ public class JwtService {
     private long refreshExpirationUser;
     @Value("${jwt.refresh-token-expiration-time.admin}")
     private long refreshExpirationAdmin;
+
+    private final UserRepository userRepository;
 
     public String extractEmail(String token) {
         return extractClaim(token, Claims::getSubject);
@@ -71,12 +78,18 @@ public class JwtService {
 
     //    REFRESH TOKEN BUILDER FOR USER
     public String generateRefreshTokenForUser(UserDetails userDetails, String subject, String moduleType) {
-        return buildToken(new HashMap<>(), userDetails, refreshExpirationUser, subject, moduleType);
+        Map<String, Object> rolesMap = new HashMap<>(1);
+        Optional<User> tokenUser = userRepository.findByEmail(userDetails.getUsername());
+        tokenUser.ifPresent(user -> rolesMap.put("roles", user.getRoles().getPermissions()));
+        return buildToken(rolesMap, userDetails, refreshExpirationUser, subject, moduleType);
     }
 
     //    REFRESH TOKEN BUILDER FOR ADMIN
     public String generateRefreshTokenForAdmin(UserDetails userDetails, String subject, String moduleType) {
-        return buildToken(new HashMap<>(), userDetails, refreshExpirationAdmin, subject, moduleType);
+        Map<String, Object> rolesMap = new HashMap<>(1);
+        Optional<User> tokenUser = userRepository.findByEmail(userDetails.getUsername());
+        tokenUser.ifPresent(user -> rolesMap.put("roles", user.getRoles().getPermissions()));
+        return buildToken(rolesMap, userDetails, refreshExpirationAdmin, subject, moduleType);
     }
 
 

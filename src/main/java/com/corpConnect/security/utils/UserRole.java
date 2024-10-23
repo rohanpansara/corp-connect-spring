@@ -116,5 +116,13 @@ public enum UserRole {
         }
         throw new RecordNotFoundException(MessageConstants.UserError.USER_ROLE_NOT_FOUND);
     }
+
+    // Method to get a list of permission strings
+    public List<String> getPermissionStrings() {
+        return this.permissions
+                .stream()
+                .map(UserPermission::getPermission)
+                .collect(Collectors.toList());
+    }
 }
 

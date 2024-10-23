@@ -6,6 +6,8 @@ import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.RequiredArgsConstructor;
 
+import java.util.List;
+
 @EqualsAndHashCode(callSuper = true)
 @Data
 @RequiredArgsConstructor
@@ -14,6 +16,7 @@ public class UserDTO extends NamedDTO {
     private String name;
     private String email;
     private String roles;
+    private List<String> permissions;
     private boolean isAccountEnabled;
     private boolean isCredentialsNonExpired;
 }

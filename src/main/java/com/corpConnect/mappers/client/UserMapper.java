@@ -68,6 +68,7 @@ public abstract class UserMapper {
     @AfterMapping
     protected void stringFormatting(User user, @MappingTarget UserDTO userDTO) {
         userDTO.setRoles(user.getRoles().getLabel());
+        userDTO.setPermissions(user.getRoles().getPermissionStrings());
         userDTO.setCreatedDate(CustomDateTimeFormatter.getLocalDateTimeString(user.getCreatedDate()));
         userDTO.setLastUpdatedDate(CustomDateTimeFormatter.getLocalDateTimeString(user.getLastUpdatedDate()));
     }
