@@ -15,6 +15,7 @@ import org.springframework.http.HttpHeaders;
 import org.springframework.http.ResponseCookie;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -39,17 +40,22 @@ public class AuthController {
     @PostMapping(value = "/login")
     public ResponseEntity<ResponseDTO<AuthResponseDTO>> login(@RequestBody AuthRequestDTO authRequestDTO) throws BaseException {
         AuthResponseDTO response = authenticationService.authenticate(authRequestDTO, "HR");
-        ResponseCookie cookie = cookieUtils.generateCookie("Token", response.getAccessToken(), "/api/auth");
+        ResponseCookie cookie = cookieUtils.generateCookie("Token_" + response.getUser().getId(), response.getAccessToken(), "/api/auth");
         return ResponseEntity.ok()
                 .header(HttpHeaders.SET_COOKIE, cookie.toString())
                 .body(ResponseDTO.success(MessageConstants.UserSuccess.LOGIN_SUCCESS, response));
     }
 
-
     @PostMapping(value = "/refresh-token")
     public ResponseEntity<ResponseDTO<AuthResponseDTO>> refreshToken(@RequestParam("refresh-token") String refreshToken) {
         AuthResponseDTO response = authenticationService.refreshToken(refreshToken);
         return ResponseEntity.ok(ResponseDTO.success(MessageConstants.UserSuccess.TOKEN_REFRESHED, response));
+    }
+
+    @PostMapping(value = "/logout/{user-id}")
+    public ResponseEntity<ResponseDTO<Void>> logout(@PathVariable("user-id") Long userId) {
+        CookieUtils.clearCookie("Token_" + userId, "/api/auth");
+        return ResponseEntity.ok(ResponseDTO.success(MessageConstants.UserSuccess.LOGOUT_SUCCESS));
     }
 
 }

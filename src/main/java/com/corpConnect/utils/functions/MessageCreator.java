@@ -13,6 +13,10 @@ public class MessageCreator {
         return "User logged in successfully";
     }
 
+    public static String getLoggedOutMessage() {
+        return "User logged out successfully";
+    }
+
     public static String getCreatedMessage(String entityName) {
         return entityName + " created successfully";
     }

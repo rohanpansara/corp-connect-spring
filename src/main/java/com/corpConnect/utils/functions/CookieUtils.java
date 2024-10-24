@@ -34,10 +34,10 @@ public class CookieUtils {
     public String getCookieValueByName(HttpServletRequest request, String name) {
         Cookie cookie = WebUtils.getCookie(request, name);
         if (cookie != null) {
-            logger.info("Found cookie with name: {}, value: {}", name, cookie.getValue());
+            logger.info("Cookie: Found cookie with name: {} and value: {}", name, cookie.getValue());
             return cookie.getValue();
         } else {
-            logger.warn("No cookie found with name: {}", name);
+            logger.warn("Cookie: No cookie found with name: {}", name);
             return null;
         }
     }

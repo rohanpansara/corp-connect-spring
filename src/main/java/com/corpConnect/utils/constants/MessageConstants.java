@@ -33,6 +33,7 @@ public class MessageConstants {
         public static final String USER_LIST_EMPTY = MessageCreator.getListEmptyMessage("User");
 
         public static final String LOGIN_SUCCESS = MessageCreator.getLoggedInMessage();
+        public static final String LOGOUT_SUCCESS = MessageCreator.getLoggedOutMessage();
         public static final String TOKEN_REFRESHED = "User token refreshed";
 
         public static final String PASSWORD_UPDATED_SUCCESSFULLY = MessageCreator.getCustomCRUDMessage("Password", "updated");
