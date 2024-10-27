@@ -32,8 +32,7 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
     private static final Logger logger = LoggerFactory.getLogger(CookieUtils.class);
 
     private static final String[] PUBLIC_URLS = {
-            "/user/login",
-            "/user/new-user"
+            "/user/login"
     };
 
     private static final String BEARER_PREFIX = "Bearer ";

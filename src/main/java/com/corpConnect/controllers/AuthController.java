@@ -52,8 +52,8 @@ public class AuthController {
         return ResponseEntity.ok(ResponseDTO.success(MessageConstants.UserSuccess.TOKEN_REFRESHED, response));
     }
 
-    @PostMapping(value = "/logout/{user-id}")
-    public ResponseEntity<ResponseDTO<Void>> logout(@PathVariable("user-id") Long userId) {
+    @PostMapping(value = "/logout")
+    public ResponseEntity<ResponseDTO<Void>> logout(@RequestParam("userId") Long userId) {
         cookieUtils.clearCookie("Token", "/api/auth");
         return ResponseEntity.ok(ResponseDTO.success(MessageConstants.UserSuccess.LOGOUT_SUCCESS));
     }
