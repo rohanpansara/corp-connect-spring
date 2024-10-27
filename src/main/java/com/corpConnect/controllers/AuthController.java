@@ -8,10 +8,14 @@ import com.corpConnect.security.dtos.AuthRequestDTO;
 import com.corpConnect.security.dtos.AuthResponseDTO;
 import com.corpConnect.security.dtos.NewUserDTO;
 import com.corpConnect.security.services.AuthenticationService;
+import com.corpConnect.services.user.impl.UserServiceImpl;
+import com.corpConnect.utils.constants.LogConstants;
 import com.corpConnect.utils.constants.MessageConstants;
 import com.corpConnect.utils.functions.CookieUtils;
 import jakarta.servlet.http.HttpServletRequest;
 import lombok.RequiredArgsConstructor;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.ResponseCookie;
 import org.springframework.http.ResponseEntity;
@@ -28,6 +32,8 @@ import org.springframework.web.bind.annotation.RestController;
 @RequiredArgsConstructor
 @RequestMapping("/user")
 public class AuthController {
+
+    private static final Logger logger = LoggerFactory.getLogger(AuthController.class);
 
     private final AuthenticationService authenticationService;
     private final CookieUtils cookieUtils;
@@ -60,14 +66,15 @@ public class AuthController {
         return ResponseEntity.ok(ResponseDTO.success(MessageConstants.UserSuccess.LOGOUT_SUCCESS));
     }
 
-    // UserController.java
     @GetMapping("/validate-token")
     public ResponseEntity<?> validateToken(HttpServletRequest request) {
-        String token = cookieUtils.getCookieValueByName(request, "accessToken"); // Assuming your cookie name is 'accessToken'
+        String token = cookieUtils.getCookieValueByName(request, "Token"); // Assuming your cookie name is 'accessToken'
 
         if (token != null && !token.isEmpty() && authenticationService.isTokenValid(token)) {
-            return ResponseEntity.ok(ResponseDTO.success(MessageConstants.UserSuccess.LOGIN_SUCCESS, true));
+            logger.info(LogConstants.getSessionVerifiedForToken(token, true));
+            return ResponseEntity.ok(ResponseDTO.success(MessageConstants.UserSuccess.USER_SESSION_VERIFIED, true));
         }
+        logger.error(LogConstants.getSessionVerifiedForToken(token, false));
         return ResponseEntity.ok(ResponseDTO.success(MessageConstants.UserError.USER_NOT_LOGGED_IN, false));
     }
 

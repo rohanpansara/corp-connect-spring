@@ -9,6 +9,10 @@ public class MessageCreator {
         return "JWT Exception [" + exceptionName + "]: " + message;
     }
 
+    public static String getSessionVerificationMessage(boolean isVerified) {
+        return "User session is " + (isVerified ? "verified" : "expired. Log in again.");
+    }
+
     public static String getLoggedInMessage() {
         return "User logged in successfully";
     }
