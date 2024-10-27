@@ -10,11 +10,13 @@ import com.corpConnect.security.dtos.NewUserDTO;
 import com.corpConnect.security.services.AuthenticationService;
 import com.corpConnect.utils.constants.MessageConstants;
 import com.corpConnect.utils.functions.CookieUtils;
+import jakarta.servlet.http.HttpServletRequest;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.ResponseCookie;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -57,5 +59,17 @@ public class AuthController {
         cookieUtils.clearCookie("Token", "/api/auth");
         return ResponseEntity.ok(ResponseDTO.success(MessageConstants.UserSuccess.LOGOUT_SUCCESS));
     }
+
+    // UserController.java
+    @GetMapping("/validate-token")
+    public ResponseEntity<?> validateToken(HttpServletRequest request) {
+        String token = cookieUtils.getCookieValueByName(request, "accessToken"); // Assuming your cookie name is 'accessToken'
+
+        if (token != null && !token.isEmpty() && authenticationService.isTokenValid(token)) {
+            return ResponseEntity.ok(ResponseDTO.success(MessageConstants.UserSuccess.LOGIN_SUCCESS, true));
+        }
+        return ResponseEntity.ok(ResponseDTO.success(MessageConstants.UserError.USER_NOT_LOGGED_IN, false));
+    }
+
 
 }

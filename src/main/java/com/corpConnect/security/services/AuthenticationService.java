@@ -139,4 +139,8 @@ public class AuthenticationService {
                 .build();
     }
 
+    public boolean isTokenValid(String token) {
+        return jwtService.isTokenExpired(token);
+    }
+
 }
