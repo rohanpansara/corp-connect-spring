@@ -68,7 +68,7 @@ public class AuthController {
 
     @GetMapping("/validate-token")
     public ResponseEntity<?> validateToken(HttpServletRequest request) {
-        String token = cookieUtils.getCookieValueByName(request, "Token"); // Assuming your cookie name is 'accessToken'
+        String token = cookieUtils.getCookieValueByName(request, "Token");
 
         if (token != null && !token.isEmpty() && authenticationService.isTokenValid(token)) {
             logger.info(LogConstants.getSessionVerifiedForToken(token, true));
