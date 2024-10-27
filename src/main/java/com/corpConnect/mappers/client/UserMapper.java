@@ -47,6 +47,7 @@ public abstract class UserMapper {
     public abstract User toEntityFromRegisterDTO(NewUserDTO newUserDTO);
 
     public abstract List<User> toEntityList(List<UserDTO> userDTOList);
+
     public abstract List<UserDTO> toDTOList(List<User> userList);
 
     @BeforeMapping

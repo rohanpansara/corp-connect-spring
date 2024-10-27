@@ -1,14 +1,19 @@
 package com.corpConnect.security.filters;
 
 import com.corpConnect.entities.user.User;
+import com.corpConnect.exceptions.jwt.JwtAuthenticationException;
 import com.corpConnect.security.CorpConnectUserContext;
 import com.corpConnect.security.services.JwtService;
 import com.corpConnect.utils.constants.MessageConstants;
+import com.corpConnect.utils.functions.CookieUtils;
+import io.jsonwebtoken.ExpiredJwtException;
 import jakarta.servlet.FilterChain;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import lombok.RequiredArgsConstructor;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.lang.NonNull;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -24,6 +29,8 @@ import java.io.IOException;
 @RequiredArgsConstructor
 public class JwtAuthenticationFilter extends OncePerRequestFilter {
 
+    private static final Logger logger = LoggerFactory.getLogger(CookieUtils.class);
+
     private static final String[] PUBLIC_URLS = {
             "/user/login",
             "/user/new-user"
@@ -33,6 +40,7 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
 
     private final JwtService jwtService;
     private final UserDetailsService userDetailsService;
+    private final CookieUtils cookieUtils;
 
     @Override
     protected void doFilterInternal(@NonNull HttpServletRequest request,
@@ -49,14 +57,13 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
                 }
             }
 
-            final String authHeader = request.getHeader("Authorization");
-            final String jwtToken;
+            String jwtToken = cookieUtils.getCookieValueByName(request, "Token");
             final String userEmail;
-            if (authHeader == null || !authHeader.startsWith(BEARER_PREFIX)) {
+            if (jwtToken == null || jwtToken.isEmpty()) {
                 filterChain.doFilter(request, response);
-                throw new RuntimeException("Authorization token missing");
+                throw new JwtAuthenticationException("Authorization token missing");
             }
-            jwtToken = authHeader.substring(BEARER_PREFIX.length());
+            logger.info("JWT: Token found with value - {}", jwtToken);
             userEmail = jwtService.extractEmail(jwtToken);
             if (userEmail != null && SecurityContextHolder.getContext().getAuthentication() == null) {
                 UserDetails userDetails = this.userDetailsService.loadUserByUsername(userEmail);
@@ -73,7 +80,13 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
                 }
             }
             filterChain.doFilter(request, response);
-        } catch (Exception e){
+        } catch (ExpiredJwtException e) {
+            logger.error("JWT: Token is expired");
+            throw new JwtAuthenticationException(MessageConstants.JWT.EXPIRED_JWT_EXCEPTION, "403");
+        } catch (JwtAuthenticationException e) {
+            logger.error("JWT: Token not found");
+            throw new JwtAuthenticationException(MessageConstants.UserError.USER_NOT_LOGGED_IN, "401");
+        } catch (Exception e) {
             throw new RuntimeException(MessageConstants.UserError.AUTHORIZATION_FAILED);
         } finally {
             CorpConnectUserContext.clear();

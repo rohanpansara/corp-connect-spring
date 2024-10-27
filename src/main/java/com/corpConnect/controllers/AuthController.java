@@ -40,7 +40,7 @@ public class AuthController {
     @PostMapping(value = "/login")
     public ResponseEntity<ResponseDTO<AuthResponseDTO>> login(@RequestBody AuthRequestDTO authRequestDTO) throws BaseException {
         AuthResponseDTO response = authenticationService.authenticate(authRequestDTO, "HR");
-        ResponseCookie cookie = cookieUtils.generateCookie("Token_" + response.getUser().getId(), response.getAccessToken(), "/api/auth");
+        ResponseCookie cookie = cookieUtils.generateCookie("Token", response.getAccessToken(), "/api/auth");
         return ResponseEntity.ok()
                 .header(HttpHeaders.SET_COOKIE, cookie.toString())
                 .body(ResponseDTO.success(MessageConstants.UserSuccess.LOGIN_SUCCESS, response));
@@ -54,7 +54,7 @@ public class AuthController {
 
     @PostMapping(value = "/logout/{user-id}")
     public ResponseEntity<ResponseDTO<Void>> logout(@PathVariable("user-id") Long userId) {
-        CookieUtils.clearCookie("Token_" + userId, "/api/auth");
+        cookieUtils.clearCookie("Token", "/api/auth");
         return ResponseEntity.ok(ResponseDTO.success(MessageConstants.UserSuccess.LOGOUT_SUCCESS));
     }
 
