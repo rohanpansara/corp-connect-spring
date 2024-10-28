@@ -123,7 +123,7 @@ public class UserServiceImpl implements UserService {
         DashboardCardDTO dashboardCard = new DashboardCardDTO();
         dashboardCard.setDailyHoursCard(new CardDataDTO(
                 "Today’s Hours",
-                "4h 45m",
+                "18h 57m",
                 "24 hours logged this week"
         ));
         dashboardCard.setLeaveDetailsCard(new CardDataDTO(
@@ -133,7 +133,7 @@ public class UserServiceImpl implements UserService {
         ));
         dashboardCard.setUpcomingMeetingCard(new CardDataDTO(
                 "Next Meeting",
-                "Daily Scrum",
+                "Daily Scrum Meeting",
                 "Place: Conference room"
         ));
         return dashboardCard;
