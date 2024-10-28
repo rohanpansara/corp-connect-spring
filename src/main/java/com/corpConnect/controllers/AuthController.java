@@ -39,8 +39,7 @@ public class AuthController {
     @PostMapping(value = "/new-user")
     @PreAuthorize("hasAuthority('pms_manager:create') || hasAuthority('hr_manager:create')")
     public ResponseEntity<ResponseDTO<UserDTO>> newUser(@RequestBody NewUserDTO newUserDTO) throws LoginFailedException {
-        UserDTO response = authenticationService.addNewUser(newUserDTO);
-        return ResponseEntity.ok(ResponseDTO.success(MessageConstants.UserSuccess.USER_CREATED, response));
+        return ResponseEntity.ok(ResponseDTO.success(MessageConstants.UserSuccess.USER_CREATED, authenticationService.addNewUser(newUserDTO)));
     }
 
     @PostMapping(value = "/login")
