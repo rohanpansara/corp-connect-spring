@@ -131,6 +131,11 @@ public class UserServiceImpl implements UserService {
                 "12",
                 "3 leaves taken last month"
         ));
+        dashboardCard.setShiftDetailsCard(new CardDataDTO(
+                "Shift Timings",
+                "7h 30m",
+                "2 late-ins this month"
+        ));
         dashboardCard.setUpcomingMeetingCard(new CardDataDTO(
                 "Next Meeting",
                 "Daily Scrum Meeting",
