@@ -29,13 +29,13 @@ import java.io.IOException;
 @RequiredArgsConstructor
 public class JwtAuthenticationFilter extends OncePerRequestFilter {
 
-    private static final Logger logger = LoggerFactory.getLogger(CookieUtils.class);
+    private static final Logger logger = LoggerFactory.getLogger(JwtAuthenticationFilter.class);
 
     private static final String[] PUBLIC_URLS = {
-            "/user/login"
+            "/user/login",
+            "/user/validate-token"
     };
 
-    private static final String BEARER_PREFIX = "Bearer ";
 
     private final JwtService jwtService;
     private final UserDetailsService userDetailsService;

@@ -64,7 +64,7 @@ public class AuthController {
     }
 
     @GetMapping("/validate-token")
-    public ResponseEntity<?> validateToken(HttpServletRequest request) {
+    public ResponseEntity<ResponseDTO<Boolean>> validateToken(HttpServletRequest request) {
         String token = cookieUtils.getCookieValueByName(request, "Token");
 
         if (token != null && !token.isEmpty() && authenticationService.isTokenValid(token)) {
