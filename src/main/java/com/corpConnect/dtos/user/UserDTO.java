@@ -13,7 +13,6 @@ import java.util.List;
 @RequiredArgsConstructor
 @JsonInclude(JsonInclude.Include.NON_NULL)
 public class UserDTO extends NamedDTO {
-    private String name;
     private String email;
     private String roles;
     private List<String> permissions;
