@@ -69,7 +69,7 @@ public class UserServiceImpl implements UserService {
         if (currentAuditor.isEmpty()) {
             user.setCreatedBy("system");
             user.setLastUpdatedBy("system");
-            logger.info(LogConstants.getAuditorNotFoundMessage("User", user.getId(), "while creating"));
+            logger.info(LogConstants.getAuditorNotFoundMessage("User", user.getEmail(), "while creating"));
         } else {
             String auditor = currentAuditor.get();
             user.setCreatedBy(auditor);

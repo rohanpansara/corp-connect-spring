@@ -43,12 +43,14 @@ public class CookieUtils {
     }
 
     // Method to clear a cookie by name
-    public void clearCookie(String name, String path) {
-        ResponseCookie.from(name, "")
+    public ResponseCookie clearCookie(String name, String path) {
+        ResponseCookie clearedCookie = ResponseCookie.from(name, "")
                 .path(path)
                 .maxAge(0)
                 .httpOnly(true)
+                .sameSite("Strict")
                 .build();
         logger.info("Cookie: Cleared cookie with name: {} and path: {}", name, path);
+        return clearedCookie;
     }
 }

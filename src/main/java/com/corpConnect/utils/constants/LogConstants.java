@@ -22,8 +22,8 @@ public class LogConstants {
         return buildMessage(mapperClass + " Mapper", specificMessage, "Attempt to map a dto to an entity");
     }
 
-    public static String getAuditorNotFoundMessage(String className, Long id, String specificMessage) {
-        return buildMessage("Auditor Not Found", specificMessage, "Setting 'createdBy' or 'lastUpdatedBy' to the value 'system' for " + className + " with ID-" + id);
+    public static String getAuditorNotFoundMessage(String className, String email, String specificMessage) {
+        return buildMessage("Auditor Not Found", specificMessage, "Setting 'createdBy' or 'lastUpdatedBy' to system for " + className + " with Email-" + email);
     }
 
     public static String getCreatedSuccessfullyMessage(String className, String fieldName, Object fieldValue, String specificMessage) {

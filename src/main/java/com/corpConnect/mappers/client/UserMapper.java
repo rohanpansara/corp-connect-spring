@@ -24,8 +24,8 @@ import java.util.List;
 @Mapper(unmappedTargetPolicy = ReportingPolicy.IGNORE, componentModel = "spring")
 public abstract class UserMapper {
 
-    @Autowired
     @Lazy
+    @Autowired
     private UserService userService;
 
     @Named("toDTO")
