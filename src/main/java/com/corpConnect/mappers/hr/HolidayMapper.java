@@ -37,8 +37,8 @@ public abstract class HolidayMapper {
 
     @AfterMapping
     protected void dateFormatting(Holiday holiday, @MappingTarget HolidayDTO holidayDTO) {
-        holidayDTO.setCreatedDate(CustomDateTimeFormatter.getLocalDateTimeString(holiday.getCreatedDate()));
-        holidayDTO.setLastUpdatedDate(CustomDateTimeFormatter.getLocalDateTimeString(holiday.getLastUpdatedDate()));
+        holidayDTO.setCreatedDate(CustomDateTimeFormatter.getFormatedDateTimeByIntensity(holiday.getCreatedDate()));
+        holidayDTO.setLastUpdatedDate(CustomDateTimeFormatter.getFormatedDateTimeByIntensity(holiday.getLastUpdatedDate()));
         holidayDTO.setDate(CustomDateTimeFormatter.getLocalDateString(holiday.getDate()));
     }
 }

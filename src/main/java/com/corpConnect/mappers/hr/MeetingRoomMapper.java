@@ -68,8 +68,8 @@ public abstract class MeetingRoomMapper {
 
     @AfterMapping
     protected void dateFormatting(MeetingRoom meetingRoom, @MappingTarget MeetingRoomDTO meetingRoomDTO) throws BaseException {
-        meetingRoomDTO.setCreatedDate(CustomDateTimeFormatter.getLocalDateTimeString(meetingRoom.getCreatedDate()));
-        meetingRoomDTO.setLastUpdatedDate(CustomDateTimeFormatter.getLocalDateTimeString(meetingRoom.getLastUpdatedDate()));
+        meetingRoomDTO.setCreatedDate(CustomDateTimeFormatter.getFormatedDateTimeByIntensity(meetingRoom.getCreatedDate()));
+        meetingRoomDTO.setLastUpdatedDate(CustomDateTimeFormatter.getFormatedDateTimeByIntensity(meetingRoom.getLastUpdatedDate()));
         if(meetingRoom.getCapacity()==null){
             meetingRoomDTO.setCapacity(0);
         }

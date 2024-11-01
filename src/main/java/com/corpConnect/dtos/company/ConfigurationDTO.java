@@ -1,7 +1,7 @@
 package com.corpConnect.dtos.company;
 
+import com.corpConnect.dtos.common.NamedDTO;
 import com.fasterxml.jackson.annotation.JsonInclude;
-import com.corpConnect.dtos.common.BaseDTO;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.RequiredArgsConstructor;
@@ -12,9 +12,8 @@ import lombok.ToString;
 @RequiredArgsConstructor
 @ToString
 @JsonInclude(JsonInclude.Include.NON_NULL)
-public class CompanyConfigurationDTO extends BaseDTO {
+public class ConfigurationDTO extends NamedDTO {
 
-    private String configName;
     private String configMaxValue;
     private String configMinValue;
     private boolean isEnabled;

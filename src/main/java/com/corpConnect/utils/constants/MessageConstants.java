@@ -89,14 +89,14 @@ public class MessageConstants {
     }
 
     public static final class CompanyConfiguration {
-        public static final String CONFIGURATION_CREATED = "Company configuration created successfully";
-        public static final String CONFIGURATION_EXISTS = "Company configuration exists with same name";
-        public static final String CONFIGURATION_FOUND = "Company configuration found successfully";
-        public static final String CONFIGURATION_NOT_FOUND = "Company configuration not found";
-        public static final String CONFIGURATION_DELETED = "Company configuration deleted successfully";
-        public static final String CONFIGURATION_LIST_FOUND = "All company configurations found successfully";
-        public static final String CONFIGURATION_LIST_EMPTY = "No company configurations found";
-        public static final String DataIntegrityViolation = getDataIntegrityViolationMessage("company configuration");
+        public static final String CONFIGURATION_CREATED = MessageCreator.getCreatedMessage("Configuration");
+        public static final String CONFIGURATION_ALREADY_EXISTS = MessageCreator.getExistsMessage("Configuration", "name");
+        public static final String CONFIGURATION_FOUND = MessageCreator.getFoundMessage("Configuration");
+        public static final String CONFIGURATION_NOT_FOUND = MessageCreator.getNotFoundMessage("Configuration");
+        public static final String CONFIGURATION_DELETED = MessageCreator.getDeletedMessage("Configuration", false);
+        public static final String CONFIGURATION_DELETED_PERMANENTLY = MessageCreator.getDeletedMessage("Configuration", true);
+        public static final String CONFIGURATION_LIST_FOUND = MessageCreator.getListFoundMessage("configuration");
+        public static final String DataIntegrityViolation = getDataIntegrityViolationMessage("configuration");
     }
 
     public static final class JobTitle {

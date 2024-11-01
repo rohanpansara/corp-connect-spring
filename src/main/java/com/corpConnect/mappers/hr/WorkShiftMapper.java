@@ -41,7 +41,7 @@ public abstract class WorkShiftMapper {
 
     @AfterMapping
     protected void dateFormatting(WorkShift workShift, @MappingTarget WorkShiftDTO workShiftDTO) throws BaseException {
-        workShiftDTO.setCreatedDate(CustomDateTimeFormatter.getLocalDateTimeString(workShift.getCreatedDate()));
-        workShiftDTO.setLastUpdatedDate(CustomDateTimeFormatter.getLocalDateTimeString(workShift.getLastUpdatedDate()));
+        workShiftDTO.setCreatedDate(CustomDateTimeFormatter.getFormatedDateTimeByIntensity(workShift.getCreatedDate()));
+        workShiftDTO.setLastUpdatedDate(CustomDateTimeFormatter.getFormatedDateTimeByIntensity(workShift.getLastUpdatedDate()));
     }
 }

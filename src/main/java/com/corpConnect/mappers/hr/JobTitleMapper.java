@@ -38,7 +38,7 @@ public abstract class JobTitleMapper {
 
     @AfterMapping
     protected void dateFormatting(JobTitle jobTitle, @MappingTarget JobTitleDTO jobTitleDTO) {
-        jobTitleDTO.setCreatedDate(CustomDateTimeFormatter.getLocalDateTimeString(jobTitle.getCreatedDate()));
-        jobTitleDTO.setLastUpdatedDate(CustomDateTimeFormatter.getLocalDateTimeString(jobTitle.getLastUpdatedDate()));
+        jobTitleDTO.setCreatedDate(CustomDateTimeFormatter.getFormatedDateTimeByIntensity(jobTitle.getCreatedDate()));
+        jobTitleDTO.setLastUpdatedDate(CustomDateTimeFormatter.getFormatedDateTimeByIntensity(jobTitle.getLastUpdatedDate()));
     }
 }

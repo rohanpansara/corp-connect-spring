@@ -43,7 +43,7 @@ public abstract class DepartmentMapper {
     @Mapping(target = "lastUpdatedBy", ignore = true)
     @Mapping(target = "createdDate", ignore = true)
     @Mapping(target = "createdBy", ignore = true)
-    @Mapping(target = "departmentHead", source = "department.departmentHead")
+    @Mapping(target = "departmentHead", source = "departmentHead")
     public abstract DepartmentDTO toDTO(Department department);
 
     public abstract List<Department> toEntityList(List<DepartmentDTO> departmentDTOList);
@@ -66,13 +66,14 @@ public abstract class DepartmentMapper {
                     logger.error(LogConstants.getNotFoundMessage("User", "set", "ID", departmentDTO.getDepartmentHead().getId(), "inside after mapping"));
                     return new UserNotFoundException(MessageConstants.UserError.USER_NOT_FOUND);
                 });
+
         department.setDepartmentHead(departmentHead);
     }
 
     @AfterMapping
     protected void dateFormatting(Department department, @MappingTarget DepartmentDTO departmentDTO) throws BaseException {
-        departmentDTO.setCreatedDate(CustomDateTimeFormatter.getLocalDateTimeString(department.getCreatedDate()));
-        departmentDTO.setLastUpdatedDate(CustomDateTimeFormatter.getLocalDateTimeString(department.getLastUpdatedDate()));
+        departmentDTO.setCreatedDate(CustomDateTimeFormatter.getFormatedDateTimeByIntensity(department.getCreatedDate()));
+        departmentDTO.setLastUpdatedDate(CustomDateTimeFormatter.getFormatedDateTimeByIntensity(department.getLastUpdatedDate()));
     }
 
 }
