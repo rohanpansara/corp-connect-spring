@@ -5,9 +5,11 @@ import com.corpConnect.entities.company.Configuration;
 import com.corpConnect.exceptions.common.BaseException;
 import com.corpConnect.utils.functions.CustomDateTimeFormatter;
 import org.mapstruct.AfterMapping;
+import org.mapstruct.BeanMapping;
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
 import org.mapstruct.MappingTarget;
+import org.mapstruct.NullValuePropertyMappingStrategy;
 import org.mapstruct.ReportingPolicy;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -35,6 +37,9 @@ public abstract class ConfigurationMapper {
     public abstract List<Configuration> toEntityList(List<ConfigurationDTO> configurationDTOList);
 
     public abstract List<ConfigurationDTO> toDTOList(List<Configuration> configurationList);
+
+    @BeanMapping(nullValuePropertyMappingStrategy = NullValuePropertyMappingStrategy.IGNORE)
+    public abstract void updateEntityFromDTO(ConfigurationDTO configurationDTO, @MappingTarget Configuration configuration);
 
     @AfterMapping
     protected void dateFormatting(Configuration configuration, @MappingTarget ConfigurationDTO configurationDTO) throws BaseException {

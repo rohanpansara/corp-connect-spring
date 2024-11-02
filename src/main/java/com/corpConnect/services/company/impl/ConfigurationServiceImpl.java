@@ -2,6 +2,8 @@ package com.corpConnect.services.company.impl;
 
 import com.corpConnect.dtos.company.ConfigurationDTO;
 import com.corpConnect.entities.company.Configuration;
+import com.corpConnect.exceptions.hr.HolidayRelatedException;
+import com.corpConnect.exceptions.hr.JobTitleRelatedException;
 import com.corpConnect.mappers.company.ConfigurationMapper;
 import com.corpConnect.repositories.company.ConfigurationRepository;
 import com.corpConnect.services.company.ConfigurationService;
@@ -13,6 +15,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.stereotype.Service;
 
+import java.util.Collections;
 import java.util.List;
 
 @Service
@@ -57,36 +60,86 @@ public class ConfigurationServiceImpl implements ConfigurationService {
 
     @Override
     public void updateConfiguration(Long oldConfigurationId, ConfigurationDTO configurationDTO) {
+        Configuration oldConfiguration = configurationRepository.findById(oldConfigurationId).orElseThrow(
+                () -> {
+                    logger.error(LogConstants.getNotFoundMessage("Configuration", "update", "ID", oldConfigurationId, null));
+                    return new JobTitleRelatedException(MessageConstants.CompanyConfiguration.CONFIGURATION_NOT_FOUND);
+                });
 
+        try {
+            configurationMapper.updateEntityFromDTO(configurationDTO, oldConfiguration);
+            configurationRepository.save(oldConfiguration);
+            logger.info(LogConstants.getUpdatedSuccessfullyMessage("Configuration", "DTO", configurationDTO, "ID", oldConfigurationId, null));
+        } catch (DataIntegrityViolationException e) {
+            logger.error(LogConstants.getAlreadyExistsMessage("Configuration", "Name", configurationDTO.getName(), "while updating"));
+            throw new RuntimeException(MessageConstants.CompanyConfiguration.CONFIGURATION_CREATED);
+        }
     }
 
     @Override
     public void deleteConfiguration(ConfigurationDTO configurationDTO, Boolean isPermanentDelete) {
+        Configuration configurationToDelete = this.getEntity(configurationDTO);
 
+        try {
+            if (isPermanentDelete) {
+                configurationRepository.delete(configurationToDelete);
+                logger.info(LogConstants.getDeletedSuccessfullyMessage("Configuration", "Permanent", "DTO", configurationDTO, null));
+            } else {
+                configurationToDelete.setDeleted(true);
+                configurationRepository.save(configurationToDelete);
+                logger.info(LogConstants.getDeletedSuccessfullyMessage("Configuration", "Soft", "DTO", configurationDTO, null));
+            }
+        } catch (DataIntegrityViolationException e) {
+            logger.error(LogConstants.getIsUsedSomewhereMessage("Configuration", "DTO", configurationDTO, null));
+            throw new RuntimeException(MessageConstants.CompanyConfiguration.DataIntegrityViolation);
+        }
     }
 
     @Override
     public void deleteConfigurationById(Long configurationId, Boolean isPermanentDelete) {
+        try {
+            Configuration configurationToDelete = configurationRepository.findById(configurationId).orElseThrow(
+                    () -> {
+                        logger.error(LogConstants.getNotFoundMessage("Configuration", "delete", "ID", configurationId, null));
+                        return new JobTitleRelatedException(MessageConstants.CompanyConfiguration.CONFIGURATION_NOT_FOUND);
+                    });
 
+            if (isPermanentDelete) {
+                configurationRepository.delete(configurationToDelete);
+                logger.info(LogConstants.getDeletedSuccessfullyMessage("Configuration", "Permanent", "ID", configurationId, null));
+            } else {
+                configurationToDelete.setDeleted(true);
+                configurationRepository.save(configurationToDelete);
+                logger.info(LogConstants.getDeletedSuccessfullyMessage("Configuration", "Soft", "ID", configurationId, null));
+            }
+        } catch (DataIntegrityViolationException e) {
+            logger.error(LogConstants.getIsUsedSomewhereMessage("Configuration", "ID", configurationId, null));
+            throw new RuntimeException(MessageConstants.CompanyConfiguration.DataIntegrityViolation);
+        }
     }
 
     @Override
     public List<Configuration> getAllConfigurations(Boolean withDeletedCheck) {
-        return List.of();
+        return configurationRepository.findByIsDeleted(withDeletedCheck);
     }
 
     @Override
     public List<Configuration> getAllNonDeletedConfigurations() {
-        return List.of();
+        return configurationRepository.findByIsDeleted(false);
     }
 
     @Override
     public List<Configuration> getAllDeletedConfigurations() {
-        return List.of();
+        return configurationRepository.findByIsDeleted(true);
     }
 
     @Override
     public List<Configuration> getConfigurationById(Long configurationId) {
-        return List.of();
+        return Collections.singletonList(configurationRepository.findById(configurationId).orElseThrow(
+                () -> {
+                    logger.error(LogConstants.getNotFoundMessage("Configuration", "get", "ID", configurationId, null));
+                    return new HolidayRelatedException(MessageConstants.CompanyConfiguration.CONFIGURATION_NOT_FOUND);
+                }
+        ));
     }
 }
