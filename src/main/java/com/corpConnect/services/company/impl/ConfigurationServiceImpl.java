@@ -120,16 +120,25 @@ public class ConfigurationServiceImpl implements ConfigurationService {
 
     @Override
     public List<Configuration> getAllConfigurations(Boolean withDeletedCheck) {
-        return configurationRepository.findByIsDeleted(withDeletedCheck);
+        if (withDeletedCheck == null) {
+            logger.info(LogConstants.getFoundAllMessage("Configuration", "get", "without deleted check"));
+            return configurationRepository.findAll();
+        } else if (withDeletedCheck) {
+            return this.getAllDeletedConfigurations();
+        } else {
+            return this.getAllNonDeletedConfigurations();
+        }
     }
 
     @Override
     public List<Configuration> getAllNonDeletedConfigurations() {
+        logger.info(LogConstants.getFoundAllMessage("Configuration", "get", "deleted check-" + false));
         return configurationRepository.findByIsDeleted(false);
     }
 
     @Override
     public List<Configuration> getAllDeletedConfigurations() {
+        logger.info(LogConstants.getFoundAllMessage("Configuration", "get", "deleted check-" + true));
         return configurationRepository.findByIsDeleted(true);
     }
 

@@ -93,6 +93,7 @@ public class MessageConstants {
         public static final String CONFIGURATION_ALREADY_EXISTS = MessageCreator.getExistsMessage("Configuration", "name");
         public static final String CONFIGURATION_FOUND = MessageCreator.getFoundMessage("Configuration");
         public static final String CONFIGURATION_NOT_FOUND = MessageCreator.getNotFoundMessage("Configuration");
+        public static final String CONFIGURATION_UPDATED = MessageCreator.getUpdatedMessage("Configuration");
         public static final String CONFIGURATION_DELETED = MessageCreator.getDeletedMessage("Configuration", false);
         public static final String CONFIGURATION_DELETED_PERMANENTLY = MessageCreator.getDeletedMessage("Configuration", true);
         public static final String CONFIGURATION_LIST_FOUND = MessageCreator.getListFoundMessage("configuration");
