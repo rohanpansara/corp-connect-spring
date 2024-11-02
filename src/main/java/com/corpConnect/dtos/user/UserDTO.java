@@ -16,6 +16,9 @@ public class UserDTO extends NamedDTO {
     private String email;
     private String roles;
     private List<String> permissions;
-    private boolean isAccountEnabled;
-    private boolean isCredentialsNonExpired;
+    private String isAccountEnabled;
+    private String isCredentialsNonExpired;
+    private String isAccountNonLocked;
+    private String isAccountNonExpired;
+
 }

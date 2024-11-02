@@ -70,6 +70,10 @@ public abstract class UserMapper {
     protected void stringFormatting(User user, @MappingTarget UserDTO userDTO) {
         userDTO.setRoles(user.getRoles().getLabel());
         userDTO.setPermissions(user.getRoles().getPermissionStrings());
+        userDTO.setIsAccountEnabled(user.isAccountEnabled() ? "true" : "false");
+        userDTO.setIsAccountNonExpired(user.isAccountNonExpired() ? "true" : "false");
+        userDTO.setIsAccountNonLocked(user.isAccountNonLocked() ? "true" : "false");
+        userDTO.setIsCredentialsNonExpired(user.isCredentialsNonExpired() ? "true" : "false");
         userDTO.setCreatedDate(CustomDateTimeFormatter.getFormatedDateTimeByIntensity(user.getCreatedDate()));
         userDTO.setLastUpdatedDate(CustomDateTimeFormatter.getFormatedDateTimeByIntensity(user.getLastUpdatedDate()));
     }
