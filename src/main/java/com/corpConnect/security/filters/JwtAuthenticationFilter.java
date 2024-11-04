@@ -6,6 +6,7 @@ import com.corpConnect.security.CorpConnectUserContext;
 import com.corpConnect.security.services.JwtService;
 import com.corpConnect.utils.constants.MessageConstants;
 import com.corpConnect.utils.functions.CookieUtils;
+import com.corpConnect.utils.functions.CustomDateTimeFormatter;
 import io.jsonwebtoken.ExpiredJwtException;
 import jakarta.servlet.FilterChain;
 import jakarta.servlet.ServletException;
@@ -24,6 +25,7 @@ import org.springframework.stereotype.Component;
 import org.springframework.web.filter.OncePerRequestFilter;
 
 import java.io.IOException;
+import java.time.LocalDateTime;
 
 @Component
 @RequiredArgsConstructor
@@ -49,6 +51,9 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
                                     @NonNull FilterChain filterChain) throws ServletException, IOException {
 
         try {
+
+            logger.info("Request remote address: {} | Time: {}", request.getRemoteAddr(), CustomDateTimeFormatter.getLocalDateTimeString(LocalDateTime.now()));
+
             // Check if the request is for a public URL
             String servletPath = request.getServletPath();
             for (String url : PUBLIC_URLS) {
