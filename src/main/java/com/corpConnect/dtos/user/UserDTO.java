@@ -20,5 +20,4 @@ public class UserDTO extends NamedDTO {
     private String isCredentialsNonExpired;
     private String isAccountNonLocked;
     private String isAccountNonExpired;
-
 }
