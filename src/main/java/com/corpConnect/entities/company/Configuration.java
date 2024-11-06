@@ -20,8 +20,8 @@ import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 @Table(name = "COMPANY_CONFIGURATIONS")
 public class Configuration extends NameWithDeleteEntity {
 
-    private String maxValue;
-    private String minValue;
+    private String maxVal;
+    private String minVal;
     private boolean isEnabled = false;
 
 }

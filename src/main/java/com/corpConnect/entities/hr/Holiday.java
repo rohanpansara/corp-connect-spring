@@ -1,5 +1,6 @@
 package com.corpConnect.entities.hr;
 
+import com.corpConnect.entities.common.NameEntity;
 import com.corpConnect.entities.common.NameWithDeleteEntity;
 import com.corpConnect.enumerations.HolidayType;
 import jakarta.persistence.Column;
@@ -24,7 +25,7 @@ import java.time.LocalDate;
 @Entity
 @EntityListeners(AuditingEntityListener.class)
 @Table(name = "HR_HOLIDAYS")
-public class Holiday extends NameWithDeleteEntity {
+public class Holiday extends NameEntity {
 
     @Column(nullable = false)
     private LocalDate date;

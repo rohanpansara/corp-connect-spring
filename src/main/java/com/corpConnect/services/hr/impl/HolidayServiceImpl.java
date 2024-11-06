@@ -65,7 +65,7 @@ public class HolidayServiceImpl implements HolidayService {
     }
 
     private void handleIntegrityViolation(DataIntegrityViolationException e, boolean isWhileCreating, HolidayDTO holidayDTO) {
-        if (e.getMessage().contains("name")) {
+        if (e.getMessage().contains("hr_holidays.name")) {
             if (isWhileCreating) {
                 logger.error(LogConstants.getAlreadyExistsMessage("Holiday", "Name", holidayDTO.getName(), "while creating"));
             } else {

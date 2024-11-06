@@ -16,8 +16,6 @@ public interface HolidayRepository extends JpaRepository<Holiday, Long> {
     Holiday findByName(String name);
     List<Holiday> findByNameContainingIgnoreCase(String name); // for searching filter
     List<Holiday> findByType(HolidayType holidayType);
-
-    List<Holiday> findByIsDeleted(boolean isDeleted);
     boolean existsByDate(LocalDate date);
 
     @Query("SELECT h FROM Holiday h WHERE MONTH(h.date) = :month AND YEAR(h.date) = :year")

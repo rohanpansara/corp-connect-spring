@@ -21,7 +21,7 @@ import java.util.List;
 
 @RestController
 @RequiredArgsConstructor
-@RequestMapping("/hr/job-titles")
+@RequestMapping("/hr/job-title")
 @PreAuthorize("hasRole('HR_MANAGER')")
 public class JobTitleController {
 
