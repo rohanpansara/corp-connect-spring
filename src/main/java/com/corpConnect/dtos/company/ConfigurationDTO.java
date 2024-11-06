@@ -14,8 +14,8 @@ import lombok.ToString;
 @JsonInclude(JsonInclude.Include.NON_NULL)
 public class ConfigurationDTO extends NamedDTO {
 
-    private String configMaxValue;
-    private String configMinValue;
+    private String maxValue;
+    private String minValue;
     private boolean isEnabled;
     private boolean isDeleted;
 
