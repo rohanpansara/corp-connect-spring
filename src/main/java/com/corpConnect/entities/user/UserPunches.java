@@ -1,7 +1,7 @@
 package com.corpConnect.entities.user;
 
 import com.corpConnect.entities.common.BaseEntity;
-import com.corpConnect.enumerations.AttendanceStatus;
+import com.corpConnect.enumerations.PunchType;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.EntityListeners;
@@ -17,8 +17,7 @@ import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
 import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 
-import java.math.BigDecimal;
-import java.time.LocalDate;
+import java.time.LocalDateTime;
 
 @Data
 @AllArgsConstructor
@@ -26,19 +25,20 @@ import java.time.LocalDate;
 @EqualsAndHashCode(callSuper = true)
 @Entity
 @EntityListeners(AuditingEntityListener.class)
-@Table(name = "USER_ATTENDANCE")
-public class UserAttendance extends BaseEntity {
+@Table(name = "USERS_PUNCHES")
+public class UserPunches extends BaseEntity {
 
     @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "user_id")
     private User user;
-    private LocalDate date;
+    private LocalDateTime punchTime;
 
     @Enumerated(EnumType.STRING)
-    @Column(name = "status", nullable = false)
-    private AttendanceStatus attendanceStatus = AttendanceStatus.getDefault();
+    @Column(name = "punchType", nullable = false)
+    private PunchType punchType = PunchType.getDefault();
 
-    @Column(precision = 5, scale = 2, nullable = false)
-    private BigDecimal totalHours = BigDecimal.ZERO;
+    private String location;
+    private boolean isAllowed;
+    private String remarks;
 
 }
