@@ -20,6 +20,7 @@ public interface UserService {
     // User Repository
     User finalSave(User user);
     void deleteUserByUserId(Long userId);
+    void deleteUsersByUserIdList(List<Long> userIdList);
     User getUserByEmail(String email);
     User getUserByUserId(Long userId);
     List<User> getUserByAccountExpiration(Boolean isExpired);

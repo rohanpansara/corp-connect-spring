@@ -79,12 +79,21 @@ public class UserServiceImpl implements UserService {
         return userRepository.save(user);
     }
 
+    @Transactional
     @Override
     public void deleteUserByUserId(Long userId) {
-        if(!userRepository.existsById(userId)) {
+        if (!userRepository.existsById(userId)) {
             throw new UserNotFoundException(MessageConstants.UserError.USER_NOT_FOUND);
         }
-        userRepository.deleteById(userId);
+        userRepository.setIsDeletedTrueForUserByUserId(userId);
+    }
+
+    @Transactional
+    @Override
+    public void deleteUsersByUserIdList(List<Long> userIdList) {
+        if (!userIdList.isEmpty()) {
+            userRepository.setIsDeletedTrueForUserByUserIdList(userIdList);
+        }
     }
 
     @Override
