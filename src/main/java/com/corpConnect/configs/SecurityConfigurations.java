@@ -41,7 +41,6 @@ public class SecurityConfigurations {
     private static final String[] publicUrls = {
             "/user/login",
             "/user/logout",
-            "/user/new-user",
             "/user/validate-token"
     };
 
