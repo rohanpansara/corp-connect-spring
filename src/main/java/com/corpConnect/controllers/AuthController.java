@@ -18,6 +18,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.ResponseCookie;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -36,7 +37,7 @@ public class AuthController {
     private final CookieUtils cookieUtils;
 
     @PostMapping(value = "/new-user")
-//    @PreAuthorize("hasAuthority('pms_manager:create') || hasAuthority('hr_manager:create')")
+    @PreAuthorize("hasAuthority('pms_manager:create') || hasAuthority('hr_manager:create')")
     public ResponseEntity<ResponseDTO<UserDTO>> addNewUser(@RequestBody NewUserDTO newUserDTO) throws LoginFailedException {
         return ResponseEntity.ok(ResponseDTO.success(MessageConstants.UserSuccess.USER_CREATED, authenticationService.addNewUser(newUserDTO)));
     }

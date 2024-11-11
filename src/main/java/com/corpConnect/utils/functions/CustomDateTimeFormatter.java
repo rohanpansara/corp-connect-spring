@@ -17,6 +17,12 @@ public class CustomDateTimeFormatter {
         return localDateTime.format(dateTimeFormatter);
     }
 
+    // Converts LocalDateTime to String using MEDIUM format style (e.g. Jul 23, 2024, 10:15:30 AM)
+    public static String getLocalDateString(LocalDateTime localDateTime) {
+        DateTimeFormatter dateTimeFormatter = DateTimeFormatter.ofPattern("dd/MM/yyyy");
+        return localDateTime.format(dateTimeFormatter);
+    }
+
     // Converts LocalDate to String using custom pattern
     public static String getLocalDateString(LocalDate localDate) {
         DateTimeFormatter dateTimeFormatter = DateTimeFormatter.ofPattern("dd/MM/yyyy");
@@ -53,7 +59,7 @@ public class CustomDateTimeFormatter {
         } else if (days < 7) {
             return days == 1 ? "1 day ago" : days + " days ago";
         } else {
-            return getLocalDateTimeString(dateTime);
+            return getLocalDateString(dateTime);
         }
     }
 }

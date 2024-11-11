@@ -8,6 +8,7 @@ import com.corpConnect.utils.constants.MessageConstants;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -34,5 +35,12 @@ public class EmployeeController {
     @PreAuthorize("hasAuthority('admin:read')")
     public ResponseEntity<ResponseDTO<UserDTO>> fetchUserByUserId(@PathVariable("user-id") Long userId) throws BaseException {
         return ResponseEntity.ok(ResponseDTO.success(MessageConstants.UserSuccess.USER_FOUND, userService.getDTO(userService.getUserByUserId(userId))));
+    }
+
+    @DeleteMapping("/{user-id}")
+    @PreAuthorize("hasAuthority('admin:read')")
+    public ResponseEntity<ResponseDTO<Void>> deleteUserByUserId(@PathVariable("user-id") Long userId) throws BaseException {
+        userService.deleteUserByUserId(userId);
+        return ResponseEntity.ok(ResponseDTO.success(MessageConstants.UserSuccess.USER_DELETED));
     }
 }

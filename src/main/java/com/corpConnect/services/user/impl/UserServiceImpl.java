@@ -9,6 +9,7 @@ import com.corpConnect.exceptions.client.UserNotFoundException;
 import com.corpConnect.exceptions.common.BaseException;
 import com.corpConnect.mappers.client.UserMapper;
 import com.corpConnect.repositories.user.UserRepository;
+import com.corpConnect.security.CorpConnectUserContext;
 import com.corpConnect.security.dtos.NewUserDTO;
 import com.corpConnect.services.user.UserService;
 import com.corpConnect.utils.constants.MessageConstants;
@@ -76,6 +77,14 @@ public class UserServiceImpl implements UserService {
             user.setLastUpdatedBy(auditor);
         }
         return userRepository.save(user);
+    }
+
+    @Override
+    public void deleteUserByUserId(Long userId) {
+        if(!userRepository.existsById(userId)) {
+            throw new UserNotFoundException(MessageConstants.UserError.USER_NOT_FOUND);
+        }
+        userRepository.deleteById(userId);
     }
 
     @Override
