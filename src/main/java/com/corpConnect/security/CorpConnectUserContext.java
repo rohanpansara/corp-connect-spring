@@ -1,10 +1,17 @@
 package com.corpConnect.security;
 
 import com.corpConnect.entities.user.User;
+import com.corpConnect.services.user.impl.UserServiceImpl;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Component;
+
+import java.util.Objects;
 
 @Component
 public class CorpConnectUserContext {
+
+    private static final Logger logger = LoggerFactory.getLogger(CorpConnectUserContext.class);
 
     private CorpConnectUserContext() {}
 
@@ -20,5 +27,18 @@ public class CorpConnectUserContext {
 
     public static void clear() {
         CorpConnectUserContext.loggedUser.remove();
+    }
+
+    public static boolean isLoggedUser(Long userId) {
+        User currentUser = getCurrentUser();
+        if(currentUser != null) {
+            if(Objects.equals(currentUser.getId(), userId)) {
+                return true;
+            } else {
+                logger.warn("User with Id: {} tried to access user with id: {}", userId, currentUser.getId());
+                return false;
+            }
+        }
+        return false;
     }
 }
