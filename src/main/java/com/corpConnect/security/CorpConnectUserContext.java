@@ -1,7 +1,6 @@
 package com.corpConnect.security;
 
 import com.corpConnect.entities.user.User;
-import com.corpConnect.services.user.impl.UserServiceImpl;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Component;
@@ -29,6 +28,7 @@ public class CorpConnectUserContext {
         CorpConnectUserContext.loggedUser.remove();
     }
 
+    @SuppressWarnings(value = "unused")
     public static boolean isLoggedUser(Long userId) {
         User currentUser = getCurrentUser();
         if(currentUser != null) {
