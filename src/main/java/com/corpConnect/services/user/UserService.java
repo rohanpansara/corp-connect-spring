@@ -23,6 +23,7 @@ public interface UserService {
     void deleteUsersByUserIdList(List<Long> userIdList);
     User getUserByEmail(String email);
     User getUserByUserId(Long userId);
+    String getUsernameByUserId(Long userId);
     List<User> getUserByAccountExpiration(Boolean isExpired);
     List<User> getAllUsers(Boolean isDeleted);
     List<User> getAllNonDeletedUsers();

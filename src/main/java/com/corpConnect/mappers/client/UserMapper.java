@@ -29,6 +29,12 @@ public abstract class UserMapper {
     private UserService userService;
 
     @Named("toDTO")
+    @Mapping(target = "roles", ignore = true)
+    @Mapping(target = "permissions", ignore = true)
+    @Mapping(target = "isAccountEnabled", ignore = true)
+    @Mapping(target = "isCredentialsNonExpired", ignore = true)
+    @Mapping(target = "isAccountNonLocked", ignore = true)
+    @Mapping(target = "isAccountNonExpired", ignore = true)
     public abstract UserDTO toDTO(User user);
 
     @Named("toEntity")
@@ -76,6 +82,7 @@ public abstract class UserMapper {
         userDTO.setIsCredentialsNonExpired(this.setBooleanString(user.isCredentialsNonExpired()));
         userDTO.setCreatedDate(CustomDateTimeFormatter.getFormatedDateTimeByIntensity(user.getCreatedDate()));
         userDTO.setLastUpdatedDate(CustomDateTimeFormatter.getFormatedDateTimeByIntensity(user.getLastUpdatedDate()));
+        userDTO.setLastUpdatedBy(userService.getUsernameByUserId(user.getId()));
     }
 
     private String setBooleanString(Boolean bool) {

@@ -25,4 +25,7 @@ public interface UserRepository extends JpaRepository<User, Long> {
     @Modifying
     @Query("UPDATE User u SET u.isDeleted = true WHERE u.id IN :userIdList")
     void setIsDeletedTrueForUserByUserIdList(@Param("userIdList") List<Long> userIdList);
+
+    @Query("SELECT u.name FROM User u WHERE u.id = :userId")
+    String findUsernameByUserId(@Param(value = "userId") Long userId);
 }

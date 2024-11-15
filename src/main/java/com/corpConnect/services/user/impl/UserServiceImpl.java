@@ -108,6 +108,14 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
+    public String getUsernameByUserId(Long userId) {
+        if(!userRepository.existsById(userId)) {
+            return "unknown";
+        }
+        return userRepository.findUsernameByUserId(userId);
+    }
+
+    @Override
     public List<User> getUserByAccountExpiration(Boolean isExpired) {
         return userRepository.findByIsAccountNonExpired(isExpired);
     }
