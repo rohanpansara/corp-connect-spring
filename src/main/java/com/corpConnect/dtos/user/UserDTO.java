@@ -14,6 +14,7 @@ import java.util.List;
 @JsonInclude(JsonInclude.Include.NON_NULL)
 public class UserDTO extends NamedDTO {
     private String email;
+    private String gender;
     private String roles;
     private List<String> permissions;
     private String isAccountEnabled;
