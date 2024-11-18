@@ -21,7 +21,7 @@ import java.time.LocalDate;
 @Entity
 @EntityListeners(AuditingEntityListener.class)
 @Table(name = "USER_EXPERIENCE_DETAILS")
-public class UserExperienceDetail extends BaseEntity {
+public class ExperienceDetail extends BaseEntity {
 
     @Column(name = "user_id")
     private User user;

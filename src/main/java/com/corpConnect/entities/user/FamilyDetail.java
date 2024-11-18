@@ -18,7 +18,7 @@ import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 @Entity
 @EntityListeners(AuditingEntityListener.class)
 @Table(name = "USER_FAMILY_DETAILS")
-public class UserFamilyDetail extends BaseEntity {
+public class FamilyDetail extends BaseEntity {
 
     @Column(name = "user_id")
     private User user;

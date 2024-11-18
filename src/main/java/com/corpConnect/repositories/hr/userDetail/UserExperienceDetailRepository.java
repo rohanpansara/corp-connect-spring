@@ -1,14 +1,14 @@
 package com.corpConnect.repositories.hr.userDetail;
 
-import com.corpConnect.entities.user.UserExperienceDetail;
+import com.corpConnect.entities.user.ExperienceDetail;
 import com.corpConnect.entities.user.User;
 import org.springframework.data.jpa.repository.JpaRepository;
 
 import java.util.List;
 
-public interface UserExperienceDetailRepository extends JpaRepository<UserExperienceDetail, Long> {
+public interface UserExperienceDetailRepository extends JpaRepository<ExperienceDetail, Long> {
 
-    UserExperienceDetail findByUser(User user);
+    ExperienceDetail findByUser(User user);
 
     List<User> findByPreviousCompanyContaining(String previousCompanyName);
     List<User> findByPreviousCompanyLocationContaining(String previousCompanyLocation);
