@@ -22,7 +22,7 @@ import java.util.List;
 @RequiredArgsConstructor
 @PreAuthorize("hasRole('ADMIN')")
 @RequestMapping("/employee")
-public class EmployeeController {
+public class UserController {
 
     private final UserService userService;
 
