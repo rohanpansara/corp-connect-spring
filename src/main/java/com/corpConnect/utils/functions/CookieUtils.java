@@ -19,16 +19,13 @@ public class CookieUtils {
     @Value("${jwt.token-expiration-time.user}")
     private long jwtExpirationUser;
 
-    public ResponseCookie generateCookie(String name, AuthResponseDTO authResponseDTO, String path) {
-        ResponseCookie cookie = ResponseCookie.from(name, authResponseDTO.getAccessToken())
+    public ResponseCookie generateCookie(String name, String value, String path) {
+        ResponseCookie cookie = ResponseCookie.from(name, value)
                 .path(path)
                 .maxAge(jwtExpirationUser/1000)
                 .httpOnly(true)
                 .sameSite("Strict")
                 .build();
-
-        authResponseDTO.setAccessToken(null);
-        authResponseDTO.setRefreshToken(null);
 
         logger.debug("Cookie [{}] generated for user with id: {}", cookie, CorpConnectUserContext.getCurrentUser().getId());
 

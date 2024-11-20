@@ -36,12 +36,26 @@ public class AuthController {
     private final AuthenticationService authenticationService;
     private final CookieUtils cookieUtils;
 
+    // TODO: Modify the method with better approach and implementation
     @PostMapping(value = "/login")
     public ResponseEntity<ResponseDTO<AuthResponseDTO>> loginUser(@RequestBody AuthRequestDTO authRequestDTO) throws BaseException {
         AuthResponseDTO response = authenticationService.authenticate(authRequestDTO, "HR");
-        ResponseCookie cookie = cookieUtils.generateCookie("Token", response, "/api/auth");
+
+        // Generate cookies
+        ResponseCookie tokenCookie = cookieUtils.generateCookie("Token", response.getAccessToken(), "/api/auth");
+        ResponseCookie roleCookie = cookieUtils.generateCookie("User_Role", response.getRefreshToken(), "/api/auth");
+        ResponseCookie permissionCookie = cookieUtils.generateCookie("User_Permission", String.join("_", response.getUser().getPermissions()), "/api/auth");
+
+        // Clear sensitive information from the response
+        response.getUser().setRoles(null);
+        response.getUser().setPermissions(null);
+        response.setAccessToken(null);
+        response.setRefreshToken(null);
+
         return ResponseEntity.ok()
-                .header(HttpHeaders.SET_COOKIE, cookie.toString())
+                .header(HttpHeaders.SET_COOKIE, tokenCookie.toString())
+                .header(HttpHeaders.SET_COOKIE, roleCookie.toString())
+                .header(HttpHeaders.SET_COOKIE, permissionCookie.toString())
                 .body(ResponseDTO.success(MessageConstants.UserSuccess.LOGIN_SUCCESS, response));
     }
 
