@@ -5,6 +5,7 @@ import com.corpConnect.exceptions.common.BaseException;
 import com.corpConnect.security.dtos.AuthRequestDTO;
 import com.corpConnect.security.dtos.AuthResponseDTO;
 import com.corpConnect.security.services.AuthenticationService;
+import com.corpConnect.services.CookieService;
 import com.corpConnect.utils.constants.LogConstants;
 import com.corpConnect.utils.constants.MessageConstants;
 import com.corpConnect.utils.functions.CookieUtils;
@@ -22,6 +23,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
+import java.util.List;
+
 @RestController
 @RequiredArgsConstructor
 @RequestMapping("/user")
@@ -31,29 +34,27 @@ public class AuthController {
 
     private final AuthenticationService authenticationService;
     private final CookieUtils cookieUtils;
+    private final CookieService cookieService;
 
-    // TODO: Modify the method with better approach and implementation
     @PostMapping(value = "/login")
     public ResponseEntity<ResponseDTO<AuthResponseDTO>> loginUser(@RequestBody AuthRequestDTO authRequestDTO) throws BaseException {
         AuthResponseDTO response = authenticationService.authenticate(authRequestDTO, "HR");
 
         // Generate cookies
-        ResponseCookie tokenCookie = cookieUtils.generateCookie("Token", response.getAccessToken(), "/api/auth");
-        ResponseCookie roleCookie = cookieUtils.generateCookie("User_Role", response.getRefreshToken(), "/api/auth");
-        ResponseCookie permissionCookie = cookieUtils.generateCookie("User_Permission", String.join("_", response.getUser().getPermissions()), "/api/auth");
+        List<ResponseCookie> cookies = cookieService.generateAuthCookies(response);
 
-        // Clear sensitive information from the response
-        response.getUser().setRoles(null);
-        response.getUser().setPermissions(null);
-        response.setAccessToken(null);
-        response.setRefreshToken(null);
+        // Clear sensitive data using abstraction
+        response.clearSensitiveData();
+
+        // Build response
+        HttpHeaders headers = new HttpHeaders();
+        cookies.forEach(cookie -> headers.add(HttpHeaders.SET_COOKIE, cookie.toString()));
 
         return ResponseEntity.ok()
-                .header(HttpHeaders.SET_COOKIE, tokenCookie.toString())
-                .header(HttpHeaders.SET_COOKIE, roleCookie.toString())
-                .header(HttpHeaders.SET_COOKIE, permissionCookie.toString())
+                .headers(headers)
                 .body(ResponseDTO.success(MessageConstants.UserSuccess.LOGIN_SUCCESS, response));
     }
+
 
     @PostMapping(value = "/refresh-token")
     public ResponseEntity<ResponseDTO<AuthResponseDTO>> generateUserRefreshToken(@RequestParam("refresh-token") String refreshToken) {
