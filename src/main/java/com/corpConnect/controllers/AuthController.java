@@ -1,12 +1,9 @@
 package com.corpConnect.controllers;
 
-import com.corpConnect.dtos.user.UserDTO;
 import com.corpConnect.dtos.common.ResponseDTO;
-import com.corpConnect.exceptions.client.LoginFailedException;
 import com.corpConnect.exceptions.common.BaseException;
 import com.corpConnect.security.dtos.AuthRequestDTO;
 import com.corpConnect.security.dtos.AuthResponseDTO;
-import com.corpConnect.security.dtos.NewUserDTO;
 import com.corpConnect.security.services.AuthenticationService;
 import com.corpConnect.utils.constants.LogConstants;
 import com.corpConnect.utils.constants.MessageConstants;
@@ -18,7 +15,6 @@ import org.slf4j.LoggerFactory;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.ResponseCookie;
 import org.springframework.http.ResponseEntity;
-import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -84,6 +80,5 @@ public class AuthController {
         logger.error(LogConstants.getSessionVerifiedForToken(token, false));
         return ResponseEntity.ok(ResponseDTO.success(MessageConstants.UserError.USER_NOT_LOGGED_IN, false));
     }
-
 
 }
