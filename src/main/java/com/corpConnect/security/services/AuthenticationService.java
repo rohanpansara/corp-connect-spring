@@ -140,7 +140,7 @@ public class AuthenticationService {
     }
 
     public boolean isTokenValid(String token) {
-        return jwtService.isTokenExpired(token);
+        return !jwtService.isTokenExpired(token);
     }
 
 }
