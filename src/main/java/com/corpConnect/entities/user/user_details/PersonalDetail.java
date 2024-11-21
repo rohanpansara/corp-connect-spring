@@ -1,4 +1,4 @@
-package com.corpConnect.entities.user;
+package com.corpConnect.entities.user.user_details;
 
 import com.corpConnect.entities.common.BaseEntity;
 import jakarta.persistence.Entity;
