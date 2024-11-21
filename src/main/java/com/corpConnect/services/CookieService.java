@@ -23,5 +23,13 @@ public class CookieService {
 
         return List.of(tokenCookie, roleCookie, permissionCookie);
     }
+
+    public List<ResponseCookie> clearAuthCookies(){
+        ResponseCookie tokenCookie = cookieUtils.clearCookie("Token", "/api/auth");
+        ResponseCookie roleCookie = cookieUtils.clearCookie("User_Role", "/api/auth");
+        ResponseCookie permissionCookie = cookieUtils.clearCookie("User_Permission", "/api/auth");
+
+        return List.of(tokenCookie, roleCookie, permissionCookie);
+    }
 }
 

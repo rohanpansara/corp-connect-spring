@@ -10,6 +10,7 @@ import com.corpConnect.utils.constants.LogConstants;
 import com.corpConnect.utils.constants.MessageConstants;
 import com.corpConnect.utils.functions.CookieUtils;
 import jakarta.servlet.http.HttpServletRequest;
+import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -63,10 +64,16 @@ public class AuthController {
     }
 
     @PostMapping(value = "/logout")
-    public ResponseEntity<ResponseDTO<Void>> logoutUser(@RequestParam("userId") Long userId) {
-        ResponseCookie clearedCookie = cookieUtils.clearCookie("Token", "/api/auth");
+    public ResponseEntity<ResponseDTO<Void>> logoutUser() {
+        // Clear cookies
+        List<ResponseCookie> cookies = cookieService.clearAuthCookies();
+
+        // Build response
+        HttpHeaders headers = new HttpHeaders();
+        cookies.forEach(cookie -> headers.add(HttpHeaders.SET_COOKIE, cookie.toString()));
+
         return ResponseEntity.ok()
-                .header(HttpHeaders.SET_COOKIE, clearedCookie.toString())
+                .headers(headers)
                 .body(ResponseDTO.success(MessageConstants.UserSuccess.LOGOUT_SUCCESS));
     }
 
@@ -79,7 +86,7 @@ public class AuthController {
             return ResponseEntity.ok(ResponseDTO.success(MessageConstants.UserSuccess.USER_SESSION_VERIFIED, true));
         }
         logger.error(LogConstants.getSessionVerifiedForToken(token, false));
-        return ResponseEntity.ok(ResponseDTO.success(MessageConstants.UserError.USER_NOT_LOGGED_IN, false));
+        return ResponseEntity.badRequest().body(ResponseDTO.error(MessageConstants.UserError.USER_NOT_LOGGED_IN, false));
     }
 
 }
