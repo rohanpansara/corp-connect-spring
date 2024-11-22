@@ -1,7 +1,7 @@
 package com.corpConnect.services.user;
 
 import com.corpConnect.dtos.user.UserDTO;
-import com.corpConnect.dtos.user.card.DashboardCardDTO;
+import com.corpConnect.dtos.card.DashboardCardDTO;
 import com.corpConnect.entities.user.User;
 import com.corpConnect.exceptions.common.BaseException;
 import com.corpConnect.security.dtos.NewUserDTO;

@@ -2,14 +2,13 @@ package com.corpConnect.services.user.impl;
 
 import com.corpConnect.audits.ApplicationAuditAware;
 import com.corpConnect.dtos.user.UserDTO;
-import com.corpConnect.dtos.user.card.CardDataDTO;
-import com.corpConnect.dtos.user.card.DashboardCardDTO;
+import com.corpConnect.dtos.card.CardDataDTO;
+import com.corpConnect.dtos.card.DashboardCardDTO;
 import com.corpConnect.entities.user.User;
 import com.corpConnect.exceptions.client.UserNotFoundException;
 import com.corpConnect.exceptions.common.BaseException;
 import com.corpConnect.mappers.client.UserMapper;
 import com.corpConnect.repositories.user.UserRepository;
-import com.corpConnect.security.CorpConnectUserContext;
 import com.corpConnect.security.dtos.NewUserDTO;
 import com.corpConnect.services.user.UserService;
 import com.corpConnect.utils.constants.MessageConstants;
