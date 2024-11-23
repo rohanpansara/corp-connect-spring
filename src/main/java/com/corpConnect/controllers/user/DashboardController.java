@@ -16,6 +16,7 @@ import org.springframework.web.bind.annotation.RestController;
 @PreAuthorize("hasRole('USER')")
 @RequestMapping("/dashboard")
 public class DashboardController {
+
     private final UserService userService;
 
     @GetMapping(value = "/cards")

@@ -10,7 +10,6 @@ import com.corpConnect.utils.constants.LogConstants;
 import com.corpConnect.utils.constants.MessageConstants;
 import com.corpConnect.utils.functions.CookieUtils;
 import jakarta.servlet.http.HttpServletRequest;
-import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -44,16 +43,13 @@ public class AuthController {
         // Generate cookies
         List<ResponseCookie> cookies = cookieService.generateAuthCookies(response);
 
-        // Clear sensitive data using abstraction
-        response.clearSensitiveData();
-
         // Build response
         HttpHeaders headers = new HttpHeaders();
         cookies.forEach(cookie -> headers.add(HttpHeaders.SET_COOKIE, cookie.toString()));
 
         return ResponseEntity.ok()
                 .headers(headers)
-                .body(ResponseDTO.success(MessageConstants.UserSuccess.LOGIN_SUCCESS, response));
+                .body(ResponseDTO.success(MessageConstants.UserSuccess.LOGIN_SUCCESS));
     }
 
 

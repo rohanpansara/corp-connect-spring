@@ -20,11 +20,4 @@ public class AuthResponseDTO {
     private String refreshToken;
     @JsonProperty("logged_user")
     private UserDTO user;
-
-    public void clearSensitiveData() {
-        this.getUser().setRoles(null);
-        this.getUser().setPermissions(null);
-        this.setAccessToken(null);
-        this.setRefreshToken(null);
-    }
 }
