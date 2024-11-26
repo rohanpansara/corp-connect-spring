@@ -13,5 +13,4 @@ public class DashboardCardDTO {
     private CardDataDTO leaveDetailsCard;
     private CardDataDTO dailyHoursCard;
     private CardDataDTO shiftDetailsCard;
-    private CardDataDTO upcomingMeetingCard;
 }

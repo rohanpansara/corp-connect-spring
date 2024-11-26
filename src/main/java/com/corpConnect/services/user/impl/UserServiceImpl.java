@@ -161,11 +161,6 @@ public class UserServiceImpl implements UserService {
                 "7h 30m",
                 "2 late-ins this month"
         ));
-        dashboardCard.setUpcomingMeetingCard(new CardDataDTO(
-                "Next Meeting",
-                "Daily Scrum Meeting",
-                "Place: Conference room"
-        ));
         return dashboardCard;
     }
 

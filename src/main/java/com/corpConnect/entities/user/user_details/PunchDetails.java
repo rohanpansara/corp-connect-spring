@@ -25,7 +25,6 @@ import java.time.LocalDateTime;
 @NoArgsConstructor
 @EqualsAndHashCode(callSuper = true)
 @Entity
-@EntityListeners(AuditingEntityListener.class)
 @Table(name = "USERS_PUNCH_DETAILS")
 public class PunchDetails extends BaseEntity {
 

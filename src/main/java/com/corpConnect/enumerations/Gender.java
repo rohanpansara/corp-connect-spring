@@ -1,5 +1,8 @@
 package com.corpConnect.enumerations;
 
+import lombok.Getter;
+
+@Getter
 public enum Gender {
 
     MALE("Male"),
@@ -16,8 +19,5 @@ public enum Gender {
         return Gender.OTHER.getLabel();
     }
 
-    public String getLabel() {
-        return label;
-    }
 }
 

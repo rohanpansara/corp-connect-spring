@@ -13,7 +13,6 @@ import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 @AllArgsConstructor
 @EqualsAndHashCode(callSuper = true)
 @Entity
-@EntityListeners(AuditingEntityListener.class)
 @Table(name = "USER_PERSONAL_DETAILS")
 public class PersonalDetail extends BaseEntity {
 }

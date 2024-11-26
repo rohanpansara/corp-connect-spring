@@ -20,7 +20,6 @@ import java.time.LocalDate;
 @NoArgsConstructor
 @EqualsAndHashCode(callSuper = true)
 @Entity
-@EntityListeners(AuditingEntityListener.class)
 @Table(name = "USER_EXPERIENCE_DETAILS")
 public class ExperienceDetail extends BaseEntity {
 

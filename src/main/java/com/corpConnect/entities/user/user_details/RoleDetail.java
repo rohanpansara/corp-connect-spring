@@ -25,7 +25,6 @@ import java.time.LocalDate;
 @NoArgsConstructor
 @EqualsAndHashCode(callSuper = true)
 @Entity
-@EntityListeners(AuditingEntityListener.class)
 @Table(name = "USER_ROLE_DETAILS")
 public class RoleDetail extends BaseEntity {
 
