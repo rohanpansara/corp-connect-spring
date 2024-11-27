@@ -141,7 +141,13 @@ public class AuthenticationService {
     }
 
     public boolean isTokenValid(String token, String userId) {
-        return !jwtService.isTokenExpired(token) && CorpConnectUserContext.isLoggedUser(Long.valueOf(userId));
+        User loggedUser = userRepository.findByEmail(jwtService.extractEmail(token)).orElseThrow(
+                () -> {
+                    logger.error(MessageCreator.getNotFoundMessage("User"));
+                    return new RuntimeException(MessageConstants.UserError.USER_NOT_FOUND);
+                }
+        );
+        return !jwtService.isTokenExpired(token) && String.valueOf(loggedUser.getId()).equals(userId);
     }
 
 }
