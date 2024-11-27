@@ -47,11 +47,11 @@ public class AuthController {
         HttpHeaders headers = new HttpHeaders();
         cookies.forEach(cookie -> headers.add(HttpHeaders.SET_COOKIE, cookie.toString()));
 
+        // Send response with data in headers and success message in body
         return ResponseEntity.ok()
                 .headers(headers)
                 .body(ResponseDTO.success(MessageConstants.UserSuccess.LOGIN_SUCCESS));
     }
-
 
     @PostMapping(value = "/refresh-token")
     public ResponseEntity<ResponseDTO<AuthResponseDTO>> generateUserRefreshToken(@RequestParam("refresh-token") String refreshToken) {
@@ -68,6 +68,7 @@ public class AuthController {
         HttpHeaders headers = new HttpHeaders();
         cookies.forEach(cookie -> headers.add(HttpHeaders.SET_COOKIE, cookie.toString()));
 
+        // Send response with data in headers and success message in body
         return ResponseEntity.ok()
                 .headers(headers)
                 .body(ResponseDTO.success(MessageConstants.UserSuccess.LOGOUT_SUCCESS));
@@ -76,8 +77,9 @@ public class AuthController {
     @GetMapping("/validate-token")
     public ResponseEntity<ResponseDTO<Boolean>> validateUserToken(HttpServletRequest request) {
         String token = cookieUtils.getCookieValueByName(request, "Token");
+        String userId = cookieUtils.getCookieValueByName(request, "User_Id");
 
-        if (token != null && !token.isEmpty() && authenticationService.isTokenValid(token)) {
+        if (token != null && !token.isEmpty() && authenticationService.isTokenValid(token, userId)) {
             logger.info(LogConstants.getSessionVerifiedForToken(token, true));
             return ResponseEntity.ok(ResponseDTO.success(MessageConstants.UserSuccess.USER_SESSION_VERIFIED, true));
         }

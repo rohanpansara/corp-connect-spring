@@ -36,9 +36,11 @@ public class CookieService {
 
 
     public List<ResponseCookie> clearAuthCookies(){
-        ResponseCookie tokenCookie = cookieUtils.clearCookie("Token", "/api/auth");
-        ResponseCookie roleCookie = cookieUtils.clearCookie("User_Role", "/api/auth");
-        ResponseCookie permissionCookie = cookieUtils.clearCookie("User_Permission", "/api/auth");
+        ResponseCookie tokenCookie = cookieUtils.clearCookie("Token", PUBLIC_PATH);
+        ResponseCookie userIdCookie = cookieUtils.clearCookie("User_Id", PUBLIC_PATH);
+        ResponseCookie userNameCookie = cookieUtils.clearCookie("User_Name", PUBLIC_PATH);
+        ResponseCookie roleCookie = cookieUtils.clearCookie("User_Role", PUBLIC_PATH);
+        ResponseCookie permissionCookie = cookieUtils.clearCookie("User_Permission", PUBLIC_PATH);
 
         return List.of(tokenCookie, roleCookie, permissionCookie);
     }

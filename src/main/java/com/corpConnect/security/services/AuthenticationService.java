@@ -14,6 +14,7 @@ import com.corpConnect.services.company.EmailService;
 import com.corpConnect.services.user.UserService;
 import com.corpConnect.utils.constants.MessageConstants;
 import com.corpConnect.utils.constants.LogConstants;
+import com.corpConnect.utils.functions.MessageCreator;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.security.authentication.AuthenticationManager;
@@ -139,8 +140,8 @@ public class AuthenticationService {
                 .build();
     }
 
-    public boolean isTokenValid(String token) {
-        return !jwtService.isTokenExpired(token);
+    public boolean isTokenValid(String token, String userId) {
+        return !jwtService.isTokenExpired(token) && CorpConnectUserContext.isLoggedUser(Long.valueOf(userId));
     }
 
 }
