@@ -146,11 +146,6 @@ public class UserServiceImpl implements UserService {
     @Override
     public DashboardCardDTO getDashboardCards() {
         DashboardCardDTO dashboardCard = new DashboardCardDTO();
-        dashboardCard.setDailyHoursCard(new CardDataDTO(
-                "Today’s Hours",
-                "18h 57m",
-                "24 hours logged this week"
-        ));
         dashboardCard.setLeaveDetailsCard(new CardDataDTO(
                 "Leaves Available",
                 "12",

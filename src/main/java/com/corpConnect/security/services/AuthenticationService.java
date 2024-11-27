@@ -131,7 +131,7 @@ public class AuthenticationService {
         // Generate a new access token
         String newAccessToken = jwtService.generateTokenForUser(user, email, "HR");
 
-        logger.info("Refresh token successfully used for user: {}", email);
+        logger.info("Refresh token successfully used for user with email: {}", email);
 
         // Return the new tokens in the response
         return AuthResponseDTO.builder()

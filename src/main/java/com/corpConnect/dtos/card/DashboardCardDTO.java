@@ -11,6 +11,5 @@ import lombok.RequiredArgsConstructor;
 @JsonInclude(JsonInclude.Include.NON_NULL)
 public class DashboardCardDTO {
     private CardDataDTO leaveDetailsCard;
-    private CardDataDTO dailyHoursCard;
     private CardDataDTO shiftDetailsCard;
 }
