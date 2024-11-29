@@ -11,6 +11,9 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import java.util.HashMap;
+import java.util.Map;
+
 @RestController
 @RequiredArgsConstructor
 @PreAuthorize("hasRole('USER')")
@@ -23,6 +26,12 @@ public class DashboardController {
     @PreAuthorize("hasAuthority('user:read')")
     public ResponseEntity<ResponseDTO<DashboardCardDTO>> fetchDashboardCardData() {
         return ResponseEntity.ok(ResponseDTO.success(MessageConstants.Record.RECORD_FOUND, userService.getDashboardCards()));
+    }
+
+    @GetMapping(value = "/user-attendance")
+    @PreAuthorize("hasAuthority('user:read')")
+    public ResponseEntity<ResponseDTO<Map<String, String>>> fetchDashboardAttendanceData() {
+        return ResponseEntity.ok(ResponseDTO.success(MessageConstants.Record.RECORD_FOUND, new HashMap<>(1)));
     }
 
 }
