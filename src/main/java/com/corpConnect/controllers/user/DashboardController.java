@@ -22,13 +22,13 @@ public class DashboardController {
 
     private final UserService userService;
 
-    @GetMapping(value = "/cards")
+    @GetMapping(value = "/cards/left")
     @PreAuthorize("hasAuthority('user:read')")
     public ResponseEntity<ResponseDTO<DashboardCardDTO>> fetchDashboardCardData() {
         return ResponseEntity.ok(ResponseDTO.success(MessageConstants.Record.RECORD_FOUND, userService.getDashboardCards()));
     }
 
-    @GetMapping(value = "/user-attendance")
+    @GetMapping(value = "/cards/right")
     @PreAuthorize("hasAuthority('user:read')")
     public ResponseEntity<ResponseDTO<Map<String, String>>> fetchDashboardAttendanceData() {
         return ResponseEntity.ok(ResponseDTO.success(MessageConstants.Record.RECORD_FOUND, new HashMap<>(1)));

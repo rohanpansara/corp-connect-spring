@@ -14,7 +14,7 @@ public class MessageCreator {
     }
 
     public static String getLoggedInMessage() {
-        return "User logged in successfully";
+        return "Credentials verified";
     }
 
     public static String getLoggedOutMessage() {
