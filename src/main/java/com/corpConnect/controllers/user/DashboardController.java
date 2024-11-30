@@ -1,6 +1,6 @@
 package com.corpConnect.controllers.user;
 
-import com.corpConnect.dtos.card.DashboardCardDTO;
+import com.corpConnect.dtos.card.LeftSideCardsDTO;
 import com.corpConnect.dtos.common.ResponseDTO;
 import com.corpConnect.services.user.UserService;
 import com.corpConnect.utils.constants.MessageConstants;
@@ -24,8 +24,8 @@ public class DashboardController {
 
     @GetMapping(value = "/cards/left")
     @PreAuthorize("hasAuthority('user:read')")
-    public ResponseEntity<ResponseDTO<DashboardCardDTO>> fetchDashboardCardData() {
-        return ResponseEntity.ok(ResponseDTO.success(MessageConstants.Record.RECORD_FOUND, userService.getDashboardCards()));
+    public ResponseEntity<ResponseDTO<LeftSideCardsDTO>> fetchDashboardCardData() {
+        return ResponseEntity.ok(ResponseDTO.success(MessageConstants.Record.RECORD_FOUND, userService.getLeftSideCards()));
     }
 
     @GetMapping(value = "/cards/right")

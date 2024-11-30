@@ -3,7 +3,7 @@ package com.corpConnect.services.user.impl;
 import com.corpConnect.audits.ApplicationAuditAware;
 import com.corpConnect.dtos.user.UserDTO;
 import com.corpConnect.dtos.card.CardDataDTO;
-import com.corpConnect.dtos.card.DashboardCardDTO;
+import com.corpConnect.dtos.card.LeftSideCardsDTO;
 import com.corpConnect.entities.user.User;
 import com.corpConnect.exceptions.client.UserNotFoundException;
 import com.corpConnect.exceptions.common.BaseException;
@@ -144,8 +144,8 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public DashboardCardDTO getDashboardCards() {
-        DashboardCardDTO dashboardCard = new DashboardCardDTO();
+    public LeftSideCardsDTO getLeftSideCards() {
+        LeftSideCardsDTO dashboardCard = new LeftSideCardsDTO();
         dashboardCard.setLeaveDetailsCard(new CardDataDTO(
                 "Leaves Available",
                 "12",
