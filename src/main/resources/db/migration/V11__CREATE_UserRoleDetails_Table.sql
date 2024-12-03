@@ -12,6 +12,7 @@ CREATE TABLE IF NOT EXISTS CorpConnect.USERS_ROLE_DETAILS (
     currentProjects VARCHAR(255),
     currentJobResponsibilities VARCHAR(255),
     workLocation VARCHAR(255),
+    referred_by BIGINT NOT NULL, -- Foreign key to USER table
     isDeleted BOOLEAN NOT NULL DEFAULT false, -- Indicates if the role detail is logically deleted
     createdDate TIMESTAMP, -- from BaseEntity (auditing)
     createdBy VARCHAR(50), -- from BaseEntity (auditing)
@@ -19,6 +20,7 @@ CREATE TABLE IF NOT EXISTS CorpConnect.USERS_ROLE_DETAILS (
     lastUpdatedBy VARCHAR(50), -- from BaseEntity (auditing)
     CONSTRAINT fk_user_role_detail FOREIGN KEY (user_id) REFERENCES `USERS`(id) ON DELETE CASCADE,
     CONSTRAINT fk_reporting_manager FOREIGN KEY (reporting_manager_id) REFERENCES `USERS`(id) ON DELETE CASCADE,
+    CONSTRAINT fk_user_referred_by FOREIGN KEY (referred_by) REFERENCES `USERS`(id) ON DELETE CASCADE,
     CONSTRAINT fk_current_job_title FOREIGN KEY (current_job_title_id) REFERENCES HR_JOB_TITLES(id),
     CONSTRAINT fk_department FOREIGN KEY (department_id) REFERENCES HR_DEPARTMENTS(id),
     CONSTRAINT fk_work_shift FOREIGN KEY (work_shift_id) REFERENCES HR_WORK_SHIFTS(id)

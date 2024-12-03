@@ -54,6 +54,9 @@ public class RoleDetail extends BaseEntity {
     private String currentJobResponsibilities;
     private String workLocation;
 
+    @Column(name = "referred_by")
+    private User referredBy;
+
     private Boolean isDeleted;
 
 }
