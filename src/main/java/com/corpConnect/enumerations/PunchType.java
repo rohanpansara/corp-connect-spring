@@ -4,9 +4,9 @@ import lombok.Getter;
 
 @Getter
 public enum PunchType {
-    FIRST_IN("Present"),
-    BREAK("Absent"),
-    LAST_OUT("Under Review");
+    FIRST_IN("First In"),
+    BREAK("On A Break"),
+    LAST_OUT("Last Out");
 
     private final String label;
 
