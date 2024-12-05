@@ -164,14 +164,14 @@ public class UserServiceImpl implements UserService {
     public RightSideCardsDTO getRightSideCards() {
         RightSideCardsDTO rightSideCardsDTO = new RightSideCardsDTO();
         rightSideCardsDTO.setDailyAttendanceCard(new CardDataDTO(
-                "Daily Attendance Average",
+                "Average Hours",
                 "8.25",
                 "On time today"
         ));
         rightSideCardsDTO.setWeeklyAttendanceCard(new CardDataDTO(
-                "Weekly Attendance Average",
+                "Average Hours",
                 "41.55",
-                "2 late ins"
+                "2 late ins this week"
         ));
         return rightSideCardsDTO;
     }
