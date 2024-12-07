@@ -13,12 +13,12 @@ import org.springframework.beans.factory.annotation.Autowired;
 @AllArgsConstructor
 @JsonInclude(JsonInclude.Include.NON_NULL)
 public class AttendanceAverageCardDTO extends CardDataDTO {
-    private boolean isOnTime;
+    private boolean onTime;
 
     @Autowired
-    public AttendanceAverageCardDTO(String title, String value, String description, boolean isOnTime) {
+    public AttendanceAverageCardDTO(String title, String value, String description, boolean onTime) {
         super(title, value, description);
-        this.isOnTime = isOnTime;
+        this.onTime = onTime;
     }
 }
 
