@@ -20,21 +20,15 @@ public class DashboardController {
 
     private final UserService userService;
 
-    @GetMapping(value = "/cards/left-up")
+    @GetMapping(value = "/cards/left")
     @PreAuthorize("hasAuthority('user:read')")
-    public ResponseEntity<ResponseDTO<LeftSideCardsDTO>> fetchUpperLeftCardsData() {
-        return ResponseEntity.ok(ResponseDTO.success(MessageConstants.Record.RECORD_FOUND, userService.getUpperLeftSideCards()));
-    }
-
-    @GetMapping(value = "/cards/left-down")
-    @PreAuthorize("hasAuthority('user:read')")
-    public ResponseEntity<ResponseDTO<LeftSideCardsDTO>> fetchLowerLeftCardData() {
-        return ResponseEntity.ok(ResponseDTO.success(MessageConstants.Record.RECORD_FOUND, userService.getLowerLeftSideCards()));
+    public ResponseEntity<ResponseDTO<LeftSideCardsDTO>> fetchLeftSideCardData() {
+        return ResponseEntity.ok(ResponseDTO.success(MessageConstants.Record.RECORD_FOUND, userService.getLeftSideCards()));
     }
 
     @GetMapping(value = "/cards/right")
     @PreAuthorize("hasAuthority('user:read')")
-    public ResponseEntity<ResponseDTO<RightSideCardsDTO>> fetchDashboardAttendanceData() {
+    public ResponseEntity<ResponseDTO<RightSideCardsDTO>> fetchRightSideCardData() {
         return ResponseEntity.ok(ResponseDTO.success(MessageConstants.Record.RECORD_FOUND, userService.getRightSideCards()));
     }
 

@@ -147,7 +147,7 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public LeftSideCardsDTO getUpperLeftSideCards() {
+    public LeftSideCardsDTO getLeftSideCards() {
         LeftSideCardsDTO dashboardCard = new LeftSideCardsDTO();
         dashboardCard.setLeaveDetailsCard(new BaseCardDTO(
                 "Leaves Available",
@@ -159,12 +159,6 @@ public class UserServiceImpl implements UserService {
                 "7h 30m",
                 "2 late-ins this month"
         ));
-        return dashboardCard;
-    }
-
-    @Override
-    public LeftSideCardsDTO getLowerLeftSideCards() {
-        LeftSideCardsDTO dashboardCard = new LeftSideCardsDTO();
         dashboardCard.setMonthlyAttendanceCard(new MonthlyAttendanceCardDTO(
                 "Monthly Attendance",
                 "5",

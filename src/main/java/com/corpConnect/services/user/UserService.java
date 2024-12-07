@@ -31,8 +31,7 @@ public interface UserService {
     List<User> getAllDeletedUsers();
 
     // Dashboard
-    LeftSideCardsDTO getUpperLeftSideCards();
-    LeftSideCardsDTO getLowerLeftSideCards();
+    LeftSideCardsDTO getLeftSideCards();
     RightSideCardsDTO getRightSideCards();
 
     // HR Access Control
