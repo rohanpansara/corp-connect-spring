@@ -1,11 +1,11 @@
 package com.corpConnect.services.user.impl;
 
 import com.corpConnect.audits.ApplicationAuditAware;
-import com.corpConnect.dtos.card.AttendanceAverageCardDTO;
-import com.corpConnect.dtos.card.RightSideCardsDTO;
+import com.corpConnect.dtos.card.dashboard.AttendanceAverageBaseCardDTO;
+import com.corpConnect.dtos.card.dashboard.RightSideCardsDTO;
 import com.corpConnect.dtos.user.UserDTO;
-import com.corpConnect.dtos.card.CardDataDTO;
-import com.corpConnect.dtos.card.LeftSideCardsDTO;
+import com.corpConnect.dtos.card.BaseCardDTO;
+import com.corpConnect.dtos.card.dashboard.LeftSideCardsDTO;
 import com.corpConnect.entities.user.User;
 import com.corpConnect.exceptions.client.UserNotFoundException;
 import com.corpConnect.exceptions.common.BaseException;
@@ -148,12 +148,12 @@ public class UserServiceImpl implements UserService {
     @Override
     public LeftSideCardsDTO getLeftSideCards() {
         LeftSideCardsDTO dashboardCard = new LeftSideCardsDTO();
-        dashboardCard.setLeaveDetailsCard(new CardDataDTO(
+        dashboardCard.setLeaveDetailsCard(new BaseCardDTO(
                 "Leaves Available",
                 "12",
                 "3 leaves taken last month"
         ));
-        dashboardCard.setShiftDetailsCard(new CardDataDTO(
+        dashboardCard.setShiftDetailsCard(new BaseCardDTO(
                 "Shift Timings",
                 "7h 30m",
                 "2 late-ins this month"
@@ -164,13 +164,13 @@ public class UserServiceImpl implements UserService {
     @Override
     public RightSideCardsDTO getRightSideCards() {
         RightSideCardsDTO rightSideCardsDTO = new RightSideCardsDTO();
-        rightSideCardsDTO.setDailyAttendanceCard(new AttendanceAverageCardDTO(
+        rightSideCardsDTO.setDailyAttendanceCard(new AttendanceAverageBaseCardDTO(
                 "Average Hours",
                 "8.25",
                 "On time",
                 true
         ));
-        rightSideCardsDTO.setWeeklyAttendanceCard(new AttendanceAverageCardDTO(
+        rightSideCardsDTO.setWeeklyAttendanceCard(new AttendanceAverageBaseCardDTO(
                 "Average Hours",
                 "41.55",
                 "2 late ins",

@@ -9,7 +9,8 @@ import lombok.RequiredArgsConstructor;
 @RequiredArgsConstructor
 @AllArgsConstructor
 @JsonInclude(JsonInclude.Include.NON_NULL)
-public class LeftSideCardsDTO {
-    private CardDataDTO leaveDetailsCard;
-    private CardDataDTO shiftDetailsCard;
+public class BaseCardDTO {
+    private String title;
+    private String value;
+    private String description;
 }

@@ -1,7 +1,7 @@
 package com.corpConnect.controllers.user;
 
-import com.corpConnect.dtos.card.LeftSideCardsDTO;
-import com.corpConnect.dtos.card.RightSideCardsDTO;
+import com.corpConnect.dtos.card.dashboard.LeftSideCardsDTO;
+import com.corpConnect.dtos.card.dashboard.RightSideCardsDTO;
 import com.corpConnect.dtos.common.ResponseDTO;
 import com.corpConnect.services.user.UserService;
 import com.corpConnect.utils.constants.MessageConstants;

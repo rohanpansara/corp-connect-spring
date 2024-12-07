@@ -1,5 +1,6 @@
-package com.corpConnect.dtos.card;
+package com.corpConnect.dtos.card.dashboard;
 
+import com.corpConnect.dtos.card.BaseCardDTO;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -12,11 +13,11 @@ import org.springframework.beans.factory.annotation.Autowired;
 @RequiredArgsConstructor
 @AllArgsConstructor
 @JsonInclude(JsonInclude.Include.NON_NULL)
-public class AttendanceAverageCardDTO extends CardDataDTO {
+public class AttendanceAverageBaseCardDTO extends BaseCardDTO {
     private boolean onTime;
 
     @Autowired
-    public AttendanceAverageCardDTO(String title, String value, String description, boolean onTime) {
+    public AttendanceAverageBaseCardDTO(String title, String value, String description, boolean onTime) {
         super(title, value, description);
         this.onTime = onTime;
     }
