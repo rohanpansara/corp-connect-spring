@@ -10,6 +10,6 @@ import lombok.RequiredArgsConstructor;
 @AllArgsConstructor
 @JsonInclude(JsonInclude.Include.NON_NULL)
 public class RightSideCardsDTO {
-    private CardDataDTO dailyAttendanceCard;
-    private CardDataDTO weeklyAttendanceCard;
+    private AttendanceAverageCardDTO dailyAttendanceCard;
+    private AttendanceAverageCardDTO weeklyAttendanceCard;
 }

@@ -1,6 +1,7 @@
 package com.corpConnect.services.user.impl;
 
 import com.corpConnect.audits.ApplicationAuditAware;
+import com.corpConnect.dtos.card.AttendanceAverageCardDTO;
 import com.corpConnect.dtos.card.RightSideCardsDTO;
 import com.corpConnect.dtos.user.UserDTO;
 import com.corpConnect.dtos.card.CardDataDTO;
@@ -163,15 +164,17 @@ public class UserServiceImpl implements UserService {
     @Override
     public RightSideCardsDTO getRightSideCards() {
         RightSideCardsDTO rightSideCardsDTO = new RightSideCardsDTO();
-        rightSideCardsDTO.setDailyAttendanceCard(new CardDataDTO(
+        rightSideCardsDTO.setDailyAttendanceCard(new AttendanceAverageCardDTO(
                 "Average Hours",
                 "8.25",
-                "On time today"
+                "On time",
+                true
         ));
-        rightSideCardsDTO.setWeeklyAttendanceCard(new CardDataDTO(
+        rightSideCardsDTO.setWeeklyAttendanceCard(new AttendanceAverageCardDTO(
                 "Average Hours",
                 "41.55",
-                "2 late ins this week"
+                "2 late ins",
+                false
         ));
         return rightSideCardsDTO;
     }
