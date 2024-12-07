@@ -13,4 +13,5 @@ import lombok.RequiredArgsConstructor;
 public class LeftSideCardsDTO {
     private BaseCardDTO leaveDetailsCard;
     private BaseCardDTO shiftDetailsCard;
+    private MonthlyAttendanceCardDTO monthlyAttendanceCard;
 }

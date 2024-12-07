@@ -2,6 +2,7 @@ package com.corpConnect.services.user.impl;
 
 import com.corpConnect.audits.ApplicationAuditAware;
 import com.corpConnect.dtos.card.dashboard.AttendanceAverageBaseCardDTO;
+import com.corpConnect.dtos.card.dashboard.MonthlyAttendanceCardDTO;
 import com.corpConnect.dtos.card.dashboard.RightSideCardsDTO;
 import com.corpConnect.dtos.user.UserDTO;
 import com.corpConnect.dtos.card.BaseCardDTO;
@@ -146,7 +147,7 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public LeftSideCardsDTO getLeftSideCards() {
+    public LeftSideCardsDTO getUpperLeftSideCards() {
         LeftSideCardsDTO dashboardCard = new LeftSideCardsDTO();
         dashboardCard.setLeaveDetailsCard(new BaseCardDTO(
                 "Leaves Available",
@@ -157,6 +158,19 @@ public class UserServiceImpl implements UserService {
                 "Shift Timings",
                 "7h 30m",
                 "2 late-ins this month"
+        ));
+        return dashboardCard;
+    }
+
+    @Override
+    public LeftSideCardsDTO getLowerLeftSideCards() {
+        LeftSideCardsDTO dashboardCard = new LeftSideCardsDTO();
+        dashboardCard.setMonthlyAttendanceCard(new MonthlyAttendanceCardDTO(
+                "Monthly Attendance",
+                "5",
+                "No absent days or leaves this month",
+                "21",
+                false
         ));
         return dashboardCard;
     }
