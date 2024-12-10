@@ -145,5 +145,9 @@ public class MessageConstants {
         public static final String DataIntegrityViolation = getDataIntegrityViolationMessage("meeting room");
     }
 
+    public static final class Leave {
+        public static final String LEAVE_STATUS_NOT_FOUND = MessageCreator.getNotFoundMessage("Leave status");
+    }
+
 }
 
