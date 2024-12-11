@@ -18,19 +18,18 @@ import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
 
 import java.time.LocalDate;
-import java.time.LocalDateTime;
 
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
 @EqualsAndHashCode(callSuper = true)
 @Entity
-@Table(name = "USERS_LEAVE_REQUESTS")
-public class LeaveRequests extends BaseEntity {
+@Table(name = "USERS_LEAVE_DETAILS")
+public class LeaveDetail extends BaseEntity {
 
     @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "user_id")
-    private User requestedBy; // The user who requested the leave
+    private User user; // The user who requested the leave
 
     @Enumerated(EnumType.STRING)
     @Column(name = "status", nullable = false)
