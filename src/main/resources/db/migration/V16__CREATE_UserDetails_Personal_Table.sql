@@ -1,4 +1,4 @@
-CREATE TABLE IF NOT EXISTS CorpConnect.USERS_PERSONAL_DETAILS (
+CREATE TABLE IF NOT EXISTS CorpConnect.USER_DETAILS_PERSONAL (
     id BIGINT AUTO_INCREMENT PRIMARY KEY, -- from BaseEntity
     user_id BIGINT NOT NULL, -- Foreign key to USER table
     gender VARCHAR(50) NOT NULL, -- Enum type for Gender

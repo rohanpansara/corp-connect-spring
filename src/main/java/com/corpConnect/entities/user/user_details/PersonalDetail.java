@@ -18,7 +18,7 @@ import java.time.LocalDate;
 @AllArgsConstructor
 @EqualsAndHashCode(callSuper = true)
 @Entity
-@Table(name = "USER_PERSONAL_DETAILS")
+@Table(name = "USER_DETAILS_PERSONAL")
 public class PersonalDetail extends BaseEntity {
 
     @Column(name = "user_id")

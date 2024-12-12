@@ -33,19 +33,21 @@ public class LeaveDetail extends BaseEntity {
 
     @Enumerated(EnumType.STRING)
     @Column(name = "status", nullable = false)
-    private LeaveStatus status; // Current status of the leave request
+    private LeaveStatus status;
 
     @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "leave_type_id")
-    private LeaveType type; // Type of leave requested
+    private LeaveType type;
 
-    private LocalDate startDate; // Start date of the leave
-    private LocalDate endDate;   // End date of the leave
+    private LocalDate startDate;
+    private LocalDate endDate;
 
-    private Integer totalDays; // Total number of leave days requested
+    private Integer totalDays;
 
     @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "approving_manager_id")
-    private User approvedBy; // Manager who approved or will approve the request
+    private User approvedBy;
+
+    private String remarks;
 }
 

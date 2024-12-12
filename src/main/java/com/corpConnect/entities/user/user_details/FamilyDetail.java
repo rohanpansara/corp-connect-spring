@@ -17,7 +17,7 @@ import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 @NoArgsConstructor
 @EqualsAndHashCode(callSuper = true)
 @Entity
-@Table(name = "USER_FAMILY_DETAILS")
+@Table(name = "USER_DETAILS_FAMILY")
 public class FamilyDetail extends BaseEntity {
 
     @Column(name = "user_id")

@@ -1,4 +1,4 @@
-CREATE TABLE IF NOT EXISTS CorpConnect.USERS_LEAVE_DETAILS (
+CREATE TABLE IF NOT EXISTS CorpConnect.USER_DETAILS_LEAVE (
     id BIGINT AUTO_INCREMENT PRIMARY KEY, -- From BaseEntity
     user_id BIGINT NOT NULL, -- Foreign key to the User table (who made the request)
     requestStatus VARCHAR(50) NOT NULL, -- Current status of the leave request (e.g., PENDING, APPROVED)
@@ -7,6 +7,7 @@ CREATE TABLE IF NOT EXISTS CorpConnect.USERS_LEAVE_DETAILS (
     endDate DATE NOT NULL, -- End date of the leave
     totalDays INT NOT NULL, -- Total number of leave days requested
     approving_manager_id BIGINT, -- Foreign key to the User table (manager who approved the request)
+    remarks VARCHAR(255),
     createdDate TIMESTAMP, -- Auditing field
     createdBy VARCHAR(50), -- Auditing field
     lastUpdatedDate TIMESTAMP, -- Auditing field

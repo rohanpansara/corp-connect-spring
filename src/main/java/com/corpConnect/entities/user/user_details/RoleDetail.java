@@ -23,7 +23,7 @@ import java.time.LocalDate;
 @NoArgsConstructor
 @EqualsAndHashCode(callSuper = true)
 @Entity
-@Table(name = "USER_ROLE_DETAILS")
+@Table(name = "USER_DETAILS_ROLE")
 public class RoleDetail extends BaseEntity {
 
     @Column(name = "user_id")

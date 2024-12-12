@@ -26,7 +26,7 @@ import java.time.LocalDate;
 @NoArgsConstructor
 @EqualsAndHashCode(callSuper = true)
 @Entity
-@Table(name = "USER_ATTENDANCE_DETAILS")
+@Table(name = "USER_DETAILS_ATTENDANCE")
 public class AttendanceDetail extends BaseEntity {
 
     @ManyToOne(fetch = FetchType.EAGER)

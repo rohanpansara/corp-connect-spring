@@ -20,7 +20,7 @@ import java.time.LocalDate;
 @NoArgsConstructor
 @EqualsAndHashCode(callSuper = true)
 @Entity
-@Table(name = "USER_EXPERIENCE_DETAILS")
+@Table(name = "USER_DETAILS_EXPERIENCE")
 public class ExperienceDetail extends BaseEntity {
 
     @Column(name = "user_id")
