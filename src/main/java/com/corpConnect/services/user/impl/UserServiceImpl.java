@@ -172,16 +172,20 @@ public class UserServiceImpl implements UserService {
     @Override
     public RightSideCardsDTO getRightSideCards() {
         RightSideCardsDTO rightSideCardsDTO = new RightSideCardsDTO();
-        rightSideCardsDTO.setDailyAttendanceCard(new AttendanceAverageBaseCardDTO(
+        rightSideCardsDTO.setTodayAttendanceCard(new AttendanceAverageBaseCardDTO(
                 "Average Hours",
-                "8.25",
+                "5.25",
                 "On time",
+                8,
+                2.75,
                 true
         ));
         rightSideCardsDTO.setWeeklyAttendanceCard(new AttendanceAverageBaseCardDTO(
                 "Average Hours",
-                "41.55",
+                "41",
                 "2 late ins",
+                40,
+                -1d,
                 false
         ));
         return rightSideCardsDTO;

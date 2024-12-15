@@ -14,12 +14,16 @@ import org.springframework.beans.factory.annotation.Autowired;
 @AllArgsConstructor
 @JsonInclude(JsonInclude.Include.NON_NULL)
 public class AttendanceAverageBaseCardDTO extends BaseCardDTO {
+    private Integer maxValue;
+    private Double remainingValue;
     private boolean onTime;
 
     @Autowired
-    public AttendanceAverageBaseCardDTO(String title, String value, String description, boolean onTime) {
+    public AttendanceAverageBaseCardDTO(String title, String value, String description, Integer maxValue, Double remainingValue, boolean onTime) {
         super(title, value, description);
         this.onTime = onTime;
+        this.maxValue = maxValue;
+        this.remainingValue = remainingValue;
     }
 }
 
