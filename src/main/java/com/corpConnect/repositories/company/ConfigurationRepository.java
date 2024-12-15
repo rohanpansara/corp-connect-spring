@@ -9,7 +9,7 @@ import java.util.List;
 @Repository
 public interface ConfigurationRepository extends JpaRepository<Configuration, Long> {
 
-    Configuration findByName(String name);
+    Configuration findByNameIgnoreCaseAndIsDeleted(String name, boolean isDeleted);
     String getMaxValueByName(String name);
     String getMinValueByName(String name);
 

@@ -151,4 +151,9 @@ public class ConfigurationServiceImpl implements ConfigurationService {
                 }
         ));
     }
+
+    @Override
+    public Configuration getNonDeletedConfigurationByName(String configurationName) {
+        return configurationRepository.findByNameIgnoreCaseAndIsDeleted(configurationName, false);
+    }
 }

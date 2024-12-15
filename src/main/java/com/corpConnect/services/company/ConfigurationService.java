@@ -20,4 +20,5 @@ public interface ConfigurationService {
     List<Configuration> getAllNonDeletedConfigurations();
     List<Configuration> getAllDeletedConfigurations();
     List<Configuration> getConfigurationById(Long configurationId);
+    Configuration getNonDeletedConfigurationByName(String configurationName);
 }
