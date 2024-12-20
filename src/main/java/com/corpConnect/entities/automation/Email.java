@@ -1,6 +1,7 @@
-package com.corpConnect.entities.company;
+package com.corpConnect.entities.automation;
 
 import com.corpConnect.entities.common.NameWithDeleteEntity;
+import com.corpConnect.entities.company.EmailTemplate;
 import jakarta.persistence.Entity;
 import jakarta.persistence.EntityListeners;
 import jakarta.persistence.Table;
@@ -10,6 +11,7 @@ import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
 import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 
+import java.time.LocalDate;
 import java.time.LocalTime;
 
 @Data
@@ -18,11 +20,13 @@ import java.time.LocalTime;
 @EqualsAndHashCode(callSuper = true)
 @Entity
 @EntityListeners(AuditingEntityListener.class)
-@Table(name = "COMPANY_EMAIL_AUTOMATION")
-public class EmailAutomation extends NameWithDeleteEntity {
+@Table(name = "AUTOMATION_EMAIL")
+public class Email extends NameWithDeleteEntity {
 
     private LocalTime time;
     private String zoneIdRegion;
+    private EmailTemplate emailTemplate;
+    private LocalDate sendOnSpecificDate;
     private boolean sendDaily;
     private boolean sendMonthly;
     private boolean sendYearly;
