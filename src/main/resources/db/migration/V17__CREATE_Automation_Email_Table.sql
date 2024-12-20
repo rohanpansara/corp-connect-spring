@@ -4,7 +4,7 @@ CREATE TABLE IF NOT EXISTS CorpConnect.AUTOMATION_EMAIL (
     time TIME, -- Specific to Email, time for automation
     zoneIdRegion VARCHAR(100), -- Specific to Email, time zone region
     emailTemplate_id BIGINT, -- Specific to Email, stores email template
-    sendOnSpecificDate DATE DEFAULT NULL,
+    sendOnSpecificDate DATE DEFAULT NULL, -- Specific to Email, stores specific date to send email on
     sendDaily BOOLEAN NOT NULL DEFAULT false, -- Specific to Email, flag for daily sending
     sendMonthly BOOLEAN NOT NULL DEFAULT false, -- Specific to Email, flag for monthly sending
     sendYearly BOOLEAN NOT NULL DEFAULT false, -- Specific to Email, flag for yearly sending
