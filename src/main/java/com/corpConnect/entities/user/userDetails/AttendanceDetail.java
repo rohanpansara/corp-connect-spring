@@ -1,9 +1,8 @@
-package com.corpConnect.entities.user.user_details;
+package com.corpConnect.entities.user.userDetails;
 
 import com.corpConnect.entities.common.BaseEntity;
-import com.corpConnect.entities.hr.LeaveType;
 import com.corpConnect.entities.user.User;
-import com.corpConnect.enumerations.LeaveStatus;
+import com.corpConnect.enumerations.AttendanceStatus;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.EnumType;
@@ -17,6 +16,7 @@ import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
 
+import java.math.BigDecimal;
 import java.time.LocalDate;
 
 @Data
@@ -24,30 +24,19 @@ import java.time.LocalDate;
 @NoArgsConstructor
 @EqualsAndHashCode(callSuper = true)
 @Entity
-@Table(name = "USERS_LEAVE_DETAILS")
-public class LeaveDetail extends BaseEntity {
+@Table(name = "USER_DETAILS_ATTENDANCE")
+public class AttendanceDetail extends BaseEntity {
 
     @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "user_id")
-    private User user; // The user who requested the leave
+    private User user;
+    private LocalDate date;
 
     @Enumerated(EnumType.STRING)
     @Column(name = "status", nullable = false)
-    private LeaveStatus status;
+    private AttendanceStatus attendanceStatus = AttendanceStatus.getDefault();
 
-    @ManyToOne(fetch = FetchType.EAGER)
-    @JoinColumn(name = "leave_type_id")
-    private LeaveType type;
+    @Column(precision = 5, scale = 2, nullable = false)
+    private BigDecimal totalHours = BigDecimal.ZERO;
 
-    private LocalDate startDate;
-    private LocalDate endDate;
-
-    private Integer totalDays;
-
-    @ManyToOne(fetch = FetchType.EAGER)
-    @JoinColumn(name = "approving_manager_id")
-    private User approvedBy;
-
-    private String remarks;
 }
-

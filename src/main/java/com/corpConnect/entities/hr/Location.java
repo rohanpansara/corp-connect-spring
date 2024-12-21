@@ -17,7 +17,7 @@ import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 @Entity
 @EntityListeners(AuditingEntityListener.class)
 @Table(name = "HR_LOCATIONS")
-public class Locations extends NameWithDeleteEntity {
+public class Location extends NameWithDeleteEntity {
 
     private String address;
     private boolean punchAllowed;

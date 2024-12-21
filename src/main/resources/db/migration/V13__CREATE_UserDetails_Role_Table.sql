@@ -23,5 +23,6 @@ CREATE TABLE IF NOT EXISTS CorpConnect.USER_DETAILS_ROLE (
     CONSTRAINT fk_user_referred_by FOREIGN KEY (referred_by) REFERENCES `USERS`(id) ON DELETE CASCADE,
     CONSTRAINT fk_current_job_title FOREIGN KEY (current_job_title_id) REFERENCES HR_JOB_TITLES(id),
     CONSTRAINT fk_department FOREIGN KEY (department_id) REFERENCES HR_DEPARTMENTS(id),
-    CONSTRAINT fk_work_shift FOREIGN KEY (work_shift_id) REFERENCES HR_WORK_SHIFTS(id)
+    CONSTRAINT fk_work_shift FOREIGN KEY (work_shift_id) REFERENCES HR_WORK_SHIFTS(id),
+    INDEX idx_user_id (user_id) -- Index for faster lookups
 );

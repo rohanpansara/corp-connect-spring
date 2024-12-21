@@ -1,4 +1,4 @@
-package com.corpConnect.entities.user.user_details;
+package com.corpConnect.entities.user.userDetails;
 
 import com.corpConnect.entities.common.BaseEntity;
 import com.corpConnect.entities.hr.Department;

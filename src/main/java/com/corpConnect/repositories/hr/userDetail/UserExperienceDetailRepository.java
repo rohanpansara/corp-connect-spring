@@ -1,6 +1,6 @@
 package com.corpConnect.repositories.hr.userDetail;
 
-import com.corpConnect.entities.user.user_details.ExperienceDetail;
+import com.corpConnect.entities.user.userDetails.ExperienceDetail;
 import com.corpConnect.entities.user.User;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;

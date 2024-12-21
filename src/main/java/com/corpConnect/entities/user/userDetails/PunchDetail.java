@@ -1,11 +1,11 @@
-package com.corpConnect.entities.user.user_details;
+package com.corpConnect.entities.user.userDetails;
 
 import com.corpConnect.entities.common.BaseEntity;
+import com.corpConnect.entities.hr.Location;
 import com.corpConnect.entities.user.User;
-import com.corpConnect.enumerations.AttendanceStatus;
+import com.corpConnect.enumerations.PunchType;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
-import jakarta.persistence.EntityListeners;
 import jakarta.persistence.EnumType;
 import jakarta.persistence.Enumerated;
 import jakarta.persistence.FetchType;
@@ -16,29 +16,32 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
-import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 
-import java.math.BigDecimal;
-import java.time.LocalDate;
+import java.time.LocalDateTime;
 
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
 @EqualsAndHashCode(callSuper = true)
 @Entity
-@Table(name = "USER_DETAILS_ATTENDANCE")
-public class AttendanceDetail extends BaseEntity {
+@Table(name = "USER_DETAILS_PUNCH")
+public class PunchDetail extends BaseEntity {
 
     @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "user_id")
     private User user;
-    private LocalDate date;
+
+    private LocalDateTime punchTime;
 
     @Enumerated(EnumType.STRING)
-    @Column(name = "status", nullable = false)
-    private AttendanceStatus attendanceStatus = AttendanceStatus.getDefault();
+    @Column(name = "punchType", nullable = false)
+    private PunchType punchType;
 
-    @Column(precision = 5, scale = 2, nullable = false)
-    private BigDecimal totalHours = BigDecimal.ZERO;
+    @ManyToOne(fetch = FetchType.EAGER)
+    @JoinColumn(name = "location_id")
+    private Location location;
+
+    private boolean allowed;
+    private String remarks;
 
 }

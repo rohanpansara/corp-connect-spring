@@ -10,7 +10,7 @@ import com.corpConnect.dtos.card.dashboard.LeftSideCardsDTO;
 import com.corpConnect.entities.user.User;
 import com.corpConnect.exceptions.client.UserNotFoundException;
 import com.corpConnect.exceptions.common.BaseException;
-import com.corpConnect.mappers.client.UserMapper;
+import com.corpConnect.mappers.user.UserMapper;
 import com.corpConnect.repositories.user.UserRepository;
 import com.corpConnect.security.dtos.NewUserDTO;
 import com.corpConnect.services.user.UserService;

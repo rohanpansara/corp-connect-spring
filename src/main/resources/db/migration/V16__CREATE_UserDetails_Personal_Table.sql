@@ -12,5 +12,6 @@ CREATE TABLE IF NOT EXISTS CorpConnect.USER_DETAILS_PERSONAL (
     createdBy VARCHAR(50), -- from BaseEntity (auditing)
     lastUpdatedDate TIMESTAMP, -- from BaseEntity (auditing)
     lastUpdatedBy VARCHAR(50), -- from BaseEntity (auditing)
-    CONSTRAINT fk_user_personal_detail FOREIGN KEY (user_id) REFERENCES `USERS`(id) ON DELETE CASCADE
+    CONSTRAINT fk_user_personal_detail FOREIGN KEY (user_id) REFERENCES `USERS`(id) ON DELETE CASCADE,
+    INDEX idx_user_id (user_id) -- Index for faster lookups
 );

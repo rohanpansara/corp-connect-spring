@@ -8,5 +8,6 @@ CREATE TABLE IF NOT EXISTS CorpConnect.USER_DETAILS_ATTENDANCE (
     createdBy VARCHAR(50), -- from BaseEntity (auditing)
     lastUpdatedDate TIMESTAMP, -- from BaseEntity (auditing)
     lastUpdatedBy VARCHAR(50), -- from BaseEntity (auditing)
-    CONSTRAINT fk_user_attendance FOREIGN KEY (user_id) REFERENCES `USERS`(id) ON DELETE CASCADE
+    CONSTRAINT fk_user_attendance FOREIGN KEY (user_id) REFERENCES `USERS`(id) ON DELETE CASCADE,
+    INDEX idx_user_id (user_id) -- Index for faster lookups
 );

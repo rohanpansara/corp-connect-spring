@@ -14,5 +14,6 @@ CREATE TABLE IF NOT EXISTS CorpConnect.USER_DETAILS_LEAVE (
     lastUpdatedBy VARCHAR(50), -- Auditing field
     CONSTRAINT fk_requested_by_user FOREIGN KEY (user_id) REFERENCES `USERS`(id),
     CONSTRAINT fk_leave_type FOREIGN KEY (leave_type_id) REFERENCES HR_LEAVE_TYPE(id),
-    CONSTRAINT fk_approving_manager FOREIGN KEY (approving_manager_id) REFERENCES `USERS`(id)
+    CONSTRAINT fk_approving_manager FOREIGN KEY (approving_manager_id) REFERENCES `USERS`(id),
+    INDEX idx_user_id (user_id) -- Index for faster lookups
 );

@@ -18,6 +18,7 @@ CREATE TABLE IF NOT EXISTS CorpConnect.USER_DETAILS_EXPERIENCE (
     lastUpdatedDate TIMESTAMP, -- from BaseEntity (auditing)
     lastUpdatedBy VARCHAR(50), -- from BaseEntity (auditing)
     CONSTRAINT fk_user_experience_detail FOREIGN KEY (user_id) REFERENCES `USERS`(id) ON DELETE CASCADE,
-    CONSTRAINT fk_considered_role FOREIGN KEY (considered_role_id) REFERENCES HR_JOB_TITLES(id)
+    CONSTRAINT fk_considered_role FOREIGN KEY (considered_role_id) REFERENCES HR_JOB_TITLES(id),
+    INDEX idx_user_id (user_id) -- Index for faster lookups
 );
 
