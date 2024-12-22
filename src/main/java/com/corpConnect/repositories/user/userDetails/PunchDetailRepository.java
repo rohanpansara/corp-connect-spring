@@ -1,4 +1,4 @@
-package com.corpConnect.repositories.hr.userDetail;
+package com.corpConnect.repositories.user.userDetails;
 
 import com.corpConnect.entities.user.User;
 import com.corpConnect.entities.user.userDetails.PunchDetail;
@@ -9,7 +9,7 @@ import org.springframework.stereotype.Repository;
 import java.util.List;
 
 @Repository
-public interface UserPunchDetailRepository extends JpaRepository<PunchDetail, Long> {
+public interface PunchDetailRepository extends JpaRepository<PunchDetail, Long> {
 
     List<PunchDetail> findByUser(User user);
     List<PunchDetail> findByUserId(Long userId);

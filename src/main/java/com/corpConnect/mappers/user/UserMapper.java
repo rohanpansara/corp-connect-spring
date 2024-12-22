@@ -35,6 +35,10 @@ public abstract class UserMapper {
     @Mapping(target = "isCredentialsNonExpired", ignore = true)
     @Mapping(target = "isAccountNonLocked", ignore = true)
     @Mapping(target = "isAccountNonExpired", ignore = true)
+    @Mapping(target = "lastUpdatedDate", ignore = true)
+    @Mapping(target = "lastUpdatedBy", ignore = true)
+    @Mapping(target = "createdDate", ignore = true)
+    @Mapping(target = "createdBy", ignore = true)
     public abstract UserDTO toDTO(User user);
 
     @Named("toEntity")

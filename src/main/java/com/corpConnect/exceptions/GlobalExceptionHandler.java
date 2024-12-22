@@ -3,49 +3,83 @@ package com.corpConnect.exceptions;
 import com.corpConnect.dtos.common.ResponseDTO;
 import com.corpConnect.exceptions.client.LoginFailedException;
 import com.corpConnect.exceptions.common.BaseException;
-import org.apache.coyote.BadRequestException;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.validation.ObjectError;
 import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
-import org.springframework.web.bind.annotation.ResponseStatus;
+
+import java.util.Optional;
 
 @ControllerAdvice
 public class GlobalExceptionHandler {
 
+    private static final Logger logger = LoggerFactory.getLogger(GlobalExceptionHandler.class);
+
+    /**
+     * Handles custom LoginFailedException.
+     */
     @ExceptionHandler(LoginFailedException.class)
-    @ResponseStatus(HttpStatus.CONFLICT)
-    public ResponseEntity<ResponseDTO<String>> handleEmailAlreadyExistsException(LoginFailedException ex) {
+    public ResponseEntity<ResponseDTO<String>> handleLoginFailedException(LoginFailedException ex) {
+        logWarning(ex);
         return buildResponse(ex.getMessage(), ex.getErrorCode(), HttpStatus.CONFLICT);
     }
 
-    @ExceptionHandler(BadRequestException.class)
-    @ResponseStatus(HttpStatus.BAD_REQUEST)
-    public ResponseEntity<ResponseDTO<String>> handleBadRequestException(BadRequestException ex) {
-        return buildResponse(ex.getMessage(), "400", HttpStatus.BAD_REQUEST);
-    }
-
+    /**
+     * Handles base custom exceptions.
+     */
     @ExceptionHandler(BaseException.class)
     public ResponseEntity<ResponseDTO<String>> handleBaseException(BaseException ex) {
+        logError(ex);
         return buildResponse(ex.getMessage(), ex.getErrorCode(), HttpStatus.INTERNAL_SERVER_ERROR);
     }
 
-    @ExceptionHandler(Exception.class)
-    public ResponseEntity<ResponseDTO<String>> handleException(Exception ex) {
-        return buildResponse(ex.getMessage(), "GENERAL_ERROR", HttpStatus.INTERNAL_SERVER_ERROR);
-    }
-
+    /**
+     * Handles Spring validation exceptions.
+     */
     @ExceptionHandler(MethodArgumentNotValidException.class)
-    @ResponseStatus(HttpStatus.BAD_REQUEST)
     public ResponseEntity<ResponseDTO<String>> handleValidationExceptions(MethodArgumentNotValidException ex) {
-        String errorMessage = ex.getBindingResult().getAllErrors().getFirst().getDefaultMessage();
-        return new ResponseEntity<>(ResponseDTO.error(errorMessage, "VALIDATION_ERROR"), HttpStatus.BAD_REQUEST);
+        logWarning(ex);
+        String errorMessage = ex.getBindingResult().getAllErrors().stream()
+                .findFirst()
+                .map(ObjectError::getDefaultMessage)
+                .orElse("Validation error occurred");
+        return buildResponse(errorMessage, "VALIDATION_ERROR", HttpStatus.BAD_REQUEST);
     }
 
+    /**
+     * Handles all uncaught exceptions.
+     */
+    @ExceptionHandler(Exception.class)
+    public ResponseEntity<ResponseDTO<String>> handleGenericException(Exception ex) {
+        logError(ex);
+        String errorMessage = Optional.ofNullable(ex.getMessage())
+                .orElse("An unexpected error occurred");
+        return buildResponse(errorMessage, "GENERAL_ERROR", HttpStatus.INTERNAL_SERVER_ERROR);
+    }
+
+    /**
+     * Utility method to construct the ResponseDTO for the API response.
+     */
     private ResponseEntity<ResponseDTO<String>> buildResponse(String message, String errorCode, HttpStatus status) {
         ResponseDTO<String> response = ResponseDTO.error(message, errorCode);
         return new ResponseEntity<>(response, status);
     }
-}
 
+    /**
+     * Logs an error-level exception.
+     */
+    private void logError(Exception ex) {
+        logger.error("Exception caught: {} - {}", ex.getClass().getSimpleName(), ex.getMessage(), ex);
+    }
+
+    /**
+     * Logs a warning-level exception.
+     */
+    private void logWarning(Exception ex) {
+        logger.warn("Exception caught: {} - {}", ex.getClass().getSimpleName(), ex.getMessage());
+    }
+}
