@@ -4,17 +4,16 @@ import com.corpConnect.dtos.user.userDetails.PunchDetailDTO;
 import com.corpConnect.entities.user.User;
 import com.corpConnect.entities.user.userDetails.PunchDetail;
 import com.corpConnect.enumerations.PunchType;
+import com.corpConnect.exceptions.client.RecordNotFoundException;
 import com.corpConnect.mappers.user.userDetails.PunchDetailMapper;
 import com.corpConnect.repositories.user.userDetails.PunchDetailRepository;
-import com.corpConnect.services.hr.impl.JobTitleServiceImpl;
 import com.corpConnect.services.user.UserService;
 import com.corpConnect.services.user.userDetails.PunchDetailService;
 import com.corpConnect.utils.constants.LogConstants;
-import com.corpConnect.utils.constants.MessageConstants;
+import com.corpConnect.utils.functions.MessageCreator;
 import lombok.RequiredArgsConstructor;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDate;
@@ -63,22 +62,27 @@ public class PunchDetailServiceImpl implements PunchDetailService {
 
     @Override
     public void updatePunchDetail(Long oldPunchTitleId, PunchDetailDTO punchDetailDTO) {
-
+        //TODO: for HR only
     }
 
     @Override
     public PunchDetail getPunchDetailById(Long punchDetailId) {
-        return null;
+        return punchDetailRepository.findById(punchDetailId).orElseThrow(
+                ()-> new RecordNotFoundException(MessageCreator.getNotFoundMessage("Punch detail"))
+        );
     }
 
     @Override
     public void deletePunchDetail(PunchDetailDTO punchDetailDTO) {
-
+        PunchDetail punchDetailToDelete = this.getEntity(punchDetailDTO);
+        punchDetailRepository.delete(punchDetailToDelete);
+        logger.info(LogConstants.getDeletedSuccessfullyMessage("Punch detail", "Permanent", "DTO", punchDetailDTO, null));
     }
 
     @Override
     public void deletePunchDetailById(Long punchTitleId) {
-
+        punchDetailRepository.deleteById(punchTitleId);
+        logger.info(LogConstants.getDeletedSuccessfullyMessage("Punch detail", "Permanent", "Id", punchTitleId, null));
     }
 
     @Override
