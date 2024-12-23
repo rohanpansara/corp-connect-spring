@@ -17,6 +17,8 @@ import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDate;
+import java.time.LocalDateTime;
+import java.util.ArrayList;
 import java.util.List;
 
 @Service
@@ -87,22 +89,32 @@ public class PunchDetailServiceImpl implements PunchDetailService {
 
     @Override
     public List<PunchDetail> getPunchDetailByUserId(Long userId) {
-        return List.of();
+        return punchDetailRepository.findByUserId(userId);
     }
 
     @Override
     public List<PunchDetail> getPunchDetailByDate(LocalDate date) {
-        return List.of();
+
+        LocalDateTime dateFrom = date.atStartOfDay();
+        LocalDateTime dateTo = dateFrom.plusDays(1).minusSeconds(1);
+
+        return punchDetailRepository.findByPunchTimeBetween(dateFrom, dateTo);
     }
 
     @Override
     public List<PunchDetail> getPunchDetailByUserIdAndDate(Long userId, LocalDate date) {
-        return List.of();
+
+        LocalDateTime dateFrom = date.atStartOfDay();
+        LocalDateTime dateTo = dateFrom.plusDays(1).minusSeconds(1);
+
+        return punchDetailRepository.findByUserIdAndPunchTimeBetween(userId, dateFrom, dateTo);
     }
 
     @Override
     public List<PunchDetail> getPunchDetailByDepartmentIdAndDate(Long departmentId, LocalDate date) {
-        return List.of();
+        List<PunchDetail> punchDetailList = new ArrayList<>();
+        // TODO: create a department-user relation table and then fetch the users from their
+        return punchDetailList;
     }
 
     @Override
