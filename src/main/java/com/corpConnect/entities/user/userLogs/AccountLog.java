@@ -1,4 +1,4 @@
-package com.corpConnect.entities.user.user_logs;
+package com.corpConnect.entities.user.userLogs;
 
 import com.corpConnect.entities.common.BaseEntity;
 import com.corpConnect.entities.user.User;
