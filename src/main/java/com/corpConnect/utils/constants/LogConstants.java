@@ -2,6 +2,10 @@ package com.corpConnect.utils.constants;
 
 public class LogConstants {
 
+    public static String getUnexpectedErrorMessage(String className, String action, String specificMessage) {
+        return buildMessage("UNEXPECTED ERROR", specificMessage, "Attempt to " + action + " " + className);
+    }
+
     public static String getSessionVerifiedForToken(String token, boolean isVerified) {
         return buildMessage("User Session", isVerified ? "Verified" : "Not Verified, Need To Login Again", "Attempt to check if the user token is valid with token-" + token);
     }

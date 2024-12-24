@@ -113,7 +113,8 @@ public class PunchDetailServiceImpl implements PunchDetailService {
     @Override
     public List<PunchDetail> getPunchDetailByDepartmentIdAndDate(Long departmentId, LocalDate date) {
         List<PunchDetail> punchDetailList = new ArrayList<>();
-        // TODO: create a department-user relation table and then fetch the users from their
+
+        List
         return punchDetailList;
     }
 

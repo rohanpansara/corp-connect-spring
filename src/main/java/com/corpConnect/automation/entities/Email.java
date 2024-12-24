@@ -1,4 +1,4 @@
-package com.corpConnect.entities.automation;
+package com.corpConnect.automation.entities;
 
 import com.corpConnect.entities.common.NameWithDeleteEntity;
 import com.corpConnect.entities.company.EmailTemplate;

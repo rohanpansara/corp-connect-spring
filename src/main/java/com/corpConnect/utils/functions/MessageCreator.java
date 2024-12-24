@@ -2,7 +2,10 @@ package com.corpConnect.utils.functions;
 
 public class MessageCreator {
 
-    private MessageCreator() {
+    private MessageCreator() {    }
+
+    public static String getUnexpectedErrorMessage(String action){
+        return "Unexpected error occurred while " + action;
     }
 
     public static String getJWTErrorMessage(String exceptionName, String message) {
@@ -61,7 +64,7 @@ public class MessageCreator {
     }
 
     public static String getDataIntegrityViolationMessage(String entityName) {
-        return "Data integrity violation on " + entityName;
+        return "Record already exists in " + entityName;
     }
 
 }

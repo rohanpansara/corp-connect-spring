@@ -19,7 +19,7 @@ public interface PunchDetailService {
 
     // CRUD Operations
     void createPunchDetail(PunchDetailDTO punchDetailDTO);
-    void updatePunchDetail(Long oldPunchTitleId, PunchDetailDTO punchDetailDTO);
+    void updatePunchDetail(Long punchDetailToUpdateId, PunchDetailDTO newPunchDetailDTO);
     PunchDetail getPunchDetailById(Long punchDetailId);
     void deletePunchDetail(PunchDetailDTO punchDetailDTO);
     void deletePunchDetailById(Long punchTitleId);
