@@ -21,7 +21,7 @@ public interface PunchDetailRepository extends JpaRepository<PunchDetail, Long> 
     List<PunchDetail> findByUser(User user);
     List<PunchDetail> findByUserId(Long userId);
 
-    List<PunchDetail> findByUserIdAndPunchTimeBetween(Long userId, LocalDateTime startDate, LocalDateTime endDate);
+    List<PunchDetail> findByUserIdInAndPunchTimeBetween(List<Long> userIdList, LocalDateTime startDate, LocalDateTime endDate);
 
     List<PunchDetail> findByPunchType(PunchType punchType);
     List<PunchDetail> findByAllowed(boolean allowed);

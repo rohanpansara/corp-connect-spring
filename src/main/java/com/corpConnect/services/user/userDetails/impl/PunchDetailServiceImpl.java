@@ -8,6 +8,7 @@ import com.corpConnect.exceptions.client.RecordNotFoundException;
 import com.corpConnect.mappers.user.userDetails.PunchDetailMapper;
 import com.corpConnect.repositories.user.userDetails.PunchDetailRepository;
 import com.corpConnect.services.user.UserService;
+import com.corpConnect.services.user.userDetails.DepartmentDetailService;
 import com.corpConnect.services.user.userDetails.PunchDetailService;
 import com.corpConnect.utils.constants.LogConstants;
 import com.corpConnect.utils.functions.MessageCreator;
@@ -19,6 +20,7 @@ import org.springframework.stereotype.Service;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 @Service
@@ -28,6 +30,7 @@ public class PunchDetailServiceImpl implements PunchDetailService {
     private static final Logger logger = LoggerFactory.getLogger(PunchDetailServiceImpl.class);
 
     private final UserService userService;
+    private final DepartmentDetailService departmentDetailService;
     private final PunchDetailMapper punchDetailMapper;
     private final PunchDetailRepository punchDetailRepository;
 
@@ -107,15 +110,19 @@ public class PunchDetailServiceImpl implements PunchDetailService {
         LocalDateTime dateFrom = date.atStartOfDay();
         LocalDateTime dateTo = dateFrom.plusDays(1).minusSeconds(1);
 
-        return punchDetailRepository.findByUserIdAndPunchTimeBetween(userId, dateFrom, dateTo);
+        return punchDetailRepository.findByUserIdInAndPunchTimeBetween(Collections.singletonList(userId), dateFrom, dateTo);
     }
 
     @Override
     public List<PunchDetail> getPunchDetailByDepartmentIdAndDate(Long departmentId, LocalDate date) {
-        List<PunchDetail> punchDetailList = new ArrayList<>();
 
-        List
-        return punchDetailList;
+        LocalDateTime dateFrom = date.atStartOfDay();
+        LocalDateTime dateTo = dateFrom.plusDays(1).minusSeconds(1);
+
+        List<Long> userIdListInTheDepartment = departmentDetailService.getUserIdsInTheDepartmentWithId(departmentId);
+        logger.info(LogConstants.getFoundAllMessage("User Ids", "getting punch details for department", "for the date: "+date));
+
+        return punchDetailRepository.findByUserIdInAndPunchTimeBetween(userIdListInTheDepartment, dateFrom, dateTo);
     }
 
     @Override

@@ -21,5 +21,5 @@ public interface DepartmentDetailService {
     void deleteDepartmentDetailById(Long departmentDetailToDeleteId);
 
     // Department Detail Repository
-
+    List<Long> getUserIdsInTheDepartmentWithId(Long departmentId);
 }

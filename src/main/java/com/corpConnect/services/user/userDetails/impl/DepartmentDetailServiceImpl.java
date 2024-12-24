@@ -1,10 +1,8 @@
 package com.corpConnect.services.user.userDetails.impl;
 
 import com.corpConnect.dtos.user.userDetails.DepartmentDetailDTO;
-import com.corpConnect.entities.hr.JobTitle;
 import com.corpConnect.entities.user.userDetails.DepartmentDetail;
 import com.corpConnect.exceptions.hr.DepartmentRelatedException;
-import com.corpConnect.exceptions.hr.JobTitleRelatedException;
 import com.corpConnect.mappers.user.userDetails.DepartmentDetailMapper;
 import com.corpConnect.repositories.user.userDetails.DepartmentDetailRepository;
 import com.corpConnect.services.user.userDetails.DepartmentDetailService;
@@ -96,5 +94,10 @@ public class DepartmentDetailServiceImpl implements DepartmentDetailService {
     @Override
     public void deleteDepartmentDetailById(Long departmentDetailToDeleteId) {
 
+    }
+
+    @Override
+    public List<Long> getUserIdsInTheDepartmentWithId(Long departmentId) {
+        return departmentDetailRepository.findUserIdByDepartmentId(departmentId);
     }
 }

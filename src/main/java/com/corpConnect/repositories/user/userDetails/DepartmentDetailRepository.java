@@ -10,6 +10,10 @@ import java.util.List;
 public interface DepartmentDetailRepository extends JpaRepository<DepartmentDetail, Long> {
 
     List<DepartmentDetail> findByUserId(Long userId);
+    List<DepartmentDetail> findByUserIdIn(List<Long> userIdList);
     List<DepartmentDetail> findByDepartmentId(Long departmentId);
+    List<DepartmentDetail> findByDepartmentIdIn(List<Long> departmentIdList);
+
+    List<Long> findUserIdByDepartmentId(Long departmentId);
 
 }
