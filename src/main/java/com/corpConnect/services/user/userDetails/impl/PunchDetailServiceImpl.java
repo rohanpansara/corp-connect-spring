@@ -7,7 +7,6 @@ import com.corpConnect.enumerations.PunchType;
 import com.corpConnect.exceptions.client.RecordNotFoundException;
 import com.corpConnect.mappers.user.userDetails.PunchDetailMapper;
 import com.corpConnect.repositories.user.userDetails.PunchDetailRepository;
-import com.corpConnect.services.user.UserService;
 import com.corpConnect.services.user.userDetails.DepartmentDetailService;
 import com.corpConnect.services.user.userDetails.PunchDetailService;
 import com.corpConnect.utils.constants.LogConstants;
@@ -19,7 +18,6 @@ import org.springframework.stereotype.Service;
 
 import java.time.LocalDate;
 import java.time.LocalDateTime;
-import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
@@ -29,7 +27,6 @@ public class PunchDetailServiceImpl implements PunchDetailService {
 
     private static final Logger logger = LoggerFactory.getLogger(PunchDetailServiceImpl.class);
 
-    private final UserService userService;
     private final DepartmentDetailService departmentDetailService;
     private final PunchDetailMapper punchDetailMapper;
     private final PunchDetailRepository punchDetailRepository;
@@ -98,46 +95,58 @@ public class PunchDetailServiceImpl implements PunchDetailService {
     @Override
     public List<PunchDetail> getPunchDetailByDate(LocalDate date) {
 
-        LocalDateTime dateFrom = date.atStartOfDay();
-        LocalDateTime dateTo = dateFrom.plusDays(1).minusSeconds(1);
+        LocalDateTime startOfDay = date.atStartOfDay();
+        LocalDateTime endOfDay = startOfDay.plusDays(1).minusSeconds(1);
 
-        return punchDetailRepository.findByPunchTimeBetween(dateFrom, dateTo);
+        return punchDetailRepository.findByPunchTimeBetween(startOfDay, endOfDay);
     }
 
     @Override
     public List<PunchDetail> getPunchDetailByUserIdAndDate(Long userId, LocalDate date) {
 
-        LocalDateTime dateFrom = date.atStartOfDay();
-        LocalDateTime dateTo = dateFrom.plusDays(1).minusSeconds(1);
+        LocalDateTime startOfDay = date.atStartOfDay();
+        LocalDateTime endOfDay = startOfDay.plusDays(1).minusSeconds(1);
 
-        return punchDetailRepository.findByUserIdInAndPunchTimeBetween(Collections.singletonList(userId), dateFrom, dateTo);
+        return punchDetailRepository.findByUserIdInAndPunchTimeBetween(Collections.singletonList(userId), startOfDay, endOfDay);
     }
 
     @Override
     public List<PunchDetail> getPunchDetailByDepartmentIdAndDate(Long departmentId, LocalDate date) {
 
-        LocalDateTime dateFrom = date.atStartOfDay();
-        LocalDateTime dateTo = dateFrom.plusDays(1).minusSeconds(1);
+        LocalDateTime startOfDay = date.atStartOfDay();
+        LocalDateTime endOfDay = startOfDay.plusDays(1).minusSeconds(1);
 
         List<Long> userIdListInTheDepartment = departmentDetailService.getUserIdsInTheDepartmentWithId(departmentId);
         logger.info(LogConstants.getFoundAllMessage("User Ids", "getting punch details for department", "for the date: "+date));
 
-        return punchDetailRepository.findByUserIdInAndPunchTimeBetween(userIdListInTheDepartment, dateFrom, dateTo);
+        return punchDetailRepository.findByUserIdInAndPunchTimeBetween(userIdListInTheDepartment, startOfDay, endOfDay);
     }
 
     @Override
     public List<PunchDetail> getPunchDetailByUserIdAndDateAndPunchType(Long userId, LocalDate date, PunchType punchType) {
-        return List.of();
+
+        LocalDateTime startOfDay = date.atStartOfDay();
+        LocalDateTime endOfDay = startOfDay.plusDays(1).minusSeconds(1);
+
+        return punchDetailRepository.findByUserIdAndPunchTimeBetweenAndPunchType(userId, startOfDay, endOfDay, punchType);
     }
 
     @Override
     public List<User> getUsersWithForbiddenPunchesByDate(LocalDate date) {
-        return List.of();
+
+        LocalDateTime startOfDay = date.atStartOfDay();
+        LocalDateTime endOfDay = startOfDay.plusDays(1).minusSeconds(1);
+
+        return punchDetailRepository.findDistinctByAllowedFalseAndPunchTimeBetween(startOfDay, endOfDay);
     }
 
     @Override
     public List<User> getUsersWithForbiddenPunchesByDepartmentIdAndDate(Long departmentId, LocalDate date) {
-        return List.of();
+
+        LocalDateTime startOfDay = date.atStartOfDay();
+        LocalDateTime endOfDay = startOfDay.plusDays(1).minusSeconds(1);
+
+        return punchDetailRepository.findUsersWithForbiddenPunchesByDepartmentIdAndDate(departmentId, startOfDay, endOfDay);
     }
 
 
