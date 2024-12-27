@@ -51,7 +51,7 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
 
         try {
 
-            logger.info("Request remote address: {} | Time: {}", request.getRemoteAddr(), CustomDateTimeFormatter.getLocalDateTimeString(LocalDateTime.now()));
+            logger.info("Request remote address: {} | DateTime: {}", request.getRemoteAddr(), CustomDateTimeFormatter.getLocalDateTimeString(LocalDateTime.now()));
 
             // Check if the request is for a public URL
             String servletPath = request.getServletPath();
