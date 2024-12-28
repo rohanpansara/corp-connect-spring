@@ -88,12 +88,22 @@ public class DepartmentDetailServiceImpl implements DepartmentDetailService {
 
     @Override
     public void deleteDepartmentDetail(DepartmentDetailDTO departmentDetailToDeleteDTO) {
+        DepartmentDetail departmentDetailToDelete = departmentDetailRepository.findById(departmentDetailToDeleteDTO.getId()).orElseThrow(
+                () -> new DepartmentRelatedException(MessageConstants.Department.DEPARTMENT_NOT_FOUND)
+        );
 
+        departmentDetailRepository.delete(departmentDetailToDelete);
+        logger.info(LogConstants.getDeletedSuccessfullyMessage("Department Detail", "Permanent", "DTO", departmentDetailToDeleteDTO, null));
     }
 
     @Override
     public void deleteDepartmentDetailById(Long departmentDetailToDeleteId) {
+        DepartmentDetail departmentDetailToDelete = departmentDetailRepository.findById(departmentDetailToDeleteId).orElseThrow(
+                () -> new DepartmentRelatedException(MessageConstants.Department.DEPARTMENT_NOT_FOUND)
+        );
 
+        departmentDetailRepository.delete(departmentDetailToDelete);
+        logger.info(LogConstants.getDeletedSuccessfullyMessage("Department Detail", "Permanent", "Id", departmentDetailToDeleteId, null));
     }
 
     @Override
