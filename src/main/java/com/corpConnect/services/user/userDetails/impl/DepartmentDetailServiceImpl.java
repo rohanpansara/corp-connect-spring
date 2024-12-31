@@ -110,4 +110,14 @@ public class DepartmentDetailServiceImpl implements DepartmentDetailService {
     public List<Long> getUserIdsInTheDepartmentWithId(Long departmentId) {
         return departmentDetailRepository.findUserIdByDepartmentId(departmentId);
     }
+
+    @Override
+    public List<DepartmentDetail> getDepartmentDetailsByUserId(Long userId) {
+        return departmentDetailRepository.findByUserId(userId);
+    }
+
+    @Override
+    public List<DepartmentDetail> getDepartmentDetailsByDepartmentId(Long departmentId) {
+        return departmentDetailRepository.findByDepartmentId(departmentId);
+    }
 }

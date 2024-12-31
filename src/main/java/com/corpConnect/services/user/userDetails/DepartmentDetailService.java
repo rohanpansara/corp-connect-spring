@@ -22,4 +22,6 @@ public interface DepartmentDetailService {
 
     // Department Detail Repository
     List<Long> getUserIdsInTheDepartmentWithId(Long departmentId);
+    List<DepartmentDetail> getDepartmentDetailsByUserId(Long userId);
+    List<DepartmentDetail> getDepartmentDetailsByDepartmentId(Long deparmentId);
 }
