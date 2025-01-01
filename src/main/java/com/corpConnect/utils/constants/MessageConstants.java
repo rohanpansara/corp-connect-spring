@@ -18,6 +18,7 @@ public class MessageConstants {
     }
 
     public static final class Record {
+        public static final String RECORD_CREATED = MessageCreator.getCreatedMessage("Record");
         public static final String RECORD_FOUND = MessageCreator.getFoundMessage("Record");
         public static final String RECORD_NOT_FOUND = MessageCreator.getNotFoundMessage("Record");
     }
