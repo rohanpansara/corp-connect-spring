@@ -1,6 +1,5 @@
 package com.corpConnect.services.user.userDetails;
 
-import com.corpConnect.dtos.hr.JobTitleDTO;
 import com.corpConnect.dtos.user.userDetails.PunchDetailDTO;
 import com.corpConnect.entities.user.User;
 import com.corpConnect.entities.user.userDetails.PunchDetail;
