@@ -34,9 +34,9 @@ public class WorkShiftController {
         return ResponseEntity.ok(ResponseDTO.success(MessageConstants.WorkShift.WORK_SHIFT_LIST_FOUND, workShiftService.getDTOList(workShiftService.getAllWorkShifts())));
     }
 
-    @GetMapping(value = "/{work-shift-id}")
+    @GetMapping(value = "/{workShiftId}")
     @PreAuthorize("hasAuthority('hr_manager:read')")
-    public ResponseEntity<ResponseDTO<List<WorkShiftDTO>>> fetchWorkShiftByWorkShiftId(@PathVariable("work-shift-id") Long workShiftId) {
+    public ResponseEntity<ResponseDTO<List<WorkShiftDTO>>> fetchWorkShiftByWorkShiftId(@PathVariable("workShiftId") Long workShiftId) {
         return ResponseEntity.ok(ResponseDTO.success(MessageConstants.WorkShift.WORK_SHIFT_FOUND, workShiftService.getDTOList(workShiftService.getWorkShiftById(workShiftId))));
     }
 
@@ -47,16 +47,16 @@ public class WorkShiftController {
         return ResponseEntity.ok(ResponseDTO.success(MessageConstants.WorkShift.WORK_SHIFT_CREATED));
     }
 
-    @PutMapping(value = "/{work-shift-id}")
+    @PutMapping(value = "/{workShiftId}")
     @PreAuthorize("hasAuthority('hr_admin:update')")
-    public ResponseEntity<ResponseDTO<Void>> updateWorkShift(@PathVariable("work-shift-id") Long oldWorkShiftId, @Valid @RequestBody WorkShiftDTO newWorkShiftDTO) {
+    public ResponseEntity<ResponseDTO<Void>> updateWorkShift(@PathVariable("workShiftId") Long oldWorkShiftId, @Valid @RequestBody WorkShiftDTO newWorkShiftDTO) {
         workShiftService.updateWorkShift(oldWorkShiftId, newWorkShiftDTO);
         return ResponseEntity.ok(ResponseDTO.success(MessageConstants.WorkShift.WORK_SHIFT_UPDATED));
     }
 
-    @DeleteMapping(value = "/{work-shift-id}")
+    @DeleteMapping(value = "/{workShiftId}")
     @PreAuthorize("hasAuthority('hr_admin:delete')")
-    public ResponseEntity<ResponseDTO<Void>> softDeleteWorkShift(@PathVariable("work-shift-id") Long workShiftId) {
+    public ResponseEntity<ResponseDTO<Void>> softDeleteWorkShift(@PathVariable("workShiftId") Long workShiftId) {
         workShiftService.deleteWorkShiftById(workShiftId);
         return ResponseEntity.ok(ResponseDTO.success(MessageConstants.WorkShift.WORK_SHIFT_DELETED));
     }

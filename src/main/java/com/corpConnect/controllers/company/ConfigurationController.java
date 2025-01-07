@@ -33,9 +33,9 @@ public class ConfigurationController {
         return ResponseEntity.ok(ResponseDTO.success(MessageConstants.CompanyConfiguration.CONFIGURATION_CREATED));
     }
 
-    @PutMapping(value = "/{configuration-id}")
+    @PutMapping(value = "/{configurationId}")
     @PreAuthorize("hasAuthority('admin:update')")
-    public ResponseEntity<ResponseDTO<Void>> updateConfiguration(@PathVariable("configuration-id") Long oldConfigurationId, @RequestBody ConfigurationDTO configurationDTO) {
+    public ResponseEntity<ResponseDTO<Void>> updateConfiguration(@PathVariable("configurationId") Long oldConfigurationId, @RequestBody ConfigurationDTO configurationDTO) {
         configurationService.updateConfiguration(oldConfigurationId, configurationDTO);
         return ResponseEntity.ok(ResponseDTO.success(MessageConstants.CompanyConfiguration.CONFIGURATION_UPDATED));
     }
@@ -46,9 +46,9 @@ public class ConfigurationController {
         return ResponseEntity.ok(ResponseDTO.success(MessageConstants.CompanyConfiguration.CONFIGURATION_LIST_FOUND, configurationService.getDTOList(configurationService.getAllConfigurations(isDeleted))));
     }
 
-    @GetMapping(value = "/{configuration-id}")
+    @GetMapping(value = "/{configurationId}")
     @PreAuthorize("hasAuthority('admin:read')")
-    public ResponseEntity<ResponseDTO<List<ConfigurationDTO>>> fetchConfigurationByConfigurationId(@PathVariable("configuration-id") Long configurationId){
+    public ResponseEntity<ResponseDTO<List<ConfigurationDTO>>> fetchConfigurationByConfigurationId(@PathVariable("configurationId") Long configurationId){
         return ResponseEntity.ok(ResponseDTO.success(MessageConstants.CompanyConfiguration.CONFIGURATION_FOUND, configurationService.getDTOList(configurationService.getConfigurationById(configurationId))));
     }
 }

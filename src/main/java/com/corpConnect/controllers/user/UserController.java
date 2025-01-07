@@ -32,15 +32,15 @@ public class UserController {
         return ResponseEntity.ok(ResponseDTO.success(MessageConstants.UserSuccess.USER_LIST_FOUND, userService.getDTOList(userService.getAllUsers(isDeleted))));
     }
 
-    @GetMapping("/{user-id}")
+    @GetMapping("/{userId}")
     @PreAuthorize("hasAuthority('admin:read') or @corpConnectUserContext.isLoggedUser(#userId)")
-    public ResponseEntity<ResponseDTO<UserDTO>> fetchUserByUserId(@PathVariable("user-id") Long userId) throws BaseException {
+    public ResponseEntity<ResponseDTO<UserDTO>> fetchUserByUserId(@PathVariable("userId") Long userId) throws BaseException {
         return ResponseEntity.ok(ResponseDTO.success(MessageConstants.UserSuccess.USER_FOUND, userService.getDTO(userService.getUserByUserId(userId))));
     }
 
-    @DeleteMapping("/{user-id}")
+    @DeleteMapping("/{userId}")
     @PreAuthorize("hasAuthority('admin:read')")
-    public ResponseEntity<ResponseDTO<Void>> deleteUserByUserId(@PathVariable("user-id") Long userId) throws BaseException {
+    public ResponseEntity<ResponseDTO<Void>> deleteUserByUserId(@PathVariable("userId") Long userId) throws BaseException {
         userService.deleteUserByUserId(userId);
         return ResponseEntity.ok(ResponseDTO.success(MessageConstants.UserSuccess.USER_DELETED));
     }

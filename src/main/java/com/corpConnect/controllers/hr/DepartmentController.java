@@ -34,9 +34,9 @@ public class DepartmentController {
         return ResponseEntity.ok(ResponseDTO.success(MessageConstants.Department.DEPARTMENT_LIST_FOUND, departmentService.getDTOList(departmentService.getAllDepartments(isDeleted))));
     }
 
-    @GetMapping(value = "/{department-id}")
+    @GetMapping(value = "/{departmentId}")
     @PreAuthorize("hasAuthority('hr_manager:read')")
-    public  ResponseEntity<ResponseDTO<List<DepartmentDTO>>> fetchDepartmentByDepartmentId(@PathVariable("department-id") Long departmentId){
+    public  ResponseEntity<ResponseDTO<List<DepartmentDTO>>> fetchDepartmentByDepartmentId(@PathVariable("departmentId") Long departmentId){
         return ResponseEntity.ok(ResponseDTO.success(MessageConstants.Department.DEPARTMENT_FOUND, departmentService.getDTOList(departmentService.getDepartmentById(departmentId))));
     }
 
@@ -47,23 +47,23 @@ public class DepartmentController {
         return ResponseEntity.ok(ResponseDTO.success(MessageConstants.Department.DEPARTMENT_CREATED));
     }
 
-    @PutMapping(value = "/{department-id}")
+    @PutMapping(value = "/{departmentId}")
     @PreAuthorize("hasAuthority('hr_manager:update')")
-    public  ResponseEntity<ResponseDTO<Void>> updateDepartment(@PathVariable(value = "department-id") Long oldDepartmentId, @RequestBody DepartmentDTO departmentDTO){
+    public  ResponseEntity<ResponseDTO<Void>> updateDepartment(@PathVariable(value = "departmentId") Long oldDepartmentId, @RequestBody DepartmentDTO departmentDTO){
         departmentService.updateDepartment(oldDepartmentId,departmentDTO);
         return ResponseEntity.ok(ResponseDTO.success(MessageConstants.Department.DEPARTMENT_UPDATED));
     }
 
-    @DeleteMapping(value = "/{department-id}")
+    @DeleteMapping(value = "/{departmentId}")
     @PreAuthorize("hasAuthority('hr_manager:delete')")
-    public  ResponseEntity<ResponseDTO<Void>> softDeleteDepartment(@PathVariable(value = "department-id") Long departmentId){
+    public  ResponseEntity<ResponseDTO<Void>> softDeleteDepartment(@PathVariable(value = "departmentId") Long departmentId){
         departmentService.deleteDepartmentById(departmentId,false);
         return ResponseEntity.ok(ResponseDTO.success(MessageConstants.Department.DEPARTMENT_DELETED));
     }
 
-    @DeleteMapping(value = "/{department-id}/permanent")
+    @DeleteMapping(value = "/{departmentId}/permanent")
     @PreAuthorize("hasAuthority('hr_manager:delete')")
-    public  ResponseEntity<ResponseDTO<Void>> permanentDeleteDepartment(@PathVariable(value = "department-id") Long departmentId){
+    public  ResponseEntity<ResponseDTO<Void>> permanentDeleteDepartment(@PathVariable(value = "departmentId") Long departmentId){
         departmentService.deleteDepartmentById(departmentId,true);
         return ResponseEntity.ok(ResponseDTO.success(MessageConstants.Department.DEPARTMENT_DELETED));
     }

@@ -32,9 +32,9 @@ public class MeetingRoomController {
         return ResponseEntity.ok(ResponseDTO.success(MessageConstants.MeetingRoom.MEETING_ROOM_LIST_FOUND, meetingRoomService.getDTOList(meetingRoomService.getAllMeetingRooms(isDeleted))));
     }
 
-    @GetMapping(value = "/{meeting-room-id}")
+    @GetMapping(value = "/{meetingRoomId}")
     @PreAuthorize("hasAuthority('hr_manager:read')")
-    public ResponseEntity<ResponseDTO<List<MeetingRoomDTO>>> fetchMeetingRoomByMeetingRoomId(@PathVariable("meeting-room-id") Long meetingRoomId){
+    public ResponseEntity<ResponseDTO<List<MeetingRoomDTO>>> fetchMeetingRoomByMeetingRoomId(@PathVariable("meetingRoomId") Long meetingRoomId){
         return ResponseEntity.ok(ResponseDTO.success(MessageConstants.MeetingRoom.MEETING_ROOM_FOUND, meetingRoomService.getDTOList(meetingRoomService.getMeetingRoomById(meetingRoomId))));
     }
 

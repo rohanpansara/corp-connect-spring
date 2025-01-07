@@ -33,9 +33,9 @@ public class AccessController {
         return ResponseEntity.ok(ResponseDTO.success(MessageConstants.UserSuccess.USER_CREATED, authenticationService.addNewUser(newUserDTO)));
     }
 
-    @PatchMapping("/{user-id}/enable-account")
+    @PatchMapping("/{userId}/enable-account")
     @PreAuthorize("hasAuthority('hr_admin:update')")
-    public ResponseEntity<ResponseDTO<String>> enableAccountByUserId(@PathVariable("user-id") Long userId, @RequestParam(name = "toBeDisabled", required = false) Boolean toBeDisabled){
+    public ResponseEntity<ResponseDTO<String>> enableAccountByUserId(@PathVariable("userId") Long userId, @RequestParam(name = "toBeDisabled", required = false) Boolean toBeDisabled){
         if(Boolean.TRUE.equals(toBeDisabled)) {
             userService.disableUserAccount(userId);
             return ResponseEntity.ok(ResponseDTO.success(MessageConstants.HrAccessControl.USER_DISABLED));
@@ -45,9 +45,9 @@ public class AccessController {
         }
     }
 
-    @PatchMapping("/{user-id}/unlock-account")
+    @PatchMapping("/{userId}/unlock-account")
     @PreAuthorize("hasAuthority('hr_admin:update')")
-    public ResponseEntity<ResponseDTO<String>> unlockAccountByUserId(@PathVariable("user-id") Long userId, @RequestParam(name = "toBeLocked", required = false) Boolean toBeLocked){
+    public ResponseEntity<ResponseDTO<String>> unlockAccountByUserId(@PathVariable("userId") Long userId, @RequestParam(name = "toBeLocked", required = false) Boolean toBeLocked){
         if(Boolean.TRUE.equals(toBeLocked)) {
             userService.lockUserAccount(userId);
             return ResponseEntity.ok(ResponseDTO.success(MessageConstants.HrAccessControl.USER_LOCKED));
