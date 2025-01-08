@@ -150,5 +150,17 @@ public class MessageConstants {
         public static final String LEAVE_STATUS_NOT_FOUND = MessageCreator.getNotFoundMessage("Leave status");
     }
 
+    public static final class LeaveType {
+        public static final String LEAVE_TYPE_CREATED = MessageCreator.getCreatedMessage("Leave type");
+        public static final String LEAVE_TYPE_FOUND = MessageCreator.getFoundMessage("Leave type");
+        public static final String LEAVE_TYPE_NOT_FOUND = MessageCreator.getNotFoundMessage("Leave type");
+        public static final String LEAVE_TYPE_UPDATED = MessageCreator.getUpdatedMessage("Leave type");
+        public static final String LEAVE_TYPE_DELETED = MessageCreator.getDeletedMessage("Leave type", false);
+        public static final String LEAVE_TYPE_DELETED_PERMANENTLY = MessageCreator.getDeletedMessage("Leave type", true);
+        public static final String LEAVE_TYPE_ALREADY_EXISTS = MessageCreator.getExistsMessage("Leave type", "name");
+        public static final String LEAVE_TYPE_LIST_FOUND = MessageCreator.getListFoundMessage("Leave type");
+        public static final String DataIntegrityViolation = getDataIntegrityViolationMessage("Leave type");
+    }
+
 }
 
