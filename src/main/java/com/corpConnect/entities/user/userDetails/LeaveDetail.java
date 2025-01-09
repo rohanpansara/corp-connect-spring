@@ -29,7 +29,7 @@ public class LeaveDetail extends BaseEntity {
 
     @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "user_id")
-    private User user; // The user who requested the leave
+    private User user;
 
     @Enumerated(EnumType.STRING)
     @Column(name = "status", nullable = false)

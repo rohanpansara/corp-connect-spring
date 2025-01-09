@@ -1,6 +1,7 @@
 package com.corpConnect.entities.user.userLogs;
 
 import com.corpConnect.entities.common.BaseEntity;
+import com.corpConnect.entities.hr.LeaveType;
 import com.corpConnect.entities.user.User;
 import jakarta.persistence.Entity;
 import jakarta.persistence.FetchType;
@@ -23,5 +24,11 @@ public class LeaveLog extends BaseEntity {
     @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "user_id")
     private User user;
+
+    @ManyToOne(fetch = FetchType.EAGER)
+    @JoinColumn(name = "leave_type_id")
+    private LeaveType leaveType;
+
+    private String remarks;
 
 }
