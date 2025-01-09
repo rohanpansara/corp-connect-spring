@@ -107,4 +107,9 @@ public class LeaveTypeServiceImpl implements LeaveTypeService {
     public List<LeaveType> getAllLeaveTypes() {
         return leaveTypeRepository.findAll();
     }
+
+    @Override
+    public Integer getYearlyTotalLeaveCount() {
+        return leaveTypeRepository.findTotalMaxLeavesPerYear();
+    }
 }

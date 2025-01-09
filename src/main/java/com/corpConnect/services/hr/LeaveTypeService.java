@@ -21,4 +21,5 @@ public interface LeaveTypeService {
 
     // Leave Type Repository
     List<LeaveType> getAllLeaveTypes();
+    Integer getYearlyTotalLeaveCount();
 }
