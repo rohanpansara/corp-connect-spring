@@ -3,7 +3,11 @@ package com.corpConnect.entities.user.userLogs;
 import com.corpConnect.entities.common.BaseEntity;
 import com.corpConnect.entities.hr.LeaveType;
 import com.corpConnect.entities.user.User;
+import com.corpConnect.enumerations.LeaveLogType;
+import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
+import jakarta.persistence.EnumType;
+import jakarta.persistence.Enumerated;
 import jakarta.persistence.FetchType;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
@@ -29,6 +33,17 @@ public class LeaveLog extends BaseEntity {
     @JoinColumn(name = "leave_type_id")
     private LeaveType leaveType;
 
+    @Enumerated(EnumType.STRING)
+    @Column(name = "leaveLogType", nullable = false)
+    private LeaveLogType leaveLogType;
+
     private String remarks;
 
+    private float leaveAdjustment;
+
+    private float updatedBalance;
+
+    @ManyToOne(fetch = FetchType.EAGER)
+    @JoinColumn(name = "performed_by_id")
+    private User performedBy;
 }

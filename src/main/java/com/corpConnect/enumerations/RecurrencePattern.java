@@ -23,7 +23,7 @@ public enum RecurrencePattern {
         return RecurrencePattern.DAILY;
     }
 
-    public static RecurrencePattern getRecurrencePattern(Integer ordinal){
+    public static RecurrencePattern getRecurrencePattern(Integer ordinal) {
         return RecurrencePattern.values()[ordinal];
     }
 }
