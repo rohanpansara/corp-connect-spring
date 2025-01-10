@@ -34,7 +34,7 @@ public class LeaveLog extends BaseEntity {
     private LeaveType leaveType;
 
     @Enumerated(EnumType.STRING)
-    @Column(name = "leaveLogType", nullable = false)
+    @Column(name = "leave_log_type", nullable = false)
     private LeaveLogType leaveLogType;
 
     private String remarks;

@@ -48,6 +48,7 @@ VALUES
             padding: 20px;
             text-align: center;
             border-radius: 8px 8px 0 0;
+            text-transform: uppercase;
         }
         .welcome-section h2 {
             font-size: 22px;
