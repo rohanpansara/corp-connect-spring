@@ -11,19 +11,19 @@ import java.time.format.FormatStyle;
 @Component
 public class CustomDateTimeFormatter {
 
-    // Converts LocalDateTime to String using MEDIUM format style (e.g. Jul 23, 2024, 10:15:30 AM)
+    // Converts LocalDateTime to String using MEDIUM format style (e.g., Jul 23, 2025, 10:15:30 AM)
     public static String getLocalDateTimeString(LocalDateTime localDateTime) {
         DateTimeFormatter dateTimeFormatter = DateTimeFormatter.ofLocalizedDateTime(FormatStyle.MEDIUM);
         return localDateTime.format(dateTimeFormatter);
     }
 
-    // Converts LocalDateTime to String using MEDIUM format style (e.g. Jul 23, 2024, 10:15:30 AM)
+    // Converts LocalDateTime to String using MEDIUM format style (e.g., Jul 23, 2025, 10:15:30 AM)
     public static String getLocalDateString(LocalDateTime localDateTime) {
         DateTimeFormatter dateTimeFormatter = DateTimeFormatter.ofPattern("dd/MM/yyyy");
         return localDateTime.format(dateTimeFormatter);
     }
 
-    // Converts LocalDate to String using custom pattern
+    // Converts LocalDate to String using a custom pattern
     public static String getLocalDateString(LocalDate localDate) {
         DateTimeFormatter dateTimeFormatter = DateTimeFormatter.ofPattern("dd/MM/yyyy");
         return localDate.format(dateTimeFormatter);
@@ -35,7 +35,7 @@ public class CustomDateTimeFormatter {
         return LocalDateTime.parse(localDateTime, dateTimeFormatter);
     }
 
-    // Converts String to LocalDate using custom pattern
+    // Converts String to LocalDate using a custom pattern
     public static LocalDate getLocalDateObject(String localDate) {
         DateTimeFormatter dateTimeFormatter = DateTimeFormatter.ofPattern("dd/MM/yyyy");
         return LocalDate.parse(localDate, dateTimeFormatter);
