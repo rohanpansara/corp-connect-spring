@@ -132,13 +132,13 @@ public class MeetingRoomServiceImpl implements MeetingRoomService {
     @Override
     public List<MeetingRoom> getAllNonDeletedMeetingRooms() {
         logger.info(LogConstants.getFoundAllMessage("Meeting Room", "get", "deleted check-" + false));
-        return meetingRoomRepository.findByIsDeleted(false);
+        return meetingRoomRepository.findByDeleted(false);
     }
 
     @Override
     public List<MeetingRoom> getAllDeletedMeetingRooms() {
         logger.info(LogConstants.getFoundAllMessage("Meeting Room", "get", "deleted check-" + true));
-        return meetingRoomRepository.findByIsDeleted(true);
+        return meetingRoomRepository.findByDeleted(true);
     }
 
     @Override

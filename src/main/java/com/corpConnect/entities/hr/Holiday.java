@@ -1,7 +1,6 @@
 package com.corpConnect.entities.hr;
 
 import com.corpConnect.entities.common.NameEntity;
-import com.corpConnect.entities.common.NameWithDeleteEntity;
 import com.corpConnect.enumerations.HolidayType;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
@@ -13,7 +12,6 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
-import lombok.ToString;
 import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 
 import java.time.LocalDate;
@@ -36,6 +34,6 @@ public class Holiday extends NameEntity {
     private HolidayType type;
 
     @Column(nullable = false)
-    private boolean isRecurring = false;
+    private boolean recurring = false;
 }
 

@@ -4,9 +4,9 @@ CREATE TABLE IF NOT EXISTS CorpConnect.HR_HOLIDAYS (
     `date` DATE NOT NULL UNIQUE, -- LocalDate (holiday date)
     description LONGTEXT, -- Description of the holiday
     type VARCHAR(50), -- Enum type (HolidayType)
-    isRecurring BOOLEAN NOT NULL DEFAULT false, -- Indicates if the holiday is recurring
-    createdDate TIMESTAMP, -- from BaseEntity (auditing)
-    createdBy VARCHAR(50), -- from BaseEntity (auditing)
-    lastUpdatedDate TIMESTAMP, -- from BaseEntity (auditing)
-    lastUpdatedBy VARCHAR(50) -- from BaseEntity (auditing)
+    recurring BOOLEAN NOT NULL DEFAULT false, -- Indicates if the holiday is recurring
+    created_date TIMESTAMP, -- from BaseEntity (auditing)
+    created_by VARCHAR(50), -- from BaseEntity (auditing)
+    last_updated_date TIMESTAMP, -- from BaseEntity (auditing)
+    last_updated_by VARCHAR(50) -- from BaseEntity (auditing)
 );

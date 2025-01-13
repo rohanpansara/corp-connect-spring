@@ -24,7 +24,10 @@ import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 @Table(name = "HR_MEETING_ROOMS")
 public class MeetingRoom extends NameWithDeleteEntity {
 
+    @Column(name = "building_name")
     private String buildingName;
+
+    @Column(name = "floor_number")
     private Integer floorNumber;
 
     @Column(name = "point_of_contact_id")

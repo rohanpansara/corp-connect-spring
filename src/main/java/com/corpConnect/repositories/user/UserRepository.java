@@ -16,14 +16,14 @@ public interface UserRepository extends JpaRepository<User, Long> {
     User findUserById(Long userId);
     List<User> findByIsAccountNonExpired(boolean isAccountNonExpired);
 
-    List<User> findByIsDeleted(boolean isDeleted);
+    List<User> findByDeleted(boolean isDeleted);
 
     @Modifying
-    @Query("UPDATE User u SET u.isDeleted = true WHERE u.id = :userId")
+    @Query("UPDATE User u SET u.deleted = true WHERE u.id = :userId")
     void setIsDeletedTrueForUserByUserId(@Param("userId") Long userId);
 
     @Modifying
-    @Query("UPDATE User u SET u.isDeleted = true WHERE u.id IN :userIdList")
+    @Query("UPDATE User u SET u.deleted = true WHERE u.id IN :userIdList")
     void setIsDeletedTrueForUserByUserIdList(@Param("userIdList") List<Long> userIdList);
 
     @Query("SELECT u.name FROM User u WHERE u.id = :userId")

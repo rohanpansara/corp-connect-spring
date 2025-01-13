@@ -15,7 +15,7 @@ public class NameWithDeleteEntity extends BaseEntity {
     private String name;
 
     @Column(nullable = false)
-    private boolean isDeleted = false;
+    private boolean deleted = false;
 
     public NameWithDeleteEntity(String name) {
         this();

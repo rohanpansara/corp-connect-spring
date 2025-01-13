@@ -30,12 +30,13 @@ public class RoleDetail extends BaseEntity {
     private User user;
 
     @Enumerated(EnumType.STRING)
-    @Column(name = "userStatus", nullable = false)
+    @Column(name = "user_status", nullable = false)
     private UserStatus userStatus;
 
     @Column(name = "current_job_title_id")
     private JobTitle currentJobTitle;
 
+    @Column(name = "onboarding_date")
     private LocalDate onboardingDate;
 
     @Column(name = "department_id")
@@ -44,19 +45,24 @@ public class RoleDetail extends BaseEntity {
     @Column(name = "reporting_manager_id")
     private User reportingManager;
 
+    @Column(name = "probation_period")
     private String probationPeriod;
+    @Column(name = "probation_end_date")
     private LocalDate probationEndDate;
 
     @Column(name = "work_shift_id")
     private WorkShift workShift;
 
+    @Column(name = "current_projects")
     private String currentProjects;
+    @Column(name = "current_job_responsibilities")
     private String currentJobResponsibilities;
+    @Column(name = "work_location")
     private String workLocation;
 
     @Column(name = "referred_by")
     private User referredBy;
 
-    private Boolean isDeleted;
+    private Boolean deleted;
 
 }

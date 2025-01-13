@@ -125,12 +125,12 @@ public class JobTitleServiceImpl implements JobTitleService {
 
     @Override
     public List<JobTitle> getAllNonDeletedJobTitles() {
-        return jobTitleRepository.findByIsDeleted(false);
+        return jobTitleRepository.findByDeleted(false);
     }
 
     @Override
     public List<JobTitle> getAllDeletedJobTitles() {
-        return jobTitleRepository.findByIsDeleted(true);
+        return jobTitleRepository.findByDeleted(true);
     }
 
     @Override

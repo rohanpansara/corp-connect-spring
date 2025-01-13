@@ -3,9 +3,9 @@ CREATE TABLE IF NOT EXISTS COMPANY_EMAIL_TEMPLATES (
     name VARCHAR(150) NOT NULL UNIQUE, -- From NameWithDeleteEntity
     subject VARCHAR(255) NOT NULL, -- Subject field for the email template
     body LONGTEXT NOT NULL, -- Body field for the email template
-    isDeleted BOOLEAN NOT NULL DEFAULT false, -- From NameWithDeleteEntity
-    createdDate TIMESTAMP, -- Auditing field
-    createdBy VARCHAR(50), -- Auditing field
-    lastUpdatedDate TIMESTAMP, -- Auditing field
-    lastUpdatedBy VARCHAR(50) -- Auditing field
+    deleted BOOLEAN NOT NULL DEFAULT false, -- From NameWithDeleteEntity
+    created_date TIMESTAMP, -- from BaseEntity (auditing)
+    created_by VARCHAR(50), -- from BaseEntity (auditing)
+    last_updated_date TIMESTAMP, -- from BaseEntity (auditing)
+    last_updated_by VARCHAR(50) -- from BaseEntity (auditing)
 );

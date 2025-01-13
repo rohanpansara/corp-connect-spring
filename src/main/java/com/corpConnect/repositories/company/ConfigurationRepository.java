@@ -9,12 +9,12 @@ import java.util.List;
 @Repository
 public interface ConfigurationRepository extends JpaRepository<Configuration, Long> {
 
-    Configuration findByNameIgnoreCaseAndIsDeleted(String name, boolean isDeleted);
+    Configuration findByNameIgnoreCaseAndDeleted(String name, boolean isDeleted);
     String getMaxValueByName(String name);
     String getMinValueByName(String name);
 
-    List<Configuration> findByIsEnabled(boolean isEnabled);
-    List<Configuration> findByIsDeleted(boolean isDeleted);
+    List<Configuration> findByEnabled(boolean isEnabled);
+    List<Configuration> findByDeleted(boolean isDeleted);
 
     boolean existsEnabledByName(String name);
     boolean existsDeletedByName(String name);

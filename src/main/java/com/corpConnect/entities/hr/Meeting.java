@@ -37,7 +37,10 @@ public class Meeting extends NameEntity {
     @JoinColumn(name = "meeting_room_id")
     private MeetingRoom meetingRoom;
 
+    @Column(name = "start_time")
     private LocalDateTime startTime;
+
+    @Column(name = "end_time")
     private LocalDateTime endTime;
 
     private String description;
@@ -49,12 +52,14 @@ public class Meeting extends NameEntity {
     private boolean recurring;
 
     @Enumerated(EnumType.STRING)
-    @Column(name = "recurrencePattern", nullable = false)
+    @Column(name = "recurrence_pattern", nullable = false)
     private RecurrencePattern recurrencePattern;
 
     private boolean virtual;
 
     private boolean secured;
+
+    @Column(name = "access_code")
     private String accessCode;
 
 }

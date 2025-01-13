@@ -133,13 +133,13 @@ public class ConfigurationServiceImpl implements ConfigurationService {
     @Override
     public List<Configuration> getAllNonDeletedConfigurations() {
         logger.info(LogConstants.getFoundAllMessage("Configuration", "get", "deleted check-" + false));
-        return configurationRepository.findByIsDeleted(false);
+        return configurationRepository.findByDeleted(false);
     }
 
     @Override
     public List<Configuration> getAllDeletedConfigurations() {
         logger.info(LogConstants.getFoundAllMessage("Configuration", "get", "deleted check-" + true));
-        return configurationRepository.findByIsDeleted(true);
+        return configurationRepository.findByDeleted(true);
     }
 
     @Override
@@ -154,6 +154,6 @@ public class ConfigurationServiceImpl implements ConfigurationService {
 
     @Override
     public Configuration getNonDeletedConfigurationByName(String configurationName) {
-        return configurationRepository.findByNameIgnoreCaseAndIsDeleted(configurationName, false);
+        return configurationRepository.findByNameIgnoreCaseAndDeleted(configurationName, false);
     }
 }

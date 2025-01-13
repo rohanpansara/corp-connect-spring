@@ -136,13 +136,13 @@ public class UserServiceImpl implements UserService {
     @Override
     public List<User> getAllNonDeletedUsers() {
         logger.info(LogConstants.getFoundAllMessage("User", "get", "deleted check-" + false));
-        return userRepository.findByIsDeleted(false);
+        return userRepository.findByDeleted(false);
     }
 
     @Override
     public List<User> getAllDeletedUsers() {
         logger.info(LogConstants.getFoundAllMessage("User", "get", "deleted check-" + true));
-        return userRepository.findByIsDeleted(true);
+        return userRepository.findByDeleted(true);
     }
 
     @Override

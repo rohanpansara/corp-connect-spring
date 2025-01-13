@@ -4,15 +4,15 @@ CREATE TABLE IF NOT EXISTS CorpConnect.`USERS` (
     email VARCHAR(255) NOT NULL UNIQUE, -- from User
     password VARCHAR(255) NOT NULL, -- from User
     roles VARCHAR(50) NOT NULL, -- Enum type (UserRole)
-    loginAttempts INT DEFAULT 0, -- from User
-    isDeleted BOOLEAN NOT NULL DEFAULT false, -- Indicates if the user is soft deleted
-    isAccountNonExpired BOOLEAN NOT NULL, -- from User
-    isAccountNonLocked BOOLEAN NOT NULL, -- from User
-    isCredentialsNonExpired BOOLEAN NOT NULL, -- from User
-    isAccountEnabled BOOLEAN NOT NULL, -- from User
-    createdDate TIMESTAMP, -- from BaseEntity (auditing)
-    createdBy VARCHAR(50), -- from BaseEntity (auditing)
-    lastUpdatedDate TIMESTAMP, -- from BaseEntity (auditing)
-    lastUpdatedBy VARCHAR(50), -- from BaseEntity (auditing)
+    login_attempts INT DEFAULT 0, -- from User
+    deleted BOOLEAN NOT NULL DEFAULT false, -- Indicates if the user is soft deleted
+    is_account_non_expired BOOLEAN NOT NULL, -- from User
+    is_account_non_locked BOOLEAN NOT NULL, -- from User
+    is_credentials_non_expired BOOLEAN NOT NULL, -- from User
+    is_account_enabled BOOLEAN NOT NULL, -- from User
+    created_date TIMESTAMP, -- from BaseEntity (auditing)
+    created_by VARCHAR(50), -- from BaseEntity (auditing)
+    last_updated_date TIMESTAMP, -- from BaseEntity (auditing)
+    last_updated_by VARCHAR(50), -- from BaseEntity (auditing)
     INDEX IDX_NAME (name) -- index on the name field
 );

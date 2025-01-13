@@ -3,9 +3,9 @@ CREATE TABLE IF NOT EXISTS CorpConnect.HR_JOB_TITLES (
     name VARCHAR(150) NOT NULL UNIQUE, -- assuming name is inherited from NameWithDeleteEntity
     grade VARCHAR(50), -- grade field
     description LONGTEXT, -- description field
-    isDeleted BOOLEAN NOT NULL DEFAULT false, -- Indicates if the job title is logically deleted
-    createdDate TIMESTAMP, -- from BaseEntity (auditing)
-    createdBy VARCHAR(50), -- from BaseEntity (auditing)
-    lastUpdatedDate TIMESTAMP, -- from BaseEntity (auditing)
-    lastUpdatedBy VARCHAR(50) -- from BaseEntity (auditing)
+    deleted BOOLEAN NOT NULL DEFAULT false, -- Indicates if the job title is logically deleted
+    created_date TIMESTAMP, -- from BaseEntity (auditing)
+    created_by VARCHAR(50), -- from BaseEntity (auditing)
+    last_updated_date TIMESTAMP, -- from BaseEntity (auditing)
+    last_updated_by VARCHAR(50) -- from BaseEntity (auditing)
 );

@@ -9,7 +9,7 @@ import java.util.List;
 @Repository
 public interface DepartmentRepository extends JpaRepository<Department, Long> {
 
-    List<Department> findByIsDeleted(boolean isDeleted);
+    List<Department> findByDeleted(boolean isDeleted);
     List<Department> findByNameContaining(String name);
 
 }

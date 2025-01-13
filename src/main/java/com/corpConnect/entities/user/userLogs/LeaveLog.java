@@ -39,8 +39,10 @@ public class LeaveLog extends BaseEntity {
 
     private String remarks;
 
+    @Column(name = "leave_adjustment")
     private float leaveAdjustment;
 
+    @Column(name = "updated_balance")
     private float updatedBalance;
 
     @ManyToOne(fetch = FetchType.EAGER)

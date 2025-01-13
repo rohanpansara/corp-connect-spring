@@ -31,10 +31,11 @@ public class PunchDetail extends BaseEntity {
     @JoinColumn(name = "user_id")
     private User user;
 
+    @Column(name = "punch_time")
     private LocalDateTime punchTime;
 
     @Enumerated(EnumType.STRING)
-    @Column(name = "punchType", nullable = false)
+    @Column(name = "punch_type", nullable = false)
     private PunchType punchType;
 
     @ManyToOne(fetch = FetchType.EAGER)

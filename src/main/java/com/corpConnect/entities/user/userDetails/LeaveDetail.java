@@ -39,9 +39,12 @@ public class LeaveDetail extends BaseEntity {
     @JoinColumn(name = "leave_type_id")
     private LeaveType type;
 
+    @Column(name = "start_date")
     private LocalDate startDate;
+    @Column(name = "end_date")
     private LocalDate endDate;
 
+    @Column(name = "total_days")
     private Integer totalDays;
 
     @ManyToOne(fetch = FetchType.EAGER)

@@ -10,7 +10,7 @@ import java.util.List;
 public interface JobTitleRepository extends JpaRepository<JobTitle, Long> {
 
     List<JobTitle> findByGrade(String grade);
-    List<JobTitle> findByIsDeleted(boolean isDeleted);
+    List<JobTitle> findByDeleted(boolean isDeleted);
     List<JobTitle> findByNameContaining(String jobTitleName);
 
 }

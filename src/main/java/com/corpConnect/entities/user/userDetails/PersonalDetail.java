@@ -29,9 +29,13 @@ public class PersonalDetail extends BaseEntity {
     private Gender gender;
 
     private LocalDate birthdate;
+    @Column(name = "contact_number")
     private String contactNumber;
     private String address;
+    @Column(name = "personal_email")
     private String personalEmail;
+    @Column(name = "emergency_contact_name")
     private String emergencyContactName;
+    @Column(name = "emergency_contact_number")
     private String emergencyContactNumber;
 }

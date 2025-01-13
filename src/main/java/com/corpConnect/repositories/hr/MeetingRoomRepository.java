@@ -13,7 +13,7 @@ public interface MeetingRoomRepository extends JpaRepository<MeetingRoom, Long> 
     MeetingRoom findMeetingRoomById(Long meetingRoomId);
     MeetingRoom findByNameContaining(String name);
 
-    List<MeetingRoom> findByIsDeleted(boolean isDeleted);
+    List<MeetingRoom> findByDeleted(boolean isDeleted);
 
     List<MeetingRoom> findByFloorNumber(Integer floorNumber);
     List<MeetingRoom> findByPointOfContact(User pointOfContact);

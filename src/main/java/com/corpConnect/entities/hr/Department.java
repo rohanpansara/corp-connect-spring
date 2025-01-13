@@ -37,6 +37,8 @@ public class Department extends NameWithDeleteEntity {
 
     private String code;
     private String location;
+
+    @Column(name = "phone_extension")
     private String phoneExtension;
 
     @OneToMany(mappedBy = "department", cascade = CascadeType.ALL, orphanRemoval = true)

@@ -132,13 +132,13 @@ public class DepartmentServiceImpl implements DepartmentService {
     @Override
     public List<Department> getAllNonDeletedDepartments() {
         logger.info(LogConstants.getFoundAllMessage("Department", "get", "deleted check-"+ true));
-        return departmentRepository.findByIsDeleted(false);
+        return departmentRepository.findByDeleted(false);
     }
 
     @Override
     public List<Department> getAllDeletedDepartments() {
         logger.info(LogConstants.getFoundAllMessage("Department", "get", "deleted check-"+ false));
-        return departmentRepository.findByIsDeleted(true);
+        return departmentRepository.findByDeleted(true);
     }
 
     @Override

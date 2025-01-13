@@ -5,6 +5,7 @@ import lombok.Getter;
 @Getter
 public enum AttendanceStatus {
     PRESENT("Present"),
+    PRESENT_HALF_DAY("Present Half Day"),
     ABSENT("Absent"),
     UNDER_REVIEW("Under Review");
 
