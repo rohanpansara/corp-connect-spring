@@ -1,5 +1,6 @@
 package com.corpConnect.entities.common;
 
+import jakarta.persistence.Column;
 import jakarta.persistence.EntityListeners;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
@@ -30,15 +31,19 @@ public abstract class BaseEntity implements Comparable<BaseEntity>, Serializable
     private Long id;
 
     @LastModifiedBy
+    @Column(name = "last_updated_by")
     private String lastUpdatedBy;
 
     @CreatedBy
+    @Column(name = "created_by")
     private String createdBy;
 
     @LastModifiedDate
+    @Column(name = "last_updated_date")
     private LocalDateTime lastUpdatedDate;
 
     @CreatedDate
+    @Column(name = "created_date")
     private LocalDateTime createdDate;
 
     @Override

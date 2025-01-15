@@ -14,6 +14,7 @@ import org.springframework.scheduling.annotation.Async;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDate;
+import java.util.Optional;
 
 @Service
 @RequiredArgsConstructor
@@ -27,11 +28,15 @@ public class EmailServiceImpl implements EmailService {
     @Async
     @Override
     public void sendWelcomeEmail(String toEmail, String name) {
-        EmailTemplate template = emailTemplateRepository.findByName("welcome");
-        String subject = template.getSubject()
+        Optional<EmailTemplate> template = emailTemplateRepository.findByName("welcome");
+        if (template.isEmpty()) {
+            logger.error("'Welcome' email template not found");
+            return;
+        }
+        String subject = template.get().getSubject()
                 .replace("{{employeeName}}", name);
 
-        String body = template.getBody()
+        String body = template.get().getBody()
                 .replace("{{employeeName}}", name)
                 .replace("{{companyName}}", "Corp Connect")
                 .replace("{{employeePortalLink}}", "https://employeeportal.com")

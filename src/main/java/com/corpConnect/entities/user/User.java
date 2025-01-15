@@ -46,10 +46,15 @@ public class User extends NameWithDeleteEntity implements UserDetails {
     @Column(name = "roles", nullable = false)
     private UserRole roles;
 
+    @Column(name = "login_attempts")
     private Integer loginAttempts = 0;
+    @Column(name = "is_account_non_expired")
     private boolean isAccountNonExpired;
+    @Column(name = "is_account_non_locked")
     private boolean isAccountNonLocked;
+    @Column(name = "is_credentials_non_expired")
     private boolean isCredentialsNonExpired;
+    @Column(name = "is_account_enabled")
     private boolean isAccountEnabled;
 
     @OneToMany(mappedBy = "user", cascade = CascadeType.ALL, orphanRemoval = true)

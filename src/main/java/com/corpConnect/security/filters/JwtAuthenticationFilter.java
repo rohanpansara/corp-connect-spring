@@ -36,7 +36,8 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
     private static final String[] PUBLIC_URLS = {
             "/user/login",
             "/user/logout",
-            "/user/validate-token"
+            "/user/validate-token",
+            "/user/new-user"
     };
 
 

@@ -1,9 +1,12 @@
 package com.corpConnect.controllers;
 
 import com.corpConnect.dtos.common.ResponseDTO;
+import com.corpConnect.dtos.user.UserDTO;
+import com.corpConnect.exceptions.client.LoginFailedException;
 import com.corpConnect.exceptions.common.BaseException;
 import com.corpConnect.security.dtos.AuthRequestDTO;
 import com.corpConnect.security.dtos.AuthResponseDTO;
+import com.corpConnect.security.dtos.NewUserDTO;
 import com.corpConnect.security.services.AuthenticationService;
 import com.corpConnect.services.CookieService;
 import com.corpConnect.utils.constants.LogConstants;
@@ -35,6 +38,12 @@ public class AuthController {
     private final AuthenticationService authenticationService;
     private final CookieUtils cookieUtils;
     private final CookieService cookieService;
+
+    // TODO: remove this once the user table is final
+    @PostMapping(value = "/new-user")
+    public ResponseEntity<ResponseDTO<UserDTO>> addNewUser(@RequestBody NewUserDTO newUserDTO) throws LoginFailedException {
+        return ResponseEntity.ok(ResponseDTO.success(MessageConstants.UserSuccess.USER_CREATED, authenticationService.addNewUser(newUserDTO)));
+    }
 
     @PostMapping(value = "/login")
     public ResponseEntity<ResponseDTO<AuthResponseDTO>> loginUser(@RequestBody AuthRequestDTO authRequestDTO) throws BaseException {
