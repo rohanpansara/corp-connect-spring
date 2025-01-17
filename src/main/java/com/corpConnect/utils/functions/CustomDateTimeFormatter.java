@@ -17,7 +17,7 @@ public class CustomDateTimeFormatter {
         return localDateTime.format(dateTimeFormatter);
     }
 
-    // Converts LocalDateTime to String using MEDIUM format style (e.g., Jul 23, 2025, 10:15:30 AM)
+    // Converts LocalDateTime to date string using a custom pattern
     public static String getLocalDateString(LocalDateTime localDateTime) {
         DateTimeFormatter dateTimeFormatter = DateTimeFormatter.ofPattern("dd/MM/yyyy");
         return localDateTime.format(dateTimeFormatter);
