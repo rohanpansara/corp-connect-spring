@@ -40,7 +40,7 @@ public class JobTitleController {
     }
 
     @PostMapping
-    @PreAuthorize("hasAuthority('hr_admin:create')")
+    @PreAuthorize("hasAuthority('hr_manager:create')")
     public ResponseEntity<ResponseDTO<Void>> createJobTitle(@RequestBody JobTitleDTO jobTitleDTO) {
         jobTitleService.createJobTitles(jobTitleDTO);
         return ResponseEntity.ok(ResponseDTO.success(MessageConstants.JobTitle.JOB_TITLE_CREATED));
@@ -54,14 +54,14 @@ public class JobTitleController {
     }
 
     @DeleteMapping(value = "/{jobTitleId}")
-    @PreAuthorize("hasAuthority('hr_admin:delete')")
+    @PreAuthorize("hasAuthority('hr_manager:delete')")
     public ResponseEntity<ResponseDTO<Void>> softDeleteJobTitle(@PathVariable("jobTitleId") Long jobTitleId) {
         jobTitleService.deleteJobTitlesById(jobTitleId, false);
         return ResponseEntity.ok(ResponseDTO.success(MessageConstants.JobTitle.JOB_TITLE_DELETED));
     }
 
     @DeleteMapping(value = "/{jobTitleId}/permanent")
-    @PreAuthorize("hasAuthority('hr_admin:delete')")
+    @PreAuthorize("hasAuthority('hr_manager:delete')")
     public ResponseEntity<ResponseDTO<Void>> permanentDeleteJobTitle(@PathVariable("jobTitleId") Long jobTitleId) {
         jobTitleService.deleteJobTitlesById(jobTitleId, true);
         return ResponseEntity.ok(ResponseDTO.success(MessageConstants.JobTitle.JOB_TITLE_DELETED_PERMANENTLY));

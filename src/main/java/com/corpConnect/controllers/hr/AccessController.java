@@ -21,7 +21,7 @@ import org.springframework.web.bind.annotation.RestController;
 @RestController
 @RequiredArgsConstructor
 @RequestMapping("/hr/access-control")
-@PreAuthorize("hasRole('HR_ADMIN')")
+@PreAuthorize("hasRole('HR_MANAGER')")
 public class AccessController {
 
     private final UserService userService;
@@ -34,7 +34,7 @@ public class AccessController {
     }
 
     @PatchMapping("/{userId}/enable-account")
-    @PreAuthorize("hasAuthority('hr_admin:update')")
+    @PreAuthorize("hasAuthority('hr_manager:update')")
     public ResponseEntity<ResponseDTO<String>> enableAccountByUserId(@PathVariable("userId") Long userId, @RequestParam(name = "toBeDisabled", required = false) Boolean toBeDisabled){
         if(Boolean.TRUE.equals(toBeDisabled)) {
             userService.disableUserAccount(userId);
@@ -46,7 +46,7 @@ public class AccessController {
     }
 
     @PatchMapping("/{userId}/unlock-account")
-    @PreAuthorize("hasAuthority('hr_admin:update')")
+    @PreAuthorize("hasAuthority('hr_manager:update')")
     public ResponseEntity<ResponseDTO<String>> unlockAccountByUserId(@PathVariable("userId") Long userId, @RequestParam(name = "toBeLocked", required = false) Boolean toBeLocked){
         if(Boolean.TRUE.equals(toBeLocked)) {
             userService.lockUserAccount(userId);

@@ -41,21 +41,21 @@ public class WorkShiftController {
     }
 
     @PostMapping
-    @PreAuthorize("hasAuthority('hr_admin:create')")
+    @PreAuthorize("hasAuthority('hr_manager:create')")
     public ResponseEntity<ResponseDTO<Void>> createWorkShift(@Valid @RequestBody WorkShiftDTO workShiftDTO) {
         workShiftService.createWorkShift(workShiftDTO);
         return ResponseEntity.ok(ResponseDTO.success(MessageConstants.WorkShift.WORK_SHIFT_CREATED));
     }
 
     @PutMapping(value = "/{workShiftId}")
-    @PreAuthorize("hasAuthority('hr_admin:update')")
+    @PreAuthorize("hasAuthority('hr_manager:update')")
     public ResponseEntity<ResponseDTO<Void>> updateWorkShift(@PathVariable("workShiftId") Long oldWorkShiftId, @Valid @RequestBody WorkShiftDTO newWorkShiftDTO) {
         workShiftService.updateWorkShift(oldWorkShiftId, newWorkShiftDTO);
         return ResponseEntity.ok(ResponseDTO.success(MessageConstants.WorkShift.WORK_SHIFT_UPDATED));
     }
 
     @DeleteMapping(value = "/{workShiftId}")
-    @PreAuthorize("hasAuthority('hr_admin:delete')")
+    @PreAuthorize("hasAuthority('hr_manager:delete')")
     public ResponseEntity<ResponseDTO<Void>> softDeleteWorkShift(@PathVariable("workShiftId") Long workShiftId) {
         workShiftService.deleteWorkShiftById(workShiftId);
         return ResponseEntity.ok(ResponseDTO.success(MessageConstants.WorkShift.WORK_SHIFT_DELETED));

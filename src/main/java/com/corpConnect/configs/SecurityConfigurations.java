@@ -19,7 +19,6 @@ import static com.corpConnect.security.utils.UserPermission.ADMIN_CREATE;
 import static com.corpConnect.security.utils.UserPermission.ADMIN_DELETE;
 import static com.corpConnect.security.utils.UserPermission.ADMIN_READ;
 import static com.corpConnect.security.utils.UserPermission.ADMIN_UPDATE;
-import static com.corpConnect.security.utils.UserPermission.HR_ADMIN_CREATE;
 import static com.corpConnect.security.utils.UserPermission.HR_MANAGER_CREATE;
 import static com.corpConnect.security.utils.UserPermission.PMS_MANAGER_CREATE;
 import static com.corpConnect.security.utils.UserPermission.PMS_MANAGER_DELETE;
@@ -58,7 +57,7 @@ public class SecurityConfigurations {
                         req.requestMatchers(publicUrls).permitAll()
                            .requestMatchers("/api/auth/**").hasAnyRole(ADMIN.name(), PMS_MANAGER.name())
                            .requestMatchers(GET, "/api/auth/**").hasAnyAuthority(ADMIN_READ.name(), PMS_MANAGER_READ.name())
-                           .requestMatchers(POST, "/api/auth/**").hasAnyAuthority(ADMIN_CREATE.name(), PMS_MANAGER_CREATE.name(), HR_ADMIN_CREATE.name(), HR_MANAGER_CREATE.name())
+                           .requestMatchers(POST, "/api/auth/**").hasAnyAuthority(ADMIN_CREATE.name(), PMS_MANAGER_CREATE.name(), HR_MANAGER_CREATE.name())
                            .requestMatchers(PUT, "/api/auth/**").hasAnyAuthority(ADMIN_UPDATE.name(), PMS_MANAGER_UPDATE.name())
                            .requestMatchers(DELETE, "/api/auth/**").hasAnyAuthority(ADMIN_DELETE.name(), PMS_MANAGER_DELETE.name())
                            .anyRequest()

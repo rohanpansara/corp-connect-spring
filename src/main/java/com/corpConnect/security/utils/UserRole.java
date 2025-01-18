@@ -27,11 +27,6 @@ public enum UserRole {
             PMS_MANAGER_DELETE,
             PMS_MANAGER_CREATE,
 
-            HR_ADMIN_READ,          // HR Admin rights
-            HR_ADMIN_UPDATE,
-            HR_ADMIN_DELETE,
-            HR_ADMIN_CREATE,
-
             HR_MANAGER_READ,        // HR Manager rights
             HR_MANAGER_UPDATE,
             HR_MANAGER_DELETE,
@@ -48,23 +43,6 @@ public enum UserRole {
             PMS_MANAGER_UPDATE,
             PMS_MANAGER_DELETE,
             PMS_MANAGER_CREATE,
-
-            USER_READ,              // User rights
-            USER_UPDATE,
-            USER_DELETE,
-            USER_CREATE
-    )),
-
-    HR_ADMIN("HR Admin", Set.of(
-            HR_ADMIN_READ,
-            HR_ADMIN_UPDATE,
-            HR_ADMIN_DELETE,
-            HR_ADMIN_CREATE,
-
-            HR_MANAGER_READ,        // HR Manager rights
-            HR_MANAGER_UPDATE,
-            HR_MANAGER_DELETE,
-            HR_MANAGER_CREATE,
 
             USER_READ,              // User rights
             USER_UPDATE,

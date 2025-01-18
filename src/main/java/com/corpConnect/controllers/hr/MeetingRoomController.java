@@ -39,7 +39,7 @@ public class MeetingRoomController {
     }
 
     @PostMapping
-    @PreAuthorize("hasAuthority('hr_admin:create')")
+    @PreAuthorize("hasAuthority('hr_manager:create')")
     public ResponseEntity<ResponseDTO<Void>> createMeetingRoom(@Valid @RequestBody MeetingRoomDTO meetingRoomDTO) {
         meetingRoomService.createMeetingRoom(meetingRoomDTO);
         return ResponseEntity.ok(ResponseDTO.success(MessageConstants.MeetingRoom.MEETING_ROOM_CREATED));
