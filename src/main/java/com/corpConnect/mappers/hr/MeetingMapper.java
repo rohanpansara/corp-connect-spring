@@ -26,7 +26,7 @@ import java.util.Objects;
 @Mapper(unmappedTargetPolicy = ReportingPolicy.IGNORE, componentModel = "spring")
 public abstract class MeetingMapper {
 
-    private static final Logger logger = LoggerFactory.getLogger(MeetingRoomMapper.class);
+    private static final Logger logger = LoggerFactory.getLogger(MeetingMapper.class);
 
     @Autowired
     private UserRepository userRepository;
