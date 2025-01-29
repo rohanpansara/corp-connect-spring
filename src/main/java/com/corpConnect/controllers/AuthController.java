@@ -9,6 +9,7 @@ import com.corpConnect.security.dtos.AuthResponseDTO;
 import com.corpConnect.security.dtos.NewUserDTO;
 import com.corpConnect.security.services.AuthenticationService;
 import com.corpConnect.services.CookieService;
+import com.corpConnect.utils.constants.CookieConstants;
 import com.corpConnect.utils.constants.LogConstants;
 import com.corpConnect.utils.constants.MessageConstants;
 import com.corpConnect.utils.functions.CookieUtils;
@@ -85,8 +86,8 @@ public class AuthController {
 
     @GetMapping("/validate-token")
     public ResponseEntity<ResponseDTO<Boolean>> validateUserToken(HttpServletRequest request) {
-        String token = cookieUtils.getCookieValueByName(request, "Token");
-        String userId = cookieUtils.getCookieValueByName(request, "User_Id");
+        String token = cookieUtils.getCookieValueByName(request, CookieConstants.TOKEN_COOKIE_NAME);
+        String userId = cookieUtils.getCookieValueByName(request, CookieConstants.USER_ID_COOKIE_NAME);
 
         if (token != null && !token.isEmpty() && authenticationService.isTokenValid(token, userId)) {
             logger.info(LogConstants.getSessionVerifiedForToken(token, true));

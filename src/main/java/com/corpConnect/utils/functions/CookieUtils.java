@@ -1,7 +1,6 @@
 package com.corpConnect.utils.functions;
 
 import com.corpConnect.security.CorpConnectUserContext;
-import com.corpConnect.security.dtos.AuthResponseDTO;
 import jakarta.servlet.http.Cookie;
 import jakarta.servlet.http.HttpServletRequest;
 import org.slf4j.Logger;

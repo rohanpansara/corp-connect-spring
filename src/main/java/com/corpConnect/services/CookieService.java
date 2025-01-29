@@ -1,6 +1,7 @@
 package com.corpConnect.services;
 
 import com.corpConnect.security.dtos.AuthResponseDTO;
+import com.corpConnect.utils.constants.CookieConstants;
 import com.corpConnect.utils.functions.CookieUtils;
 import org.springframework.http.ResponseCookie;
 import org.springframework.stereotype.Service;
@@ -20,15 +21,15 @@ public class CookieService {
     }
 
     public List<ResponseCookie> generateAuthCookies(AuthResponseDTO response) {
-        ResponseCookie tokenCookie = cookieUtils.generateCookie("Token",
+        ResponseCookie tokenCookie = cookieUtils.generateCookie(CookieConstants.TOKEN_COOKIE_NAME,
                 URLEncoder.encode(response.getAccessToken(), StandardCharsets.UTF_8), PUBLIC_PATH);
-        ResponseCookie userNameCookie = cookieUtils.generateCookie("User_Name",
+        ResponseCookie userNameCookie = cookieUtils.generateCookie(CookieConstants.USER_NAME_COOKIE_NAME,
                 URLEncoder.encode(response.getUser().getName(), StandardCharsets.UTF_8), PUBLIC_PATH);
-        ResponseCookie userIdCookie = cookieUtils.generateCookie("User_Id",
+        ResponseCookie userIdCookie = cookieUtils.generateCookie(CookieConstants.USER_ID_COOKIE_NAME,
                 URLEncoder.encode(String.valueOf(response.getUser().getId()), StandardCharsets.UTF_8), PUBLIC_PATH);
-        ResponseCookie roleCookie = cookieUtils.generateCookie("User_Role",
+        ResponseCookie roleCookie = cookieUtils.generateCookie(CookieConstants.USER_ROLE_COOKIE_NAME,
                 URLEncoder.encode(response.getUser().getRoles(), StandardCharsets.UTF_8), PUBLIC_PATH);
-        ResponseCookie permissionCookie = cookieUtils.generateCookie("User_Permission",
+        ResponseCookie permissionCookie = cookieUtils.generateCookie(CookieConstants.USER_PERMISSION_COOKIE_NAME,
                 URLEncoder.encode(String.join("-", response.getUser().getPermissions()), StandardCharsets.UTF_8), PUBLIC_PATH);
 
         return List.of(tokenCookie, userNameCookie, userIdCookie, roleCookie, permissionCookie);
@@ -36,11 +37,11 @@ public class CookieService {
 
 
     public List<ResponseCookie> clearAuthCookies(){
-        ResponseCookie tokenCookie = cookieUtils.clearCookie("Token", PUBLIC_PATH);
-        ResponseCookie userIdCookie = cookieUtils.clearCookie("User_Id", PUBLIC_PATH);
-        ResponseCookie userNameCookie = cookieUtils.clearCookie("User_Name", PUBLIC_PATH);
-        ResponseCookie roleCookie = cookieUtils.clearCookie("User_Role", PUBLIC_PATH);
-        ResponseCookie permissionCookie = cookieUtils.clearCookie("User_Permission", PUBLIC_PATH);
+        ResponseCookie tokenCookie = cookieUtils.clearCookie(CookieConstants.TOKEN_COOKIE_NAME, PUBLIC_PATH);
+        ResponseCookie userIdCookie = cookieUtils.clearCookie(CookieConstants.USER_ID_COOKIE_NAME, PUBLIC_PATH);
+        ResponseCookie userNameCookie = cookieUtils.clearCookie(CookieConstants.USER_NAME_COOKIE_NAME, PUBLIC_PATH);
+        ResponseCookie roleCookie = cookieUtils.clearCookie(CookieConstants.USER_ROLE_COOKIE_NAME, PUBLIC_PATH);
+        ResponseCookie permissionCookie = cookieUtils.clearCookie(CookieConstants.USER_PERMISSION_COOKIE_NAME, PUBLIC_PATH);
 
         return List.of(tokenCookie, roleCookie, permissionCookie);
     }
