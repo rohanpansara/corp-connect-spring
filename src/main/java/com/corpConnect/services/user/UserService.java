@@ -20,8 +20,6 @@ public interface UserService {
 
     // User Repository
     User finalSave(User user);
-    void deleteUserByUserId(Long userId);
-    void deleteUsersByUserIdList(List<Long> userIdList);
     User getUserByEmail(String email);
     User getUserByUserId(Long userId);
     String getUsernameByUserId(Long userId);
@@ -29,6 +27,9 @@ public interface UserService {
     List<User> getAllUsers(Boolean isDeleted);
     List<User> getAllNonDeletedUsers();
     List<User> getAllDeletedUsers();
+    User updateUserByUserIdAndUserDTO(Long userId, UserDTO userDTO);
+    void deleteUserByUserId(Long userId);
+    void deleteUsersByUserIdList(List<Long> userIdList);
 
     // Dashboard
     LeftSideCardsDTO getLeftSideCards();

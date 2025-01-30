@@ -80,23 +80,6 @@ public class UserServiceImpl implements UserService {
         return userRepository.save(user);
     }
 
-    @Transactional
-    @Override
-    public void deleteUserByUserId(Long userId) {
-        if (!userRepository.existsById(userId)) {
-            throw new UserNotFoundException(MessageConstants.UserError.USER_NOT_FOUND);
-        }
-        userRepository.setIsDeletedTrueForUserByUserId(userId);
-    }
-
-    @Transactional
-    @Override
-    public void deleteUsersByUserIdList(List<Long> userIdList) {
-        if (!userIdList.isEmpty()) {
-            userRepository.setIsDeletedTrueForUserByUserIdList(userIdList);
-        }
-    }
-
     @Override
     public User getUserByEmail(String email) {
         Optional<User> foundUser = userRepository.findByEmail(email);
@@ -143,6 +126,28 @@ public class UserServiceImpl implements UserService {
     public List<User> getAllDeletedUsers() {
         logger.info(LogConstants.getFoundAllMessage("User", "get", "deleted check-" + true));
         return userRepository.findByDeleted(true);
+    }
+
+    @Override
+    public User updateUserByUserIdAndUserDTO(Long userId, UserDTO userDTO) {
+        return null;
+    }
+
+    @Transactional
+    @Override
+    public void deleteUserByUserId(Long userId) {
+        if (!userRepository.existsById(userId)) {
+            throw new UserNotFoundException(MessageConstants.UserError.USER_NOT_FOUND);
+        }
+        userRepository.setIsDeletedTrueForUserByUserId(userId);
+    }
+
+    @Transactional
+    @Override
+    public void deleteUsersByUserIdList(List<Long> userIdList) {
+        if (!userIdList.isEmpty()) {
+            userRepository.setIsDeletedTrueForUserByUserIdList(userIdList);
+        }
     }
 
     @Override

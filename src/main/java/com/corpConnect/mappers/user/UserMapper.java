@@ -80,17 +80,13 @@ public abstract class UserMapper {
     protected void stringFormatting(User user, @MappingTarget UserDTO userDTO) {
         userDTO.setRoles(user.getRoles().getLabel());
         userDTO.setPermissions(user.getRoles().getPermissionStrings());
-        userDTO.setIsAccountEnabled(this.setBooleanString(user.isAccountEnabled()));
-        userDTO.setIsAccountNonExpired(this.setBooleanString(user.isAccountNonExpired()));
-        userDTO.setIsAccountNonLocked(this.setBooleanString(user.isAccountNonLocked()));
-        userDTO.setIsCredentialsNonExpired(this.setBooleanString(user.isCredentialsNonExpired()));
+        userDTO.setIsAccountEnabled(String.valueOf(user.isAccountEnabled()));
+        userDTO.setIsAccountNonExpired(String.valueOf(user.isAccountNonExpired()));
+        userDTO.setIsAccountNonLocked(String.valueOf(user.isAccountNonLocked()));
+        userDTO.setIsCredentialsNonExpired(String.valueOf(user.isCredentialsNonExpired()));
         userDTO.setCreatedDate(CustomDateTimeFormatter.getFormatedDateTimeByIntensity(user.getCreatedDate()));
         userDTO.setLastUpdatedDate(CustomDateTimeFormatter.getFormatedDateTimeByIntensity(user.getLastUpdatedDate()));
         userDTO.setLastUpdatedBy(userService.getUsernameByUserId(user.getId()));
-    }
-
-    private String setBooleanString(Boolean bool) {
-        return bool ? "true" : "false";
     }
 
 }
