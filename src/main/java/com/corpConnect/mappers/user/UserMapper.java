@@ -1,6 +1,8 @@
 package com.corpConnect.mappers.user;
 
+import com.corpConnect.dtos.hr.JobTitleDTO;
 import com.corpConnect.dtos.user.UserDTO;
+import com.corpConnect.entities.hr.JobTitle;
 import com.corpConnect.entities.user.User;
 import com.corpConnect.exceptions.client.LoginFailedException;
 import com.corpConnect.exceptions.common.BaseException;
@@ -10,11 +12,13 @@ import com.corpConnect.utils.functions.CustomDateTimeFormatter;
 import com.corpConnect.utils.constants.MessageConstants;
 import org.apache.commons.lang3.ObjectUtils;
 import org.mapstruct.AfterMapping;
+import org.mapstruct.BeanMapping;
 import org.mapstruct.BeforeMapping;
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
 import org.mapstruct.MappingTarget;
 import org.mapstruct.Named;
+import org.mapstruct.NullValuePropertyMappingStrategy;
 import org.mapstruct.ReportingPolicy;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Lazy;
@@ -59,6 +63,9 @@ public abstract class UserMapper {
     public abstract List<User> toEntityList(List<UserDTO> userDTOList);
 
     public abstract List<UserDTO> toDTOList(List<User> userList);
+
+    @BeanMapping(nullValuePropertyMappingStrategy = NullValuePropertyMappingStrategy.IGNORE)
+    public abstract void updateEntityFromDTO(UserDTO userDTO, @MappingTarget User user);
 
     @BeforeMapping
     protected void validatePassword(NewUserDTO newUserDTO, @MappingTarget User user) throws BaseException {

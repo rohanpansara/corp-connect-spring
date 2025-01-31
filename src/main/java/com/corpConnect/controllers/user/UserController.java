@@ -23,7 +23,7 @@ import java.util.List;
 @RestController
 @RequiredArgsConstructor
 @PreAuthorize("hasRole('ADMIN')")
-@RequestMapping("/employee")
+@RequestMapping("/user")
 public class UserController {
 
     private final UserService userService;
@@ -43,7 +43,7 @@ public class UserController {
     @PutMapping("/{userId}")
     @PreAuthorize("hasAuthority('admin:update') or @corpConnectUserContext.isLoggedUser(#userId)")
     public ResponseEntity<ResponseDTO<UserDTO>> updateUserByUserIdAndUserDTO(@PathVariable("userId") Long userId, @RequestBody UserDTO userDTO) throws BaseException {
-        return ResponseEntity.ok(ResponseDTO.success(MessageConstants.UserSuccess.USER_FOUND));
+        return ResponseEntity.ok(ResponseDTO.success(MessageConstants.UserSuccess.USER_FOUND, userService.getDTO(userService.updateUserByUserIdAndUserDTO(userId, userDTO))));
     }
 
     @DeleteMapping("/{userId}")

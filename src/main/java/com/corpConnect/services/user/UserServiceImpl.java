@@ -130,7 +130,15 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public User updateUserByUserIdAndUserDTO(Long userId, UserDTO userDTO) {
-        return null;
+        User userToBeUpdated = userRepository.findById(userId).orElseThrow(
+                () -> {
+                    logger.error("Not Found: Attempt to update user with id: {}", userId);
+                    return new UserNotFoundException(MessageConstants.UserError.USER_NOT_FOUND);
+                }
+        );
+
+        userMapper.updateEntityFromDTO(userDTO, userToBeUpdated);
+        return userRepository.save(userToBeUpdated);
     }
 
     @Transactional
