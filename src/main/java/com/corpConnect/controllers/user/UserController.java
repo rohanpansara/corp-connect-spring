@@ -11,7 +11,6 @@ import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -55,7 +54,7 @@ public class UserController {
 
     @DeleteMapping
     @PreAuthorize("hasAuthority('admin:read')")
-    public ResponseEntity<ResponseDTO<Void>> deleteUserByUserIdList(@RequestBody List<Long> userIdList) throws BaseException {
+    public ResponseEntity<ResponseDTO<Void>> deleteUserByUserIdList(@RequestParam("userIdsToDelete") List<Long> userIdList) throws BaseException {
         userService.deleteUsersByUserIdList(userIdList);
         return ResponseEntity.ok(ResponseDTO.success(MessageConstants.UserSuccess.USER_DELETED));
     }
