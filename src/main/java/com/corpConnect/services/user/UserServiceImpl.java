@@ -4,9 +4,11 @@ import com.corpConnect.audits.ApplicationAuditAware;
 import com.corpConnect.dtos.card.dashboard.AttendanceAverageBaseCardDTO;
 import com.corpConnect.dtos.card.dashboard.MonthlyAttendanceCardDTO;
 import com.corpConnect.dtos.card.dashboard.RightSideCardsDTO;
+import com.corpConnect.dtos.common.PageDTO;
 import com.corpConnect.dtos.user.UserDTO;
 import com.corpConnect.dtos.card.BaseCardDTO;
 import com.corpConnect.dtos.card.dashboard.LeftSideCardsDTO;
+import com.corpConnect.entities.common.filter.UserFilter;
 import com.corpConnect.entities.user.User;
 import com.corpConnect.exceptions.client.UserNotFoundException;
 import com.corpConnect.exceptions.common.BaseException;
@@ -15,10 +17,18 @@ import com.corpConnect.repositories.user.UserRepository;
 import com.corpConnect.security.dtos.NewUserDTO;
 import com.corpConnect.utils.constants.MessageConstants;
 import com.corpConnect.utils.constants.LogConstants;
+import jakarta.persistence.criteria.CriteriaBuilder;
+import jakarta.persistence.criteria.CriteriaQuery;
+import jakarta.persistence.criteria.Predicate;
+import jakarta.persistence.criteria.Root;
 import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.jpa.domain.Specification;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
@@ -93,7 +103,7 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public String getUsernameByUserId(Long userId) {
-        if(!userRepository.existsById(userId)) {
+        if (!userRepository.existsById(userId)) {
             return "unknown";
         }
         return userRepository.findUsernameByUserId(userId);
@@ -126,6 +136,45 @@ public class UserServiceImpl implements UserService {
     public List<User> getAllDeletedUsers() {
         logger.info(LogConstants.getFoundAllMessage("User", "get", "deleted check-" + true));
         return userRepository.findByDeleted(true);
+    }
+
+    @Override
+    public PageDTO<UserDTO> getFilteredUsers(UserFilter filter) {
+        Specification<User> spec = this.getUserSpecificationFromUserFilter(filter);
+        Pageable pageable = PageRequest.of(filter.getPageNumber(), filter.getRowsPerPage());
+        Page<User> userPage = userRepository.findAll(spec, pageable);
+
+        return userMapper.toPageDTO(userPage);
+    }
+
+    private Specification<User> getUserSpecificationFromUserFilter(UserFilter filter) {
+        return (Root<User> root, CriteriaQuery<?> query, CriteriaBuilder cb) -> {
+            Predicate predicate = cb.conjunction();
+
+            if (filter.getSearchedString() != null && !filter.getSearchedString().isEmpty()) {
+                Predicate namePredicate = cb.like(cb.lower(root.get("name")), "%" + filter.getSearchedString().toLowerCase() + "%");
+                Predicate emailPredicate = cb.like(cb.lower(root.get("email")), "%" + filter.getSearchedString().toLowerCase() + "%");
+                predicate = cb.and(predicate, cb.or(namePredicate, emailPredicate));
+            }
+
+            if (filter.getRole() != null && !filter.getRole().isEmpty()) {
+                predicate = cb.and(predicate, cb.equal(root.get("roles"), filter.getRole()));
+            }
+
+            if (filter.isAccountNonExpired()) {
+                predicate = cb.and(predicate, cb.isTrue(root.get("isAccountNonExpired")));
+            }
+
+            if (filter.isAccountUnlocked()) {
+                predicate = cb.and(predicate, cb.isTrue(root.get("isAccountNonLocked")));
+            }
+
+            if (filter.isAccountEnabled()) {
+                predicate = cb.and(predicate, cb.isTrue(root.get("isAccountEnabled")));
+            }
+
+            return predicate;
+        };
     }
 
     @Override

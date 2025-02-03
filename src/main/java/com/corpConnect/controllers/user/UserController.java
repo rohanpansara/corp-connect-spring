@@ -1,7 +1,9 @@
 package com.corpConnect.controllers.user;
 
+import com.corpConnect.dtos.common.PageDTO;
 import com.corpConnect.dtos.user.UserDTO;
 import com.corpConnect.dtos.common.ResponseDTO;
+import com.corpConnect.entities.common.filter.UserFilter;
 import com.corpConnect.exceptions.common.BaseException;
 import com.corpConnect.services.user.UserService;
 import com.corpConnect.utils.constants.MessageConstants;
@@ -37,6 +39,12 @@ public class UserController {
     @PreAuthorize("hasAuthority('admin:read') or @corpConnectUserContext.isLoggedUser(#userId)")
     public ResponseEntity<ResponseDTO<UserDTO>> fetchUserByUserId(@PathVariable("userId") Long userId) throws BaseException {
         return ResponseEntity.ok(ResponseDTO.success(MessageConstants.UserSuccess.USER_FOUND, userService.getDTO(userService.getUserByUserId(userId))));
+    }
+
+    @GetMapping("/filter")
+    @PreAuthorize("hasAuthority('admin:read') or hasAuthority('pms_manager:read')")
+    public ResponseEntity<ResponseDTO<PageDTO<UserDTO>>> fetchUserByUserFilter(UserFilter userFilter) throws BaseException {
+        return ResponseEntity.ok(ResponseDTO.success(MessageConstants.UserSuccess.USER_FOUND, userService.getFilteredUsers(userFilter)));
     }
 
     @PutMapping("/{userId}")

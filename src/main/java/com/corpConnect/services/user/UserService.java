@@ -1,11 +1,15 @@
 package com.corpConnect.services.user;
 
 import com.corpConnect.dtos.card.dashboard.RightSideCardsDTO;
+import com.corpConnect.dtos.common.PageDTO;
 import com.corpConnect.dtos.user.UserDTO;
 import com.corpConnect.dtos.card.dashboard.LeftSideCardsDTO;
+import com.corpConnect.entities.common.filter.UserFilter;
 import com.corpConnect.entities.user.User;
 import com.corpConnect.exceptions.common.BaseException;
 import com.corpConnect.security.dtos.NewUserDTO;
+import org.springframework.data.domain.Page;
+import org.springframework.data.jpa.domain.Specification;
 
 import java.util.List;
 
@@ -27,8 +31,11 @@ public interface UserService {
     List<User> getAllUsers(Boolean isDeleted);
     List<User> getAllNonDeletedUsers();
     List<User> getAllDeletedUsers();
-    List<User> getFilteredUsers();
+
+    PageDTO<UserDTO> getFilteredUsers(UserFilter userFilter);
+
     User updateUserByUserIdAndUserDTO(Long userId, UserDTO userDTO);
+
     void deleteUserByUserId(Long userId);
     void deleteUsersByUserIdList(List<Long> userIdList);
 

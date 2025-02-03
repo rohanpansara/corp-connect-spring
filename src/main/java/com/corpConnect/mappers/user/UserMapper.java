@@ -1,5 +1,6 @@
 package com.corpConnect.mappers.user;
 
+import com.corpConnect.dtos.common.PageDTO;
 import com.corpConnect.dtos.hr.JobTitleDTO;
 import com.corpConnect.dtos.user.UserDTO;
 import com.corpConnect.entities.hr.JobTitle;
@@ -22,8 +23,10 @@ import org.mapstruct.NullValuePropertyMappingStrategy;
 import org.mapstruct.ReportingPolicy;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Lazy;
+import org.springframework.data.domain.Page;
 
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Mapper(unmappedTargetPolicy = ReportingPolicy.IGNORE, componentModel = "spring")
 public abstract class UserMapper {
@@ -63,6 +66,22 @@ public abstract class UserMapper {
     public abstract List<User> toEntityList(List<UserDTO> userDTOList);
 
     public abstract List<UserDTO> toDTOList(List<User> userList);
+
+    public PageDTO<UserDTO> toPageDTO(Page<User> userPage) {
+        List<UserDTO> userDTOs = userPage.getContent().stream()
+                .map(this::toDTO)
+                .collect(Collectors.toList());
+
+        return new PageDTO<>(
+                userDTOs,
+                userPage.getNumber(),
+                userPage.getSize(),
+                userPage.getTotalElements(),
+                userPage.getTotalPages(),
+                userPage.isFirst(),
+                userPage.isLast()
+        );
+    }
 
     @BeanMapping(nullValuePropertyMappingStrategy = NullValuePropertyMappingStrategy.IGNORE)
     public abstract void updateEntityFromDTO(UserDTO userDTO, @MappingTarget User user);
