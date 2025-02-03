@@ -27,6 +27,7 @@ public interface UserService {
     List<User> getAllUsers(Boolean isDeleted);
     List<User> getAllNonDeletedUsers();
     List<User> getAllDeletedUsers();
+    List<User> getFilteredUsers();
     User updateUserByUserIdAndUserDTO(Long userId, UserDTO userDTO);
     void deleteUserByUserId(Long userId);
     void deleteUsersByUserIdList(List<Long> userIdList);
