@@ -15,6 +15,7 @@ import com.corpConnect.exceptions.common.BaseException;
 import com.corpConnect.mappers.user.UserMapper;
 import com.corpConnect.repositories.user.UserRepository;
 import com.corpConnect.security.dtos.NewUserDTO;
+import com.corpConnect.security.utils.UserRole;
 import com.corpConnect.utils.constants.MessageConstants;
 import com.corpConnect.utils.constants.LogConstants;
 import jakarta.persistence.criteria.CriteriaBuilder;
@@ -144,6 +145,10 @@ public class UserServiceImpl implements UserService {
         Pageable pageable = PageRequest.of(filter.getPageNumber(), filter.getRowsPerPage());
         Page<User> userPage = userRepository.findAll(spec, pageable);
 
+        if (filter.getPageNumber() >= userPage.getTotalPages()) {
+            throw new RuntimeException("Requested page number exceeds available pages");
+        }
+
         return userMapper.toPageDTO(userPage);
     }
 
@@ -158,7 +163,12 @@ public class UserServiceImpl implements UserService {
             }
 
             if (filter.getRole() != null && !filter.getRole().isEmpty()) {
-                predicate = cb.and(predicate, cb.equal(root.get("roles"), filter.getRole()));
+                try {
+                    UserRole roleEnum = UserRole.valueOf(filter.getRole());
+                    predicate = cb.and(predicate, cb.equal(root.get("roles"), roleEnum));
+                } catch (IllegalArgumentException e) {
+                    logger.warn("Invalid role filter value: {}", filter.getRole());
+                }
             }
 
             if (filter.isAccountNonExpired()) {
