@@ -1,9 +1,12 @@
 package com.corpConnect.services.company.impl;
 
+import com.corpConnect.entities.company.Configuration;
 import com.corpConnect.entities.company.EmailTemplate;
 import com.corpConnect.repositories.company.EmailTemplateRepository;
+import com.corpConnect.services.company.ConfigurationService;
 import com.corpConnect.services.company.EmailService;
 import com.corpConnect.utils.constants.LogConstants;
+import jakarta.mail.MessagingException;
 import jakarta.mail.internet.MimeMessage;
 import lombok.RequiredArgsConstructor;
 import org.slf4j.Logger;
@@ -22,6 +25,7 @@ public class EmailServiceImpl implements EmailService {
 
     private static final Logger logger = LoggerFactory.getLogger(EmailServiceImpl.class);
 
+    private final ConfigurationService configurationService;
     private final JavaMailSender javaMailSender;
     private final EmailTemplateRepository emailTemplateRepository;
 
@@ -45,15 +49,24 @@ public class EmailServiceImpl implements EmailService {
                 .replace("{{currentYear}}", String.valueOf(LocalDate.now().getYear()));
 
         try {
-            MimeMessage message = javaMailSender.createMimeMessage();
-            MimeMessageHelper helper = new MimeMessageHelper(message, true);
-            helper.setTo(toEmail);
-            helper.setSubject(subject);
-            helper.setText(body, true);
-            javaMailSender.send(message);
+            sendEmail(toEmail, subject, body);
             logger.info(LogConstants.getWelcomeMailSentSuccessfullyMessage(toEmail));
         } catch (Exception e) {
             logger.error(LogConstants.getEmailNotSentMessage("user", "add", toEmail, e.getLocalizedMessage()));
         }
+    }
+
+    private void sendEmail(String toEmail, String subject, String body) throws MessagingException {
+        Configuration mailConfiguration = configurationService.getNonDeletedConfigurationByName("EMAIL_ENABLED");
+        if (mailConfiguration != null && !mailConfiguration.isEnabled()) {
+            return;
+        }
+
+        MimeMessage message = javaMailSender.createMimeMessage();
+        MimeMessageHelper helper = new MimeMessageHelper(message, true);
+        helper.setTo(toEmail);
+        helper.setSubject(subject);
+        helper.setText(body, true);
+        javaMailSender.send(message);
     }
 }
