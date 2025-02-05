@@ -59,6 +59,7 @@ public class EmailServiceImpl implements EmailService {
     private void sendEmail(String toEmail, String subject, String body) throws MessagingException {
         Configuration mailConfiguration = configurationService.getNonDeletedConfigurationByName("EMAIL_ENABLED");
         if (mailConfiguration != null && !mailConfiguration.isEnabled()) {
+            logger.info("Email configuration is disabled");
             return;
         }
 
