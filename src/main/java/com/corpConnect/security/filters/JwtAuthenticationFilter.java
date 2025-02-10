@@ -38,7 +38,9 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
             "/user/login",
             "/user/logout",
             "/user/validate-token",
-            "/user/new-user"
+            "/user/new-user",
+//            "/api/update-socket",
+            "/ws"
     };
 
 
@@ -76,7 +78,7 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
             logger.info("JWT: Token found with value - {}", jwtToken);
 
             // Extract email from the token
-            userEmail = jwtService.extractEmail(jwtToken);
+            userEmail = jwtService.extractEmailFromToken(jwtToken);
             if (userEmail != null && SecurityContextHolder.getContext().getAuthentication() == null) {
                 logger.info("JWT: Extracted user email - {}", userEmail);
                 UserDetails userDetails = this.userDetailsService.loadUserByUsername(userEmail);

@@ -141,9 +141,9 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public PageDTO<UserDTO> getFilteredUsers(UserFilter filter) {
-        Specification<User> spec = this.getUserSpecificationFromUserFilter(filter);
+        Specification<User> userSpecificationFromUserFilter = this.getUserSpecificationFromUserFilter(filter);
         Pageable pageable = PageRequest.of(filter.getPageNumber(), filter.getRowsPerPage());
-        Page<User> userPage = userRepository.findAll(spec, pageable);
+        Page<User> userPage = userRepository.findAll(userSpecificationFromUserFilter, pageable);
 
         if (filter.getPageNumber() >= userPage.getTotalPages()) {
             throw new RuntimeException("Requested page number exceeds available pages");

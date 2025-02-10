@@ -113,7 +113,7 @@ public class AuthenticationService {
     public AuthResponseDTO refreshToken(String refreshToken) {
 
         // Extract email from the refresh token
-        String email = jwtService.extractEmail(refreshToken);
+        String email = jwtService.extractEmailFromToken(refreshToken);
 
         // Load the user details using the email extracted from the token
         UserDetails userDetails = userDetailsService.loadUserByUsername(email);
@@ -141,7 +141,7 @@ public class AuthenticationService {
     }
 
     public boolean isTokenValid(String token, String userId) {
-        User loggedUser = userRepository.findByEmail(jwtService.extractEmail(token)).orElseThrow(
+        User loggedUser = userRepository.findByEmail(jwtService.extractEmailFromToken(token)).orElseThrow(
                 () -> {
                     logger.error(MessageCreator.getNotFoundMessage("User"));
                     return new RuntimeException(MessageConstants.UserError.USER_NOT_FOUND);

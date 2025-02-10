@@ -1,19 +1,15 @@
 package com.corpConnect.entities.common.filter;
 
-import com.corpConnect.utils.constants.CommonConstants;
-import lombok.Getter;
-import lombok.Setter;
+import lombok.Data;
+import lombok.EqualsAndHashCode;
 
-@Getter
-@Setter
-public class UserFilter {
+@EqualsAndHashCode(callSuper = true)
+@Data
+public class UserFilter extends BaseFilter {
 
-    private int pageNumber = CommonConstants.DEFAULT_PAGE_NUMBER;
-    private int rowsPerPage = CommonConstants.DEFAULT_NUMBER_OF_ROWS;
-    private String searchedString;
     private String role;
-    private boolean isAccountUnlocked;
-    private boolean isAccountEnabled;
-    private boolean isAccountNonExpired;
+    private boolean accountUnlocked;
+    private boolean accountEnabled;
+    private boolean accountNonExpired;
 
 }

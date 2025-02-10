@@ -44,7 +44,7 @@ public class JwtService {
 
     private final UserRepository userRepository;
 
-    public String extractEmail(String token) {
+    public String extractEmailFromToken(String token) {
         return extractClaim(token, Claims::getSubject);
     }
 
@@ -109,9 +109,9 @@ public class JwtService {
 
     // CHECK IF TOKEN IS VALID
     public boolean isTokenValid(String token, UserDetails userDetails) {
-        final String username = extractEmail(token);
+        final String email = extractEmailFromToken(token);
 
-        if (!username.equals(userDetails.getUsername())) {
+        if (!email.equals(userDetails.getUsername())) {
             throw new JwtAuthenticationException(MessageConstants.JWT.INVALID_TOKEN);
         }
 

@@ -41,7 +41,9 @@ public class SecurityConfigurations {
             "/user/login",
             "/user/logout",
             "/user/validate-token",
-            "/user/new-user"
+            "/user/new-user",
+//            "/api/update-socket",
+            "/ws"
     };
 
     private final AuthenticationProvider authenticationProvider;
