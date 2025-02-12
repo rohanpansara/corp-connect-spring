@@ -1,7 +1,7 @@
 package com.corpConnect.exceptions.client;
 
-import com.fasterxml.jackson.annotation.JsonInclude;
 import com.corpConnect.exceptions.common.BaseException;
+import com.fasterxml.jackson.annotation.JsonInclude;
 
 @JsonInclude(JsonInclude.Include.NON_NULL)
 public class RegistrationFailedException extends BaseException {

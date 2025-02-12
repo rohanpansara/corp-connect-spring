@@ -1,15 +1,13 @@
 package com.corpConnect.services.user;
 
+import com.corpConnect.dtos.card.dashboard.LeftSideCardsDTO;
 import com.corpConnect.dtos.card.dashboard.RightSideCardsDTO;
 import com.corpConnect.dtos.common.PageDTO;
 import com.corpConnect.dtos.user.UserDTO;
-import com.corpConnect.dtos.card.dashboard.LeftSideCardsDTO;
 import com.corpConnect.entities.common.filter.UserFilter;
 import com.corpConnect.entities.user.User;
 import com.corpConnect.exceptions.common.BaseException;
 import com.corpConnect.security.dtos.NewUserDTO;
-import org.springframework.data.domain.Page;
-import org.springframework.data.jpa.domain.Specification;
 
 import java.util.List;
 

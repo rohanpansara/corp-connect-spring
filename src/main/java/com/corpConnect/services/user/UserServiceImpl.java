@@ -1,13 +1,13 @@
 package com.corpConnect.services.user;
 
 import com.corpConnect.audits.ApplicationAuditAware;
+import com.corpConnect.dtos.card.BaseCardDTO;
 import com.corpConnect.dtos.card.dashboard.AttendanceAverageBaseCardDTO;
+import com.corpConnect.dtos.card.dashboard.LeftSideCardsDTO;
 import com.corpConnect.dtos.card.dashboard.MonthlyAttendanceCardDTO;
 import com.corpConnect.dtos.card.dashboard.RightSideCardsDTO;
 import com.corpConnect.dtos.common.PageDTO;
 import com.corpConnect.dtos.user.UserDTO;
-import com.corpConnect.dtos.card.BaseCardDTO;
-import com.corpConnect.dtos.card.dashboard.LeftSideCardsDTO;
 import com.corpConnect.entities.common.filter.UserFilter;
 import com.corpConnect.entities.user.User;
 import com.corpConnect.exceptions.client.UserNotFoundException;
@@ -16,8 +16,8 @@ import com.corpConnect.mappers.user.UserMapper;
 import com.corpConnect.repositories.user.UserRepository;
 import com.corpConnect.security.dtos.NewUserDTO;
 import com.corpConnect.security.utils.UserRole;
-import com.corpConnect.utils.constants.MessageConstants;
 import com.corpConnect.utils.constants.LogConstants;
+import com.corpConnect.utils.constants.MessageConstants;
 import jakarta.persistence.criteria.CriteriaBuilder;
 import jakarta.persistence.criteria.CriteriaQuery;
 import jakarta.persistence.criteria.Predicate;

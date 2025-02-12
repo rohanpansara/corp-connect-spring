@@ -6,7 +6,6 @@ import com.corpConnect.entities.user.User;
 import com.corpConnect.exceptions.client.UserNotFoundException;
 import com.corpConnect.exceptions.common.BaseException;
 import com.corpConnect.repositories.user.UserRepository;
-import com.corpConnect.services.hr.impl.DepartmentServiceImpl;
 import com.corpConnect.utils.constants.LogConstants;
 import com.corpConnect.utils.constants.MessageConstants;
 import com.corpConnect.utils.functions.CustomDateTimeFormatter;

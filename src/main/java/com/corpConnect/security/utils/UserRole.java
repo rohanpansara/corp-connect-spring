@@ -9,7 +9,22 @@ import java.util.List;
 import java.util.Set;
 import java.util.stream.Collectors;
 
-import static com.corpConnect.security.utils.UserPermission.*;
+import static com.corpConnect.security.utils.UserPermission.ADMIN_CREATE;
+import static com.corpConnect.security.utils.UserPermission.ADMIN_DELETE;
+import static com.corpConnect.security.utils.UserPermission.ADMIN_READ;
+import static com.corpConnect.security.utils.UserPermission.ADMIN_UPDATE;
+import static com.corpConnect.security.utils.UserPermission.HR_MANAGER_CREATE;
+import static com.corpConnect.security.utils.UserPermission.HR_MANAGER_DELETE;
+import static com.corpConnect.security.utils.UserPermission.HR_MANAGER_READ;
+import static com.corpConnect.security.utils.UserPermission.HR_MANAGER_UPDATE;
+import static com.corpConnect.security.utils.UserPermission.PMS_MANAGER_CREATE;
+import static com.corpConnect.security.utils.UserPermission.PMS_MANAGER_DELETE;
+import static com.corpConnect.security.utils.UserPermission.PMS_MANAGER_READ;
+import static com.corpConnect.security.utils.UserPermission.PMS_MANAGER_UPDATE;
+import static com.corpConnect.security.utils.UserPermission.USER_CREATE;
+import static com.corpConnect.security.utils.UserPermission.USER_DELETE;
+import static com.corpConnect.security.utils.UserPermission.USER_READ;
+import static com.corpConnect.security.utils.UserPermission.USER_UPDATE;
 
 @Getter
 public enum UserRole {

@@ -1,7 +1,6 @@
 package com.corpConnect.audits;
 
 import com.corpConnect.entities.user.User;
-
 import io.micrometer.common.lang.NonNullApi;
 import org.springframework.data.domain.AuditorAware;
 import org.springframework.security.authentication.AnonymousAuthenticationToken;

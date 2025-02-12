@@ -1,7 +1,6 @@
 package com.corpConnect.entities.user;
 
 import com.corpConnect.entities.common.NameWithDeleteEntity;
-import com.corpConnect.entities.hr.Department;
 import com.corpConnect.entities.user.userDetails.DepartmentDetail;
 import com.corpConnect.security.utils.UserRole;
 import jakarta.persistence.CascadeType;
@@ -11,9 +10,6 @@ import jakarta.persistence.EntityListeners;
 import jakarta.persistence.EnumType;
 import jakarta.persistence.Enumerated;
 import jakarta.persistence.Index;
-import jakarta.persistence.JoinColumn;
-import jakarta.persistence.JoinTable;
-import jakarta.persistence.ManyToMany;
 import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
 import lombok.AllArgsConstructor;

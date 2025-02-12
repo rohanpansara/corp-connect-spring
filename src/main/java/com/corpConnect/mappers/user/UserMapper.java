@@ -1,16 +1,14 @@
 package com.corpConnect.mappers.user;
 
 import com.corpConnect.dtos.common.PageDTO;
-import com.corpConnect.dtos.hr.JobTitleDTO;
 import com.corpConnect.dtos.user.UserDTO;
-import com.corpConnect.entities.hr.JobTitle;
 import com.corpConnect.entities.user.User;
 import com.corpConnect.exceptions.client.LoginFailedException;
 import com.corpConnect.exceptions.common.BaseException;
 import com.corpConnect.security.dtos.NewUserDTO;
 import com.corpConnect.services.user.UserService;
-import com.corpConnect.utils.functions.CustomDateTimeFormatter;
 import com.corpConnect.utils.constants.MessageConstants;
+import com.corpConnect.utils.functions.CustomDateTimeFormatter;
 import org.apache.commons.lang3.ObjectUtils;
 import org.mapstruct.AfterMapping;
 import org.mapstruct.BeanMapping;

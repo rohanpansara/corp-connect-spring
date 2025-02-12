@@ -1,10 +1,9 @@
 package com.corpConnect.dtos.common;
 
-import jakarta.validation.constraints.NotBlank;
-import org.hibernate.validator.constraints.Length;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.Setter;
+import org.hibernate.validator.constraints.Length;
 
 @Getter
 @Setter

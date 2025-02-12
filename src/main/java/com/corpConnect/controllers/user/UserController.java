@@ -1,8 +1,8 @@
 package com.corpConnect.controllers.user;
 
 import com.corpConnect.dtos.common.PageDTO;
-import com.corpConnect.dtos.user.UserDTO;
 import com.corpConnect.dtos.common.ResponseDTO;
+import com.corpConnect.dtos.user.UserDTO;
 import com.corpConnect.entities.common.filter.UserFilter;
 import com.corpConnect.exceptions.common.BaseException;
 import com.corpConnect.services.user.UserService;
