@@ -1,13 +1,13 @@
-INSERT INTO `CorpConnect`.`COMPANY_EMAIL_TEMPLATES`
+INSERT INTO CorpConnect.COMPANY_EMAIL_TEMPLATES
 (`id`,
  `name`,
  `subject`,
  `body`,
- `isDeleted`,
- `createdDate`,
- `createdBy`,
- `lastUpdatedDate`,
- `lastUpdatedBy`)
+ `deleted`,
+ `created_date`,
+ `created_by`,
+ `last_updated_date`,
+ `last_updated_by`)
 VALUES
 (1,
  'welcome',
@@ -15,17 +15,17 @@ VALUES
  '<!DOCTYPE html>
   <html lang=\"en\">
   <head>
-      <meta charset=\"UTF-8\">
-      <meta name=\"viewport\" content=\"width=device-width, initial-scale=1.0\">
-      <link href=\"https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600&display=swap\" rel=\"stylesheet\" />
-      <title>Welcome to the Team!</title>
+      <meta charset=\"UTF-8\" />
+    <meta name=\"viewport\" content=\"width=device-width, initial-scale=1.0\" />
+    <link href=\"https://fonts.googleapis.com/css2?family=Lato:wght@400;500;600&display=swap\" rel=\"stylesheet\" />
+    <title>Welcome to the Team!</title>
       <style>
           body {
-              font-family: \"Poppins\", Arial, sans-serif;
-              margin: 0;
-              padding: 0;
-              background-color: #f4f4f4;
-              font-size: 14px;
+            font-family: \"Lato\", sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #f4f4f4;
+            font-size: 14px;
           }
           .container {
               max-width: 600px;
