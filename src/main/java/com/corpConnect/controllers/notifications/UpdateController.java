@@ -1,6 +1,6 @@
 package com.corpConnect.controllers.notifications;
 
-import com.corpConnect.configs.notification.WebSocketHandler;
+import com.corpConnect.configs.notification.CustomWebSocketHandler;
 import com.corpConnect.dtos.notifications.UpdateRequest;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -16,18 +16,18 @@ import java.util.List;
 @RequestMapping("/update")
 public class UpdateController {
 
-    private final WebSocketHandler webSocketHandler;
+    private final CustomWebSocketHandler customWebSocketHandler;
 
     @Autowired
-    public UpdateController(WebSocketHandler webSocketHandler) {
-        this.webSocketHandler = webSocketHandler;
+    public UpdateController(CustomWebSocketHandler customWebSocketHandler) {
+        this.customWebSocketHandler = customWebSocketHandler;
     }
 
     @PostMapping("/update-socket")
     public ResponseEntity<String> sendUpdate(@RequestBody UpdateRequest updateRequest) {
         String message = updateRequest.getCount() + " Data has been updated!";
-        webSocketHandler.broadcast("{\"message\": \"" + message + "\"}");
-        webSocketHandler.sendMessageToUsers(new ArrayList<>(List.of("fenil@gmail.com", "rohan@gmail.com")), "This message is only for you");
+        customWebSocketHandler.broadcast("{\"message\": \"" + message + "\"}");
+        customWebSocketHandler.sendMessageToUsers(new ArrayList<>(List.of("fenil@gmail.com", "rohan@gmail.com")), "This message is only for you");
         return ResponseEntity.ok("Update notification sent to all clients.");
     }
 }

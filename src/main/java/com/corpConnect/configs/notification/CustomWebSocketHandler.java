@@ -21,7 +21,7 @@ import java.util.Map;
 import java.util.Set;
 
 @Component
-public class WebSocketHandler extends TextWebSocketHandler {
+public class CustomWebSocketHandler extends TextWebSocketHandler {
 
     @Autowired
     private JwtService jwtService;
