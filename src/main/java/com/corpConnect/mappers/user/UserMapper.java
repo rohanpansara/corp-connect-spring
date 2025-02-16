@@ -90,9 +90,9 @@ public abstract class UserMapper {
             throw new LoginFailedException(MessageConstants.UserError.EMAIL_EXISTS);
         }
 
-        if (!newUserDTO.getPassword().equals(newUserDTO.getConfirmPassword())) {
-            throw new BaseException(MessageConstants.UserError.CONFIRM_PASSWORD_DID_NOT_MATCH);
-        }
+//        if (!newUserDTO.getPassword().equals(newUserDTO.getConfirmPassword())) {
+//            throw new BaseException(MessageConstants.UserError.CONFIRM_PASSWORD_DID_NOT_MATCH);
+//        }
     }
 
     private boolean isEmailExists(String email) {

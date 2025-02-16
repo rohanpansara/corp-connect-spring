@@ -50,7 +50,7 @@ public class AuthenticationService {
             logger.error(LogConstants.getAlreadyExistsMessage("User", "Email", newUserDTO.getEmail(), "while registering"));
             throw new RegistrationFailedException(MessageConstants.UserError.EMAIL_EXISTS);
         } catch (BaseException e) {
-            logger.error("Did Not Match: Attempt to create a user with password: {} and confirmPassword: {}", newUserDTO.getPassword(), newUserDTO.getConfirmPassword());
+//            logger.error("Did Not Match: Attempt to create a user with password: {} and confirmPassword: {}", newUserDTO.getPassword(), newUserDTO.getConfirmPassword());
             throw new RegistrationFailedException(MessageConstants.UserError.CONFIRM_PASSWORD_DID_NOT_MATCH);
         }
     }
