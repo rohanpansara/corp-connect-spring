@@ -12,8 +12,6 @@ import lombok.ToString;
 public class NewUserDTO {
     private String name;
     private String email;
-    private String password;
-    private String confirmPassword;
     private String roles;
     private String registerModule;
 }

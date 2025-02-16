@@ -56,6 +56,18 @@ public class EmailServiceImpl implements EmailService {
         }
     }
 
+    @Async
+    @Override
+    public void sendNewUserEmail(String newUserEmail, String newUserName) {
+        Optional<EmailTemplate> template = emailTemplateRepository.findByName("welcome");
+        if (template.isEmpty()) {
+            logger.error("'OTP' email template not found");
+            return;
+        }
+
+        String subject = template.get().getSubject();
+    }
+
     private void sendEmail(String toEmail, String subject, String body) throws MessagingException {
         Configuration mailConfiguration = configurationService.getNonDeletedConfigurationByName("EMAIL_ENABLED");
         if (mailConfiguration != null && !mailConfiguration.isEnabled()) {
