@@ -31,7 +31,7 @@ public class UserController {
 
     @GetMapping
     @PreAuthorize("hasAuthority('admin:read')")
-    public ResponseEntity<ResponseDTO<List<UserDTO>>> fetchAllUsers(@RequestParam(required = false, value = "deleted") Boolean isDeleted){
+    public ResponseEntity<ResponseDTO<List<UserDTO>>> fetchAllUsers(@RequestParam(required = false, value = "deleted") Boolean isDeleted) {
         return ResponseEntity.ok(ResponseDTO.success(MessageConstants.UserSuccess.USER_LIST_FOUND, userService.getDTOList(userService.getAllUsers(isDeleted))));
     }
 
