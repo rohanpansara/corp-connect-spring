@@ -70,8 +70,16 @@ public class LogConstants {
         return buildMessage("Email Sent", null, "New user added to the system with email-" + email);
     }
 
+    public static String getNewUserOTPMailSentSuccessfullyMessage(String email) {
+        return buildMessage("Email Sent", null, "New user otp email sent for user with email-" + email);
+    }
+
     public static String getEmailNotSentMessage(String className, String action, String email, String specificMessage) {
         return buildMessage("Email Not Sent", specificMessage, "Attempt to " + action + " " + className + " and send email to-" + email);
+    }
+
+    public static String getOTPEmailNotSentMessage(String className, String action, String email, String specificMessage) {
+        return buildMessage("Email Not Sent", specificMessage, "Attempt to verify " + action + " user " + className + " and send email to-" + email);
     }
 
     // Helper method to dynamically build the message

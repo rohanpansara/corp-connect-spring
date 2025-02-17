@@ -40,9 +40,9 @@ public class AuthenticationService {
     public UserDTO verifyNewUser(NewUserDTO newUserDTO) {
         try {
             var user = userService.getUserFromRegisterDTO(newUserDTO);
-            var savedUser = userService.finalSave(user);
+            var savedUser = userRepository.save(user);
 
-            emailService.sendNewUserEmail(savedUser.getEmail(), savedUser.getName());
+            emailService.sendNewUserEmail(savedUser);
 
 //            logger.info(LogConstants.getCreatedSuccessfullyMessage("User", "DTO", newUserDTO, "new user"));
             return userService.getDTO(savedUser);

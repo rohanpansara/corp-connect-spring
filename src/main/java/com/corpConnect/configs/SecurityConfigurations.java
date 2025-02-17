@@ -42,6 +42,7 @@ public class SecurityConfigurations {
             "/user/logout",
             "/user/validate-token",
             "/user/new-user",
+            "/user/verify-otp",
 //            "/api/update-socket",
             "/ws"
     };

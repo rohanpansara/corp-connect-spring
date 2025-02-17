@@ -40,4 +40,7 @@ public class OTP extends BaseEntity {
     @JoinColumn(name = "verified")
     private boolean verified = false;
 
+    @JoinColumn(name = "expired")
+    private boolean expired = false;
+
 }

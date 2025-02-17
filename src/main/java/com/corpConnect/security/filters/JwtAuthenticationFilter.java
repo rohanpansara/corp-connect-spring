@@ -35,12 +35,13 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
     private static final Logger logger = LoggerFactory.getLogger(JwtAuthenticationFilter.class);
 
     private static final String[] PUBLIC_URLS = {
-            "/user/login",
-            "/user/logout",
-            "/user/validate-token",
-            "/user/new-user",
+        "/user/login",
+        "/user/logout",
+        "/user/validate-token",
+        "/user/new-user",
+        "/user/verify-otp",
 //            "/api/update-socket",
-            "/ws"
+        "/ws"
     };
 
 
@@ -86,9 +87,9 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
                 if (jwtService.isTokenValid(jwtToken, userDetails)) {
                     logger.info("JWT: Token is valid, setting authentication for user: {}", userEmail);
                     UsernamePasswordAuthenticationToken authToken = new UsernamePasswordAuthenticationToken(
-                            userDetails,
-                            null,
-                            userDetails.getAuthorities()
+                        userDetails,
+                        null,
+                        userDetails.getAuthorities()
                     );
                     authToken.setDetails(new WebAuthenticationDetailsSource().buildDetails(request));
                     SecurityContextHolder.getContext().setAuthentication(authToken);

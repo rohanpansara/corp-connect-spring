@@ -2,9 +2,11 @@ package com.corpConnect.services.company.impl;
 
 import com.corpConnect.entities.company.Configuration;
 import com.corpConnect.entities.company.EmailTemplate;
+import com.corpConnect.entities.user.User;
 import com.corpConnect.repositories.company.EmailTemplateRepository;
 import com.corpConnect.services.company.ConfigurationService;
 import com.corpConnect.services.company.EmailService;
+import com.corpConnect.services.company.OTPService;
 import com.corpConnect.utils.constants.LogConstants;
 import jakarta.mail.MessagingException;
 import jakarta.mail.internet.MimeMessage;
@@ -28,6 +30,7 @@ public class EmailServiceImpl implements EmailService {
     private final ConfigurationService configurationService;
     private final JavaMailSender javaMailSender;
     private final EmailTemplateRepository emailTemplateRepository;
+    private final OTPService otpService;
 
     @Async
     @Override
@@ -38,15 +41,15 @@ public class EmailServiceImpl implements EmailService {
             return;
         }
         String subject = template.get().getSubject()
-                .replace("{{employeeName}}", name);
+            .replace("{{employeeName}}", name);
 
         String body = template.get().getBody()
-                .replace("{{employeeName}}", name)
-                .replace("{{companyName}}", "Corp Connect")
-                .replace("{{employeePortalLink}}", "https://employeeportal.com")
-                .replace("{{onboardingLink}}", "https://onboarding.com")
-                .replace("{{contactHRLink}}", "mailto:hr@company.com")
-                .replace("{{currentYear}}", String.valueOf(LocalDate.now().getYear()));
+            .replace("{{employeeName}}", name)
+            .replace("{{companyName}}", "Corp Connect")
+            .replace("{{employeePortalLink}}", "https://employeeportal.com")
+            .replace("{{onboardingLink}}", "https://onboarding.com")
+            .replace("{{contactHRLink}}", "mailto:hr@company.com")
+            .replace("{{currentYear}}", String.valueOf(LocalDate.now().getYear()));
 
         try {
             sendEmail(toEmail, subject, body);
@@ -58,14 +61,27 @@ public class EmailServiceImpl implements EmailService {
 
     @Async
     @Override
-    public void sendNewUserEmail(String newUserEmail, String newUserName) {
-        Optional<EmailTemplate> template = emailTemplateRepository.findByName("welcome");
+    public void sendNewUserEmail(User user) {
+        Optional<EmailTemplate> template = emailTemplateRepository.findByName("otp_verification");
         if (template.isEmpty()) {
             logger.error("'OTP' email template not found");
             return;
         }
 
+        String otp = otpService.generateAndSaveNewUserOTPForUser(user);
+
         String subject = template.get().getSubject();
+        String body = template.get().getBody()
+            .replace("{{otp}}", otp)
+            .replace("{{currentYear}}", String.valueOf(LocalDate.now().getYear()))
+            .replace("{{companyName}}", "Corp Connect");
+
+        try {
+            sendEmail(user.getEmail(), subject, body);
+            logger.info(LogConstants.getNewUserOTPMailSentSuccessfullyMessage(user.getEmail()));
+        } catch (Exception e) {
+            logger.error(LogConstants.getEmailNotSentMessage("user", "new", user.getEmail(), e.getLocalizedMessage()));
+        }
     }
 
     private void sendEmail(String toEmail, String subject, String body) throws MessagingException {

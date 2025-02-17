@@ -1,11 +1,12 @@
 package com.corpConnect.services.company;
 
+import com.corpConnect.entities.user.User;
 import com.corpConnect.security.dtos.NewUserDTO;
 
 public interface OTPService {
 
-    String generateOTP();
+    String generateAndSaveNewUserOTPForUser(User user);
 
-    void generateNewUserOTPAndSendEmail(NewUserDTO newUserDTO);
+    void verifyNewUserOTP(Long userId, String otp);
 
 }

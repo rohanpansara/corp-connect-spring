@@ -9,6 +9,7 @@ import com.corpConnect.security.dtos.AuthResponseDTO;
 import com.corpConnect.security.dtos.NewUserDTO;
 import com.corpConnect.security.services.AuthenticationService;
 import com.corpConnect.services.CookieService;
+import com.corpConnect.services.company.OTPService;
 import com.corpConnect.utils.constants.CookieConstants;
 import com.corpConnect.utils.constants.LogConstants;
 import com.corpConnect.utils.constants.MessageConstants;
@@ -22,6 +23,7 @@ import org.springframework.http.ResponseCookie;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -37,6 +39,7 @@ public class AuthController {
     private static final Logger logger = LoggerFactory.getLogger(AuthController.class);
 
     private final AuthenticationService authenticationService;
+    private final OTPService otpService;
     private final CookieUtils cookieUtils;
     private final CookieService cookieService;
 
@@ -44,6 +47,12 @@ public class AuthController {
     @PostMapping(value = "/new-user")
     public ResponseEntity<ResponseDTO<UserDTO>> addNewUser(@RequestBody NewUserDTO newUserDTO) throws LoginFailedException {
         return ResponseEntity.ok(ResponseDTO.success(MessageConstants.UserSuccess.USER_CREATED, authenticationService.verifyNewUser(newUserDTO)));
+    }
+
+    @PutMapping(value = "/verify-otp")
+    public ResponseEntity<ResponseDTO<Void>> verifyOTP(@RequestParam("userId") Long userId, @RequestParam("otp") String otp) {
+        otpService.verifyNewUserOTP(userId, otp);
+        return ResponseEntity.ok(ResponseDTO.success(MessageConstants.EmailSuccess.EMAIL_VERIFIED));
     }
 
     @PostMapping(value = "/login")
@@ -59,8 +68,8 @@ public class AuthController {
 
         // Send response with data in headers and success message in body
         return ResponseEntity.ok()
-                .headers(headers)
-                .body(ResponseDTO.success(MessageConstants.UserSuccess.LOGIN_SUCCESS));
+            .headers(headers)
+            .body(ResponseDTO.success(MessageConstants.UserSuccess.LOGIN_SUCCESS));
     }
 
     @PostMapping(value = "/refresh-token")
@@ -80,8 +89,8 @@ public class AuthController {
 
         // Send response with data in headers and success message in body
         return ResponseEntity.ok()
-                .headers(headers)
-                .body(ResponseDTO.success(MessageConstants.UserSuccess.LOGOUT_SUCCESS));
+            .headers(headers)
+            .body(ResponseDTO.success(MessageConstants.UserSuccess.LOGOUT_SUCCESS));
     }
 
     @GetMapping("/validate-token")
