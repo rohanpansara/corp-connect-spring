@@ -85,14 +85,10 @@ public abstract class UserMapper {
     public abstract void updateEntityFromDTO(UserDTO userDTO, @MappingTarget User user);
 
     @BeforeMapping
-    protected void validatePassword(NewUserDTO newUserDTO, @MappingTarget User user) throws BaseException {
+    protected void validateExistingEmail(NewUserDTO newUserDTO, @MappingTarget User user) throws BaseException {
         if (!isEmailExists(newUserDTO.getEmail())) {
             throw new LoginFailedException(MessageConstants.UserError.EMAIL_EXISTS);
         }
-
-//        if (!newUserDTO.getPassword().equals(newUserDTO.getConfirmPassword())) {
-//            throw new BaseException(MessageConstants.UserError.CONFIRM_PASSWORD_DID_NOT_MATCH);
-//        }
     }
 
     private boolean isEmailExists(String email) {
