@@ -43,7 +43,7 @@ public class AuthController {
     // TODO: remove this once the user table is final
     @PostMapping(value = "/new-user")
     public ResponseEntity<ResponseDTO<UserDTO>> addNewUser(@RequestBody NewUserDTO newUserDTO) throws LoginFailedException {
-        return ResponseEntity.ok(ResponseDTO.success(MessageConstants.UserSuccess.USER_CREATED, authenticationService.addNewUser(newUserDTO)));
+        return ResponseEntity.ok(ResponseDTO.success(MessageConstants.UserSuccess.USER_CREATED, authenticationService.verifyNewUser(newUserDTO)));
     }
 
     @PostMapping(value = "/login")

@@ -59,7 +59,7 @@ public abstract class UserMapper {
     @Mapping(target = "createdDate", ignore = true)
     @Mapping(target = "createdBy", ignore = true)
     @Mapping(target = "authorities", ignore = true)
-    public abstract User toEntityFromRegisterDTO(NewUserDTO newUserDTO);
+    public abstract User toEntityFromNewUserDTO(NewUserDTO newUserDTO);
 
     public abstract List<User> toEntityList(List<UserDTO> userDTOList);
 

@@ -1,7 +1,7 @@
 INSERT INTO `CorpConnect`.`COMPANY_EMAIL_TEMPLATES`
 (`id`, `name`, `subject`, `body`, `deleted`, `created_date`, `created_by`, `last_updated_date`, `last_updated_by`)
 VALUES
-(2,
+(3,
  'leave_applied',
  'Leave Application Submitted',
  '<!DOCTYPE html>

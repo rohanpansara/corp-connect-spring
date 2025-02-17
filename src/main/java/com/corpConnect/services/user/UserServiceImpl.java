@@ -49,7 +49,7 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public User getUserFromRegisterDTO(NewUserDTO newUserDTO) throws BaseException {
-        return userMapper.toEntityFromRegisterDTO(newUserDTO);
+        return userMapper.toEntityFromNewUserDTO(newUserDTO);
     }
 
     @Override

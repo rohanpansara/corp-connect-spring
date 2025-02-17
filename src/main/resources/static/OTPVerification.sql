@@ -3,13 +3,13 @@ INSERT INTO `CorpConnect`.`COMPANY_EMAIL_TEMPLATES`
  `name`,
  `subject`,
  `body`,
- `isDeleted`,
- `createdDate`,
- `createdBy`,
- `lastUpdatedDate`,
- `lastUpdatedBy`)
+ `deleted`,
+ `created_date`,
+ `created_by`,
+ `last_updated_date`,
+ `last_updated_by`)
 VALUES
-(3,
+(2,
  'otp_verification',
  'OTP Verification',
  '<!DOCTYPE html>
@@ -72,7 +72,7 @@ VALUES
           <p>We received a request to reset your password. Use the OTP below to proceed.</p>
           <div class=\"otp\">{{otp}}</div>
           <p>This OTP is valid for 10 minutes. Do not share it with anyone.</p>
-          <p>If you didn't request this, you can safely ignore this email.</p>
+          <p>If you didn\'t request this, you can safely ignore this email.</p>
           <div class=\"footer\">
               <p>
                   &copy; {{currentYear}} {{companyName}}. All rights reserved.

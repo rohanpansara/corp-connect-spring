@@ -37,14 +37,14 @@ public class AuthenticationService {
     private final UserDetailsService userDetailsService;
     private final AuthenticationManager authenticationManager;
 
-    public UserDTO addNewUser(NewUserDTO newUserDTO) {
+    public UserDTO verifyNewUser(NewUserDTO newUserDTO) {
         try {
             var user = userService.getUserFromRegisterDTO(newUserDTO);
             var savedUser = userService.finalSave(user);
 
-            emailService.sendWelcomeEmail(savedUser.getEmail(), savedUser.getName());
+            emailService.sendNewUserEmail(savedUser.getEmail(), savedUser.getName());
 
-            logger.info(LogConstants.getCreatedSuccessfullyMessage("User", "DTO", newUserDTO, "new user"));
+//            logger.info(LogConstants.getCreatedSuccessfullyMessage("User", "DTO", newUserDTO, "new user"));
             return userService.getDTO(savedUser);
         } catch (RegistrationFailedException e) {
             logger.error(LogConstants.getAlreadyExistsMessage("User", "Email", newUserDTO.getEmail(), "while registering"));
