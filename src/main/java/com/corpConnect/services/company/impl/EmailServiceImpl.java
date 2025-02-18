@@ -62,7 +62,7 @@ public class EmailServiceImpl implements EmailService {
     @Async
     @Override
     public void sendNewUserEmail(User user) {
-        Optional<EmailTemplate> template = emailTemplateRepository.findByName("otp_verification");
+        Optional<EmailTemplate> template = emailTemplateRepository.findByName("new_user_otp_verification");
         if (template.isEmpty()) {
             logger.error("'OTP' email template not found");
             return;

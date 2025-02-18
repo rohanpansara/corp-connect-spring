@@ -9,8 +9,8 @@ INSERT INTO `CorpConnect`.`COMPANY_EMAIL_TEMPLATES`
  `last_updated_date`,
  `last_updated_by`)
 VALUES
-(2,
- 'otp_verification',
+(3,
+ 'forgot_password_otp_verification',
  'OTP Verification',
  '<!DOCTYPE html>
   <html lang=\"en\">

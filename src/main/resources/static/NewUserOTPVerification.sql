@@ -9,7 +9,7 @@ INSERT INTO `CorpConnect`.`COMPANY_EMAIL_TEMPLATES`
  `last_updated_date`,
  `last_updated_by`)
 VALUES
-(4,
+(1,
  'new_user_otp_verification',
  'OTP Verification',
  '<!DOCTYPE html>
@@ -58,6 +58,9 @@ VALUES
               letter-spacing: 5px;
               margin: 20px 0;
           }
+          .validity{
+              font-weight: bold;
+          }
           .footer {
               margin-top: 20px;
               text-align: center;
@@ -71,7 +74,7 @@ VALUES
           <h2>New User Otp Verification</h2>
           <p>Please verify your email. Use the OTP below to proceed.</p>
           <div class=\"otp\">{{otp}}</div>
-          <p>This OTP is valid for 10 minutes. Do not share it with anyone.</p>
+          <p class=\"validity\">This OTP is valid for 10 minutes. Do not share it with anyone.</p>
           <p>If you didn\'t request this, you can safely ignore this email.</p>
           <div class=\"footer\">
               <p>

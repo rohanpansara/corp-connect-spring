@@ -9,7 +9,7 @@ INSERT INTO CorpConnect.COMPANY_EMAIL_TEMPLATES
  `last_updated_date`,
  `last_updated_by`)
 VALUES
-(1,
+(2,
  'welcome',
  'Welcome to the Team, {{employeeName}}!',
  '<!DOCTYPE html>
