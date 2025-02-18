@@ -35,12 +35,11 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
     private static final Logger logger = LoggerFactory.getLogger(JwtAuthenticationFilter.class);
 
     private static final String[] PUBLIC_URLS = {
-        "/user/login",
-        "/user/logout",
-        "/user/validate-token",
-        "/user/new-user",
-        "/user/verify-otp",
-//            "/api/update-socket",
+        "/public/login",
+        "/public/logout",
+        "/public/validate-token",
+        "/public/new-user",
+        "/public/verify-otp",
         "/ws"
     };
 

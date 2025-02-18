@@ -33,10 +33,10 @@ import java.util.List;
 
 @RestController
 @RequiredArgsConstructor
-@RequestMapping("/user")
-public class AuthController {
+@RequestMapping("/public")
+public class PublicController {
 
-    private static final Logger logger = LoggerFactory.getLogger(AuthController.class);
+    private static final Logger logger = LoggerFactory.getLogger(PublicController.class);
 
     private final AuthenticationService authenticationService;
     private final OTPService otpService;

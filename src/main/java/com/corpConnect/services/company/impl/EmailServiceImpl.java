@@ -41,15 +41,15 @@ public class EmailServiceImpl implements EmailService {
             return;
         }
         String subject = template.get().getSubject()
-            .replace("{{employeeName}}", name);
+                .replace("{{employeeName}}", name);
 
         String body = template.get().getBody()
-            .replace("{{employeeName}}", name)
-            .replace("{{companyName}}", "Corp Connect")
-            .replace("{{employeePortalLink}}", "https://employeeportal.com")
-            .replace("{{onboardingLink}}", "https://onboarding.com")
-            .replace("{{contactHRLink}}", "mailto:hr@company.com")
-            .replace("{{currentYear}}", String.valueOf(LocalDate.now().getYear()));
+                .replace("{{employeeName}}", name)
+                .replace("{{companyName}}", "Corp Connect")
+                .replace("{{employeePortalLink}}", "https://employeeportal.com")
+                .replace("{{onboardingLink}}", "https://onboarding.com")
+                .replace("{{contactHRLink}}", "mailto:hr@company.com")
+                .replace("{{currentYear}}", String.valueOf(LocalDate.now().getYear()));
 
         try {
             sendEmail(toEmail, subject, body);
@@ -72,9 +72,10 @@ public class EmailServiceImpl implements EmailService {
 
         String subject = template.get().getSubject();
         String body = template.get().getBody()
-            .replace("{{otp}}", otp)
-            .replace("{{currentYear}}", String.valueOf(LocalDate.now().getYear()))
-            .replace("{{companyName}}", "Corp Connect");
+                .replace("{{otp}}", otp)
+                .replace("{{userId}}", String.valueOf(user.getId()))
+                .replace("{{currentYear}}", String.valueOf(LocalDate.now().getYear()))
+                .replace("{{companyName}}", "Corp Connect");
 
         try {
             sendEmail(user.getEmail(), subject, body);

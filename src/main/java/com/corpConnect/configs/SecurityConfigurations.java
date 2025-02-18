@@ -38,13 +38,8 @@ import static org.springframework.security.config.http.SessionCreationPolicy.STA
 @RequiredArgsConstructor
 public class SecurityConfigurations {
     private static final String[] publicUrls = {
-            "/user/login",
-            "/user/logout",
-            "/user/validate-token",
-            "/user/new-user",
-            "/user/verify-otp",
-//            "/api/update-socket",
-            "/ws"
+            "/public/new-user",
+            "/ws/**"
     };
 
     private final AuthenticationProvider authenticationProvider;

@@ -11,7 +11,7 @@ INSERT INTO `CorpConnect`.`COMPANY_EMAIL_TEMPLATES`
 VALUES
 (1,
  'new_user_otp_verification',
- 'OTP Verification',
+ 'Email Verification OTP',
  '<!DOCTYPE html>
   <html lang=\"en\">
   <head>
@@ -27,6 +27,7 @@ VALUES
               background-color: #f4f4f4;
               font-size: 14px;
           }
+
           .container {
               max-width: 600px;
               margin: 30px auto;
@@ -36,31 +37,54 @@ VALUES
               box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
               text-align: center;
           }
+
           .logo {
               width: 100px;
               margin-bottom: 20px;
           }
+
           h2 {
               color: #333;
           }
+
           p {
               color: #555;
               font-size: 16px;
           }
+
           .otp {
               display: inline-block;
               font-size: 24px;
               font-weight: bold;
               color: #2c3e50;
-              background: #f3f3f3;
-              padding: 10px 20px;
+              background: #f5f5f5;
+              padding: 10px 20px 10px 25px;
               border-radius: 5px;
               letter-spacing: 5px;
               margin: 20px 0;
           }
-          .validity{
+
+          .redirect {
+              display: flex;
+              justify-content: center;
+              align-items: center;
+              width: 100%;
+              padding: 5px;
+          }
+
+          .redirect-btn {
+              text-decoration: none;
+              border: none;
+              padding: 10px 20px;
+              border-radius: 5px;
+              background-color: #2c3e50;
+              color: #f3f3f3;
+          }
+
+          .validity {
               font-weight: bold;
           }
+
           .footer {
               margin-top: 20px;
               text-align: center;
@@ -68,14 +92,21 @@ VALUES
           }
       </style>
   </head>
+
   <body>
       <div class=\"container\">
-          <img src=\"https://images.seeklogo.com/logo-png/47/2/creative-commons-logo-png_seeklogo-470282.png" alt=\"Company Logo\" class=\"logo\">
-          <h2>New User Otp Verification</h2>
-          <p>Please verify your email. Use the OTP below to proceed.</p>
+          <img src=\"https://images.seeklogo.com/logo-png/47/2/creative-commons-logo-png_seeklogo-470282.png\"
+              alt=\"Company Logo\" class=\"logo\">
+          <h2>Verify Your Email with OTP</h2>
+          <p>You're almost there! Use the OTP below to verify your email and complete the setup.</p>
           <div class=\"otp\">{{otp}}</div>
-          <p class=\"validity\">This OTP is valid for 10 minutes. Do not share it with anyone.</p>
-          <p>If you didn\'t request this, you can safely ignore this email.</p>
+          <p class=\"validity\">This OTP is valid for 10 minutes. Please do not share it with anyone.</p>
+          <p>Click the button below to continue:</p>
+          <div class=\"redirect\">
+              <a href=\"http://192.168.24.101:3000/verify-otp/{{userId}}\" class=\"redirect-btn\">Verify Email</a>
+          </div>
+          <p>If you did not request this, you can ignore this email.</p>
+
           <div class=\"footer\">
               <p>
                   &copy; {{currentYear}} {{companyName}}. All rights reserved.
