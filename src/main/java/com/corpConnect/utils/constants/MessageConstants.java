@@ -38,6 +38,7 @@ public class MessageConstants {
         public static final String USER_SESSION_VERIFIED = MessageCreator.getSessionVerificationMessage(true);
         public static final String TOKEN_REFRESHED = "User token refreshed";
 
+        public static final String PASSWORD_SET_SUCCESSFULLY = MessageCreator.getCustomCRUDMessage("Password", "set");
         public static final String PASSWORD_UPDATED_SUCCESSFULLY = MessageCreator.getCustomCRUDMessage("Password", "updated");
         public static final String PASSWORD_RESET_SUCCESS = MessageCreator.getCustomCRUDMessage("Password", "reset");
         public static final String PROFILE_UPDATED_SUCCESSFULLY = MessageCreator.getUpdatedMessage("User profile");

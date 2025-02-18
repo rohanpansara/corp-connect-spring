@@ -10,6 +10,7 @@ import com.corpConnect.security.CorpConnectUserContext;
 import com.corpConnect.security.dtos.AuthRequestDTO;
 import com.corpConnect.security.dtos.AuthResponseDTO;
 import com.corpConnect.security.dtos.NewUserDTO;
+import com.corpConnect.security.dtos.PasswordDTO;
 import com.corpConnect.services.company.EmailService;
 import com.corpConnect.services.user.UserService;
 import com.corpConnect.utils.constants.LogConstants;
@@ -52,6 +53,21 @@ public class AuthenticationService {
         } catch (BaseException e) {
 //            logger.error("Did Not Match: Attempt to create a user with password: {} and confirmPassword: {}", newUserDTO.getPassword(), newUserDTO.getConfirmPassword());
             throw new RegistrationFailedException(MessageConstants.UserError.CONFIRM_PASSWORD_DID_NOT_MATCH);
+        }
+    }
+
+    public UserDTO createUserPassword(PasswordDTO passwordDTO) {
+        try {
+            User user = userService.getUserByUserId(passwordDTO.getUser().getId());
+            if(passwordDTO.getPassword().equals(passwordDTO.getConfirmPassword())) {
+                user.setPassword(passwordDTO.getPassword());
+                User savedUser = userService.finalSave(user);
+                return userService.getDTO(savedUser);
+            } else {
+                throw new RuntimeException(MessageConstants.UserError.CONFIRM_PASSWORD_DID_NOT_MATCH);
+            }
+        } catch (Exception e) {
+            throw new RuntimeException(e);
         }
     }
 

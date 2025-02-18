@@ -65,14 +65,15 @@ VALUES
           }
 
           .redirect {
-              display: flex;
+              display: inline-block;
               justify-content: center;
               align-items: center;
               width: 100%;
               padding: 5px;
+              margin: 20px 0;
           }
 
-          .redirect-btn {
+          .redirect>a{
               text-decoration: none;
               border: none;
               padding: 10px 20px;
@@ -103,7 +104,7 @@ VALUES
           <p class=\"validity\">This OTP is valid for 10 minutes. Please do not share it with anyone.</p>
           <p>Click the button below to continue:</p>
           <div class=\"redirect\">
-              <a href=\"http://192.168.24.101:3000/verify-otp/{{userId}}\" class=\"redirect-btn\">Verify Email</a>
+              <a href=\"http://192.168.24.101:3000/verify-email/{{userId}}\">Verify Email</a>
           </div>
           <p>If you did not request this, you can ignore this email.</p>
 

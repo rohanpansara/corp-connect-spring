@@ -7,6 +7,7 @@ import com.corpConnect.exceptions.common.BaseException;
 import com.corpConnect.security.dtos.AuthRequestDTO;
 import com.corpConnect.security.dtos.AuthResponseDTO;
 import com.corpConnect.security.dtos.NewUserDTO;
+import com.corpConnect.security.dtos.PasswordDTO;
 import com.corpConnect.security.services.AuthenticationService;
 import com.corpConnect.services.CookieService;
 import com.corpConnect.services.company.OTPService;
@@ -53,6 +54,12 @@ public class PublicController {
     public ResponseEntity<ResponseDTO<Void>> verifyOTP(@RequestParam("userId") Long userId, @RequestParam("otp") String otp) {
         otpService.verifyNewUserOTP(userId, otp);
         return ResponseEntity.ok(ResponseDTO.success(MessageConstants.EmailSuccess.EMAIL_VERIFIED));
+    }
+
+    @PutMapping(value = "/set-password")
+    public ResponseEntity<ResponseDTO<Void>> setPassword(@RequestBody PasswordDTO passwordDTO) {
+        authenticationService.createUserPassword(passwordDTO);
+        return ResponseEntity.ok(ResponseDTO.success(MessageConstants.UserSuccess.PASSWORD_SET_SUCCESSFULLY));
     }
 
     @PostMapping(value = "/login")

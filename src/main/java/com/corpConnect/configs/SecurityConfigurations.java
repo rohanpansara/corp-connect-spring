@@ -38,7 +38,7 @@ import static org.springframework.security.config.http.SessionCreationPolicy.STA
 @RequiredArgsConstructor
 public class SecurityConfigurations {
     private static final String[] publicUrls = {
-            "/public/new-user",
+            "/public/**",
             "/ws/**"
     };
 
