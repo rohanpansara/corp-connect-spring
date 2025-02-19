@@ -74,16 +74,21 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public User save(User user) {
-        Optional<String> currentAuditor = applicationAuditAware.getCurrentAuditor();
-        if (currentAuditor.isEmpty()) {
-            user.setCreatedBy("system");
-            user.setLastUpdatedBy("system");
-            logger.info(LogConstants.getAuditorNotFoundMessage("User", user.getEmail(), "while creating"));
-        } else {
-            String auditor = currentAuditor.get();
+        String auditor = applicationAuditAware.getCurrentAuditor().orElse("system");
+
+        // if createdBy is not set, assign the current auditor
+        if (user.getCreatedBy() == null || user.getCreatedBy().isEmpty()) {
             user.setCreatedBy(auditor);
-            user.setLastUpdatedBy(auditor);
         }
+
+        // always update lastUpdatedBy
+        user.setLastUpdatedBy(auditor);
+
+        // Log if no auditor is found when creating the user
+        if ("system".equals(auditor)) {
+            logger.info(LogConstants.getAuditorNotFoundMessage("User", user.getEmail(), "while creating"));
+        }
+
         return userRepository.save(user);
     }
 

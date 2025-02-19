@@ -4,7 +4,7 @@ server:
     session:
       cookie:
         http-only: true
-    context-path: /api/auth
+    context-path: /api/v1
 
 spring:
   main:

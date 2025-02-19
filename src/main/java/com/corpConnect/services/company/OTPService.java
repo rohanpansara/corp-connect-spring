@@ -1,7 +1,7 @@
 package com.corpConnect.services.company;
 
 import com.corpConnect.entities.user.User;
-import com.corpConnect.security.dtos.NewUserDTO;
+import com.corpConnect.enumerations.OTPType;
 
 public interface OTPService {
 
@@ -9,4 +9,5 @@ public interface OTPService {
 
     void verifyNewUserOTP(Long userId, String otp);
 
+    boolean validateForPendingOTPVerification(Long userId, OTPType otpType);
 }

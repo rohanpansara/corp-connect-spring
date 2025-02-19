@@ -2,6 +2,7 @@ package com.corpConnect.controllers;
 
 import com.corpConnect.dtos.common.ResponseDTO;
 import com.corpConnect.dtos.user.UserDTO;
+import com.corpConnect.enumerations.OTPType;
 import com.corpConnect.exceptions.client.LoginFailedException;
 import com.corpConnect.exceptions.common.BaseException;
 import com.corpConnect.security.dtos.AuthRequestDTO;
@@ -50,12 +51,6 @@ public class PublicController {
         return ResponseEntity.ok(ResponseDTO.success(MessageConstants.UserSuccess.USER_CREATED, authenticationService.verifyNewUser(newUserDTO)));
     }
 
-    @PutMapping(value = "/verify-otp")
-    public ResponseEntity<ResponseDTO<Void>> verifyOTP(@RequestParam("userId") Long userId, @RequestParam("otp") String otp) {
-        otpService.verifyNewUserOTP(userId, otp);
-        return ResponseEntity.ok(ResponseDTO.success(MessageConstants.EmailSuccess.EMAIL_VERIFIED));
-    }
-
     @PutMapping(value = "/set-password")
     public ResponseEntity<ResponseDTO<Void>> setPassword(@RequestBody PasswordDTO passwordDTO) {
         authenticationService.createUserPassword(passwordDTO);
@@ -100,7 +95,7 @@ public class PublicController {
             .body(ResponseDTO.success(MessageConstants.UserSuccess.LOGOUT_SUCCESS));
     }
 
-    @GetMapping("/validate-token")
+    @GetMapping("/validate/token")
     public ResponseEntity<ResponseDTO<Boolean>> validateUserToken(HttpServletRequest request) {
         String token = cookieUtils.getCookieValueByName(request, CookieConstants.TOKEN_COOKIE_NAME);
         String userId = cookieUtils.getCookieValueByName(request, CookieConstants.USER_ID_COOKIE_NAME);
@@ -113,17 +108,18 @@ public class PublicController {
         return ResponseEntity.badRequest().body(ResponseDTO.error(MessageConstants.UserError.USER_NOT_LOGGED_IN, false));
     }
 
-    @GetMapping("/validate-pending-otp")
-    public ResponseEntity<ResponseDTO<Boolean>> validatePendingOTP(HttpServletRequest request) {
-        String token = cookieUtils.getCookieValueByName(request, CookieConstants.TOKEN_COOKIE_NAME);
-        String userId = cookieUtils.getCookieValueByName(request, CookieConstants.USER_ID_COOKIE_NAME);
-
-        if (token != null && !token.isEmpty() && authenticationService.isTokenValid(token, userId)) {
-            logger.info(LogConstants.getSessionVerifiedForToken(token, true));
-            return ResponseEntity.ok(ResponseDTO.success(MessageConstants.UserSuccess.USER_SESSION_VERIFIED, true));
+    @GetMapping("/validate/new-user/for-email-pending-otp")
+    public ResponseEntity<ResponseDTO<Boolean>> validatePendingOTP(@RequestParam("userId") Long userId) {
+        if (otpService.validateForPendingOTPVerification(userId, OTPType.NEW_USER_VERIFICATION)) {
+            return ResponseEntity.badRequest().body(ResponseDTO.error(MessageConstants.OTP.PENDING_OTP_NOT_FOUND, true));
         }
-        logger.error(LogConstants.getSessionVerifiedForToken(token, false));
-        return ResponseEntity.badRequest().body(ResponseDTO.error(MessageConstants.UserError.USER_NOT_LOGGED_IN, false));
+        return ResponseEntity.badRequest().body(ResponseDTO.error(MessageConstants.OTP.PENDING_OTP_FOUND, false));
+    }
+
+    @PutMapping(value = "/validate/new-user/email-otp")
+    public ResponseEntity<ResponseDTO<Void>> verifyOTP(@RequestParam("userId") Long userId, @RequestParam("otp") String otp) {
+        otpService.verifyNewUserOTP(userId, otp);
+        return ResponseEntity.ok(ResponseDTO.success(MessageConstants.EmailSuccess.EMAIL_VERIFIED));
     }
 
 }

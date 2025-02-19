@@ -70,6 +70,12 @@ public class MessageConstants {
         public static final String PASSWORD_RESET_EMAIL_SENT = "Password reset link sent to email";
     }
 
+    public static final class OTP {
+        public static final String OTP_VERIFIED = "OTP Verified Successfully";
+        public static final String PENDING_OTP_FOUND = "Pending OTP Verification Found";
+        public static final String PENDING_OTP_NOT_FOUND = "No Pending OTP Verification Found";
+    }
+
     public static final class Holiday {
         public static final String HOLIDAY_CREATED = MessageCreator.getCreatedMessage("Holiday");
         public static final String HOLIDAY_FOR_THE_DATE_EXISTS = MessageCreator.getExistsMessage("Holiday", "date");
