@@ -20,9 +20,9 @@ import org.springframework.web.bind.annotation.RestController;
 
 @RestController
 @RequiredArgsConstructor
-@RequestMapping("/hr/access-control")
+@RequestMapping("/hr/user-access-control")
 @PreAuthorize("hasRole('HR_MANAGER')")
-public class AccessController {
+public class UserAccessController {
 
     private final UserService userService;
     private final AuthenticationService authenticationService;

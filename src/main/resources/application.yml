@@ -64,6 +64,11 @@ logging:
   level:
     com.corpConnect.utils.functions.CookieUtils: DEBUG
 
+user-initializer:
+  name: "Rohan Pansara"
+  email: "rohan.pansara@drcsystems.com"
+  password: "Drc@1234"
+
 #cloudinary:
 #  api-key: 132918619484761
 

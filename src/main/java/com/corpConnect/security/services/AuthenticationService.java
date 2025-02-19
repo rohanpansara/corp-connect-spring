@@ -3,8 +3,7 @@ package com.corpConnect.security.services;
 import com.corpConnect.dtos.user.UserDTO;
 import com.corpConnect.entities.user.User;
 import com.corpConnect.exceptions.client.LoginFailedException;
-import com.corpConnect.exceptions.client.RegistrationFailedException;
-import com.corpConnect.exceptions.common.BaseException;
+import com.corpConnect.exceptions.client.UserRelatedException;
 import com.corpConnect.repositories.user.UserRepository;
 import com.corpConnect.security.CorpConnectUserContext;
 import com.corpConnect.security.dtos.AuthRequestDTO;
@@ -40,19 +39,16 @@ public class AuthenticationService {
 
     public UserDTO verifyNewUser(NewUserDTO newUserDTO) {
         try {
-            var user = userService.getUserFromRegisterDTO(newUserDTO);
+            var user = userService.getUserFromNewUserDTO(newUserDTO);
             var savedUser = userRepository.save(user);
 
+            // send email on the added user's email id with email-verification otp
             emailService.sendNewUserEmail(savedUser);
 
-//            logger.info(LogConstants.getCreatedSuccessfullyMessage("User", "DTO", newUserDTO, "new user"));
             return userService.getDTO(savedUser);
-        } catch (RegistrationFailedException e) {
+        } catch (UserRelatedException e) {
             logger.error(LogConstants.getAlreadyExistsMessage("User", "Email", newUserDTO.getEmail(), "while registering"));
-            throw new RegistrationFailedException(MessageConstants.UserError.EMAIL_EXISTS);
-        } catch (BaseException e) {
-//            logger.error("Did Not Match: Attempt to create a user with password: {} and confirmPassword: {}", newUserDTO.getPassword(), newUserDTO.getConfirmPassword());
-            throw new RegistrationFailedException(MessageConstants.UserError.CONFIRM_PASSWORD_DID_NOT_MATCH);
+            throw new UserRelatedException(MessageConstants.UserError.EMAIL_EXISTS);
         }
     }
 
@@ -62,6 +58,10 @@ public class AuthenticationService {
             if(passwordDTO.getPassword().equals(passwordDTO.getConfirmPassword())) {
                 user.setPassword(passwordDTO.getPassword());
                 User savedUser = userService.finalSave(user);
+
+                // send welcome email on the user's verified email id
+                emailService.sendWelcomeEmail(savedUser.getEmail(), savedUser.getName());
+
                 return userService.getDTO(savedUser);
             } else {
                 throw new RuntimeException(MessageConstants.UserError.CONFIRM_PASSWORD_DID_NOT_MATCH);

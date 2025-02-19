@@ -48,7 +48,7 @@ public class UserServiceImpl implements UserService {
     private final UserRepository userRepository;
 
     @Override
-    public User getUserFromRegisterDTO(NewUserDTO newUserDTO) throws BaseException {
+    public User getUserFromNewUserDTO(NewUserDTO newUserDTO) throws BaseException {
         return userMapper.toEntityFromNewUserDTO(newUserDTO);
     }
 
@@ -70,6 +70,21 @@ public class UserServiceImpl implements UserService {
     @Override
     public List<UserDTO> getDTOList(List<User> userList) {
         return userMapper.toDTOList(userList);
+    }
+
+    @Override
+    public User save(User user) {
+        Optional<String> currentAuditor = applicationAuditAware.getCurrentAuditor();
+        if (currentAuditor.isEmpty()) {
+            user.setCreatedBy("system");
+            user.setLastUpdatedBy("system");
+            logger.info(LogConstants.getAuditorNotFoundMessage("User", user.getEmail(), "while creating"));
+        } else {
+            String auditor = currentAuditor.get();
+            user.setCreatedBy(auditor);
+            user.setLastUpdatedBy(auditor);
+        }
+        return userRepository.save(user);
     }
 
     @Override

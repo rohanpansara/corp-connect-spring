@@ -113,4 +113,17 @@ public class PublicController {
         return ResponseEntity.badRequest().body(ResponseDTO.error(MessageConstants.UserError.USER_NOT_LOGGED_IN, false));
     }
 
+    @GetMapping("/validate-pending-otp")
+    public ResponseEntity<ResponseDTO<Boolean>> validatePendingOTP(HttpServletRequest request) {
+        String token = cookieUtils.getCookieValueByName(request, CookieConstants.TOKEN_COOKIE_NAME);
+        String userId = cookieUtils.getCookieValueByName(request, CookieConstants.USER_ID_COOKIE_NAME);
+
+        if (token != null && !token.isEmpty() && authenticationService.isTokenValid(token, userId)) {
+            logger.info(LogConstants.getSessionVerifiedForToken(token, true));
+            return ResponseEntity.ok(ResponseDTO.success(MessageConstants.UserSuccess.USER_SESSION_VERIFIED, true));
+        }
+        logger.error(LogConstants.getSessionVerifiedForToken(token, false));
+        return ResponseEntity.badRequest().body(ResponseDTO.error(MessageConstants.UserError.USER_NOT_LOGGED_IN, false));
+    }
+
 }

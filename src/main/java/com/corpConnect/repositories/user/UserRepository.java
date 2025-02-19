@@ -1,6 +1,7 @@
 package com.corpConnect.repositories.user;
 
 import com.corpConnect.entities.user.User;
+import com.corpConnect.security.utils.UserRole;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.JpaSpecificationExecutor;
 import org.springframework.data.jpa.repository.Modifying;
@@ -14,10 +15,14 @@ import java.util.Optional;
 @Repository
 public interface UserRepository extends JpaRepository<User, Long>, JpaSpecificationExecutor<User> {
     Optional<User> findByEmail(String email);
+
     User findUserById(Long userId);
+
     List<User> findByIsAccountNonExpired(boolean isAccountNonExpired);
 
     List<User> findByDeleted(boolean isDeleted);
+
+    List<User> findByRoles(UserRole userRole);
 
     @Modifying
     @Query("UPDATE User u SET u.deleted = true WHERE u.id = :userId")

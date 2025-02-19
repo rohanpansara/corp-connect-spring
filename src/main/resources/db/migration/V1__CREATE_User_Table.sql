@@ -3,6 +3,7 @@ CREATE TABLE IF NOT EXISTS CorpConnect.`USERS` (
     name VARCHAR(150), -- from NamedEntity
     email VARCHAR(255) NOT NULL UNIQUE, -- from User
     password VARCHAR(255), -- from User
+    is_email_verified BOOLEAN NOT NULL DEFAULT false, -- from User
     roles VARCHAR(50) NOT NULL, -- Enum type (UserRole)
     login_attempts INT DEFAULT 0, -- from User
     deleted BOOLEAN NOT NULL DEFAULT false, -- Indicates if the user is soft deleted

@@ -7,6 +7,7 @@ import com.corpConnect.repositories.company.EmailTemplateRepository;
 import com.corpConnect.services.company.ConfigurationService;
 import com.corpConnect.services.company.EmailService;
 import com.corpConnect.services.company.OTPService;
+import com.corpConnect.utils.constants.CommonConstants;
 import com.corpConnect.utils.constants.LogConstants;
 import jakarta.mail.MessagingException;
 import jakarta.mail.internet.MimeMessage;
@@ -35,17 +36,20 @@ public class EmailServiceImpl implements EmailService {
     @Async
     @Override
     public void sendWelcomeEmail(String toEmail, String name) {
-        Optional<EmailTemplate> template = emailTemplateRepository.findByName("welcome");
+        Optional<EmailTemplate> template = emailTemplateRepository.findByName("welcome_user");
         if (template.isEmpty()) {
-            logger.error("'Welcome' email template not found");
+            logger.error("'Welcome User' email template not found");
             return;
         }
-        String subject = template.get().getSubject()
+
+        EmailTemplate welcomeUserEmailTemplate = template.get();
+
+        String subject = welcomeUserEmailTemplate.getSubject()
                 .replace("{{employeeName}}", name);
 
-        String body = template.get().getBody()
+        String body = welcomeUserEmailTemplate.getBody()
                 .replace("{{employeeName}}", name)
-                .replace("{{companyName}}", "Corp Connect")
+                .replace("{{companyName}}", CommonConstants.COMPANY_NAME)
                 .replace("{{employeePortalLink}}", "https://employeeportal.com")
                 .replace("{{onboardingLink}}", "https://onboarding.com")
                 .replace("{{contactHRLink}}", "mailto:hr@company.com")
@@ -75,7 +79,7 @@ public class EmailServiceImpl implements EmailService {
                 .replace("{{otp}}", otp)
                 .replace("{{userId}}", String.valueOf(user.getId()))
                 .replace("{{currentYear}}", String.valueOf(LocalDate.now().getYear()))
-                .replace("{{companyName}}", "Corp Connect");
+                .replace("{{companyName}}", CommonConstants.COMPANY_NAME);
 
         try {
             sendEmail(user.getEmail(), subject, body);

@@ -4,21 +4,21 @@ import com.corpConnect.exceptions.common.BaseException;
 import com.fasterxml.jackson.annotation.JsonInclude;
 
 @JsonInclude(JsonInclude.Include.NON_NULL)
-public class RegistrationFailedException extends BaseException {
+public class UserRelatedException extends BaseException {
 
-    public RegistrationFailedException(String message) {
+    public UserRelatedException(String message) {
         super(message);
     }
 
-    public RegistrationFailedException(String message, String errorCode) {
+    public UserRelatedException(String message, String errorCode) {
         super(message, errorCode);
     }
 
-    public RegistrationFailedException(String message, Throwable cause) {
+    public UserRelatedException(String message, Throwable cause) {
         super(message, cause);
     }
 
-    public RegistrationFailedException(String message, Throwable cause, String errorCode) {
+    public UserRelatedException(String message, Throwable cause, String errorCode) {
         super(message, cause, errorCode);
     }
 }

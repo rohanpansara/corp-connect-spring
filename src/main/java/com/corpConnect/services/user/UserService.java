@@ -14,13 +14,14 @@ import java.util.List;
 public interface UserService {
 
     // User Mapper
-    User getUserFromRegisterDTO(NewUserDTO newUserDTO) throws BaseException;
+    User getUserFromNewUserDTO(NewUserDTO newUserDTO) throws BaseException;
     User getEntity(UserDTO userDTO);
     UserDTO getDTO(User user);
     List<User> getEntityList(List<UserDTO> userDTOList);
     List<UserDTO> getDTOList(List<User> userList);
 
     // User Repository
+    User save(User user);
     User finalSave(User user);
     User getUserByEmail(String email);
     User getUserByUserId(Long userId);

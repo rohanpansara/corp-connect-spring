@@ -42,6 +42,9 @@ public class User extends NameWithDeleteEntity implements UserDetails {
     @Column(name = "roles", nullable = false)
     private UserRole roles;
 
+    @Column(name = "is_email_verified")
+    private boolean isEmailVerified = false;
+
     @Column(name = "login_attempts")
     private Integer loginAttempts = 0;
     @Column(name = "is_account_non_expired")
