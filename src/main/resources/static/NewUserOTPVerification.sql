@@ -99,7 +99,7 @@ VALUES
           <img src=\"https://images.seeklogo.com/logo-png/47/2/creative-commons-logo-png_seeklogo-470282.png\"
               alt=\"Company Logo\" class=\"logo\">
           <h2>Verify Your Email with OTP</h2>
-          <p>You're almost there! Use the OTP below to verify your email and complete the setup.</p>
+          <p>You\'re almost there! Use the OTP below to verify your email and complete the setup.</p>
           <div class=\"otp\">{{otp}}</div>
           <p class=\"validity\">This OTP is valid for 10 minutes. Please do not share it with anyone.</p>
           <p>Click the button below to continue:</p>

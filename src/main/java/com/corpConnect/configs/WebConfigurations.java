@@ -19,7 +19,7 @@ public class WebConfigurations implements WebMvcConfigurer {
         registry.addMapping("/**")
                 .allowedMethods("GET", "POST", "PUT", "DELETE")
                 // TODO: need to check why localhost is not working on office computer?
-                .allowedOrigins("http://localhost:3000", "http://192.168.24.101:3000", "http://192.168.1.5:3000")
+                .allowedOrigins("http://localhost:3000", "http://192.168.24.101:3000", "http://192.168.1.3:3000")
                 .allowCredentials(true);
     }
 

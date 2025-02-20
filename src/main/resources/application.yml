@@ -65,8 +65,8 @@ logging:
     com.corpConnect.utils.functions.CookieUtils: DEBUG
 
 user-initializer:
-  name: "Rohan Pansara"
-  email: "rohan.pansara@drcsystems.com"
+  name: "Test User"
+  email: "test.user@test.com"
   password: "Drc@1234"
 
 #cloudinary:
