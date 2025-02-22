@@ -35,13 +35,13 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
     private static final Logger logger = LoggerFactory.getLogger(JwtAuthenticationFilter.class);
 
     private static final String[] PUBLIC_URLS = {
-            "/public/login",
-            "/public/logout",
-            "/public/validate-token",
+            "/auth/login",
+            "/auth/logout",
+            "/auth/validate-token",
             "/public/new-user",
             "/public/verify-otp",
             "/public/set-password",
-            "/ws"
+            "/ws/**"
     };
 
 
@@ -62,7 +62,7 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
             String servletPath = request.getServletPath();
             for (String url : PUBLIC_URLS) {
                 if (servletPath.equals(url)) {
-                    logger.info("Public URL accessed: {}", servletPath);
+                    logger.info("Public URL '{}' accessed by: {}", servletPath, request.getRemoteAddr());
                     filterChain.doFilter(request, response);
                     return;
                 }

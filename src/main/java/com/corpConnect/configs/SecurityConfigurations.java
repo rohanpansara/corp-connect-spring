@@ -38,9 +38,9 @@ import static org.springframework.security.config.http.SessionCreationPolicy.STA
 @RequiredArgsConstructor
 public class SecurityConfigurations {
     private static final String[] publicUrls = {
-            "/public/login",
-            "/public/logout",
-            "/public/validate-token",
+            "/auth/login",
+            "/auth/logout",
+            "/auth/validate-token",
             "/public/new-user",
             "/public/verify-otp",
             "/public/set-password",
