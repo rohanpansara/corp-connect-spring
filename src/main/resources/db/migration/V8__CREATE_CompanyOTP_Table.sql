@@ -9,5 +9,5 @@ CREATE TABLE IF NOT EXISTS CorpConnect.COMPANY_OTP (
     created_by VARCHAR(50), -- from BaseEntity (auditing)
     last_updated_date TIMESTAMP, -- from BaseEntity (auditing)
     last_updated_by VARCHAR(50), -- from BaseEntity (auditing)
-    CONSTRAINT fk_otp_user FOREIGN KEY (user_id) REFERENCES `USERS`(id) -- Foreign key constraint to USER table
+    CONSTRAINT fk_otp_user FOREIGN KEY (user_id) REFERENCES `USERS`(id) ON DELETE CASCADE -- Automatically delete OTPs when a user is deleted
 );
