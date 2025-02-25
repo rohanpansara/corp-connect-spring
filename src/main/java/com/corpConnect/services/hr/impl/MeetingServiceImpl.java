@@ -3,17 +3,28 @@ package com.corpConnect.services.hr.impl;
 import com.corpConnect.dtos.hr.MeetingDTO;
 import com.corpConnect.dtos.hr.MeetingRoomDTO;
 import com.corpConnect.entities.hr.Meeting;
+import com.corpConnect.enumerations.MeetingStatus;
+import com.corpConnect.exceptions.client.UserNotFoundException;
 import com.corpConnect.mappers.hr.MeetingMapper;
 import com.corpConnect.repositories.hr.MeetingRepository;
 import com.corpConnect.services.hr.MeetingService;
+import com.corpConnect.services.user.UserServiceImpl;
+import com.corpConnect.utils.constants.LogConstants;
+import com.corpConnect.utils.constants.MessageConstants;
 import lombok.RequiredArgsConstructor;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.stereotype.Service;
 
+import java.util.Collections;
 import java.util.List;
 
 @Service
 @RequiredArgsConstructor
 public class MeetingServiceImpl implements MeetingService {
+
+    private static final Logger logger = LoggerFactory.getLogger(MeetingServiceImpl.class);
 
     private final MeetingMapper meetingMapper;
     private final MeetingRepository meetingRepository;
@@ -40,8 +51,14 @@ public class MeetingServiceImpl implements MeetingService {
 
     @Override
     public void createMeeting(MeetingDTO meetingDTO) {
-        Meeting meeting = meetingMapper.toEntity(meetingDTO);
-
+        try {
+            Meeting meeting = meetingMapper.toEntity(meetingDTO);
+            meetingRepository.save(meeting);
+            logger.info(LogConstants.getCreatedSuccessfullyMessage("Meeting", "DTO", meetingDTO, null));
+        } catch (DataIntegrityViolationException e) {
+            logger.error(LogConstants.getAlreadyExistsMessage("Meeting", "Name", meetingDTO.getName(), "while creating"));
+            throw new RuntimeException(MessageConstants.Meeting.MEETING_ALREADY_EXISTS);
+        }
     }
 
     @Override
@@ -62,5 +79,35 @@ public class MeetingServiceImpl implements MeetingService {
     @Override
     public void deleteMeetingById(Long meetingToDeleteId) {
 
+    }
+
+    @Override
+    public List<Meeting> getAllMeetings() {
+        return meetingRepository.findAll();
+    }
+
+    @Override
+    public List<Meeting> getAllNonCompletedMeetings() {
+        return meetingRepository.findAllByStatusIn(List.of(MeetingStatus.SCHEDULED, MeetingStatus.DELAYED, MeetingStatus.CANCELLED));
+    }
+
+    @Override
+    public List<Meeting> getAllCompletedMeetings() {
+        return meetingRepository.findAllByStatusIn(List.of(MeetingStatus.OVER));
+    }
+
+    @Override
+    public List<Meeting> getMeetingsById(Long meetingId) {
+        return Collections.singletonList(meetingRepository.findById(meetingId).orElseThrow(
+                () -> {
+                    logger.error("Not Found: Attempt to fetch meeting with id: {}", meetingId);
+                    return new RuntimeException(MessageConstants.Meeting.MEETING_NOT_FOUND);
+                }
+        ));
+    }
+
+    @Override
+    public List<Meeting> getMeetingsByName(String meetingName) {
+        return List.of();
     }
 }

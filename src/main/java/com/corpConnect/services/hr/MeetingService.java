@@ -2,6 +2,7 @@ package com.corpConnect.services.hr;
 
 import com.corpConnect.dtos.hr.MeetingDTO;
 import com.corpConnect.dtos.hr.MeetingRoomDTO;
+import com.corpConnect.entities.hr.JobTitle;
 import com.corpConnect.entities.hr.Meeting;
 
 import java.util.List;
@@ -20,5 +21,12 @@ public interface MeetingService {
     Meeting getMeetingById(Long meetingToGetId);
     void deleteMeeting(MeetingRoomDTO meetingRoomDTO);
     void deleteMeetingById(Long meetingToDeleteId);
+
+    // Meeting Repository
+    List<Meeting> getAllMeetings();
+    List<Meeting> getAllNonCompletedMeetings();
+    List<Meeting> getAllCompletedMeetings();
+    List<Meeting> getMeetingsById(Long meetingId);
+    List<Meeting> getMeetingsByName(String meetingName);
 
 }

@@ -15,7 +15,7 @@ public interface MeetingRepository extends JpaRepository<Meeting, Long> {
 
     List<Meeting> findAllByOrganizerId(Long organizerId);
     List<Meeting> findAllByMeetingRoomId(Long meetingRoomId);
-    List<Meeting> findAllByStatus(MeetingStatus status);
+    List<Meeting> findAllByStatusIn(List<MeetingStatus> meetingStatuses);
 
     List<Meeting> findAllByStartTime(LocalDateTime startTime);
     List<Meeting> findAllByEndTime(LocalDateTime endTime);
