@@ -33,17 +33,17 @@ public class MeetingController {
         return ResponseEntity.ok(ResponseDTO.success(MessageConstants.Meeting.MEETING_LIST_FOUND, meetingService.getDTOList(meetingService.ge())));
     }
 
-    @GetMapping(value = "/{jobTitleId}")
+    @GetMapping(value = "/{meetingId}")
     @PreAuthorize("hasAuthority('user:read')")
-    public ResponseEntity<ResponseDTO<List<JobTitleDTO>>> fetchJobTitleByJobTitleId(@PathVariable("jobTitleId") Long jobTitleId) {
-        return ResponseEntity.ok(ResponseDTO.success(MessageConstants.JobTitle.JOB_TITLE_FOUND, jobTitleService.getDTOList(jobTitleService.getJobTitlesById(jobTitleId))));
+    public ResponseEntity<ResponseDTO<List<MeetingDTO>>> fetchMeetingByMeetingId(@PathVariable("meetingId") Long meetingId) {
+        return ResponseEntity.ok(ResponseDTO.success(MessageConstants.Meeting.MEETING_LIST_FOUND, meetingService.getDTOList(meetingService.getMeetingsById(meetingId))));
     }
 
     @PostMapping
-    @PreAuthorize("hasAuthority('hr_manager:create')")
-    public ResponseEntity<ResponseDTO<Void>> createJobTitle(@RequestBody JobTitleDTO jobTitleDTO) {
-        jobTitleService.createJobTitles(jobTitleDTO);
-        return ResponseEntity.ok(ResponseDTO.success(MessageConstants.JobTitle.JOB_TITLE_CREATED));
+    @PreAuthorize("hasAuthority('pms_manager:create')")
+    public ResponseEntity<ResponseDTO<Void>> createMeeting(@RequestBody MeetingDTO meetingDTO) {
+        meetingService.createMeeting(meetingDTO);
+        return ResponseEntity.ok(ResponseDTO.success(MessageConstants.Meeting.MEETING_CREATED));
     }
 
     @PutMapping(value = "/{jobTitleId}")
