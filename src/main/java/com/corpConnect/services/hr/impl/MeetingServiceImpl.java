@@ -2,9 +2,12 @@ package com.corpConnect.services.hr.impl;
 
 import com.corpConnect.dtos.hr.MeetingDTO;
 import com.corpConnect.dtos.hr.MeetingRoomDTO;
+import com.corpConnect.entities.hr.JobTitle;
 import com.corpConnect.entities.hr.Meeting;
 import com.corpConnect.enumerations.MeetingStatus;
+import com.corpConnect.exceptions.client.RecordNotFoundException;
 import com.corpConnect.exceptions.client.UserNotFoundException;
+import com.corpConnect.exceptions.hr.JobTitleRelatedException;
 import com.corpConnect.mappers.hr.MeetingMapper;
 import com.corpConnect.repositories.hr.MeetingRepository;
 import com.corpConnect.services.hr.MeetingService;
@@ -63,7 +66,20 @@ public class MeetingServiceImpl implements MeetingService {
 
     @Override
     public void updateMeeting(Long meetingToUpdateId, MeetingDTO newMeetingDTO) {
+        Meeting oldMeeting = meetingRepository.findById(meetingToUpdateId).orElseThrow(
+                () -> {
+                    logger.error(LogConstants.getNotFoundMessage("Meeting", "update", "ID", meetingToUpdateId, null));
+                    return new RecordNotFoundException(MessageConstants.Meeting.MEETING_NOT_FOUND);
+                });
 
+        try {
+            meetingMapper.updateEntityFromDTO(newMeetingDTO, oldMeeting);
+            meetingRepository.save(oldMeeting);
+            logger.info(LogConstants.getUpdatedSuccessfullyMessage("Meeting", "DTO", newMeetingDTO, "ID", meetingToUpdateId, null));
+        } catch (DataIntegrityViolationException e) {
+            logger.error(LogConstants.getAlreadyExistsMessage("Meeting", "Name", newMeetingDTO.getName(), "while updating"));
+            throw new RuntimeException(MessageConstants.Meeting.MEETING_ALREADY_EXISTS);
+        }
     }
 
     @Override
