@@ -1,6 +1,7 @@
 CREATE TABLE IF NOT EXISTS CorpConnect.HR_MEETINGS (
-    `id` BIGINT AUTO_INCREMENT PRIMARY KEY, -- Inherited from NameEntity
-    `name` VARCHAR(150) NOT NULL, -- Inherited from NameEntity
+    `id` BIGINT AUTO_INCREMENT PRIMARY KEY, -- Inherited from NameWithDeleteEntity
+    `name` VARCHAR(150) NOT NULL, -- Inherited from NameWithDeleteEntity
+    deleted BOOLEAN NOT NULL DEFAULT false, -- Inherited from NameWithDeleteEntity
     organizer_id BIGINT NOT NULL, -- Foreign key referencing USERS (organizer of the meeting)
     meeting_room_id BIGINT, -- Foreign key referencing HR_MEETING_ROOMS
     start_time TIMESTAMP, -- Meeting start time

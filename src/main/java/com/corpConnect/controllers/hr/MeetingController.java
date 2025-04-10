@@ -30,7 +30,7 @@ public class MeetingController {
     @GetMapping
     @PreAuthorize("hasAuthority('hr_manager:read')")
     public ResponseEntity<ResponseDTO<List<MeetingDTO>>> fetchAllMeetings() {
-        return ResponseEntity.ok(ResponseDTO.success(MessageConstants.Meeting.MEETING_LIST_FOUND, meetingService.getDTOList(meetingService.ge())));
+        return ResponseEntity.ok(ResponseDTO.success(MessageConstants.Meeting.MEETING_LIST_FOUND, meetingService.getDTOList(meetingService.getAllMeetings())));
     }
 
     @GetMapping(value = "/{meetingId}")
@@ -46,25 +46,25 @@ public class MeetingController {
         return ResponseEntity.ok(ResponseDTO.success(MessageConstants.Meeting.MEETING_CREATED));
     }
 
-    @PutMapping(value = "/{jobTitleId}")
+    @PutMapping(value = "/{meetingId}")
     @PreAuthorize("hasAuthority('hr_manager:update')")
-    public ResponseEntity<ResponseDTO<Void>> updateJobTitle(@PathVariable("jobTitleId") Long oldJobTitleId, @RequestBody JobTitleDTO jobTitleDTO) {
-        jobTitleService.updateJobTitles(oldJobTitleId, jobTitleDTO);
-        return ResponseEntity.ok(ResponseDTO.success(MessageConstants.JobTitle.JOB_TITLE_UPDATED));
+    public ResponseEntity<ResponseDTO<Void>> updateMeeting(@PathVariable("meetingId") Long meetingId, @RequestBody MeetingDTO meetingDTO) {
+        meetingService.updateMeeting(meetingId, meetingDTO);
+        return ResponseEntity.ok(ResponseDTO.success(MessageConstants.Meeting.MEETING_UPDATED));
     }
 
-    @DeleteMapping(value = "/{jobTitleId}")
+    @DeleteMapping(value = "/{meetingId}")
     @PreAuthorize("hasAuthority('hr_manager:delete')")
-    public ResponseEntity<ResponseDTO<Void>> softDeleteJobTitle(@PathVariable("jobTitleId") Long jobTitleId) {
-        jobTitleService.deleteJobTitlesById(jobTitleId, false);
-        return ResponseEntity.ok(ResponseDTO.success(MessageConstants.JobTitle.JOB_TITLE_DELETED));
+    public ResponseEntity<ResponseDTO<Void>> softDeleteMeeting(@PathVariable("meetingId") Long meetingId) {
+        meetingService.deleteMeetingById(meetingId);
+        return ResponseEntity.ok(ResponseDTO.success(MessageConstants.Meeting.MEETING_DELETED));
     }
 
-    @DeleteMapping(value = "/{jobTitleId}/permanent")
+    @DeleteMapping(value = "/{meetingId}/permanent")
     @PreAuthorize("hasAuthority('hr_manager:delete')")
-    public ResponseEntity<ResponseDTO<Void>> permanentDeleteJobTitle(@PathVariable("jobTitleId") Long jobTitleId) {
-        jobTitleService.deleteJobTitlesById(jobTitleId, true);
-        return ResponseEntity.ok(ResponseDTO.success(MessageConstants.JobTitle.JOB_TITLE_DELETED_PERMANENTLY));
+    public ResponseEntity<ResponseDTO<Void>> permanentDeleteJobTitle(@PathVariable("meetingId") Long meetingId) {
+        meetingService.deleteMeetingById(meetingId);
+        return ResponseEntity.ok(ResponseDTO.success(MessageConstants.Meeting.MEETING_DELETED));
     }
 
 }

@@ -1,6 +1,7 @@
 package com.corpConnect.entities.hr;
 
 import com.corpConnect.entities.common.NameEntity;
+import com.corpConnect.entities.common.NameWithDeleteEntity;
 import com.corpConnect.entities.user.User;
 import com.corpConnect.enumerations.MeetingStatus;
 import com.corpConnect.enumerations.RecurrencePattern;
@@ -27,7 +28,7 @@ import java.time.LocalDateTime;
 @Entity
 @EntityListeners(AuditingEntityListener.class)
 @Table(name = "HR_MEETINGS")
-public class Meeting extends NameEntity {
+public class Meeting extends NameWithDeleteEntity {
 
     @ManyToOne
     @JoinColumn(name = "organizer_id", nullable = false)

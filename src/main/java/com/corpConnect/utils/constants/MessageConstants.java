@@ -147,7 +147,8 @@ public class MessageConstants {
         public static final String MEETING_LIST_FOUND = MessageCreator.getListFoundMessage("Meeting");
         public static final String MEETING_NOT_FOUND = MessageCreator.getNotFoundMessage("Meeting");
         public static final String MEETING_CREATED = MessageCreator.getCreatedMessage("Meeting");
-        public static final String MEETING_DELETED = MessageCreator.getDeletedMessage("Meeting", false);
+        public static final String MEETING_DELETED = MessageCreator.getDeletedMessage("Meeting", true);
+        public static final String MEETING_SOFT_DELETED = MessageCreator.getDeletedMessage("Meeting", false);
         public static final String MEETING_UPDATED = MessageCreator.getUpdatedMessage("Meeting");
         public static final String MEETING_ALREADY_EXISTS = MessageCreator.getExistsMessage("Meeting", "time");
         public static final String DataIntegrityViolation = getDataIntegrityViolationMessage("Meeting");
