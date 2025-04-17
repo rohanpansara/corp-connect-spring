@@ -234,7 +234,9 @@ public class UserServiceImpl implements UserService {
     public void deleteUsersByUserIdList(List<Long> userIdList) {
         if (!userIdList.isEmpty()) {
             userRepository.setIsDeletedTrueForUserByUserIdList(userIdList);
+            return;
         }
+        logger.error("No Data Received: Attempt to delete users with empty user ids list");
     }
 
     @Override
