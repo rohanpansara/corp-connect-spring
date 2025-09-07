@@ -76,16 +76,13 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
                 filterChain.doFilter(request, response);
                 throw new JwtAuthenticationException("Authorization token missing");
             }
-            logger.info("JWT: Token found with value - {}", jwtToken);
 
             // Extract email from the token
             userEmail = jwtService.extractEmailFromToken(jwtToken);
             if (userEmail != null && SecurityContextHolder.getContext().getAuthentication() == null) {
-                logger.info("JWT: Extracted user email - {}", userEmail);
                 UserDetails userDetails = this.userDetailsService.loadUserByUsername(userEmail);
 
                 if (jwtService.isTokenValid(jwtToken, userDetails)) {
-                    logger.info("JWT: Token is valid, setting authentication for user: {}", userEmail);
                     UsernamePasswordAuthenticationToken authToken = new UsernamePasswordAuthenticationToken(
                             userDetails,
                             null,

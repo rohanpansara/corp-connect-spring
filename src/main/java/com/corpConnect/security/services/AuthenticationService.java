@@ -52,7 +52,7 @@ public class AuthenticationService {
         }
     }
 
-    public UserDTO createUserPassword(PasswordDTO passwordDTO) {
+    public void createUserPassword(PasswordDTO passwordDTO) {
         try {
             User user = userService.getUserByUserId(passwordDTO.getUser().getId());
             if(passwordDTO.getPassword().equals(passwordDTO.getConfirmPassword())) {
@@ -62,7 +62,7 @@ public class AuthenticationService {
                 // send welcome email on the user's verified email id
                 emailService.sendWelcomeEmail(savedUser.getEmail(), savedUser.getName());
 
-                return userService.getDTO(savedUser);
+                userService.getDTO(savedUser);
             } else {
                 throw new RuntimeException(MessageConstants.UserError.CONFIRM_PASSWORD_DID_NOT_MATCH);
             }

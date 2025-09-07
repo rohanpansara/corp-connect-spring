@@ -101,6 +101,7 @@ public enum UserRole {
         return authorities;
     }
 
+    @SuppressWarnings("unused")
     public static UserRole getByLabel(String label) {
         for (UserRole role : values()) {
             if (role.getLabel().equalsIgnoreCase(label)) {

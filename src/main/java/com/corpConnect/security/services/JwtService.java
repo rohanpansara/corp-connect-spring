@@ -64,6 +64,7 @@ public class JwtService {
 
 
     //    CREATE TOKEN FOR ADMIN
+    @SuppressWarnings("unused")
     public String generateTokenForAdmin(UserDetails userDetails, String subject, String moduleType) {
         return generateTokenForAdmin(new HashMap<>(), userDetails, subject, moduleType);
     }
@@ -83,6 +84,7 @@ public class JwtService {
     }
 
     //    REFRESH TOKEN BUILDER FOR ADMIN
+    @SuppressWarnings("unused")
     public String generateRefreshTokenForAdmin(UserDetails userDetails, String subject, String moduleType) {
         Map<String, Object> rolesMap = new HashMap<>(1);
         Optional<User> tokenUser = userRepository.findByEmail(userDetails.getUsername());
